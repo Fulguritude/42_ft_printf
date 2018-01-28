@@ -20,17 +20,19 @@ LFTDIR	=	./libft/
 TSTDIR	=	./tests/
 
 HDRS	=	ft_printf.h
-SRCS	=	ft_printf.c
-TESTS	=	
+SRCS	=	ft_printf.c		\
+			converters.c
+TESTS	=	main.c
 
 OBJS	=	$(SRCS:.c=.o)
 
 $(LFT):
-	$(MAKE) -C $(LFTDIR) $(LIBFT)
+	$(MAKE) -C $(LFTDIR) $(LFT)
 
 $(NAME):
-	gcc $(CFLAGS) -c $(SRCS)
-	gcc -o $(NAME) $(OBJS) -lft -L$(LFTDIR)
+	gcc $(CFLAGS) -c $(SRCS) -I$(HDDIR)
+	ar rc $(NAME) $(OBJS) -lft -L$(LFTDIR)
+	ranlib $(NAME)
 
 all: $(LFT) $(NAME)
 
@@ -44,5 +46,6 @@ fclean:clean
 re:fclean all
 
 test:re
-	./$(NAME) $(addprefix $(TSTDIR),$(TESTS))
+	gcc -o tests $(TESTS) -lftprintf -L.
+	./tests
 	@make clean
