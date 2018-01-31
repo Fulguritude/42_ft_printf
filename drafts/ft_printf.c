@@ -64,27 +64,24 @@ int				ft_vasprintf(char **res, const char *format, va_list args)
 	char	**fmt_strls;
 	t_list	*res_lststr;
 	int		i;
-	int		status;
-	int		tot_len;
+	t_str	tmp_res;
 
-	if (!(fmt_strls = format_to_strls(format), ft_ptrarrlen(args)))
+	setlocale(LC_ALL, "en_US.UTF-8");
+	if (!(fmt_strls = format_to_strls(format)))
 		return (-1);
-	i = 0;
-	while (fmt_strls[i])
+	i = -1;
+	while (fmt_strls[++i])
 	{
-		if (fmt_strls[i][0] == '%')
-			status = convert_str(chunk, args);
-		if (status == -1)
+		if (convert_str(fmt_strls[i], res_lststr, args) == -1)
 		{
 			ft_strlsdel(&fmt_strls);
-			return (status);
+			ft_lstdel(&res_lststr);
+			return (-1);
 		}
-		else
-			tot_len += status;
-		++i;
 	}
-	*res = ft_strlsjoin(res_strls);
+	tmp_res = to_single_t_str(res_lststr);
+	*res = tmp_res->data;
+	ft_strlsdel(&fmt_strls);
 	ft_lstdel(&res_lststr);
-	return (tot_len);
-*/
+	return (tmp_res->len);
 }

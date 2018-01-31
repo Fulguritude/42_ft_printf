@@ -22,14 +22,14 @@
 # define FLAGS "#0- +hljz" //*, $, L, '
 # define CONVS "pdDioOuUxXcCsS%" //eE, fF, gG, aA, n, bB
 # define PRECS ".0123456789"
-# define HXMIN "0123456789abcdef"
-# define HXCAP "0123456789ABCDEF"
+# define HXLOW "0123456789abcdef"
+# define HXUPP "0123456789ABCDEF"
 
 
 typedef struct	s_str
 {
 	char	*data;
-	int		len;
+	size_t	len;
 }				t_str;
 
 int		ft_printf(const char *format, ...);

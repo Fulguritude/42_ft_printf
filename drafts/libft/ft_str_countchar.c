@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-t_u32		ft_str_countchar(const char *str, const char c)
+t_u32		ft_str_countchar(char const *str, char const c)
 {
 	t_u32		count;
 	t_u32		i;
