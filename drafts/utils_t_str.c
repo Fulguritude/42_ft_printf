@@ -1,13 +1,13 @@
 #include "ft_printf.h"
 
-t_str	*str_to_t_str(char *str)
+t_str	str_to_t_str(char const *str)
 {
-	t_str	*result;
+	t_str	result;
 
-	if (!str || !(result = (t_str*)malloc(sizeof(t_str))))
-		return (NULL);
-	result->data = ft_strdup(str);
-	result->len = ft_strlen(str);
+//	if (!str || !(result = (t_str*)malloc(sizeof(t_str))))
+//		return (NULL);
+	result.data = ft_strdup(str);
+	result.len = ft_strlen(str);
 }
 
 static void	t_str_append(t_str *acc, t_str *next)

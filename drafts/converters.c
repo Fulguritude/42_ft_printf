@@ -11,6 +11,9 @@
 ** analysing the format string before allocating memory.
 ** Accounting for the null-term => 2n+1+1
 */
+/*
+** Maybe just read the string linearly ? With multiple whiles
+*/
 
 char	**format_to_strls(char const *format)
 {
@@ -27,7 +30,8 @@ char	**format_to_strls(char const *format)
 	{
 		j = 0;
 		if (format[i] == '%')
-			while (ft_in_base(format[i + j], CONVS) == -1 && format[i + j])
+			while (ft_in_base(format[i + j], CONVS) == -1 && format[i + j] &&
+					ft_in_base(format[i + j], ALL_SYMBOLS))
 				++j;
 		else
 			while (format[i + j] != '%')
@@ -39,23 +43,26 @@ char	**format_to_strls(char const *format)
 	return (result);
 }
 
-int		convert_str(char *fmt_part, t_list *lststr, va_list args)
+void	convert_str(char *fmt_part, t_list *lststr, va_list args)
 {
-	char	converter;
-	void	*data;
-	t_str	*result;
-	int		len;
+	char		type;
+	t_format	format_info;
+	t_str		result;
 
 	if (fmt_part[0] != '%')
 		result = str_to_t_str(fmt_part);
 	else
 	{
-		converter = fmt_part[ft_strlen(fmt_part) - 1];
-		if (ft_in_base(CONVS, converter) == -1)
-			return (-1)
-		
-
+		type = fmt_part[ft_strlen(fmt_part) - 1];
+		if (ft_in_base(TYPES, type) == -1)
+			result = str_to_t_str(fmt_part);
+		else
+		{
+			format_info = read_format(fmt_part);
+			result = resolve_format(format_info, args);
+			if (result.len == -1)
+				//TODO ? make various -n error codes ?
+		}
 	}
-	ft_lstappend(lststr, ft_lstnew_no_copy(result, sizeof(t_str)));
-	return (len);
+	ft_lstappend(lststr, ft_lstnew(&result, sizeof(t_str)));
 }

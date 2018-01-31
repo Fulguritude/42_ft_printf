@@ -231,3 +231,12 @@ color or file desc management
 
 
 
+
+ar -M <<EOM
+    CREATE libab.a
+    ADDLIB liba.a
+    ADDLIB libb.a
+    SAVE
+    END
+EOM
+ranlib libab.a
