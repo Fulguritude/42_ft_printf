@@ -59,9 +59,9 @@ void	convert_str(char *fmt_part, t_list *lststr, va_list args)
 		else
 		{
 			format_info = read_format(fmt_part);
-			result = resolve_format(format_info, args);
-			if (result.len == -1)
-				//TODO ? make various -n error codes ?
+			result = handle_format(format_info, args);
+			//if (result.len == -1)
+				//TODO ? make various -n error codes using the length of the t_str ?
 		}
 	}
 	ft_lstappend(lststr, ft_lstnew(&result, sizeof(t_str)));

@@ -66,7 +66,6 @@ int				ft_vasprintf(char **res, const char *format, va_list args)
 	int		i;
 	t_str	tmp_res;
 
-	setlocale(LC_ALL, "en_US.UTF-8");
 	if (!(fmt_strls = format_to_strls(format)))
 		return (-1);
 	i = -1;

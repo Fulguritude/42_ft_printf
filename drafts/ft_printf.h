@@ -37,12 +37,11 @@
 
 # define FLAGS "#0- +" //'
 # define TYPES "pdDioOuUxXcCsS%" //eE, fF, gG, aA, n, bB
-# define PRECS ".0123456789"
-# define LGTHS "hljz" //L, t ; hh, ll
+# define LGTHS "hljz" //L, t
 
 # define ALL_SYMBOLS "#0- +pdDioOuUxXcCsS%.0123456789hljz"
 
-# define BINAR "01"
+//# define BINAR "01"
 # define OCTAL "01234567"
 # define DECIM "0123456789"
 # define HXLOW "0123456789abcdef"
@@ -53,21 +52,20 @@
 # define FL_MINUS 0x4
 # define FL_SPACE 0x8
 # define FL_ZERO 0x10
+//# define FL_QUOTE 0x20
 # define FL_ERROR 0x80
 
 typedef enum	e_types
 {
-	pointer,
+	percent,
 	int_dec,
-	int_oct,
+	int_uoct,
 	int_udec,
-	int_hexlower,
-	int_hexupper,
-	char_ascii,
-	char_utf8,
-	str_ascii,
-	str_utf8,
-//	float_, longlong, etc
+	int_uhex_l,
+	int_uhex_u,
+	uchar,
+	string,
+//	float, longlong, etc
 	no_type_error
 }				t_types;
 

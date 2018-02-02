@@ -99,10 +99,25 @@ t_len_flag		read_format_len_flag(char const *fmt_part, int *i)
 	return (result);
 }
 
-t_types			read_format_type(char const *fmt_part, int i)
+t_types			read_format_type(char const *fmt_part, t_format *info, int i)
 {
-	if (ft_in_base(TYPES, fmt_part[i]) == -1)
-		return (no_type_error);
+	char	c;
+	t_types	result;
+
+	c = fmt_part[i];
+	result = c == '%' ? percent : no_type_error;
+	result = c == 'd' || c == 'i' || c == 'D' ? int_dec : result;
+	result = c == 'o' || c == 'O' ? int_uoct : result;
+	result = c == 'u' || c == 'U' ? int_udec : result;
+	result = c == 'x' || c == 'p' ? int_uhex_l : result;
+	result = c == 'X' ? int_uhex_u : result;
+	result = c == 'c' || c == 'C' ? uchar : result;
+	result = c == 's' || c == 'S' ? string : result;
+	info->len_flag = (c == 'D' || c == 'O' || c == 'U' || c == 'p' || c == 'C'
+						|| c == 'S') ? fl_l : info->len_flag;
+	if (c == 'p')
+		info->flags |= FL_HASH;
+	return (result);
 }
 
 t_format		read_format(char const *fmt_part)
@@ -115,11 +130,6 @@ t_format		read_format(char const *fmt_part)
 	result.width = read_format_width(fmt_part, &i);
 	result.prec = read_format_prec(fmt_part, &i);
 	result.len_flag = read_format_len_flag(fmt_part, &i);
-	result.type = read_format_type(fmt_part, i); //maybe give "type" as an argument to gain a bit of place because read_format_type probably won't have enough lines for all possibilities
+	result.type = read_format_type(fmt_part, &result, i); //maybe give "type" as an argument to gain a bit of place because read_format_type probably won't have enough lines for all possibilities
 	return (result);
-}
-
-t_str			resolve_format(t_format fmt_info, va_list args)
-{
-	//return result.len == -1 in case of incoherent format
 }
