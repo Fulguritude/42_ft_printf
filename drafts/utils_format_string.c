@@ -14,9 +14,9 @@ t_u8			read_format_flags(char const *fmt_part, int *i)
 	char	c;
 
 	flags = 0;
-	if (ft_in_base(FLAGS, fmt_part[*i]) == -1)
+	if (ft_in_base(fmt_part[*i], FLAGS) == -1)
 		return (FL_ERROR);
-	while (ft_in_base(FLAGS, fmt_part[*i]) != -1)
+	while (ft_in_base(fmt_part[*i], FLAGS) != -1)
 	{
 		c = fmt_part[*i];
 		if (c == '+')
@@ -39,10 +39,10 @@ int				read_format_width(char const *fmt_part, int *i)
 	int		width;
 	t_u8	digit;
 
-	if (ft_in_base(DECIM, fmt_part[*i]) == -1)	
+	if (ft_in_base(fmt_part[*i], DECIM) == -1)	
 		return (-1);
 	width = 0;
-	while (ft_in_base(DECIM, fmt_part[*i]) != -1)
+	while (ft_in_base(fmt_part[*i], DECIM) != -1)
 	{
 		digit = fmt_part[*i];
 		width = width * 10 + digit - '0';
@@ -61,7 +61,7 @@ int				read_format_prec(char const *fmt_part, int *i)
 		return (-1);
 	++(*i);
 	prec = 0;
-	while (ft_in_base(DECIM, fmt_part[*i]) != -1)
+	while (ft_in_base(fmt_part[*i], DECIM) != -1)
 	{
 		digit = fmt_part[*i];
 		prec = prec * 10 + digit - '0';
@@ -70,7 +70,6 @@ int				read_format_prec(char const *fmt_part, int *i)
 	return (prec);
 }
 
-
 t_len_flag		read_format_len_flag(char const *fmt_part, int *i)
 {
 	char		len_flag_c;
@@ -78,17 +77,17 @@ t_len_flag		read_format_len_flag(char const *fmt_part, int *i)
 	t_len_flag	result;
 
 	
-	if (ft_in_base(LGTHS, fmt_part[*i]) == -1)	
+	if (ft_in_base(fmt_part[*i], LGTHS) == -1)	
 		return (no_len_flag);
 	len_flag_c = fmt_part[*i];
 	count = 1;
 	++(*i);
 	if (fmt_part[*i] == len_flag_c)
 		(*i) += count++;
-	else if (ft_in_base(LGTHS, fmt_part[*i]) != -1)
+	else if (ft_in_base(fmt_part[*i], LGTHS) != -1)
 		return (incoherent_len_flag);
 	if (count == 2 && ((len_flag_c != 'l' && len_flag_c != 'h') ||
-						(ft_in_base(LGTHS, fmt_part[*i + 1]) != -1)))
+						(ft_in_base(fmt_part[*i + 1], LGTHS) != -1)))
 		return (incoherent_len_flag);
 	if (count == 2)
 		return (len_flag_c == 'l' ? fl_ll : fl_hh);

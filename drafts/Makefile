@@ -20,9 +20,13 @@ LFTDIR	=	./libft/
 TSTDIR	=	./tests/
 
 HDRS	=	ft_printf.h
-SRCS	=	ft_printf.c		\
-			converters.c
-TESTS	=	main.c
+SRCS	=	ft_printf.c				\
+			converters.c			\
+			unicode.c				\
+			utils_format_string.c	\
+			utils_t_str.c			\
+			handlers1.c
+MAIN	=	main.c
 
 OBJS	=	$(SRCS:.c=.o)
 
@@ -45,7 +49,9 @@ fclean:clean
 
 re:fclean all
 
-test:re
-	gcc -o tests $(TESTS) -lftprintf -L.
-	./tests
+test: $(LFT)
+	gcc $(CFLAGS) -c $(SRCS) $(TSTDIR)$(MAIN)
+	gcc $(OBJS) -lft -L$(LFTDIR)
+	./a.out
 	@make clean
+	@rm a.out

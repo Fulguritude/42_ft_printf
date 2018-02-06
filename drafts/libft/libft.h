@@ -191,6 +191,13 @@ char					*ft_itoa(int n);
 char					*ft_itoa_base(long nb, char const *base);
 
 /*
+** Returns a new string which is nb written in "base" where nb is unsigned.
+*/
+
+char					*ft_uitoa_base(unsigned long nb, const char *base);
+
+
+/*
 ** Takes a string as a number written in base "base_from" (digit val == index
 ** of digit symbol in string) and returns a newly allocated (itoa_base) string
 ** in base "base_to".

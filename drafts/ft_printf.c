@@ -84,6 +84,6 @@ int				ft_vasprintf(char **res, const char *format, va_list args)
 	tmp_res = to_single_t_str(res_lststr);
 	*res = tmp_res.data;
 	ft_strlsdel(&fmt_strls);
-	ft_lstdel(&res_lststr);
+	ft_lstdel(&res_lststr, ft_delete);
 	return (tmp_res.len);
 }

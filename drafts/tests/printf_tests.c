@@ -55,9 +55,12 @@ int		main()
 	return_values[j++] = printf("%lS\n", L"résumé lS");
 	return_values[j++] = printf("%jS\n", L"résumé jS");
 	return_values[j++] = printf("%hhS\n", L"résumé hhS");
+	return_values[j++] = printf("%hhs\n", L"résumé hhs");
+	return_values[j++] = printf("%hhs\n", "rasuma hhs");
 
 
 	return_values[j++] = printf("%s gives %p\n", "%p", &i);
+	return_values[j++] = printf("%s gives %#p\n", "%#p", &i);
 
 	return_values[j++] = printf("%s gives %x\n", "%x", &i);
 	return_values[j++] = printf("%s gives %X\n", "%X", &i);
@@ -71,6 +74,7 @@ int		main()
 
 	++i;
 	return_values[j++] = printf("%d in octal : %o\n", i, i);
+	return_values[j++] = printf("%#d in octal : %#o\n", i, i);
 	i = -1;
 	while (++i < j)
 		printf("%d\n", return_values[i]);

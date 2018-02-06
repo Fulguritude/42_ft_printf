@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <stdarg.h>
 # include <locale.h>
+# include <inttypes.h>
 # include "libft/libft.h"
 
 /*
@@ -96,10 +97,68 @@ typedef struct	s_format
 	t_types			type;
 }				t_format;
 
+typedef union	u_data
+{
+	t_u8			c;
+	short			sh;
+	int				i;
+	long			l;
+	long long		ll;
+	char			*st;
+	size_t			si;
+	wchar_t			wc;
+	wchar_t			*ws;
+	intmax_t		im;
+}				t_data;
+
+
+/*
+** ft_printf.c
+*/
+
 int				ft_printf(const char *format, ...);
 int				ft_printf_fd(int fd, const char *format, ...);
 int				ft_vprintf_fd(int fd, const char *format, va_list args);
 int				ft_asprintf(char **res, const char *format, ...);
 int				ft_vasprintf(char **res, const char *format, va_list args);
+
+/*
+** converters.c
+*/
+
+char			**format_to_strls(char const *format);
+void			convert_str(char *fmt_part, t_list *lststr, va_list args);
+
+/*
+** handlers.c
+*/
+
+t_str			handle_format(t_format info, char const *fmt, va_list args);
+
+/*
+** unicode.c
+*/
+
+char			*encode_unicodepoint_to_utf8(wchar_t c);
+char			*build_utf8(wchar_t *unicode_str);
+
+/*
+** utils_format_string.c
+*/
+
+t_u8			read_format_flags(char const *fmt_part, int *i);
+int				read_format_width(char const *fmt_part, int *i);
+int				read_format_prec(char const *fmt_part, int *i);
+t_len_flag		read_format_len_flag(char const *fmt_part, int *i);
+t_types			read_format_type(char const *fmt_part, t_format *info, int i);
+t_format		read_format(char const *fmt_part);
+
+/*
+** utils_t_str.c
+*/
+
+t_str	to_single_t_str(t_list *lststr);
+//static void	t_str_append(t_str *acc, t_str *next);
+t_str	str_to_t_str(char const *str);
 
 #endif

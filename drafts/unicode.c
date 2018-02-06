@@ -6,6 +6,8 @@
 ** 1 << size is 2^size, -1 makes it 00000111 with as many 1s as size, bitshift
 ** left (8 - size) gives the result we want.
 ** mod 0x40 => extract six last digits.
+**
+** Standard calls this wcrtomb, wide char to multibyte
 */
 
 char	*encode_unicodepoint_to_utf8(wchar_t c)
@@ -35,7 +37,7 @@ char	*encode_unicodepoint_to_utf8(wchar_t c)
 ** See how this affects performance in the end.
 */
 
-char	*read_utf8(wchar_t *unicode_str)
+char	*build_utf8(wchar_t *unicode_str)
 {
 	char	*utf8_str;
 	char	*new_char;
@@ -52,7 +54,7 @@ char	*read_utf8(wchar_t *unicode_str)
 			free(utf8_str);
 			return (NULL);
 		}
-		ft_strappend(utf8_str, new_char);
+		ft_strappend(&utf8_str, new_char);
 		free(new_char);
 		++i;
 	}

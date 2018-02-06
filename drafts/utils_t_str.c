@@ -8,13 +8,18 @@ t_str	str_to_t_str(char const *str)
 //		return (NULL);
 	result.data = ft_strdup(str);
 	result.len = ft_strlen(str);
+	return (result);
 }
 
-static void	t_str_append(t_str *acc, t_str *next)
+static void	t_str_append(void *s1, void *s2)
 {
 	int		len;
 	char	*tmp;
+	t_str	*acc;
+	t_str	*next;
 
+	acc = (t_str*)s1;
+	next = (t_str*)s2;
 	len = acc->len + next->len;
 	tmp = ft_strnew(len);
 	ft_memcpy(tmp, acc->data, acc->len);

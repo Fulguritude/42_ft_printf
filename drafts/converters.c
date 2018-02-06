@@ -30,7 +30,7 @@ char	**format_to_strls(char const *format)
 	{
 		j = 0;
 		if (format[i] == '%')
-			while (ft_in_base(format[i + j], CONVS) == -1 && format[i + j] &&
+			while (ft_in_base(format[i + j], TYPES) == -1 && format[i + j] &&
 					ft_in_base(format[i + j], ALL_SYMBOLS))
 				++j;
 		else
@@ -54,15 +54,15 @@ void	convert_str(char *fmt_part, t_list *lststr, va_list args)
 	else
 	{
 		type = fmt_part[ft_strlen(fmt_part) - 1];
-		if (ft_in_base(TYPES, type) == -1)
+		if (ft_in_base(type, TYPES) == -1)
 			result = str_to_t_str(fmt_part);
 		else
 		{
 			format_info = read_format(fmt_part);
-			result = handle_format(format_info, args);
+			result = handle_format(format_info, fmt_part, args);
 			//if (result.len == -1)
 				//TODO ? make various -n error codes using the length of the t_str ?
 		}
 	}
-	ft_lstappend(lststr, ft_lstnew(&result, sizeof(t_str)));
+	ft_lstappend(&lststr, ft_lstnew(&result, sizeof(t_str)));
 }
