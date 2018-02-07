@@ -61,6 +61,7 @@ SRCS	=	ft_memset.c				\
 			ft_strlspad_left.c		\
 			ft_strpad_right.c		\
 			ft_strappend.c			\
+			ft_strprepend.c			\
 			ft_strjoin.c			\
 			ft_strtrim.c			\
 			ft_strsplit.c			\

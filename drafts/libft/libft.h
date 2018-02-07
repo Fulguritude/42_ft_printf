@@ -505,6 +505,14 @@ char					**ft_strlssub(char const **strls,
 char					*ft_strappend(char **dest, char const *src);
 
 /*
+** Returns the concatenation of src and dest inside the pointer of dest.
+** The previous dest is free and src is unaltered.
+*/
+
+char					*ft_strprepend(char const *src, char **dest);
+
+
+/*
 ** Returns a new string which is the result of the concatenation of the
 ** two given strings.
 */

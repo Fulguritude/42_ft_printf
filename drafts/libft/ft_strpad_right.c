@@ -28,6 +28,9 @@ char	*ft_strpad_right(const char *s, const char c, t_u32 n)
 	ft_strlcpy(result, s, len + 1);
 	i = len;
 	while (i < totlen)
-		result[i++] = c;
+	{
+		result[i] = c;
+		++i;
+	}
 	return (result);
 }

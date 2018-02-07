@@ -37,10 +37,43 @@ floating point types double and long double, and pointer types are not
 promoted at all but are passed to the function as is. 
 */
 
+/*
+** The precision field does not apply to numeric types, only floats and strings.
+*/
 
-t_str			build_t_str(t_format info, va_list args)
+t_str			build_int_str(t_format info, intmax_t n, va_list args)
 {
+	char	*str;
+	char	*tmp;
+	int		digits;
+	t_str	result;
 
+	str = info.type == int_dec ? ft_itoa_base(n, DECIM): NULL;
+	str = info.type == int_udec ? ft_uitoa_base(n, DECIM): str;
+	str = info.type == int_uoct ? ft_uitoa_base(n, OCTAL): str;
+	str = info.type == int_uhex_l ? ft_uitoa_base(n, HXLOW): str;
+	str = info.type == int_uhex_u ? ft_uitoa_base(n, HXUPP): str;
+//the following line find out the number of symbols before width
+	digits = ft_strlen(str) + 2 * (info.flags & FL_HASH) - (info.type == int_uoct
+		|| (info.type == int_dec && (info.flag & (FL_SPACE | FL_PLUS))));
+//highest priority is FL_MINUS that cancels FL_ZERO
+//then prepend 0s if FL_ZERO, then apply FL_HASH
+//if no FL_ZERO, first FL_HASH then prepend spaces
+	if ((info.flags & FL_ZERO) && !(info.flags & FL_MINUS) && info.width > digits)
+		ft_strpad_left(str, '0', info.width - digits);
+	tmp = info.type == int_uoct && (info.flags & FL_HASH) ? "0" : "";
+	tmp = info.type == int_uhex_l && (info.flags & FL_HASH) ? "0x" : tmp;
+	tmp = info.type == int_uhex_u && (info.flags & FL_HASH) ? "0X" : tmp;
+	tmp = info.type == int_dec && n > 0 && (info.flag & FL_SPACE) ? " " : tmp;
+	tmp = info.type == int_dec && n > 0 && (info.flag & FL_PLUS) ? "+" : tmp;
+	tmp = ft_strprepend(tmp, str);
+	if (!(info.flags & FL_ZERO) && info.width > digits)
+		str = (info.flag & FL_MINUS) ? ft_strpad_right(tmp, ' ', info.width - digits) :
+										ft_strpad_left(tmp, ' ', info.width - digits);
+	result.data = str;
+	result.len = info.width > digits ? info.width : digits;
+	free(tmp);
+	return (result);
 }
 
 t_str			handle_format(t_format info, char const *fmt, va_list args)
@@ -60,83 +93,64 @@ t_str			handle_format(t_format info, char const *fmt, va_list args)
 	{
 		if (info.len_flag == fl_l && info.type != uchar)
 		{
-			char	*str;
-
 			argdata.l = (long)va_arg(args, long);
-			str = info.type == int_dec ? ft_itoa_base(argdata.l, DECIM): NULL;
-			str = info.type == int_udec ? ft_uitoa_base(argdata.l, DECIM): str;
-			str = info.type == int_uoct ? ft_uitoa_base(argdata.l, OCTAL): str;
-			str = info.type == int_uhex_l ? ft_uitoa_base(argdata.l, HXLOW): str;
-			str = info.type == int_uhex_u ? ft_uitoa_base(argdata.l, HXUPP): str;
+			result = build_int_str(info, argdata.l, args);
 		}
-		else if (info.len_flag == fl_l && info.type == uchar)
+		else if (info.type == uchar)
 		{
-			char	*str;
-
-			argdata.wc = (wchar_t)va_arg(args, wchar_t);
-			str = encode_unicodepoint_to_utf8(argdata.wc);
+			if (info.len_flag == fl_l)
+			{
+				argdata.wc = (wchar_t)va_arg(args, wchar_t);
+				result.data = encode_unicodepoint_to_utf8(argdata.wc);
+				wchar_t c = argdata.wc;
+				result.len = 1 + (c > 0x7F) + (c > 0x7FF) + (c > 0xFFFF);
+			}
+			else
+			{
+				result.data = ft_strnew(1);
+				result.data[0] = (char)va_arg(args, int);
+				result.len = 1;
+			}
 		}
 		else if (info.len_flag == fl_ll)
 		{
-			char	*str;
-
 			argdata.ll = (long long)va_arg(args, long long);
-			str = info.type == int_dec ? ft_itoa_base(argdata.ll, DECIM): NULL;
-			str = info.type == int_udec ? ft_uitoa_base(argdata.ll, DECIM): str;
-			str = info.type == int_uoct ? ft_uitoa_base(argdata.ll, OCTAL): str;
-			str = info.type == int_uhex_l ? ft_uitoa_base(argdata.ll, HXLOW): str;
-			str = info.type == int_uhex_u ? ft_uitoa_base(argdata.ll, HXUPP): str;
+			result = build_int_str(info, argdata.ll, args);
 		}		
 		else if (info.len_flag == fl_j)
 		{
-			char	*str;
-
 			argdata.im = (intmax_t)va_arg(args, intmax_t);
-			str = info.type == int_dec ? ft_itoa_base(argdata.im, DECIM): NULL;
-			str = info.type == int_udec ? ft_uitoa_base(argdata.im, DECIM): str;
-			str = info.type == int_uoct ? ft_uitoa_base(argdata.im, OCTAL): str;
-			str = info.type == int_uhex_l ? ft_uitoa_base(argdata.im, HXLOW): str;
-			str = info.type == int_uhex_u ? ft_uitoa_base(argdata.im, HXUPP): str;
+			result = build_int_str(info, argdata.im, args);
 		}
 		else if (info.len_flag == fl_hh)
 		{
-			char	*str;
-
 			argdata.c = (char)va_arg(args, int);
-			str = info.type == int_dec ? ft_itoa_base(argdata.c, DECIM): NULL;
-			str = info.type == int_udec ? ft_uitoa_base(argdata.c, DECIM): str;
-			str = info.type == int_uoct ? ft_uitoa_base(argdata.c, OCTAL): str;
-			str = info.type == int_uhex_l ? ft_uitoa_base(argdata.c, HXLOW): str;
-			str = info.type == int_uhex_u ? ft_uitoa_base(argdata.c, HXUPP): str;
+			result = build_int_str(info, argdata.c, args);
 		}
 		else if (info.len_flag == fl_h)
 		{
-			char	*str;
-
 			argdata.sh = (short)va_arg(args, int);
-			str = info.type == int_dec ? ft_itoa_base(argdata.sh, DECIM): NULL;
-			str = info.type == int_udec ? ft_uitoa_base(argdata.sh, DECIM): str;
-			str = info.type == int_uoct ? ft_uitoa_base(argdata.sh, OCTAL): str;
-			str = info.type == int_uhex_l ? ft_uitoa_base(argdata.sh, HXLOW): str;
-			str = info.type == int_uhex_u ? ft_uitoa_base(argdata.sh, HXUPP): str;
+			result = build_int_str(info, argdata.sh, args);
 		}
 		else if (info.len_flag == fl_z)
 		{
-			char	*str;
-
 			argdata.si = (size_t)va_arg(args, size_t);
-			str = info.type == int_dec ? ft_itoa_base(argdata.si, DECIM): NULL;
-			str = info.type == int_udec ? ft_uitoa_base(argdata.si, DECIM): str;
-			str = info.type == int_uoct ? ft_uitoa_base(argdata.si, OCTAL): str;
-			str = info.type == int_uhex_l ? ft_uitoa_base(argdata.si, HXLOW): str;
-			str = info.type == int_uhex_u ? ft_uitoa_base(argdata.si, HXUPP): str;
+			result = build_int_str(info, argdata.si, args);
 		}
 	}
 	if (info.type == string && info.len_flag != fl_l)
 	{
 		char	*str;
 
-		str = (char*)va_arg(args, char*);
+//FL_ZERO doesn't apply to strings
+		str = ft_strdup((char*)va_arg(args, char*));
+		if (info.prec != -1 && info.prec < ft_strlen(str))
+			str[info.prec] = '\0';
+		if (info.width != -1 && info.width > ft_strlen(str))
+			result.data = (info.flag & FL_MINUS) ? ft_strpad_right(str, ' ', info.width - ft_strlen(str)) :
+										ft_strpad_left(str, ' ', info.width - ft_strlen(str));
+		free(str);
+		result.len = ft_strlen(result.data);
 	}
 	if (info.type == string && info.len_flag == fl_l)
 	{
@@ -144,10 +158,22 @@ t_str			handle_format(t_format info, char const *fmt, va_list args)
 
 		argdata.ws = (wchar_t*)va_arg(args, wchar_t*);
 		str = build_utf8(argdata.ws);
+		if (info.prec != -1 && info.prec < ft_strlen(str))
+		{
+			while (str[info.prec] >> 6 == 0x2)
+				--info.prec;
+			str[info.prec] = '\0';
+		}
+		if (info.width != -1 && info.width > ft_strlen(str) && (info.flag & FL_MINUS))
+			result.data = ft_strpad_right(str, ' ', info.width - ft_strlen(str));
+		else if (info.width != -1 && info.width > ft_strlen(str))
+			result.data = ft_strpad_left(str, ' ', info.width - ft_strlen(str));
+		else
+			result.data = ft_strdup(str);
+		free(str);
+		result.len = ft_strlen(result.data);
 	}
 
-
-//TODO the objective is now to have the data in argdata be transformed into a first string, then have that string be altered, appended etc appropriately. 
 
 /*
 	int_dec,
@@ -158,7 +184,5 @@ t_str			handle_format(t_format info, char const *fmt, va_list args)
 	uchar,
 	string,
 */
-	result.data = (char*)fmt;
-	result.len = 0;
 	return (result);
 }

@@ -25,7 +25,10 @@ char	*ft_strpad_left(const char *s, const char c, t_u32 n)
 		return (NULL);
 	i = 0;
 	while (i < n)
-		result[i++] = c;
+	{
+		result[i] = c;
+		++i;
+	}
 	ft_strlcpy(result + i, s, ft_strlen(s) + 1);
 	return (result);
 }
