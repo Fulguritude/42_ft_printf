@@ -17,7 +17,7 @@
 ** boolean functions,
 ** str_replace
 ** lstinsert
-** lstnew without copy
+** lstnew without copy DONE
 ** lstpop with pointers ? and rename lstpopi ?
 ** add ft_puthex_llstelem to libft, maybe rename putlst_hex
 ** vim -c  sed \ti++; to \t++i;
@@ -194,7 +194,7 @@ char					*ft_itoa_base(long nb, char const *base);
 ** Returns a new string which is nb written in "base" where nb is unsigned.
 */
 
-char					*ft_uitoa_base(unsigned long nb, const char *base);
+char					*ft_uitoa_base(unsigned long nb, char const *base);
 
 
 /*
@@ -510,7 +510,6 @@ char					*ft_strappend(char **dest, char const *src);
 */
 
 char					*ft_strprepend(char const *src, char **dest);
-
 
 /*
 ** Returns a new string which is the result of the concatenation of the

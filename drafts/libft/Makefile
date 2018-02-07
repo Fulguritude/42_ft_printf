@@ -90,6 +90,7 @@ SRCS	=	ft_memset.c				\
 			ft_in_base.c			\
 			ft_is_valid_base.c		\
 			ft_itoa_base.c			\
+			ft_uitoa_base.c			\
 			ft_atoi_base.c			\
 			ft_convert_base.c		\
 			ft_digits.c				\

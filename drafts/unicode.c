@@ -1,4 +1,4 @@
-#include "ft_printf.c"
+#include "ft_printf.h"
 
 /*
 ** 0x7F = 127, 0x7FF = 2047, 0xFFFF = 65535

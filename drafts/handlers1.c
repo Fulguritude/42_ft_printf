@@ -41,7 +41,7 @@ promoted at all but are passed to the function as is.
 ** The precision field does not apply to numeric types, only floats and strings.
 */
 
-t_str			build_int_str(t_format info, intmax_t n, va_list args)
+t_str			build_int_str(t_format info, intmax_t n)
 {
 	char	*str;
 	char	*tmp;
@@ -55,7 +55,7 @@ t_str			build_int_str(t_format info, intmax_t n, va_list args)
 	str = info.type == int_uhex_u ? ft_uitoa_base(n, HXUPP): str;
 //the following line find out the number of symbols before width
 	digits = ft_strlen(str) + 2 * (info.flags & FL_HASH) - (info.type == int_uoct
-		|| (info.type == int_dec && (info.flag & (FL_SPACE | FL_PLUS))));
+		|| (info.type == int_dec && (info.flags & (FL_SPACE | FL_PLUS))));
 //highest priority is FL_MINUS that cancels FL_ZERO
 //then prepend 0s if FL_ZERO, then apply FL_HASH
 //if no FL_ZERO, first FL_HASH then prepend spaces
@@ -64,11 +64,11 @@ t_str			build_int_str(t_format info, intmax_t n, va_list args)
 	tmp = info.type == int_uoct && (info.flags & FL_HASH) ? "0" : "";
 	tmp = info.type == int_uhex_l && (info.flags & FL_HASH) ? "0x" : tmp;
 	tmp = info.type == int_uhex_u && (info.flags & FL_HASH) ? "0X" : tmp;
-	tmp = info.type == int_dec && n > 0 && (info.flag & FL_SPACE) ? " " : tmp;
-	tmp = info.type == int_dec && n > 0 && (info.flag & FL_PLUS) ? "+" : tmp;
-	tmp = ft_strprepend(tmp, str);
+	tmp = info.type == int_dec && n > 0 && (info.flags & FL_SPACE) ? " " : tmp;
+	tmp = info.type == int_dec && n > 0 && (info.flags & FL_PLUS) ? "+" : tmp;
+	tmp = ft_strprepend(tmp, &str);
 	if (!(info.flags & FL_ZERO) && info.width > digits)
-		str = (info.flag & FL_MINUS) ? ft_strpad_right(tmp, ' ', info.width - digits) :
+		str = (info.flags & FL_MINUS) ? ft_strpad_right(tmp, ' ', info.width - digits) :
 										ft_strpad_left(tmp, ' ', info.width - digits);
 	result.data = str;
 	result.len = info.width > digits ? info.width : digits;
@@ -94,7 +94,7 @@ t_str			handle_format(t_format info, char const *fmt, va_list args)
 		if (info.len_flag == fl_l && info.type != uchar)
 		{
 			argdata.l = (long)va_arg(args, long);
-			result = build_int_str(info, argdata.l, args);
+			result = build_int_str(info, argdata.l);
 		}
 		else if (info.type == uchar)
 		{
@@ -115,27 +115,27 @@ t_str			handle_format(t_format info, char const *fmt, va_list args)
 		else if (info.len_flag == fl_ll)
 		{
 			argdata.ll = (long long)va_arg(args, long long);
-			result = build_int_str(info, argdata.ll, args);
+			result = build_int_str(info, argdata.ll);
 		}		
 		else if (info.len_flag == fl_j)
 		{
 			argdata.im = (intmax_t)va_arg(args, intmax_t);
-			result = build_int_str(info, argdata.im, args);
+			result = build_int_str(info, argdata.im);
 		}
 		else if (info.len_flag == fl_hh)
 		{
 			argdata.c = (char)va_arg(args, int);
-			result = build_int_str(info, argdata.c, args);
+			result = build_int_str(info, argdata.c);
 		}
 		else if (info.len_flag == fl_h)
 		{
 			argdata.sh = (short)va_arg(args, int);
-			result = build_int_str(info, argdata.sh, args);
+			result = build_int_str(info, argdata.sh);
 		}
 		else if (info.len_flag == fl_z)
 		{
 			argdata.si = (size_t)va_arg(args, size_t);
-			result = build_int_str(info, argdata.si, args);
+			result = build_int_str(info, argdata.si);
 		}
 	}
 	if (info.type == string && info.len_flag != fl_l)
@@ -144,10 +144,10 @@ t_str			handle_format(t_format info, char const *fmt, va_list args)
 
 //FL_ZERO doesn't apply to strings
 		str = ft_strdup((char*)va_arg(args, char*));
-		if (info.prec != -1 && info.prec < ft_strlen(str))
+		if (info.prec != -1 && info.prec < (int)ft_strlen(str))
 			str[info.prec] = '\0';
-		if (info.width != -1 && info.width > ft_strlen(str))
-			result.data = (info.flag & FL_MINUS) ? ft_strpad_right(str, ' ', info.width - ft_strlen(str)) :
+		if (info.width != -1 && info.width > (int)ft_strlen(str))
+			result.data = (info.flags & FL_MINUS) ? ft_strpad_right(str, ' ', info.width - ft_strlen(str)) :
 										ft_strpad_left(str, ' ', info.width - ft_strlen(str));
 		free(str);
 		result.len = ft_strlen(result.data);
@@ -158,15 +158,15 @@ t_str			handle_format(t_format info, char const *fmt, va_list args)
 
 		argdata.ws = (wchar_t*)va_arg(args, wchar_t*);
 		str = build_utf8(argdata.ws);
-		if (info.prec != -1 && info.prec < ft_strlen(str))
+		if (info.prec != -1 && info.prec < (int)ft_strlen(str))
 		{
 			while (str[info.prec] >> 6 == 0x2)
 				--info.prec;
 			str[info.prec] = '\0';
 		}
-		if (info.width != -1 && info.width > ft_strlen(str) && (info.flag & FL_MINUS))
+		if (info.width != -1 && info.width > (int)ft_strlen(str) && (info.flags & FL_MINUS))
 			result.data = ft_strpad_right(str, ' ', info.width - ft_strlen(str));
-		else if (info.width != -1 && info.width > ft_strlen(str))
+		else if (info.width != -1 && info.width > (int)ft_strlen(str))
 			result.data = ft_strpad_left(str, ' ', info.width - ft_strlen(str));
 		else
 			result.data = ft_strdup(str);

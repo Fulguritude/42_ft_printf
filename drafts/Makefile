@@ -51,7 +51,7 @@ re:fclean all
 
 test: $(LFT)
 	gcc $(CFLAGS) -c $(SRCS) $(TSTDIR)$(MAIN)
-	gcc $(OBJS) -lft -L$(LFTDIR)
+	gcc $(OBJS) main.o -lft -L$(LFTDIR)
 	./a.out
 	@make clean
 	@rm a.out
