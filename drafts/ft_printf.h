@@ -98,6 +98,8 @@ typedef struct	s_format
 	t_types			type;
 }				t_format;
 
+
+/*
 typedef union	u_data
 {
 	t_u8			c;
@@ -111,7 +113,7 @@ typedef union	u_data
 	wchar_t			*ws;
 	intmax_t		im;
 }				t_data;
-
+*/
 
 /*
 ** ft_printf.c
@@ -132,9 +134,22 @@ void			convert_str(char *fmt_part, t_list **a_lststr, va_list args);
 
 /*
 ** handlers.c
+**
+** static t_str		handle_uchar_type(t_len_flag len_flag, va_list args);
+** static t_str		handle_str_type(t_format info, va_list args);
 */
 
 t_str			handle_format(t_format info, char const *fmt, va_list args);
+
+/*
+** utils_int_handler.c
+**
+** static char  *val_to_str(t_types type, t_u8 flags, intmax_t n, int *digits)
+** static char  *flag_prepend(t_types type, t_u8 flags, intmax_t n, char **a_s)
+** static t_str	build_int_str(t_format info, intmax_t n)
+*/
+
+t_str			handle_int_type(t_format info, va_list args);
 
 /*
 ** unicode.c
@@ -146,7 +161,7 @@ char			*build_utf8(wchar_t *unicode_str);
 /*
 ** utils_format_string.c
 */
-
+ 
 t_u8			read_format_flags(char const *fmt_part, int *i);
 int				read_format_width(char const *fmt_part, int *i);
 int				read_format_prec(char const *fmt_part, int *i);

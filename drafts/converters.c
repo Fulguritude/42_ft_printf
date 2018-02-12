@@ -53,7 +53,7 @@ char	**format_to_strls(char const *format)
 
 //
 //
-#include <stdio.h>
+//#include <stdio.h>
 
 void	convert_str(char *fmt_part, t_list **a_lststr, va_list args)
 {
@@ -71,7 +71,7 @@ void	convert_str(char *fmt_part, t_list **a_lststr, va_list args)
 		else
 		{
 			format_info = read_format(fmt_part);
-printf("Format_info : %d flags, %d width, %d prec, %d len_flag, %d type\n", format_info.flags, format_info.width, format_info.prec, format_info.len_flag, format_info.type);
+//printf("Format_info : %d flags, %d width, %d prec, %d len_flag, %d type\n", format_info.flags, format_info.width, format_info.prec, format_info.len_flag, format_info.type);
 			result = handle_format(format_info, fmt_part, args);
 			//if (result.len == -1)
 				//TODO ? make various -n error codes using the length of the t_str ?

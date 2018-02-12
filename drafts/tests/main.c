@@ -19,7 +19,10 @@ int main()
 	ft_printf("test ft_printf %#x\n", 123);
 
 	//printf("\n\n\ntest printf %#-+05.5d and %#-+06.5d\n", 123456, 123);
-	ft_printf("test ft_printf %#-+05.5d and %#-+06.5d\n", 123456, 123);
+	//ft_printf("test ft_printf %#-+05.5d and %#-+06.5d\n", 123456, 123);
+
+	printf("\n\n\ntest printf %-+5.5d and %-+6.5d\n", 123456, 123);
+	ft_printf("test ft_printf %-+5.5d and %-+6.5d\n", 123456, 123);
 
 	return (0);
 }

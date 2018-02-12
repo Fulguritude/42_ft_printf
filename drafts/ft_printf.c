@@ -69,8 +69,8 @@ int				ft_vasprintf(char **res, const char *format, va_list args)
 //ft_putstr("\nformat_to_strls\n");
 	if (!(fmt_strls = format_to_strls(format)))
 		return (-1);
-ft_putendl("fmt_strls");
-ft_putstrls((const char **)fmt_strls);
+//ft_putendl("fmt_strls");
+//ft_putstrls((const char **)fmt_strls);
 	i = -1;
 	while (fmt_strls[++i])
 	{
@@ -82,11 +82,11 @@ ft_putstrls((const char **)fmt_strls);
 			return (-1);
 		}
 */
-ft_putstr("\nCalled fmt_str : ");
-ft_putendl(fmt_strls[i]);
+//ft_putstr("\nCalled fmt_str : ");
+//ft_putendl(fmt_strls[i]);
 		convert_str(fmt_strls[i], &res_lststr, args);
-ft_putstr("\nCalled reslst_str : ");
-ft_putendl(((t_str*)(ft_lstget(res_lststr, i)->content))->data);
+//ft_putstr("\nCalled reslst_str : ");
+//ft_putendl(((t_str*)(ft_lstget(res_lststr, i)->content))->data);
 	}
 	tmp_res = to_single_t_str(res_lststr);
 	*res = tmp_res.data;
