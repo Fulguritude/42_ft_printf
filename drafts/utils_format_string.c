@@ -15,7 +15,7 @@ t_u8			read_format_flags(char const *fmt_part, int *i)
 
 	flags = 0;
 	if (ft_in_base(fmt_part[*i], FLAGS) == -1)
-		return (FL_ERROR);
+		return (FL_NONE);
 	while (ft_in_base(fmt_part[*i], FLAGS) != -1)
 	{
 		c = fmt_part[*i];
@@ -123,12 +123,13 @@ t_format		read_format(char const *fmt_part)
 {
 	int			i;
 	t_format	result;
-
+ft_putstr("\tRead format ...");
 	i = 1;
 	result.flags = read_format_flags(fmt_part, &i);
 	result.width = read_format_width(fmt_part, &i);
 	result.prec = read_format_prec(fmt_part, &i);
 	result.len_flag = read_format_len_flag(fmt_part, &i);
 	result.type = read_format_type(fmt_part, &result, i); //maybe give "type" as an argument to gain a bit of place because read_format_type probably won't have enough lines for all possibilities
+ft_putendl("... format read\n");
 	return (result);
 }

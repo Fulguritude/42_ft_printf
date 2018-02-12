@@ -1,5 +1,9 @@
 #include "ft_printf.h"
 
+
+#include <stdio.h>
+
+
 /*
 	t_u8			flags;
 	int				width;
@@ -53,26 +57,37 @@ t_str			build_int_str(t_format info, intmax_t n)
 	str = info.type == int_uoct ? ft_uitoa_base(n, OCTAL): str;
 	str = info.type == int_uhex_l ? ft_uitoa_base(n, HXLOW): str;
 	str = info.type == int_uhex_u ? ft_uitoa_base(n, HXUPP): str;
+////printf("\tbuild_int_str str: %s\n", str);
 //the following line find out the number of symbols before width
-	digits = ft_strlen(str) + 2 * (info.flags & FL_HASH) - (info.type == int_uoct
-		|| (info.type == int_dec && (info.flags & (FL_SPACE | FL_PLUS))));
+//Add two digits for a hash, remove one if the hash is an octal;
+//      add one digit for a signed value with appropriate flag;
+	digits = ft_strlen(str) - (info.type == int_uoct)
+		+ 2 * ((info.flags & FL_HASH) && (info.type != int_dec))
+		+ (info.type == int_dec && (info.flags & (FL_SPACE | FL_PLUS)));
+//printf("\tbuild_int_str digits: %d\n", digits);
 //highest priority is FL_MINUS that cancels FL_ZERO
 //then prepend 0s if FL_ZERO, then apply FL_HASH
-//if no FL_ZERO, first FL_HASH then prepend spaces
-	if ((info.flags & FL_ZERO) && !(info.flags & FL_MINUS) && info.width > digits)
-		ft_strpad_left(str, '0', info.width - digits);
+//if no FL_ZERO, first FL_HASH then prepend sign/spaces
+	if ((info.flags & FL_ZERO) && info.width > digits)
+		str = (info.flags & FL_MINUS) ? ft_strpad_right(str, ' ', info.width - digits) :
+										ft_strpad_left(str, '0', info.width - digits);
 	tmp = info.type == int_uoct && (info.flags & FL_HASH) ? "0" : "";
 	tmp = info.type == int_uhex_l && (info.flags & FL_HASH) ? "0x" : tmp;
 	tmp = info.type == int_uhex_u && (info.flags & FL_HASH) ? "0X" : tmp;
 	tmp = info.type == int_dec && n > 0 && (info.flags & FL_SPACE) ? " " : tmp;
 	tmp = info.type == int_dec && n > 0 && (info.flags & FL_PLUS) ? "+" : tmp;
 	tmp = ft_strprepend(tmp, &str);
+////printf("\tbuild_int_str tmp: %s\n", tmp);
 	if (!(info.flags & FL_ZERO) && info.width > digits)
+	{
 		str = (info.flags & FL_MINUS) ? ft_strpad_right(tmp, ' ', info.width - digits) :
 										ft_strpad_left(tmp, ' ', info.width - digits);
+		free(tmp);
+	}
+////printf("\tbuild_int_str str: %s\n", str);
 	result.data = str;
 	result.len = info.width > digits ? info.width : digits;
-	free(tmp);
+////printf("\tbuild_int_str result: data = %s ; len = %lu\n", result.data, result.len);
 	return (result);
 }
 
@@ -137,22 +152,32 @@ t_str			handle_format(t_format info, char const *fmt, va_list args)
 			argdata.si = (size_t)va_arg(args, size_t);
 			result = build_int_str(info, argdata.si);
 		}
+		else
+		{
+			argdata.i = (int)va_arg(args, int);
+			result = build_int_str(info, argdata.i);
+		}
 	}
-	if (info.type == string && info.len_flag != fl_l)
+	else if (info.type == string && info.len_flag != fl_l)
 	{
 		char	*str;
 
 //FL_ZERO doesn't apply to strings
 		str = ft_strdup((char*)va_arg(args, char*));
+printf("\tbuild_pcs_str : %s\n", str);
 		if (info.prec != -1 && info.prec < (int)ft_strlen(str))
 			str[info.prec] = '\0';
 		if (info.width != -1 && info.width > (int)ft_strlen(str))
+		{
 			result.data = (info.flags & FL_MINUS) ? ft_strpad_right(str, ' ', info.width - ft_strlen(str)) :
 										ft_strpad_left(str, ' ', info.width - ft_strlen(str));
-		free(str);
+			free(str);
+		}
+		else
+			result.data = str;
 		result.len = ft_strlen(result.data);
 	}
-	if (info.type == string && info.len_flag == fl_l)
+	else if (info.type == string && info.len_flag == fl_l)
 	{
 		char	*str;
 
@@ -184,5 +209,8 @@ t_str			handle_format(t_format info, char const *fmt, va_list args)
 	uchar,
 	string,
 */
+
+printf("handler result: data = %s ; len = %lu\n", result.data, result.len);
+
 	return (result);
 }

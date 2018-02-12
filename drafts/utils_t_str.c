@@ -1,5 +1,10 @@
 #include "ft_printf.h"
 
+
+#include <stdio.h>
+
+
+
 t_str	str_to_t_str(char const *str)
 {
 	t_str	result;
@@ -8,6 +13,7 @@ t_str	str_to_t_str(char const *str)
 //		return (NULL);
 	result.data = ft_strdup(str);
 	result.len = ft_strlen(str);
+printf("str_to_t_str : %s, %s\n", str, result.data);
 	return (result);
 }
 

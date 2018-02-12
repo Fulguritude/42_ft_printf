@@ -54,6 +54,7 @@
 # define FL_SPACE 0x8
 # define FL_ZERO 0x10
 //# define FL_QUOTE 0x20
+# define FL_NONE 0x40
 # define FL_ERROR 0x80
 
 typedef enum	e_types
@@ -127,7 +128,7 @@ int				ft_vasprintf(char **res, const char *format, va_list args);
 */
 
 char			**format_to_strls(char const *format);
-void			convert_str(char *fmt_part, t_list *lststr, va_list args);
+void			convert_str(char *fmt_part, t_list **a_lststr, va_list args);
 
 /*
 ** handlers.c
