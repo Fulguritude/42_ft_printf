@@ -37,12 +37,12 @@
 */
 
 # define FLAGS "#0- +" //'
-# define TYPES "pdDioOuUxXcCsS%" //eE, fF, gG, aA, n, bB
+# define TYPES "pdDibBoOuUxXcCsS%" //eE, fF, gG, aA, n
 # define LGTHS "hljz" //L, t
 
-# define ALL_SYMBOLS "#0- +pdDioOuUxXcCsS%.0123456789hljz"
+# define ALL_SYMBOLS "#0- +pdDibBoOuUxXcCsS%.0123456789hljz"
 
-//# define BINAR "01"
+# define BINAR "01"
 # define OCTAL "01234567"
 # define DECIM "0123456789"
 # define HXLOW "0123456789abcdef"
@@ -65,6 +65,8 @@ typedef enum	e_types
 	int_udec,
 	int_uhex_l,
 	int_uhex_u,
+	int_ubin_l,
+	int_ubin_u,
 	uchar,
 	string,
 //	float, longlong, etc

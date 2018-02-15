@@ -15,36 +15,34 @@
 ** Maybe just read the string linearly ? With multiple whiles
 */
 
-char	**format_to_strls(char const *format)
+char	**format_to_strls(char const *fmt)
 {
 	int		i;
 	int		j;
 	int		k;
 	char	**result;
 
-	if (!(result = ft_ptrarrnew(2 + 2 * ft_str_countchar(format, '%'))))
+	if (!(result = ft_ptrarrnew(2 + 2 * ft_str_countchar(fmt, '%'))))
 		return (NULL);
 	k = -1;
 	i = 0;
-	while (format[i])
+	while (fmt[i])
 	{
 //ft_putstr("Curr str : ");
-//ft_putendl(format + i);
+//ft_putendl(fmt + i);
+//TODO: this setup doesn't work for any identifier
 		j = 1;
-		if (format[i] == '%')
-			while (format[i + j] && ft_in_base(format[i + j], ALL_SYMBOLS) != -1)
+		if (fmt[i] == '%')
+			while (fmt[i + j] && ft_in_base(fmt[i + j], ALL_SYMBOLS) != -1)
 			{
 				++j;
-				if (ft_in_base(format[i + j], TYPES) != -1)
-				{
-					++j;
+				if (ft_in_base(fmt[i + j - 1], TYPES) != -1)
 					break ;
-				}
 			}
 		else
-			while (format[i + j] != '%' && format[i + j])
+			while (fmt[i + j] && fmt[i + j] != '%')
 				++j;
-		result[++k] = ft_strsub(format, i, j);
+		result[++k] = ft_strsub(fmt, i, j);
 		i += j;
 	}
 	result[++k] = NULL;
@@ -52,8 +50,8 @@ char	**format_to_strls(char const *format)
 }
 
 //
-//
-//#include <stdio.h>
+// TODO remove
+#include <stdio.h>
 
 void	convert_str(char *fmt_part, t_list **a_lststr, va_list args)
 {
@@ -71,8 +69,9 @@ void	convert_str(char *fmt_part, t_list **a_lststr, va_list args)
 		else
 		{
 			format_info = read_format(fmt_part);
-//printf("Format_info : %d flags, %d width, %d prec, %d len_flag, %d type\n", format_info.flags, format_info.width, format_info.prec, format_info.len_flag, format_info.type);
+printf("\t\t--Format_info :\n\t\t++%d flags, %d width, %d prec, %d len_flag, %d type\n", format_info.flags, format_info.width, format_info.prec, format_info.len_flag, format_info.type);
 			result = handle_format(format_info, fmt_part, args);
+printf("\t\t--Handled result :\n\t\t++data: %s, len: %lu\n", result.data, result.len);  
 			//if (result.len == -1)
 				//TODO ? make various -n error codes using the length of the t_str ?
 		}

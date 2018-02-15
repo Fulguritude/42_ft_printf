@@ -42,7 +42,8 @@ int				ft_vprintf_fd(int fd, const char *format, va_list args)
 	status = ft_vasprintf(&str, format, args);
 	if (status >= 0)
 	{
-		write(fd, str, status);
+		if (write(fd, str, status) == -1)
+			return (-1);
 		free(str);
 	}
 	return (status);
@@ -82,11 +83,11 @@ int				ft_vasprintf(char **res, const char *format, va_list args)
 			return (-1);
 		}
 */
-//ft_putstr("\nCalled fmt_str : ");
-//ft_putendl(fmt_strls[i]);
+ft_putstr("\n\t--Called fmt_str : \n\t++");
+ft_putendl(fmt_strls[i]);
 		convert_str(fmt_strls[i], &res_lststr, args);
-//ft_putstr("\nCalled reslst_str : ");
-//ft_putendl(((t_str*)(ft_lstget(res_lststr, i)->content))->data);
+ft_putstr("\n\t--Reslst_str : \n\t++");
+ft_putendl(((t_str*)(ft_lstget(res_lststr, i)->content))->data);
 	}
 	tmp_res = to_single_t_str(res_lststr);
 	*res = tmp_res.data;

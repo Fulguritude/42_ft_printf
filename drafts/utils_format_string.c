@@ -110,6 +110,8 @@ t_types			read_format_type(char const *fmt_part, t_format *info, int i)
 	result = c == 'u' || c == 'U' ? int_udec : result;
 	result = c == 'x' || c == 'p' ? int_uhex_l : result;
 	result = c == 'X' ? int_uhex_u : result;
+	result = c == 'b' ? int_ubin_l : result;
+	result = c == 'B' ? int_ubin_u : result;
 	result = c == 'c' || c == 'C' ? uchar : result;
 	result = c == 's' || c == 'S' ? string : result;
 	info->len_flag = (c == 'D' || c == 'O' || c == 'U' || c == 'p' || c == 'C'

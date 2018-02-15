@@ -12,6 +12,9 @@
 
 #include "libft.h"
 
+/*
+** ft_memalloc wipes memory with ft_bzero.
+*/
 char	*ft_strnew(size_t size)
 {
 	char	*str;

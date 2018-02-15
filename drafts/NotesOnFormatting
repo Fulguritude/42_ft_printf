@@ -200,7 +200,7 @@ BONUS:
 
        L      A following a, A, e, E, f, F, g, or G conversion corresponds to a long double argument.  (C99
               allows %LF, but SUSv2 does not.)  This is a synonym for ll.
-       '      For  decimal  conversion  (i,  d,  u, f, F, g, G) the output is to be grouped with thousands'
+       '      For  decimal  conversion  (i,  d,  u, f, F, g, G) the output is to  be grouped with thousands'
               grouping characters if the locale information indicates any.   Note  that  many  versions  of
               gcc(1)  cannot  parse  this option and will issue a warning.
  

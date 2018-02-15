@@ -23,8 +23,10 @@ static char		*val_to_str(t_types type, t_u8 flags, intmax_t n, int *digits)
 		str = ft_uitoa_base(n, HXLOW);
 	else if (type == int_uhex_u)
 		str = ft_uitoa_base(n, HXUPP);
+	else if (type == int_ubin_l || type == int_ubin_u)
+		str = ft_uitoa_base(n, BINAR);
 	*digits = ft_strlen(str) - (type == int_uoct)
-		+ 2 * ((flags & FL_HASH) && (type != int_dec))
+		+ 2 * ((flags & FL_HASH) && (int_uoct <= type) && (type <= int_ubin_u))
 		+ (type == int_dec && (flags & (FL_SPACE | FL_PLUS)));
 	return (str);
 }
@@ -40,6 +42,10 @@ static char		*flag_prepend(t_types type, t_u8 flags, intmax_t n, char **a_s)
 		tmp = "0x";
 	else if (type == int_uhex_u && (flags & FL_HASH))
 		tmp = "0X";
+	else if (type == int_ubin_l && (flags & FL_HASH))
+		tmp = "0b";
+	else if (type == int_ubin_u && (flags & FL_HASH))
+		tmp = "0B";
 	else if (type == int_dec && n > 0 && (flags & FL_SPACE))
 		tmp = " ";
 	else if (type == int_dec && n > 0 && (flags & FL_PLUS))
@@ -50,8 +56,9 @@ static char		*flag_prepend(t_types type, t_u8 flags, intmax_t n, char **a_s)
 
 /*
 **  highest priority is FL_MINUS that cancels FL_ZERO
-**  then, if FL_ZERO, prepend 0s, then apply FL_HASH
+**  then, if FL_ZERO, prepend 0s, then apply FL_HASH or FL_SPACE or FL_PLUS
 **  else, if no FL_ZERO, first FL_HASH then prepend sign/spaces
+**  if FL_SPACE or FL_PLUS, and no FL_MINUS, append ZEROS first
 */
 
 static t_str	build_int_str(t_format info, intmax_t n)
@@ -66,9 +73,10 @@ static t_str	build_int_str(t_format info, intmax_t n)
 ////printf("\tbuild_int_str digits: %d\n", digits);
 	if ((info.flags & FL_ZERO) && info.width > digits)
 	{
-		tmp = (info.flags & FL_MINUS) ?
-			ft_strpad_right(str, ' ', info.width - digits) :
-			ft_strpad_left(str, '0', info.width - digits);
+		if ((info.flags & FL_MINUS))
+			tmp = ft_strpad_right(str, ' ', info.width - digits);
+		else
+			tmp = ft_strpad_left(str, '0', info.width - digits);
 		free(str);
 		str = tmp;
 	}
