@@ -6,7 +6,7 @@
 #    By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/17 21:33:56 by tduquesn          #+#    #+#              #
-#    Updated: 2017/12/12 19:50:00 by tduquesn         ###   ########.fr        #
+#    Updated: 2018/02/20 15:39:52 by tduquesn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ $(NAME):
 all: $(LFT) $(NAME)
 
 clean:
+	$(MAKE) -C $(LFTDIR) clean
 	rm -f $(OBJS)
 
 fclean:clean
@@ -50,7 +51,7 @@ fclean:clean
 
 re:fclean all
 
-test: $(LFT)
+test: re
 	gcc $(CFLAGS) -c $(SRCS) $(TSTDIR)$(MAIN)
 	gcc $(OBJS) main.o -lft -L$(LFTDIR)
 	./a.out

@@ -89,22 +89,25 @@ t_str				handle_format(t_format info, char const *fmt, va_list args)
 {
 	//return result.len == (size_t)-1 in case of incoherent format
 	//return result.len == (size_t)-2 in case of unicode error
+//printf("handler result: data = %s ; len = %lu\n", result.data, result.len);
 	t_str	result;
 
 	if (info.type == percent && info.flags == FL_NONE && info.width == -1 &&
 		info.prec == -1 && info.len_flag == no_len_flag)
 		return (str_to_t_str("%"));
-	if (info.type == percent || info.type == no_type_error ||
+	else if (info.type == percent || info.type == no_type_error ||
 		info.len_flag == incoherent_len_flag)
 		return (str_to_t_str(fmt));
-	if (int_dec <= info.type && info.type <= int_uhex_u)
+	else if (int_dec <= info.type && info.type <= int_uhex_u)
 		return (handle_int_type(info, args));
-	if (info.type == string)
+	else if (info.type == string)
 		return (handle_str_type(info, args));
-	if (info.type == uchar)
+	else if (info.type == uchar)
 		return (handle_uchar_type(info.len_flag, args));
-
-//printf("handler result: data = %s ; len = %lu\n", result.data, result.len);
-
-	return (result);
+	else
+	{
+		result.data = NULL;
+		result.len = -1;
+		return (result);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 01:50:05 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/28 11:44:40 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/02/20 15:19:58 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	**ft_strdivide(const char *str, size_t n)
 		if (i + n < len)
 			strls[i / n] = ft_strsub(str, i, n);
 		else
-			strls[i / n] = strdup(str + i);
+			strls[i / n] = ft_strdup(str + i);
 		i += n;
 	}
 	strls[lines] = NULL;
