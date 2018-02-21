@@ -29,6 +29,8 @@ t_u8			read_format_flags(char const *fmt_part, int *i)
 			flags |= FL_ZERO;
 		else if (c == ' ')
 			flags |= FL_SPACE;
+		else
+			flags |= FL_ERROR;
 		++(*i);
 	}
 	return (flags);

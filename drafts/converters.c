@@ -30,7 +30,6 @@ char	**format_to_strls(char const *fmt)
 	{
 //ft_putstr("Curr str : ");
 //ft_putendl(fmt + i);
-//TODO: this setup doesn't work for any identifier
 		j = 1;
 		if (fmt[i] == '%')
 			while (fmt[i + j] && ft_in_base(fmt[i + j], ALL_SYMBOLS) != -1)
@@ -57,24 +56,29 @@ void	convert_str(char *fmt_part, t_list **a_lststr, va_list args)
 {
 	char		type;
 	t_format	format_info;
-	t_str		result;
+	t_str		*result;
 
+	if (!(result = (t_str*)malloc(sizeof(t_str))))
+		return ;
 	if (fmt_part[0] != '%')
-		result = str_to_t_str(fmt_part);
+		*result = str_to_t_str(fmt_part);
 	else
 	{
 		type = fmt_part[ft_strlen(fmt_part) - 1];
 		if (ft_in_base(type, TYPES) == -1)
-			result = str_to_t_str(fmt_part);
+			*result = str_to_t_str(fmt_part);
 		else
 		{
+printf("\t\t--Format_info :\n\t\t\t");
 			format_info = read_format(fmt_part);
-printf("\t\t--Format_info :\n\t\t++%d flags, %d width, %d prec, %d len_flag, %d type\n", format_info.flags, format_info.width, format_info.prec, format_info.len_flag, format_info.type);
-			result = handle_format(format_info, fmt_part, args);
-printf("\t\t--Handled result :\n\t\t++data: %s, len: %lu\n", result.data, result.len);  
+printf("%d flags, %d width, %d prec, %d len_flag, %d type\n\t\t++Format_info end.\n", format_info.flags, format_info.width, format_info.prec, format_info.len_flag, format_info.type);
+printf("\t\t--Handled result :\n\t\t\t");
+			*result = handle_format(format_info, fmt_part, args);
+printf("data: %s, len: %lu\n\t\t++Handled result end.\n", result->data, result->len);  
 			//if (result.len == -1)
 				//TODO ? make various -n error codes using the length of the t_str ?
 		}
 	}
-	ft_lstappend(a_lststr, ft_lstnew(&result, sizeof(t_str)));
+//printf("\tFinal result :\n\t\tdata: %s;\n\t\tlen: %lu\n", result->data, result->len);
+	ft_lstappend(a_lststr, ft_lstnew_no_copy(result, sizeof(t_str)));
 }

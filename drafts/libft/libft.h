@@ -6,7 +6,7 @@
 /*   By: tduquesn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 12:45:43 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/12/12 19:49:35 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/02/20 21:38:31 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -390,6 +390,12 @@ char					*ft_strpad_left(char const *s, char const c, t_u32 n);
 
 char					**ft_strlspad_left(char const **strls,
 											char const c, t_u32 n);
+
+/*
+** Returns ft_strpad_left by reference rather than new allocation.
+*/
+
+void	ft_strpad_left_inplace(char **a_str, char const c, t_u32 len);
 
 /*
 ** Returns a newly allocated string, the result of the concatenation of a string

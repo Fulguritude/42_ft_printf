@@ -8,11 +8,17 @@
 **      add one digit for a signed value with appropriate flag;
 */
 
-static char		*val_to_str(t_types type, t_u8 flags, intmax_t n, int *digits)
+static char		*val_to_str(t_format info, intmax_t n, int *digits)
 {
 	char	*str;
+	t_types	type;
+	t_u8	flags;
+	int		prec;
 
 	str = NULL;
+	type = info.type;
+	flags = info.flags;
+	prec = info.prec;
 	if (type == int_dec)
 		str = ft_itoa_base(n, DECIM);
 	else if (type == int_udec)
@@ -25,7 +31,7 @@ static char		*val_to_str(t_types type, t_u8 flags, intmax_t n, int *digits)
 		str = ft_uitoa_base(n, HXUPP);
 	else if (type == int_ubin_l || type == int_ubin_u)
 		str = ft_uitoa_base(n, BINAR);
-	*digits = ft_strlen(str) - (type == int_uoct)
+	*digits = (ft_strlen(str) > prec ? ft_strlen : prec) - (type == int_uoct)
 		+ 2 * ((flags & FL_HASH) && (int_uoct <= type) && (type <= int_ubin_u))
 		+ (type == int_dec && (flags & (FL_SPACE | FL_PLUS)));
 	return (str);
@@ -69,9 +75,11 @@ static t_str	build_int_str(t_format info, intmax_t n)
 	t_str	result;
 
 ////printf("\tbuild_int_str str: %s\n", str);
-	str = val_to_str(info.type, info.flags, n, &digits);
+	str = val_to_str(info, n, &digits);
 ////printf("\tbuild_int_str digits: %d\n", digits);
-	if ((info.flags & FL_ZERO) && info.width > digits)
+	if (ft_strlen(str) > info.prec)
+		ft_strpad_left_inplace(str, '0', info.prec - ft_strlen(str));
+	if (((info.flags & FL_ZERO) && info.width > digits))
 	{
 		if ((info.flags & FL_MINUS))
 			tmp = ft_strpad_right(str, ' ', info.width - digits);

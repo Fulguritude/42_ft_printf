@@ -6,7 +6,7 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/05 15:51:47 by tduquesn          #+#    #+#             */
-/*   Updated: 2018/01/05 15:52:08 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/02/20 17:02:19 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int				ft_vasprintf(char **res, const char *format, va_list args)
 		return (-1);
 //ft_putendl("fmt_strls");
 //ft_putstrls((const char **)fmt_strls);
+	res_lststr = NULL;
 	i = -1;
 	while (fmt_strls[++i])
 	{
@@ -83,11 +84,13 @@ int				ft_vasprintf(char **res, const char *format, va_list args)
 			return (-1);
 		}
 */
-ft_putstr("\n\t--Called fmt_str : \n\t++");
+ft_putstr("\n\t--Called fmt_str : \n\t\t");
 ft_putendl(fmt_strls[i]);
+ft_putstr("\n\t++Called fmt_str end.\n");
 		convert_str(fmt_strls[i], &res_lststr, args);
-ft_putstr("\n\t--Reslst_str : \n\t++");
+ft_putstr("\n\t--Reslst_str : \n\t\t");
 ft_putendl(((t_str*)(ft_lstget(res_lststr, i)->content))->data);
+ft_putstr("\n\t++Reslst_str end.\n");
 	}
 	tmp_res = to_single_t_str(res_lststr);
 	*res = tmp_res.data;
