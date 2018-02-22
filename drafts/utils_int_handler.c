@@ -6,6 +6,7 @@
 ** "digits" is used to find out the number of symbols before width
 ** => Add two digits for a hash, remove one if the hash is an octal;
 **      add one digit for a signed value with appropriate flag;
+** => For precision, 0 flag is ignored, and precision is applied before width
 */
 
 static char		*val_to_str(t_format info, intmax_t n, int *digits)
@@ -13,12 +14,12 @@ static char		*val_to_str(t_format info, intmax_t n, int *digits)
 	char	*str;
 	t_types	type;
 	t_u8	flags;
-	int		prec;
+	t_u32	prec;
 
 	str = NULL;
 	type = info.type;
 	flags = info.flags;
-	prec = info.prec;
+	prec = info.prec <= 0 ? 0 : (t_u32)info.prec;
 	if (type == int_dec)
 		str = ft_itoa_base(n, DECIM);
 	else if (type == int_udec)
@@ -31,33 +32,32 @@ static char		*val_to_str(t_format info, intmax_t n, int *digits)
 		str = ft_uitoa_base(n, HXUPP);
 	else if (type == int_ubin_l || type == int_ubin_u)
 		str = ft_uitoa_base(n, BINAR);
-	*digits = (ft_strlen(str) > prec ? ft_strlen : prec) - (type == int_uoct)
+	*digits = (ft_strlen(str) > prec ? ft_strlen(str) : prec) - (type == int_uoct)
 		+ 2 * ((flags & FL_HASH) && (int_uoct <= type) && (type <= int_ubin_u))
 		+ (type == int_dec && (flags & (FL_SPACE | FL_PLUS)));
 	return (str);
 }
 
-static char		*flag_prepend(t_types type, t_u8 flags, intmax_t n, char **a_s)
+static void		flag_prepend(t_types type, t_u8 flags, intmax_t n, char **a_s)
 {
-	char	*tmp;
+	char	*prefix;
 
-	tmp = "";
+	prefix = "";
 	if (type == int_uoct && (flags & FL_HASH))
-		tmp = "0";
+		prefix = "0";
 	else if (type == int_uhex_l && (flags & FL_HASH))
-		tmp = "0x";
+		prefix = "0x";
 	else if (type == int_uhex_u && (flags & FL_HASH))
-		tmp = "0X";
+		prefix = "0X";
 	else if (type == int_ubin_l && (flags & FL_HASH))
-		tmp = "0b";
+		prefix = "0b";
 	else if (type == int_ubin_u && (flags & FL_HASH))
-		tmp = "0B";
+		prefix = "0B";
 	else if (type == int_dec && n > 0 && (flags & FL_SPACE))
-		tmp = " ";
+		prefix = " ";
 	else if (type == int_dec && n > 0 && (flags & FL_PLUS))
-		tmp = "+";
-	tmp = ft_strprepend(tmp, a_s);
-	return (tmp);
+		prefix = "+";
+	ft_strprepend(prefix, a_s);
 }
 
 /*
@@ -70,34 +70,33 @@ static char		*flag_prepend(t_types type, t_u8 flags, intmax_t n, char **a_s)
 static t_str	build_int_str(t_format info, intmax_t n)
 {
 	char	*str;
-	char	*tmp;
 	int		digits;
 	t_str	result;
 
 ////printf("\tbuild_int_str str: %s\n", str);
 	str = val_to_str(info, n, &digits);
 ////printf("\tbuild_int_str digits: %d\n", digits);
-	if (ft_strlen(str) > info.prec)
-		ft_strpad_left_inplace(str, '0', info.prec - ft_strlen(str));
-	if (((info.flags & FL_ZERO) && info.width > digits))
+	if (info.prec >= 0 && ft_strlen(str) > (t_u32)info.prec)
+		ft_strpad_left_inplace(&str, '0', info.prec - ft_strlen(str));
+	else if (((info.flags & FL_ZERO) && info.width > digits))
 	{
 		if ((info.flags & FL_MINUS))
-			tmp = ft_strpad_right(str, ' ', info.width - digits);
+			ft_strpad_right_inplace(&str, ' ', info.width - digits);
 		else
-			tmp = ft_strpad_left(str, '0', info.width - digits);
-		free(str);
-		str = tmp;
+			ft_strpad_left_inplace(&str, '0', info.width - digits);
 	}
-	tmp = flag_prepend(info.type, info.flags, n, &str);
+	flag_prepend(info.type, info.flags, n, &str);
 ////printf("\tbuild_int_str tmp: %s\n", tmp);
 	if (!(info.flags & FL_ZERO) && info.width > digits)
-		result.data = (info.flags & FL_MINUS) ?
-			ft_strpad_right(tmp, ' ', info.width - digits) :
-			ft_strpad_left(tmp, ' ', info.width - digits);
+	{
+		if (info.flags & FL_MINUS)
+			ft_strpad_right_inplace(&str, ' ', info.width - digits);
+		else
+			ft_strpad_left_inplace(&str, ' ', info.width - digits);
 ////printf("\tbuild_int_str str: %s\n", str);
-	else
-		result.data = ft_strdup(tmp);
-	free(tmp);
+	}
+	result.data = ft_strdup(str);
+	free(str);
 	result.len = info.width > digits ? info.width : digits;
 ////printf("\tbuild_int_str result: data = %s ; len = %lu\n", result.data, result.len);
 	return (result);

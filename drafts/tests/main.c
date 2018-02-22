@@ -38,9 +38,9 @@ int main()
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
 	return_values[j++] = ft_printf("ft_printf %-+8.5d and %-+8.5d\n", 123456, 123);
 	return_values[j++] =    printf("   printf %-+8.5d and %-+8.5d\n", 123456, 123);
-	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf %0+8.5d and %0+8.5d\n", 123456, 123);
-	return_values[j++] =    printf("   printf %0+8.5d and %0+8.5d\n", 123456, 123);
+//	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
+//	return_values[j++] = ft_printf("ft_printf %0+8.5d and %0+8.5d\n", 123456, 123);
+//	return_values[j++] =    printf("   printf %0+8.5d and %0+8.5d\n", 123456, 123);
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
 	return_values[j++] = ft_printf("ft_printf %-+5.5d and %-+5.5d\n", 123456, 123);
 	return_values[j++] =    printf("   printf %-+5.5d and %-+5.5d\n", 123456, 123);

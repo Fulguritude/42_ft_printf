@@ -18,7 +18,7 @@
 # include <stdarg.h>
 # include <locale.h>
 # include <inttypes.h>
-# include "libft/libft.h"
+# include "libft/hdr/libft.h"
 
 /*
 ** http://computer-programming-forum.com/47-c-language/e00ad32ae4b4b1d6.htm

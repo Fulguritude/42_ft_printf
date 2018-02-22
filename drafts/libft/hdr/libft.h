@@ -384,6 +384,13 @@ size_t					ft_strlcat(char *dest, char const *src, size_t size);
 char					*ft_strpad_left(char const *s, char const c, t_u32 n);
 
 /*
+** Returns ft_strpad_left by reference rather than new allocation.
+*/
+
+void					ft_strpad_left_inplace(char **a_str,
+											char const c, t_u32 len);
+
+/*
 ** Returns a newly allocated string list, where each line is the result of
 ** the appropriate ft_strpad_left of length n.
 */
@@ -392,17 +399,18 @@ char					**ft_strlspad_left(char const **strls,
 											char const c, t_u32 n);
 
 /*
-** Returns ft_strpad_left by reference rather than new allocation.
-*/
-
-void	ft_strpad_left_inplace(char **a_str, char const c, t_u32 len);
-
-/*
 ** Returns a newly allocated string, the result of the concatenation of a string
 ** s1 == s and s2 containing the character c a total of n times.
 */
 
 char					*ft_strpad_right(const char *s, const char c, t_u32 n);
+
+/*
+** Returns ft_strpad_right by reference rather than new allocation.
+*/
+
+void					ft_strpad_right_inplace(char **a_str,
+											char const c, t_u32 len);
 
 /*
 ** Returns a pointer to the first occurence of a char 'c' in the given string
