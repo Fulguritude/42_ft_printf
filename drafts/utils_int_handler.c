@@ -12,29 +12,28 @@
 static char		*val_to_str(t_format info, intmax_t n, int *digits)
 {
 	char	*str;
-	t_types	type;
-	t_u8	flags;
 	t_u32	prec;
 
 	str = NULL;
-	type = info.type;
-	flags = info.flags;
-	prec = info.prec <= 0 ? 0 : (t_u32)info.prec;
-	if (type == int_dec)
+	prec = info.prec <= 0 ? 0 :
+		(t_u32)info.prec - (info.type == int_uoct && (info.flags & FL_HASH));
+	if (info.type == int_dec)
 		str = ft_itoa_base(n, DECIM);
-	else if (type == int_udec)
+	else if (info.type == int_udec)
 		str = ft_uitoa_base(n, DECIM);
-	else if (type == int_uoct)
+	else if (info.type == int_uoct)
 		str = ft_uitoa_base(n, OCTAL);
-	else if (type == int_uhex_l)
+	else if (info.type == int_uhex_l)
 		str = ft_uitoa_base(n, HXLOW);
-	else if (type == int_uhex_u)
+	else if (info.type == int_uhex_u)
 		str = ft_uitoa_base(n, HXUPP);
-	else if (type == int_ubin_l || type == int_ubin_u)
+	else if (info.type == int_ubin_l || info.type == int_ubin_u)
 		str = ft_uitoa_base(n, BINAR);
-	*digits = (ft_strlen(str) > prec ? ft_strlen(str) : prec) - (type == int_uoct)
-		+ 2 * ((flags & FL_HASH) && (int_uoct <= type) && (type <= int_ubin_u))
-		+ (type == int_dec && (flags & (FL_SPACE | FL_PLUS)));
+	*digits = (ft_strlen(str) > prec ? ft_strlen(str) : prec)
+		+ 2 * ((info.flags & FL_HASH) &&
+			(int_uoct <= info.type) && (info.type <= int_ubin_u))
+		- (info.type == int_uoct && (info.flags & FL_HASH))
+		+ (info.type == int_dec && (info.flags & (FL_SPACE | FL_PLUS)));
 	return (str);
 }
 
@@ -73,32 +72,27 @@ static t_str	build_int_str(t_format info, intmax_t n)
 	int		digits;
 	t_str	result;
 
-////printf("\tbuild_int_str str: %s\n", str);
 	str = val_to_str(info, n, &digits);
-////printf("\tbuild_int_str digits: %d\n", digits);
-	if (info.prec >= 0 && ft_strlen(str) > (t_u32)info.prec)
-		ft_strpad_left_inplace(&str, '0', info.prec - ft_strlen(str));
+//printf("build_int_str str: %s\n", str); //\t\t\t
+//printf("\t\t\tbuild_int_str digits: %d\n", digits);
+	if (info.prec >= 0 && ft_strlen(str) < (t_u32)info.prec)
+		ft_strpad_left_inplace(&str, '0', info.prec - ft_strlen(str));	
 	else if (((info.flags & FL_ZERO) && info.width > digits))
-	{
-		if ((info.flags & FL_MINUS))
-			ft_strpad_right_inplace(&str, ' ', info.width - digits);
-		else
+		(info.flags & FL_MINUS) ?
+			ft_strpad_right_inplace(&str, ' ', info.width - digits) :
 			ft_strpad_left_inplace(&str, '0', info.width - digits);
-	}
+//printf("\t\t\tbuild_int_str prec or zero with width: %s\n", str);
 	flag_prepend(info.type, info.flags, n, &str);
-////printf("\tbuild_int_str tmp: %s\n", tmp);
+//printf("\t\t\tbuild_int_str flag prepend: %s\n", str);
 	if (!(info.flags & FL_ZERO) && info.width > digits)
-	{
-		if (info.flags & FL_MINUS)
-			ft_strpad_right_inplace(&str, ' ', info.width - digits);
-		else
+		(info.flags & FL_MINUS) ?
+			ft_strpad_right_inplace(&str, ' ', info.width - digits) :
 			ft_strpad_left_inplace(&str, ' ', info.width - digits);
-////printf("\tbuild_int_str str: %s\n", str);
-	}
+//printf("\t\t\tbuild_int_str str: %s\n", str);
 	result.data = ft_strdup(str);
 	free(str);
 	result.len = info.width > digits ? info.width : digits;
-////printf("\tbuild_int_str result: data = %s ; len = %lu\n", result.data, result.len);
+//printf("\t\t\tbuild_int_str result: data = %s ; len = %lu\n", result.data, result.len);
 	return (result);
 }
 

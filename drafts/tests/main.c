@@ -16,6 +16,8 @@ int main()
 	int j = 0;
 	int return_values[400];
 
+
+#if 0
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
 	return_values[j++] = ft_printf("ft_printf\n");
 	return_values[j++] =    printf("   printf\n");
@@ -35,6 +37,9 @@ int main()
 	//printf("ft_printf %#-+05.5d and %#-+06.5d\n", 123456, 123);
 	//   printf("   printf %#-+05.5d and %#-+06.5d\n", 123456, 123);
 
+	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
+	return_values[j++] = ft_printf("ft_printf %+8.5d and %+8.5d\n", 123456, 123);
+	return_values[j++] =    printf("   printf %+8.5d and %+8.5d\n", 123456, 123);
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
 	return_values[j++] = ft_printf("ft_printf %-+8.5d and %-+8.5d\n", 123456, 123);
 	return_values[j++] =    printf("   printf %-+8.5d and %-+8.5d\n", 123456, 123);
@@ -62,92 +67,94 @@ int main()
 	return_values[j++] = ft_printf("ft_printf: %d in octal : %#o\n", 123, 123);
 	return_values[j++] =    printf("   printf: %d in octal : %#o\n", 123, 123);
 
-	printf("\n\n\n");
+printf("\n\n\n");
+
+
+#endif
+
 
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %c\n", L'é');
-	return_values[j++] =    printf("   printf: %c\n", L'é');
+	return_values[j++] = ft_printf("ft_printf %%c L'é': %c\n", L'é');
+	return_values[j++] =    printf("   printf %%c L'é': %c\n", L'é');
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %lc\n", L'é');
-	return_values[j++] =    printf("   printf: %lc\n", L'é');
+	return_values[j++] = ft_printf("ft_printf %%lc L'é': %lc\n", L'é');
+	return_values[j++] =    printf("   printf %%lc L'é': %lc\n", L'é');
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %C\n", L'é');
-	return_values[j++] =    printf("   printf: %C\n", L'é');
+	return_values[j++] = ft_printf("ft_printf %%C L'é': %C\n", L'é');
+	return_values[j++] =    printf("   printf %%C L'é': %C\n", L'é');
 	//return_values[j++] = ft_printf("ft_printf: %lC\n", L'é');
 	//return_values[j++] =    printf("   printf: %lC\n", L'é');
 	//return_values[j++] = ft_printf("ft_printf: %s\n", L"résumé s");
 	//return_values[j++] =    printf("   printf: %s\n", L"résumé s");
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %ls\n", L"résumé ls");
-	return_values[j++] =    printf("   printf: %ls\n", L"résumé ls");
+	return_values[j++] = ft_printf("ft_printf %%ls: %ls\n", L"résumé ls");
+	return_values[j++] =    printf("   printf %%ls: %ls\n", L"résumé ls");
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %S\n", L"résumé S");
-	return_values[j++] =    printf("   printf: %S\n", L"résumé S");
-/*	return_values[j++] = ft_printf("ft_printf: %lS\n", L"résumé lS");
-	return_values[j++] =    printf("   printf: %lS\n", L"résumé lS");
-	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %jS\n", L"résumé jS");
-	return_values[j++] =    printf("   printf: %jS\n", L"résumé jS");
-	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %hhS\n", L"résumé hhS");
-	return_values[j++] =    printf("   printf: %hhS\n", L"résumé hhS");
-	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %hhs\n", L"résumé hhs");
-	return_values[j++] =    printf("   printf: %hhs\n", L"résumé hhs");
-	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %hhs\n", "rasuma hhs");
-	return_values[j++] =    printf("   printf: %hhs\n", "rasuma hhs");
-*/
+	return_values[j++] = ft_printf("ft_printf %%S: %S\n", L"résumé S");
+	return_values[j++] =    printf("   printf %%S: %S\n", L"résumé S");
+//	return_values[j++] = ft_printf("ft_printf: %lS\n", L"résumé lS");
+//	return_values[j++] =    printf("   printf: %lS\n", L"résumé lS");
+//	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
+//	return_values[j++] = ft_printf("ft_printf: %jS\n", L"résumé jS");
+//	return_values[j++] =    printf("   printf: %jS\n", L"résumé jS");
+//	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
+//	return_values[j++] = ft_printf("ft_printf: %hhS\n", L"résumé hhS");
+//	return_values[j++] =    printf("   printf: %hhS\n", L"résumé hhS");
+//	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
+//	return_values[j++] = ft_printf("ft_printf: %hhs\n", L"résumé hhs");
+//	return_values[j++] =    printf("   printf: %hhs\n", L"résumé hhs");
+//	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
+//	return_values[j++] = ft_printf("ft_printf: %hhs\n", "rasuma hhs");
+//	return_values[j++] =    printf("   printf: %hhs\n", "rasuma hhs");
 
 
-
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %s gives %.5s\n", "%.5s", "printf");
+	return_values[j++] = ft_printf("ft_printf: %s gives %.5s\n", "%.5s", "ft_printf");
 	return_values[j++] =    printf("   printf: %s gives %.5s\n", "%.5s", "   printf");
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %s gives %12s\n", "%12s", "printf");
+	return_values[j++] = ft_printf("ft_printf: %s gives %12s\n", "%12s", "ft_printf");
 	return_values[j++] =    printf("   printf: %s gives %12s\n", "%12s", "   printf");
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %s gives %12.5s\n", "%12.5s", "printf");
+	return_values[j++] = ft_printf("ft_printf: %s gives %12.5s\n", "%12.5s", "ft_printf");
 	return_values[j++] =    printf("   printf: %s gives %12.5s\n", "%12.5s", "   printf");
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %s gives %-12.5s\n", "%-12.5s", "printf");
+	return_values[j++] = ft_printf("ft_printf: %s gives %-12.5s\n", "%-12.5s", "ft_printf");
 	return_values[j++] =    printf("   printf: %s gives %-12.5s\n", "%-12.5s", "   printf");
 //	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-//	return_values[j++] = ft_printf("ft_printf: %s gives %#12.5s\n", "%#12.5s", "printf");
+//	return_values[j++] = ft_printf("ft_printf: %s gives %#12.5s\n", "%#12.5s", "ft_printf");
 //	return_values[j++] =    printf("   printf: %s gives %#12.5s\n", "%#12.5s", "   printf");
 //	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-//	return_values[j++] = ft_printf("ft_printf: %s gives %012.5s\n", "%012.5s", "printf");
+//	return_values[j++] = ft_printf("ft_printf: %s gives %012.5s\n", "%012.5s", "ft_printf");
 //	return_values[j++] =    printf("   printf: %s gives %012.5s\n", "%012.5s", "   printf");
 //	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-//	return_values[j++] = ft_printf("ft_printf: %s gives % 12.5s\n", "% 12.5s", "printf");
+//	return_values[j++] = ft_printf("ft_printf: %s gives % 12.5s\n", "% 12.5s", "ft_printf");
 //	return_values[j++] =    printf("   printf: %s gives % 12.5s\n", "% 12.5s", "   printf");
 
 
+
 printf("\n\n");
 printf("\n\n");
 
-//les é comptent pour pile 2 bytes. Remarquez que le .5 ne fait afficher que 2 é sur 3 par la suite
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %s gives %.5ls\n", "%.5ls", L"éprintf");
+	return_values[j++] = ft_printf("ft_printf: %s gives %.5ls\n", "%.5ls", L"éft_printf");
 	return_values[j++] =    printf("   printf: %s gives %.5ls\n", "%.5ls", L"é   printf");
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %s gives %12ls\n", "%12ls", L"éprintf");
+	return_values[j++] = ft_printf("ft_printf: %s gives %12ls\n", "%12ls", L"éft_printf");
 	return_values[j++] =    printf("   printf: %s gives %12ls\n", "%12ls", L"é   printf");
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %s gives %12.5ls\n", "%12.5ls", L"éprintf");
+	return_values[j++] = ft_printf("ft_printf: %s gives %12.5ls\n", "%12.5ls", L"éft_printf");
 	return_values[j++] =    printf("   printf: %s gives %12.5ls\n", "%12.5ls", L"é   printf");
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %s gives %-12.5ls\n", "%-12.5ls", L"éprintf");
+	return_values[j++] = ft_printf("ft_printf: %s gives %-12.5ls\n", "%-12.5ls", L"éft_printf");
 	return_values[j++] =    printf("   printf: %s gives %-12.5ls\n", "%-12.5ls", L"é   printf");
 //	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-//	return_values[j++] = ft_printf("ft_printf: %s gives %#12.5ls\n", "%#12.5ls", L"éprintf");
+//	return_values[j++] = ft_printf("ft_printf: %s gives %#12.5ls\n", "%#12.5ls", L"éft_printf");
 //	return_values[j++] =    printf("   printf: %s gives %#12.5ls\n", "%#12.5ls", L"é   printf");
 //	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-//	return_values[j++] = ft_printf("ft_printf: %s gives %+12.5ls\n", "%+12.5ls", L"éprintf");
+//	return_values[j++] = ft_printf("ft_printf: %s gives %+12.5ls\n", "%+12.5ls", L"éft_printf");
 //	return_values[j++] =    printf("   printf: %s gives %+12.5ls\n", "%+12.5ls", L"é   printf");
 //	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-//	return_values[j++] = ft_printf("ft_printf: %s gives %012.5ls\n", "%012.5ls", L"éprintf");
+//	return_values[j++] = ft_printf("ft_printf: %s gives %012.5ls\n", "%012.5ls", L"éft_printf");
 //	return_values[j++] =    printf("   printf: %s gives %012.5ls\n", "%012.5ls", L"é   printf");
 
 
@@ -155,27 +162,28 @@ printf("\n\n");
 printf("\n\n");
 
 
+//les é comptent pour pile 2 bytes. Remarquez que le .5 ne fait afficher que 2 é sur 3 par la suite
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %s gives %.5ls\n", "%.5ls", L"éééprintf");
+	return_values[j++] = ft_printf("ft_printf: %s gives %.5ls\n", "%.5ls", L"éééft_printf");
 	return_values[j++] =    printf("   printf: %s gives %.5ls\n", "%.5ls", L"ééé   printf");
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %s gives %12ls\n", "%12ls", L"éééprintf");
+	return_values[j++] = ft_printf("ft_printf: %s gives %12ls\n", "%12ls", L"éééft_printf");
 	return_values[j++] =    printf("   printf: %s gives %12ls\n", "%12ls", L"ééé   printf");
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %s gives %12.5ls\n", "%12.5ls", L"éééprintf");
+	return_values[j++] = ft_printf("ft_printf: %s gives %12.5ls\n", "%12.5ls", L"éééft_printf");
 	return_values[j++] =    printf("   printf: %s gives %12.5ls\n", "%12.5ls", L"ééé   printf");
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %s gives %-12.5ls\n", "%-12.5ls", L"éééprintf");
+	return_values[j++] = ft_printf("ft_printf: %s gives %-12.5ls\n", "%-12.5ls", L"éééft_printf");
 	return_values[j++] =    printf("   printf: %s gives %-12.5ls\n", "%-12.5ls", L"ééé   printf");
-/*	return_values[j++] = ft_printf("ft_printf: %s gives %#12.5ls\n", "%#12.5ls", L"éééprintf");
-	return_values[j++] =    printf("   printf: %s gives %#12.5ls\n", "%#12.5ls", L"ééé   printf");
-	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %s gives %0-12.5ls\n", "%0-12.5ls", L"éééprintf");
-	return_values[j++] =    printf("   printf: %s gives %0-12.5ls\n", "%0-12.5ls", L"ééé   printf");
-	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
-	return_values[j++] = ft_printf("ft_printf: %s gives %012.5ls\n", "%012.5ls", L"éééprintf");
-	return_values[j++] =    printf("   printf: %s gives %012.5ls\n", "%012.5ls", L"ééé   printf");
-*/
+//	return_values[j++] = ft_printf("ft_printf: %s gives %#12.5ls\n", "%#12.5ls", L"éééft_printf");
+//	return_values[j++] =    printf("   printf: %s gives %#12.5ls\n", "%#12.5ls", L"ééé   printf");
+//	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
+//	return_values[j++] = ft_printf("ft_printf: %s gives %0-12.5ls\n", "%0-12.5ls", L"éééft_printf");
+//	return_values[j++] =    printf("   printf: %s gives %0-12.5ls\n", "%0-12.5ls", L"ééé   printf");
+//	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
+//	return_values[j++] = ft_printf("ft_printf: %s gives %012.5ls\n", "%012.5ls", L"éééft_printf");
+//	return_values[j++] =    printf("   printf: %s gives %012.5ls\n", "%012.5ls", L"ééé   printf");
+
 
 printf("\n\n");
 printf("\n\n");
@@ -229,6 +237,9 @@ printf("\n\n");
 printf("\n\n");
 
 
+
+#if 0
+
 //	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
 //	return_values[j++] = ft_printf("ft_printf: %s gives %0.2d\n", "%0.2d", 123);
 //	return_values[j++] =    printf("   printf: %s gives %0.2d\n", "%0.2d", 123);
@@ -244,7 +255,6 @@ printf("\n\n");
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
 	return_values[j++] = ft_printf("ft_printf: %s gives %4.3d\n", "%4.3d", 123456789);
 	return_values[j++] =    printf("   printf: %s gives %4.3d\n", "%4.3d", 123456789);
-
 
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
 	return_values[j++] = ft_printf("ft_printf: %s gives %5d\n", "%5d", 123);
@@ -325,6 +335,12 @@ printf("\n\n");
 	return_values[j++] =    printf("   printf: %s gives %4.5o\n", "%4.5o", 123);
 
 
+	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
+	return_values[j++] = ft_printf("ft_printf: %s gives %#4o\n", "%#4o", 123);
+	return_values[j++] =    printf("   printf: %s gives %#4o\n", "%#4o", 123);
+	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
+	return_values[j++] = ft_printf("ft_printf: %s gives %#.5o\n", "%#.5o", 123);
+	return_values[j++] =    printf("   printf: %s gives %#.5o\n", "%#.5o", 123);
 	printf(C_GREEN"\n\nTest %d:\n"RESET, ++i); printf("\n");
 	return_values[j++] = ft_printf("ft_printf: %s gives %#4.5o\n", "%#4.5o", 123);
 	return_values[j++] =    printf("   printf: %s gives %#4.5o\n", "%#4.5o", 123);
@@ -519,16 +535,25 @@ printf("\n\n");
 	return_values[j++] = ft_printf("ft_printf: %s gives %06u\n", "%06u", 123);
 	return_values[j++] =    printf("   printf: %s gives %06u\n", "%06u", 123);
 
+#endif
+
+	int fails = 0;
 
 	i = 0;
 	while (i < j)
 	{
 		if (return_values[i] == return_values[i + 1])
-			printf(C_GREEN"Test %3d: printf %d ;    printf %d\n"RESET, i / 2, return_values[i], return_values[i + 1]);
+			printf(C_GREEN"Test %3d: ft_printf %d ;    printf %d\n"RESET, i / 2, return_values[i], return_values[i + 1]);
 		else
-			printf(C_RED"Test %3d: printf %d ;    printf %d\n"RESET, i / 2, return_values[i], return_values[i + 1]);
+		{
+			printf(C_RED"Test %3d: ft_printf %d ;    printf %d\n"RESET, i / 2, return_values[i], return_values[i + 1]);
+			++fails;
+		}
 		i += 2;
 	}
-
+	fails == 0 ?
+		printf(C_GREEN"\nThere are 0 failed tests based on return values. Check that output is adequate.\n"RESET) :	
+		printf(C_RED"\nThere are %d failed tests based on return values.\n"RESET, fails);
+	printf("\n");
 	return (0);
 }

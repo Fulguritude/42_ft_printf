@@ -20,7 +20,7 @@ CFLAGS	=	-Wall -Werror -Wextra
 HDRDIR	=	./hdr/
 SRCDIR	=	./src/
 OBJDIR	=	./obj/
-TSTDIR	=	../
+TSTDIR	=	../ #keep out of git bounds to avoid forbidden functions
 
 HDRS	=	libft.h
 SRCS	=	ft_memset.c					\
@@ -135,6 +135,9 @@ SRCS	=	ft_memset.c					\
 
 OBJS	=	$(SRCS:.c=.o)
 
+MAIN	=	main_libft.c
+TEST	=	test.out
+
 RESET	=	"\033[0m"
 RED		=	"\033[0;31m"
 GREEN	=	"\033[0;32m"
@@ -158,17 +161,19 @@ $(NAME): $(addprefix $(OBJDIR),$(OBJS))
 all: $(NAME)
 
 clean:
-	rm -f $(addprefix $(OBJDIR),$(OBJS))
+	@printf "Calling libft clean...\n"
+	@rm -f $(addprefix $(OBJDIR),$(OBJS))
 
 fclean: clean
-	rm -f $(NAME)
+	@printf "Calling libft fclean...\n"
+	@rm -f $(NAME)
 
 re:fclean all
 
 build_test: re
-	gcc -o tests $(TSTDIR)main_libft.c libft.a
-	./tests
-	rm -f tests
+	gcc $(TSTDIR)$(MAIN) $(NAME) -o $(TSTDIR)$(TEST)
+	./$(TEST)
+	rm -f $(TEST)
 
 test:build_test
 	@make clean

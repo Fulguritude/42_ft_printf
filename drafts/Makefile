@@ -29,6 +29,7 @@ SRCS	=	ft_printf.c				\
 			handlers.c				\
 			utils_int_handler.c
 MAIN	=	main.c
+TEST	=	test.out
 
 OBJS	=	$(SRCS:.c=.o)
 
@@ -47,12 +48,15 @@ $(NAME): $(LFT) $(OBJS)
 all: $(NAME)
 
 clean:
-	$(MAKE) -C $(LFTDIR) clean
-	rm -f $(OBJS)
+	@printf "Calling libftprintf clean...\n"
+	@$(MAKE) -C $(LFTDIR) clean
+	@rm -f $(OBJS)
+	@rm -f $(TEST)
 
 fclean:clean
-	$(MAKE) -C $(LFTDIR) fclean
-	rm -f $(NAME)
+	@printf "Calling libftprintf fclean...\n"
+	@rm -f $(LFTDIR)$(LFT)
+	@rm -f $(NAME)
 
 re:fclean all
 
@@ -60,7 +64,7 @@ re:fclean all
 test:fclean $(NAME)
 	@printf "Rebuilding test.out...\n"
 	@$(CC) $(CFLAGS) -c $(TSTDIR)$(MAIN) -o $(TSTDIR)$(MAIN:.c=.o)
-	@$(CC) $(OBJS) $(TSTDIR)$(MAIN:.c=.o) -lftprintf -L./ -o test.out
-	./test.out
+	@$(CC) $(OBJS) $(TSTDIR)$(MAIN:.c=.o) -lftprintf -L./ -o $(TEST)
+	./$(TEST)
 	@make clean
-	@rm test.out
+	@printf "Done !\n"
