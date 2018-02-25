@@ -35,6 +35,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
+# include <inttypes.h>
 
 typedef	unsigned char	t_u8;
 typedef	unsigned short	t_u16;
@@ -147,6 +148,34 @@ char					*ft_memhex(void const *ptr, size_t n);
 void					ft_delete(void *p, size_t mem_size);
 
 /*
+** =============== Math Functions ===================
+*/
+
+/*
+** Returns max of a and b, signed.
+*/
+
+t_s64					ft_max(t_s64 a, t_s64 b);
+
+/*
+** Returns min of a and b, signed.
+*/
+
+t_s64					ft_min(t_s64 a, t_s64 b);
+
+/*
+** Returns max of a and b, unsigned.
+*/
+
+t_u64					ft_umax(t_u64 a, t_u64 b);
+
+/*
+** Returns min of a and b, unsigned.
+*/
+
+t_u64					ft_umin(t_u64 a, t_u64 b);
+
+/*
 ** ========== Str-Int Conversion Functions ==========
 */
 
@@ -154,13 +183,21 @@ void					ft_delete(void *p, size_t mem_size);
 ** Returns the number of digits in n knowing that n is written in base 10.
 */
 
-int						ft_digits(int n);
+int						ft_digits(intmax_t n);
 
 /*
 ** Returns the number of digits in n knowing that n is written in base "base".
+** n is signed.
 */
 
-int						ft_digits_base(int n, int base);
+int						ft_digits_base(intmax_t n, int base);
+
+/*
+** Returns the number of digits in n knowing that n is written in base "base".
+** n is unsigned.
+*/
+
+int						ft_udigits_base(uintmax_t n, int base);
 
 /*
 ** Returns an int parsed from the given string number 'str' (returns 0 if
@@ -181,7 +218,7 @@ long					ft_atoi_base(char const *str, char const *base);
 ** Returns a new string which is the representation of the given number 'n'.
 */
 
-char					*ft_itoa(int n);
+char					*ft_itoa(long n);
 
 /*
 ** Returns a new string which is the representation of the given number 'n',
@@ -191,11 +228,22 @@ char					*ft_itoa(int n);
 char					*ft_itoa_base(long nb, char const *base);
 
 /*
+** itoa with longer arg.
+*/
+
+char					*ft_imaxtoa_base(intmax_t nb, const char *base);
+
+/*
 ** Returns a new string which is nb written in "base" where nb is unsigned.
 */
 
 char					*ft_uitoa_base(unsigned long nb, char const *base);
 
+/*
+** uitoa_base with longer arg.
+*/
+
+char					*ft_uimaxtoa_base(uintmax_t nb, const char *base);
 
 /*
 ** Takes a string as a number written in base "base_from" (digit val == index

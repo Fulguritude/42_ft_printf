@@ -161,7 +161,7 @@ char			*encode_unicodepoint_to_utf8(wchar_t c);
 char			*build_utf8(wchar_t *unicode_str);
 
 /*
-** utils_format_string.c
+** str_formatter.c
 */
  
 t_u8			read_format_flags(char const *fmt_part, int *i);

@@ -24,7 +24,7 @@ HDRS	=	ft_printf.h
 SRCS	=	ft_printf.c				\
 			converters.c			\
 			unicode.c				\
-			utils_format_string.c	\
+			str_formatter.c			\
 			utils_t_str.c			\
 			handlers.c				\
 			utils_int_handler.c
@@ -51,6 +51,7 @@ clean:
 	@printf "Calling libftprintf clean...\n"
 	@$(MAKE) -C $(LFTDIR) clean
 	@rm -f $(OBJS)
+	@rm -f $(TSTDIR)$(MAIN:.c=.o)
 	@rm -f $(TEST)
 
 fclean:clean

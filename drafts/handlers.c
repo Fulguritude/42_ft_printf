@@ -47,10 +47,10 @@ static t_str	handle_str_type(t_format info, va_list args)
 	else
 		str = ft_strdup((char*)va_arg(args, char*));
 ////printf("\tbuild_pcs_str : %s\n", str);
-	if (info.prec != -1 && info.prec < (int)ft_strlen(str))
+	if (info.prec != -1 && (t_u64)info.prec < ft_strlen(str))
 	{
 		if (info.len_flag == fl_l)
-			while (str[info.prec] >> 6 == 0x2)
+			while ((t_u8)str[info.prec] >> 6 == (t_u8)0x2)
 				--info.prec;
 		str[info.prec] = '\0';
 	}

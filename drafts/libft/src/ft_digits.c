@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-int		ft_digits(int n)
+int		ft_digits(intmax_t n)
 {
 	return (ft_digits_base(n, 10));
 }

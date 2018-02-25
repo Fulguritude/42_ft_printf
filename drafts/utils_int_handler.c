@@ -1,5 +1,11 @@
 #include "ft_printf.h"
 
+
+
+#include <stdio.h>
+
+
+
 /*
 ** The precision field does not apply to numeric types, only floats and strings.
 **
@@ -15,20 +21,21 @@ static char		*val_to_str(t_format info, intmax_t n, int *digits)
 	t_u32	prec;
 
 	str = NULL;
+printf("val_to_str arg n is: %lx\n\t\t\t", n);
 	prec = info.prec <= 0 ? 0 :
 		(t_u32)info.prec - (info.type == int_uoct && (info.flags & FL_HASH));
 	if (info.type == int_dec)
-		str = ft_itoa_base(n, DECIM);
+		str = ft_imaxtoa_base(n, DECIM);
 	else if (info.type == int_udec)
-		str = ft_uitoa_base(n, DECIM);
+		str = ft_uimaxtoa_base(n, DECIM);
 	else if (info.type == int_uoct)
-		str = ft_uitoa_base(n, OCTAL);
+		str = ft_uimaxtoa_base(n, OCTAL);
 	else if (info.type == int_uhex_l)
-		str = ft_uitoa_base(n, HXLOW);
+		str = ft_uimaxtoa_base(n, HXLOW);
 	else if (info.type == int_uhex_u)
-		str = ft_uitoa_base(n, HXUPP);
+		str = ft_uimaxtoa_base(n, HXUPP);
 	else if (info.type == int_ubin_l || info.type == int_ubin_u)
-		str = ft_uitoa_base(n, BINAR);
+		str = ft_uimaxtoa_base(n, BINAR);
 	*digits = (ft_strlen(str) > prec ? ft_strlen(str) : prec)
 		+ 2 * ((info.flags & FL_HASH) &&
 			(int_uoct <= info.type) && (info.type <= int_ubin_u))

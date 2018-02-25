@@ -91,16 +91,23 @@ SRCS	=	ft_memset.c					\
 			ft_isspace.c				\
 			ft_toupper.c				\
 			ft_tolower.c				\
+			ft_max.c					\
+			ft_min.c					\
+			ft_umax.c					\
+			ft_umin.c					\
 			ft_atoi.c					\
 			ft_itoa.c					\
 			ft_in_base.c				\
 			ft_is_valid_base.c			\
 			ft_itoa_base.c				\
+			ft_imaxtoa_base.c			\
 			ft_uitoa_base.c				\
+			ft_uimaxtoa_base.c			\
 			ft_atoi_base.c				\
 			ft_convert_base.c			\
 			ft_digits.c					\
 			ft_digits_base.c			\
+			ft_udigits_base.c			\
 			ft_putchar_fd.c				\
 			ft_putstr_fd.c				\
 			ft_putendl_fd.c				\

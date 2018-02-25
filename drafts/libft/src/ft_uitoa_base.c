@@ -22,7 +22,7 @@ char	*ft_uitoa_base(unsigned long nb, const char *base)
 	if (!base || !ft_is_valid_base(base))
 		return (NULL);
 	b_n = ft_in_base('\0', base);
-	bdigits_in_n = ft_digits_base(nb, b_n);
+	bdigits_in_n = ft_udigits_base(nb, b_n);
 	size = bdigits_in_n;
 	if (!(arr = ft_strnew(size)))
 		return (NULL);

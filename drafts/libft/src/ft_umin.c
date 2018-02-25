@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isascii.c                                       :+:      :+:    :+:   */
+/*   ft_umin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
+/*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/17 21:31:48 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/28 11:44:32 by tduquesn         ###   ########.fr       */
+/*   Created: 2018/02/25 00:29:04 by fulguritu         #+#    #+#             */
+/*   Updated: 2018/02/25 00:37:10 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-inline int		ft_isascii(int c)
+inline t_u64	ft_umin(t_u64 a, t_u64 b)
 {
-	return (0 <= c && c <= 127);
+	return (a < b ? a : b);
 }
