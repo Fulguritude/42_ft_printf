@@ -846,6 +846,11 @@ printf("\n\n");
 	check_retvals(j, return_values);
 
 
+printf("\n\n");
+printf(C_BLUE"\nTests on return values :"RESET);
+printf("\n\n");
+
+
 	int fails = 0;
 
 	i = 0;

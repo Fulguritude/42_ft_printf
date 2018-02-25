@@ -13,29 +13,56 @@
 ** => Add two digits for a hash, remove one if the hash is an octal;
 **      add one digit for a signed value with appropriate flag;
 ** => For precision, 0 flag is ignored, and precision is applied before width
+**
+** => ft_ivartoa_base was coded to force integer casting; memory would be 
+**		filled with ones rather than zeros in a few cases.
 */
 
-static char		*val_to_str(t_format info, intmax_t n, int *digits)
+static char		*ft_ivartoa_base(intmax_t n, char const *base, t_u8 bytes,
+									t_u8 sign)
+{
+	t_varint	varint;
+
+	varint.l = 0;
+	if (bytes == 1)
+		varint.c = (char)n;
+	else if (bytes == 2)
+		varint.s = (short)n;
+	else if (bytes == 4)
+		varint.i = (int)n;
+	else if (bytes == 8)
+		varint.l = (long)n;
+	else
+		return (NULL);
+printf("varint.l : %lx\n\t\t\t", varint.l);
+	if (sign == 's')
+		return (ft_imaxtoa_base(varint.l, base));
+	else if (sign == 'u')
+		return (ft_uimaxtoa_base(varint.l, base));
+	else
+		return (NULL);
+}
+
+static char		*val_to_str(t_format info, intmax_t n, int *digits, t_u8 bytes)
 {
 	char	*str;
 	t_u32	prec;
 
 	str = NULL;
-printf("val_to_str arg n is: %lx\n\t\t\t", n);
 	prec = info.prec <= 0 ? 0 :
 		(t_u32)info.prec - (info.type == int_uoct && (info.flags & FL_HASH));
 	if (info.type == int_dec)
-		str = ft_imaxtoa_base(n, DECIM);
+		str = ft_ivartoa_base(n, DECIM, bytes, 's');
 	else if (info.type == int_udec)
-		str = ft_uimaxtoa_base(n, DECIM);
+		str = ft_ivartoa_base(n, DECIM, bytes, 'u');
 	else if (info.type == int_uoct)
-		str = ft_uimaxtoa_base(n, OCTAL);
+		str = ft_ivartoa_base(n, OCTAL, bytes, 'u');
 	else if (info.type == int_uhex_l)
-		str = ft_uimaxtoa_base(n, HXLOW);
+		str = ft_ivartoa_base(n, HXLOW, bytes, 'u');
 	else if (info.type == int_uhex_u)
-		str = ft_uimaxtoa_base(n, HXUPP);
+		str = ft_ivartoa_base(n, HXUPP, bytes, 'u');
 	else if (info.type == int_ubin_l || info.type == int_ubin_u)
-		str = ft_uimaxtoa_base(n, BINAR);
+		str = ft_ivartoa_base(n, BINAR, bytes, 'u');
 	*digits = (ft_strlen(str) > prec ? ft_strlen(str) : prec)
 		+ 2 * ((info.flags & FL_HASH) &&
 			(int_uoct <= info.type) && (info.type <= int_ubin_u))
@@ -73,17 +100,19 @@ static void		flag_prepend(t_types type, t_u8 flags, intmax_t n, char **a_s)
 **  if FL_SPACE or FL_PLUS, and no FL_MINUS, append ZEROS first
 */
 
-static t_str	build_int_str(t_format info, intmax_t n)
+static t_str	build_int_str(t_format info, intmax_t n, t_u8 bytes)
 {
 	char	*str;
 	int		digits;
 	t_str	result;
 
-	str = val_to_str(info, n, &digits);
+printf("val_to_str arg n is: %lx\n\t\t\t", n);
+	str = val_to_str(info, n, &digits, bytes);
 //printf("build_int_str str: %s\n", str); //\t\t\t
 //printf("\t\t\tbuild_int_str digits: %d\n", digits);
 	if (info.prec >= 0 && ft_strlen(str) < (t_u32)info.prec)
-		ft_strpad_left_inplace(&str, '0', info.prec - ft_strlen(str));	
+		ft_strpad_left_inplace(&str, '0', info.prec - ft_strlen(str)
+					- (info.type == int_uoct && (info.flags & FL_HASH)));	
 	else if (((info.flags & FL_ZERO) && info.width > digits))
 		(info.flags & FL_MINUS) ?
 			ft_strpad_right_inplace(&str, ' ', info.width - digits) :
@@ -107,19 +136,19 @@ t_str			handle_int_type(t_format info, va_list args)
 {
 	t_str	result;
 
-	if (info.len_flag == fl_l)
-		result = build_int_str(info, (long)va_arg(args, long));
-	else if (info.len_flag == fl_ll)
-		result = build_int_str(info, (long long)va_arg(args, long long));	
-	else if (info.len_flag == fl_j)
-		result = build_int_str(info, (intmax_t)va_arg(args, intmax_t));
-	else if (info.len_flag == fl_hh)
-		result = build_int_str(info, (char)va_arg(args, int));
+	if (info.len_flag == fl_hh)
+		result = build_int_str(info, (char)va_arg(args, int), 1);
 	else if (info.len_flag == fl_h)
-		result = build_int_str(info, (short)va_arg(args, int));
+		result = build_int_str(info, (short)va_arg(args, int), 2);
+	else if (info.len_flag == fl_l)
+		result = build_int_str(info, (long)va_arg(args, long), 8);
+	else if (info.len_flag == fl_ll)
+		result = build_int_str(info, (long long)va_arg(args, long long), 8);	
+	else if (info.len_flag == fl_j)
+		result = build_int_str(info, (intmax_t)va_arg(args, intmax_t), 8);
 	else if (info.len_flag == fl_z)
-		result = build_int_str(info, (size_t)va_arg(args, size_t));
+		result = build_int_str(info, (size_t)va_arg(args, size_t), 8);
 	else
-		result = build_int_str(info, (int)va_arg(args, int));
+		result = build_int_str(info, (int)va_arg(args, int), 4);
 	return (result);
 }

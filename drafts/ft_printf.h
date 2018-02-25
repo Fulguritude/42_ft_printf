@@ -75,8 +75,8 @@ typedef enum	e_types
 
 typedef enum	e_len_flag
 {
-	fl_h,
 	fl_hh,
+	fl_h,
 	fl_l,
 	fl_ll,
 	fl_j,
@@ -100,22 +100,13 @@ typedef struct	s_format
 	t_types			type;
 }				t_format;
 
-
-/*
-typedef union	u_data
+typedef union	u_varint
 {
 	t_u8			c;
-	short			sh;
+	short			s;
 	int				i;
 	long			l;
-	long long		ll;
-	char			*st;
-	size_t			si;
-	wchar_t			wc;
-	wchar_t			*ws;
-	intmax_t		im;
-}				t_data;
-*/
+}				t_varint;
 
 /*
 ** ft_printf.c
