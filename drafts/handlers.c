@@ -104,6 +104,8 @@ t_str				handle_format(t_format info, char const *fmt, va_list args)
 		return (handle_str_type(info, args));
 	else if (info.type == uchar)
 		return (handle_uchar_type(info.len_flag, args));
+	else if (info.type == float_pt)
+		return (handle_float_type(info, args));
 	else
 	{
 		result.data = NULL;

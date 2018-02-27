@@ -1,13 +1,5 @@
 #include "ft_printf.h"
 
-/* t_format:
-	t_u8			flags;
-	int				width;
-	int				prec;
-	t_len_flag		len_flag;
-	t_types			type;
-*/
-
 t_u8			read_format_flags(char const *fmt_part, int *i)
 {
 	t_u8	flags;
@@ -58,10 +50,17 @@ int				read_format_prec(char const *fmt_part, int *i)
 {
 	int		prec;
 	t_u8	digit;
+	t_u8	neg;
 
 	if (fmt_part[*i] != '.')	
 		return (-1);
 	++(*i);
+	neg = 0;
+	if (fmt_part[*i] == '-')
+	{
+		neg = 1;
+		++(*i);
+	}
 	prec = 0;
 	while (ft_in_base(fmt_part[*i], DECIM) != -1)
 	{
@@ -69,6 +68,7 @@ int				read_format_prec(char const *fmt_part, int *i)
 		prec = prec * 10 + digit - '0';
 		++(*i);
 	}
+	prec = neg ? -1 : prec;
 	return (prec);
 }
 
@@ -106,6 +106,7 @@ t_types			read_format_type(char const *fmt_part, t_format *info, int i)
 	t_types	result;
 
 	c = fmt_part[i];
+	info.type_char = c;
 	result = c == '%' ? percent : no_type_error;
 	result = c == 'd' || c == 'i' || c == 'D' ? int_dec : result;
 	result = c == 'o' || c == 'O' ? int_uoct : result;
@@ -116,24 +117,11 @@ t_types			read_format_type(char const *fmt_part, t_format *info, int i)
 	result = c == 'B' ? int_ubin_u : result;
 	result = c == 'c' || c == 'C' ? uchar : result;
 	result = c == 's' || c == 'S' ? string : result;
-	info->len_flag = (c == 'D' || c == 'O' || c == 'U' || c == 'p' || c == 'C'
-						|| c == 'S') ? fl_l : info->len_flag;
+	result = c == 'a' || c == 'A' || c == 'e' || c == 'E' || c == 'f' ||
+			c == 'F' || c == 'g' || c == 'G') ? float_pt : result;
+	info->len_flag = (c == 'D' || c == 'O' || c == 'U' || c == 'p' ||
+			c == 'C'|| c == 'S') ? fl_l : info->len_flag;
 	if (c == 'p')
 		info->flags |= FL_HASH;
-	return (result);
-}
-
-t_format		read_format(char const *fmt_part)
-{
-	int			i;
-	t_format	result;
-//ft_putstr("\tRead format ...");
-	i = 1;
-	result.flags = read_format_flags(fmt_part, &i);
-	result.width = read_format_width(fmt_part, &i);
-	result.prec = read_format_prec(fmt_part, &i);
-	result.len_flag = read_format_len_flag(fmt_part, &i);
-	result.type = read_format_type(fmt_part, &result, i); //maybe give "type" as an argument to gain a bit of place because read_format_type probably won't have enough lines for all possibilities
-//ft_putendl("... format read\n");
 	return (result);
 }

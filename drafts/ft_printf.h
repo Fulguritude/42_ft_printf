@@ -22,6 +22,7 @@
 
 /*
 ** http://computer-programming-forum.com/47-c-language/e00ad32ae4b4b1d6.htm
+** http://steve.hollasch.net/cgindex/coding/ieeefloat.html
 */
 
 /*
@@ -36,11 +37,11 @@
 **     NB : printf("%*d", width, num) <=> printf("%2$*1$d", width, num)
 */
 
-# define FLAGS "#0- +" //'
-# define TYPES "pdDibBoOuUxXcCsS%" //eE, fF, gG, aA, n
+# define FLAGS "#0- +"
+# define TYPES "pdDibBoOuUxXcCsSeEfFgGaA%" //n
 # define LGTHS "hljz" //L, t
 
-# define ALL_SYMBOLS "#0- +pdDibBoOuUxXcCsS%.0123456789hljz"
+# define ALL_SYMBOLS "#0- +pdDibBoOuUxXcCsSeEfFgGaA%.0123456789hljz"
 
 # define BINAR "01"
 # define OCTAL "01234567"
@@ -53,9 +54,24 @@
 # define FL_MINUS 0x4
 # define FL_SPACE 0x8
 # define FL_ZERO 0x10
-//# define FL_QUOTE 0x20
+/*
+** # define FL_QUOTE 0x20 //add "\'" to flags
+*/
 # define FL_NONE 0x40
 # define FL_ERROR 0x80
+
+/*
+** Section to edit platform dependent primitive type byte lengths.
+*/
+# define BYTELEN_CHAR		1
+# define BYTELEN_SHORT		2
+# define BYTELEN_INT		4
+# define BYTELEN_LONG		8
+# define BYTELEN_LONGLONG	8
+# define BYTELEN_IMAX		8
+# define BYTELEN_SIZET		8
+# define BYTELEN_FLOAT		4
+# define BYTELEN_DOUBLE		8
 
 typedef enum	e_types
 {
@@ -69,7 +85,7 @@ typedef enum	e_types
 	int_ubin_u,
 	uchar,
 	string,
-//	float, longlong, etc
+	float_pt,
 	no_type_error
 }				t_types;
 
@@ -98,15 +114,8 @@ typedef struct	s_format
 	int				prec;
 	t_len_flag		len_flag;
 	t_types			type;
+	char			type_char;
 }				t_format;
-
-typedef union	u_varint
-{
-	t_u8			c;
-	short			s;
-	int				i;
-	long			l;
-}				t_varint;
 
 /*
 ** ft_printf.c
@@ -124,6 +133,19 @@ int				ft_vasprintf(char **res, const char *format, va_list args);
 
 char			**format_to_strls(char const *format);
 void			convert_str(char *fmt_part, t_list **a_lststr, va_list args);
+t_format		read_format(char const *fmt_part);
+
+/*
+** converter_utils_rdfmt.c
+**
+** TODO, when out of norminette, put in the same file as read_format as static
+*/
+ 
+t_u8			read_format_flags(char const *fmt_part, int *i);
+int				read_format_width(char const *fmt_part, int *i);
+int				read_format_prec(char const *fmt_part, int *i);
+t_len_flag		read_format_len_flag(char const *fmt_part, int *i);
+t_types			read_format_type(char const *fmt_part, t_format *info, int i);
 
 /*
 ** handlers.c
@@ -135,7 +157,7 @@ void			convert_str(char *fmt_part, t_list **a_lststr, va_list args);
 t_str			handle_format(t_format info, char const *fmt, va_list args);
 
 /*
-** utils_int_handler.c
+** handler_utils_int.c
 **
 ** static char  *val_to_str(t_types type, t_u8 flags, intmax_t n, int *digits)
 ** static char  *flag_prepend(t_types type, t_u8 flags, intmax_t n, char **a_s)
@@ -145,29 +167,26 @@ t_str			handle_format(t_format info, char const *fmt, va_list args);
 t_str			handle_int_type(t_format info, va_list args);
 
 /*
-** unicode.c
+** handler_utils_float.c
+*/
+
+t_str			handle_float_type(t_format info, va_list args);
+
+/*
+** handler_utils_unicode.c
 */
 
 char			*encode_unicodepoint_to_utf8(wchar_t c);
 char			*build_utf8(wchar_t *unicode_str);
 
-/*
-** str_formatter.c
-*/
- 
-t_u8			read_format_flags(char const *fmt_part, int *i);
-int				read_format_width(char const *fmt_part, int *i);
-int				read_format_prec(char const *fmt_part, int *i);
-t_len_flag		read_format_len_flag(char const *fmt_part, int *i);
-t_types			read_format_type(char const *fmt_part, t_format *info, int i);
-t_format		read_format(char const *fmt_part);
 
 /*
 ** utils_t_str.c
+**
+** static void	t_str_append(t_str *acc, t_str *next);
 */
 
-t_str	to_single_t_str(t_list *lststr);
-//static void	t_str_append(t_str *acc, t_str *next);
-t_str	str_to_t_str(char const *str);
+t_str			to_single_t_str(t_list *lststr);
+t_str			str_to_t_str(char const *str);
 
 #endif

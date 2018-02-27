@@ -48,6 +48,23 @@ char	**format_to_strls(char const *fmt)
 	return (result);
 }
 
+t_format		read_format(char const *fmt_part)
+{
+	int			i;
+	t_format	result;
+//ft_putstr("\tRead format ...");
+	i = 1;
+	result.flags = read_format_flags(fmt_part, &i);
+	result.width = read_format_width(fmt_part, &i);
+	result.prec = read_format_prec(fmt_part, &i);
+	result.len_flag = read_format_len_flag(fmt_part, &i);
+	result.type = read_format_type(fmt_part, &result, i);
+//ft_putendl("... format read\n");
+	if (result.type == float_pt && result.prec == -1)
+		result.prec = 6;
+	return (result);
+}
+
 //
 // TODO remove
 #include <stdio.h>

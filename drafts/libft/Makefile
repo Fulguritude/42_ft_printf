@@ -6,7 +6,7 @@
 #    By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/17 21:33:56 by tduquesn          #+#    #+#              #
-#    Updated: 2017/12/12 19:50:00 by tduquesn         ###   ########.fr        #
+#    Updated: 2018/02/26 19:15:56 by fulguritu        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,9 +66,10 @@ SRCS	=	ft_memset.c					\
 			ft_strlspad_left.c			\
 			ft_strpad_right.c			\
 			ft_strpad_right_inplace.c	\
+			ft_strjoin.c				\
 			ft_strappend.c				\
 			ft_strprepend.c				\
-			ft_strjoin.c				\
+			ft_strinsert.c				\
 			ft_strtrim.c				\
 			ft_strsplit.c				\
 			ft_strhex.c					\
@@ -103,6 +104,9 @@ SRCS	=	ft_memset.c					\
 			ft_imaxtoa_base.c			\
 			ft_uitoa_base.c				\
 			ft_uimaxtoa_base.c			\
+			ft_ftoa.c					\
+			ft_ftoa_base.c				\
+			ft_lftoa_base.c				\
 			ft_atoi_base.c				\
 			ft_convert_base.c			\
 			ft_digits.c					\

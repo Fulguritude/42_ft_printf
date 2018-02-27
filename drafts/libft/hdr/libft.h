@@ -54,6 +54,20 @@ typedef struct			s_list
 	struct s_list	*next;
 }						t_list;
 
+typedef union	u_varint
+{
+	t_u8			c;
+	t_u16			s;
+	t_u32			i;
+	t_u64			l;
+}				t_varint;
+
+typedef union	u_varfloat
+{
+	float			f;
+	double			d;
+}				t_varfloat;
+
 /*
 ** ============ Memory Functions ===========
 */
@@ -267,6 +281,28 @@ int						ft_is_valid_base(char const *base);
 */
 
 int						ft_in_base(char c, char const *base);
+
+/*
+** =========== Str-Float Conversion Functions ==========
+*/
+
+/*
+** Returns the standard, decimal representation of f as a string.
+*/
+
+char					*ft_ftoa(float f);
+
+/*
+** Returns the standard representation of f as a string in the base "base".
+*/
+
+char					*ft_ftoa_base(float f, char const *base);
+
+/*
+** Returns the standard representation of lf as a string in the base "base".
+*/
+
+char					*ft_lftoa_base(double lf, char const *base);
 
 /*
 ** =========== Character Functions ==========
@@ -546,18 +582,25 @@ char					*ft_strmapi(char const *str, char (*f)(t_u32, char));
 
 /*
 ** Returns a new string which is a subsection of 'str', starting at 'start'
-** and copying 'len' characters.
+** and copying 'len' characters. Only returns NULL upon malloc failure, else
+** returns an newly-allocated empty string.
 */
 
-char					*ft_strsub(char const *str, unsigned int start,
-									size_t len);
+char					*ft_strsub(char const *str, t_u32 start, size_t len);
 
 /*
 ** Returns a newly allocated sub-stringlist from strls, similarly to ft_strsub.
 */
 
 char					**ft_strlssub(char const **strls,
-									t_u32 start, t_u32 len);
+										t_u32 start, t_u32 len);
+
+/*
+** Returns a new string which is the result of the concatenation of the
+** two given strings.
+*/
+
+char					*ft_strjoin(char const *str1, char const *str2);
 
 /*
 ** Returns the concatenation of dest and src inside the pointer of dest.
@@ -574,11 +617,12 @@ char					*ft_strappend(char **dest, char const *src);
 char					*ft_strprepend(char const *src, char **dest);
 
 /*
-** Returns a new string which is the result of the concatenation of the
-** two given strings.
+** Reallocs dest, and inserts src at index, and appends the substring of dest
+** that was after index.
 */
 
-char					*ft_strjoin(char const *str1, char const *str2);
+char					*ft_strinsert(char **dest, char const *src,
+										t_u32 index);
 
 /*
 ** Returns a new string from 'str' in which all leading and trailing

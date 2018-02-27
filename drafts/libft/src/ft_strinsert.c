@@ -1,0 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strinsert.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/02/26 19:04:14 by fulguritu         #+#    #+#             */
+/*   Updated: 2018/02/26 19:14:46 by fulguritu        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+char	*ft_strinsert(char **dest, char const *src, t_u32 index)
+{
+	char	*tmp;
+
+	tmp = ft_strsub(*dest, 0, index);
+	ft_strappend(tmp, src);
+	ft_strappend(tmp, (*dest) + index);
+	free(*dest);
+	*dest = tmp;
+	return (*dest);
+}

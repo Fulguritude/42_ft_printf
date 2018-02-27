@@ -21,17 +21,19 @@ LFTDIR	=	./libft/
 TSTDIR	=	./tests/
 
 HDRS	=	ft_printf.h
-SRCS	=	ft_printf.c				\
-			converters.c			\
-			unicode.c				\
-			str_formatter.c			\
-			utils_t_str.c			\
-			handlers.c				\
-			utils_int_handler.c
-MAIN	=	main.c
-TEST	=	test.out
-
+SRCS	=	ft_printf.c					\
+			converters.c				\
+			converter_utils_rdfmt.c		\
+			utils_t_str.c				\
+			handlers.c					\
+			handler_utils_int.c			\
+			handler_utils_unicode.c		\
+			handler_utils_float.c
 OBJS	=	$(SRCS:.c=.o)
+
+MAIN	=	main.c
+BONUS	=	main_bonus.c
+TEST	=	test.out
 
 #dependencies are taken care of in libft's makefile.
 $(LFT):
@@ -66,6 +68,14 @@ test:fclean $(NAME)
 	@printf "Rebuilding test.out...\n"
 	@$(CC) $(CFLAGS) -c $(TSTDIR)$(MAIN) -o $(TSTDIR)$(MAIN:.c=.o)
 	@$(CC) $(OBJS) $(TSTDIR)$(MAIN:.c=.o) -lftprintf -L./ -o $(TEST)
+	./$(TEST)
+	@make clean
+	@printf "Done !\n"
+
+test:fclean $(NAME)
+	@printf "Rebuilding test.out...\n"
+	@$(CC) $(CFLAGS) -c $(TSTDIR)$(MAIN) -o $(TSTDIR)$(BONUS:.c=.o)
+	@$(CC) $(OBJS) $(TSTDIR)$(BONUS:.c=.o) -lftprintf -L./ -o $(TEST)
 	./$(TEST)
 	@make clean
 	@printf "Done !\n"

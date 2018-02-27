@@ -1,7 +1,7 @@
 #include "ft_printf.h"
 
 
-
+//TODO REMOVE
 #include <stdio.h>
 
 
@@ -19,7 +19,7 @@
 */
 
 static char		*ft_ivartoa_base(intmax_t n, char const *base, t_u8 bytes,
-									t_u8 sign)
+									t_u8 has_sign)
 {
 	t_varint	varint;
 
@@ -34,8 +34,8 @@ static char		*ft_ivartoa_base(intmax_t n, char const *base, t_u8 bytes,
 		varint.l = (long)n;
 	else
 		return (NULL);
-printf("varint.l : %lx\n\t\t\t", varint.l);
-	if (sign == 's')
+//printf("varint.l : %lx\n\t\t\t", varint.l);
+	if (has_sign == 's')
 		return (ft_imaxtoa_base(varint.l, base));
 	else if (sign == 'u')
 		return (ft_uimaxtoa_base(varint.l, base));
@@ -137,18 +137,21 @@ t_str			handle_int_type(t_format info, va_list args)
 	t_str	result;
 
 	if (info.len_flag == fl_hh)
-		result = build_int_str(info, (char)va_arg(args, int), 1);
+		result = build_int_str(info, (char)va_arg(args, int), BYTELEN_CHAR);
 	else if (info.len_flag == fl_h)
-		result = build_int_str(info, (short)va_arg(args, int), 2);
+		result = build_int_str(info, (short)va_arg(args, int), BYTELEN_SHORT);
 	else if (info.len_flag == fl_l)
-		result = build_int_str(info, (long)va_arg(args, long), 8);
+		result = build_int_str(info, (long)va_arg(args, long), BYTELEN_LONG);
 	else if (info.len_flag == fl_ll)
-		result = build_int_str(info, (long long)va_arg(args, long long), 8);	
+		result = build_int_str(info, (long long)va_arg(args, long long),
+								BYTELEN_LONGLONG);	
 	else if (info.len_flag == fl_j)
-		result = build_int_str(info, (intmax_t)va_arg(args, intmax_t), 8);
+		result = build_int_str(info, (intmax_t)va_arg(args, intmax_t),
+								BYTELEN_IMAX);
 	else if (info.len_flag == fl_z)
-		result = build_int_str(info, (size_t)va_arg(args, size_t), 8);
+		result = build_int_str(info, (size_t)va_arg(args, size_t),
+								BYTELEN_SIZET);
 	else
-		result = build_int_str(info, (int)va_arg(args, int), 4);
+		result = build_int_str(info, (int)va_arg(args, int), BYTELEN_INT);
 	return (result);
 }
