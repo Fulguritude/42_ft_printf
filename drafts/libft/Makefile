@@ -38,7 +38,9 @@ SRCS	=	ft_memset.c					\
 			ft_delete.c					\
 			ft_strlen.c					\
 			ft_strnew.c					\
+			ft_strcnew.c				\
 			ft_strlsnew.c				\
+			ft_strlscnew.c				\
 			ft_strdel.c					\
 			ft_strlsdel.c				\
 			ft_strrev.c					\
@@ -54,6 +56,7 @@ SRCS	=	ft_memset.c					\
 			ft_strnequ.c				\
 			ft_strchr.c					\
 			ft_strrchr.c				\
+			ft_strfind.c				\
 			ft_strstr.c					\
 			ft_strnstr.c				\
 			ft_strcat.c					\

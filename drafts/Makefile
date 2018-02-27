@@ -54,6 +54,7 @@ clean:
 	@$(MAKE) -C $(LFTDIR) clean
 	@rm -f $(OBJS)
 	@rm -f $(TSTDIR)$(MAIN:.c=.o)
+	@rm -f $(TSTDIR)$(BONUS:.c=.o)
 	@rm -f $(TEST)
 
 fclean:clean
@@ -65,16 +66,16 @@ re:fclean all
 
 #remove CFLAGS below before testing weirder undefined printf cases
 test:fclean $(NAME)
-	@printf "Rebuilding test.out...\n"
+	@printf "Rebuilding test.out for rule 'test'...\n"
 	@$(CC) $(CFLAGS) -c $(TSTDIR)$(MAIN) -o $(TSTDIR)$(MAIN:.c=.o)
 	@$(CC) $(OBJS) $(TSTDIR)$(MAIN:.c=.o) -lftprintf -L./ -o $(TEST)
 	./$(TEST)
 	@make clean
 	@printf "Done !\n"
 
-test:fclean $(NAME)
-	@printf "Rebuilding test.out...\n"
-	@$(CC) $(CFLAGS) -c $(TSTDIR)$(MAIN) -o $(TSTDIR)$(BONUS:.c=.o)
+bonus:fclean $(NAME)
+	@printf "Rebuilding test.out for rule 'bonus'...\n"
+	@$(CC) $(CFLAGS) -c $(TSTDIR)$(BONUS) -o $(TSTDIR)$(BONUS:.c=.o)
 	@$(CC) $(OBJS) $(TSTDIR)$(BONUS:.c=.o) -lftprintf -L./ -o $(TEST)
 	./$(TEST)
 	@make clean

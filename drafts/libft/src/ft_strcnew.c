@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strinsert.c                                     :+:      :+:    :+:   */
+/*   ft_strcnew.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
+/*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/26 19:04:14 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/02/26 19:14:46 by fulguritu        ###   ########.fr       */
+/*   Created: 2018/02/27 21:32:01 by tduquesn          #+#    #+#             */
+/*   Updated: 2017/11/28 11:44:43 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strinsert(char **dest, char const *src, t_u32 index)
+/*
+** ft_memalloc wipes memory with ft_bzero.
+*/
+char	*ft_strcnew(size_t size, char const c)
 {
-	char	*tmp;
+	char	*str;
 
-	tmp = ft_strsub(*dest, 0, index);
-	ft_strappend(&tmp, src);
-	ft_strappend(&tmp, (*dest) + index);
-	free(*dest);
-	*dest = tmp;
-	return (*dest);
+	if (!(str = (char*)malloc(size + 1)))
+		return (NULL);
+	str[size] = '\0';
+	ft_memset(str, c, size);
+	return (str);
 }

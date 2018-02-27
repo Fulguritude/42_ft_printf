@@ -10,9 +10,9 @@
 #define C_CYAN    "\x1b[36m"
 #define RESET     "\x1b[0m"
 
-# define VAL_1	123
-# define VAL_2	123456
-# define VAL_3	123456789
+# define VAL_1	-123 //123
+# define VAL_2	-123456 //123456
+# define VAL_3	123456789 //123456789
 
 
 /*
@@ -38,6 +38,10 @@
 **		found quickly. End all printf calls with \n to force flush the printf
 **		buffer to stdout and have stdout be coherent with current function call.
 **
+**	 -	Tests on zero are independent; do however change VAL_1 etc by negatives,
+**		large numbers, small numbers... As this is how the test suite was built
+**		out to work.
+**
 **	 -	Calling a va_arg() on a non-existing argument always causes a segfault.
 **
 **		Check debug versions of the code on 
@@ -46,7 +50,6 @@
 **
 ** ---------------------------------------------------------------------------
 */
-
 
 static void	check_retvals(int j, int *return_values)
 {
@@ -62,6 +65,34 @@ int main()
 	int j = 0;
 	int return_values[400];
 
+/*
+** Before setlocale
+*/
+
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf %%c L'é': %c\n", L'é');
+	  return_values[j++] =    printf("   printf %%c L'é': %c\n", L'é');
+	check_retvals(j, return_values);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf %%lc L'é': %lc\n", L'é');
+	  return_values[j++] =    printf("   printf %%lc L'é': %lc\n", L'é');
+	check_retvals(j, return_values);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf %%C L'é': %C\n", L'é');
+	  return_values[j++] =    printf("   printf %%C L'é': %C\n", L'é');
+	check_retvals(j, return_values);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf %%ls: %ls\n", L"résumé ls");
+	  return_values[j++] =    printf("   printf %%ls: %ls\n", L"résumé ls");
+	check_retvals(j, return_values);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf %%S: %S\n", L"résumé S");
+	  return_values[j++] =    printf("   printf %%S: %S\n", L"résumé S");
+	check_retvals(j, return_values);
+
+/*
+** After setlocale
+*/
 	setlocale(LC_ALL, "");
 
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
@@ -77,8 +108,8 @@ int main()
 	  return_values[j++] =    printf("   printf %d\n", VAL_1);
 	check_retvals(j, return_values);
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
-	  return_values[j++] = ft_printf("   %sf\n", "print");
-	  return_values[j++] =    printf("ft_%sf\n", "print");
+	  return_values[j++] = ft_printf("ft_%sf\n", "print");
+	  return_values[j++] =    printf("   %sf\n", "print");
 	check_retvals(j, return_values);
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_printf("ft_printf %#x\n", VAL_1);
@@ -106,12 +137,136 @@ int main()
 	  return_values[j++] =    printf("   printf %.0X\n", 0);
 	check_retvals(j, return_values);
 
+//	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_printf("ft_printf %.-4d\n", 0);
+//	  return_values[j++] =    printf("   printf %.-4d\n", 0);
+//	check_retvals(j, return_values);
+//	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_printf("ft_printf %.-4u\n", 0);
+//	  return_values[j++] =    printf("   printf %.-4u\n", 0);
+//	check_retvals(j, return_values);
+//	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_printf("ft_printf %.-4o\n", 0);
+//	  return_values[j++] =    printf("   printf %.-4o\n", 0);
+//	check_retvals(j, return_values);
+//	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_printf("ft_printf %.-4x\n", 0);
+//	  return_values[j++] =    printf("   printf %.-4x\n", 0);
+//	check_retvals(j, return_values);
+//	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_printf("ft_printf %.-4X\n", 0);
+//	  return_values[j++] =    printf("   printf %.-4X\n", 0);
+//	check_retvals(j, return_values);
+
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf %5.0d\n", 0);
+	  return_values[j++] =    printf("   printf %5.0d\n", 0);
+	check_retvals(j, return_values);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf %5.0u\n", 0);
+	  return_values[j++] =    printf("   printf %5.0u\n", 0);
+	check_retvals(j, return_values);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf %5.0o\n", 0);
+	  return_values[j++] =    printf("   printf %5.0o\n", 0);
+	check_retvals(j, return_values);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf %5.0x\n", 0);
+	  return_values[j++] =    printf("   printf %5.0x\n", 0);
+	check_retvals(j, return_values);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf %5.0X\n", 0);
+	  return_values[j++] =    printf("   printf %5.0X\n", 0);
+	check_retvals(j, return_values);
+
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf %+.0d\n", 0);
+	  return_values[j++] =    printf("   printf %+.0d\n", 0);
+	check_retvals(j, return_values);
+//	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_printf("ft_printf %+.0u\n", 0);
+//	  return_values[j++] =    printf("   printf %+.0u\n", 0);
+//	check_retvals(j, return_values);
+//	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_printf("ft_printf %+.0o\n", 0);
+//	  return_values[j++] =    printf("   printf %+.0o\n", 0);
+//	check_retvals(j, return_values);
+//	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_printf("ft_printf %+.0x\n", 0);
+//	  return_values[j++] =    printf("   printf %+.0x\n", 0);
+//	check_retvals(j, return_values);
+//	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_printf("ft_printf %+.0X\n", 0);
+//	  return_values[j++] =    printf("   printf %+.0X\n", 0);
+//	check_retvals(j, return_values);
+
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf % .0d\n", 0);
+	  return_values[j++] =    printf("   printf % .0d\n", 0);
+	check_retvals(j, return_values);
+//	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_printf("ft_printf % .0u\n", 0);
+//	  return_values[j++] =    printf("   printf % .0u\n", 0);
+//	check_retvals(j, return_values);
+//	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_printf("ft_printf % .0o\n", 0);
+//	  return_values[j++] =    printf("   printf % .0o\n", 0);
+//	check_retvals(j, return_values);
+//	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_printf("ft_printf % .0x\n", 0);
+//	  return_values[j++] =    printf("   printf % .0x\n", 0);
+//	check_retvals(j, return_values);
+//	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_printf("ft_printf % .0X\n", 0);
+//	  return_values[j++] =    printf("   printf % .0X\n", 0);
+//	check_retvals(j, return_values);
+
+//	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_printf("ft_printf %#.0d\n", 0);
+//	  return_values[j++] =    printf("   printf %#.0d\n", 0);
+//	check_retvals(j, return_values);
+//	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_printf("ft_printf %#.0u\n", 0);
+//	  return_values[j++] =    printf("   printf %#.0u\n", 0);
+//	check_retvals(j, return_values);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf %#.0o\n", 0);
+	  return_values[j++] =    printf("   printf %#.0o\n", 0);
+	check_retvals(j, return_values);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf %#.0x\n", 0);
+	  return_values[j++] =    printf("   printf %#.0x\n", 0);
+	check_retvals(j, return_values);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf %#.0X\n", 0);
+	  return_values[j++] =    printf("   printf %#.0X\n", 0);
+	check_retvals(j, return_values);
+
+//	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_printf("ft_printf %#5.0d\n", 0);
+//	  return_values[j++] =    printf("   printf %#5.0d\n", 0);
+//	check_retvals(j, return_values);
+//	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_printf("ft_printf %#5.0u\n", 0);
+//	  return_values[j++] =    printf("   printf %#5.0u\n", 0);
+//	check_retvals(j, return_values);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf %#5.0o\n", 0);
+	  return_values[j++] =    printf("   printf %#5.0o\n", 0);
+	check_retvals(j, return_values);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf %#5.0x\n", 0);
+	  return_values[j++] =    printf("   printf %#5.0x\n", 0);
+	check_retvals(j, return_values);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf %#5.0X\n", 0);
+	  return_values[j++] =    printf("   printf %#5.0X\n", 0);
+	check_retvals(j, return_values);
 
 //	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 //	  return_values[j++] = ft_printf("ft_printf %#-+05.5d and %#-+06.5d\n", VAL_2, VAL_1);
 //	  return_values[j++] =    printf("   printf %#-+05.5d and %#-+06.5d\n", VAL_2, VAL_1);
 //	check_retvals(j, return_values);
-
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_printf("ft_printf %+8.5d and %+8.5d\n", VAL_2, VAL_1);
 	  return_values[j++] =    printf("   printf %+8.5d and %+8.5d\n", VAL_2, VAL_1);

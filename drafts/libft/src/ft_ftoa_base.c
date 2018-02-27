@@ -19,21 +19,23 @@ static char		*ft_ftoa_base_exp(char const *base, t_u8 minus,
 	char	*tmp;
 
 	tmp = ft_uitoa_base(mantissa, base);
-	result = ft_strinsert(tmp, ".", 1);
+	result = ft_strinsert(&tmp, ".", 1);
 	free(tmp);
 	tmp = ft_itoa_base(exp, base);
 	if (tmp[0] != '-' && ft_strlen(tmp) < 2)
-		ft_strpad_left_inplace(tmp, base[0], 1);
+		ft_strprepend("+0", &tmp);
+	else if (tmp[0] != '-')
+		ft_strprepend("+", &tmp);		
 	else if (tmp[0] == '-' && ft_strlen(tmp) < 3)
 	{
 		tmp[0] = base[0];
-		ft_strprepend("-", tmp);
-	}	
-	ft_strappend(result, "\t");
-	ft_strappend(result, tmp);
+		ft_strprepend("-", &tmp);
+	}
+	ft_strappend(&result, "\t");
+	ft_strappend(&result, tmp);
 	free(tmp);
 	if (minus)
-		ft_strprepend(result, "-");
+		ft_strprepend("-", &result);
 	return (result);
 }
 
@@ -46,20 +48,20 @@ static char		*ft_ftoa_base_point(char const *base, t_u8 minus,
 	result = ft_uitoa_base(mantissa, base);
 	if (exp > 0)
 	{
-		ft_strpad_right_in_place(result, base[0], exp);
-		ft_strappend(result, ".");
+		ft_strpad_right_inplace(&result, base[0], exp);
+		ft_strappend(&result, ".");
 	}
 	else if (exp < 0 && (index = ft_strlen(result) - exp) > 0)
-		ft_strinsert(result, ".", index);
+		ft_strinsert(&result, ".", index);
 	else if (exp < 0 && index <= 0)
 	{
-		ft_strpad_left_inplace(result, base[0], -index);
-		ft_strprepend("0.", result);
+		ft_strpad_left_inplace(&result, base[0], -index);
+		ft_strprepend("0.", &result);
 	}
 	else
-		ft_strappend(result, ".");
+		ft_strappend(&result, ".");
 	if (minus)
-		ft_strprepend("-", result);
+		ft_strprepend("-", &result);
 	return (result);
 }
 
@@ -70,16 +72,16 @@ char			*ft_ftoa_base(float f, char const *base, char style)
 	t_u32	mantissa;
 	t_u8	minus;
 
-	minus = f >> 31;
-	exp = ((f << 1) >> 32) - 127;
-	mantissa = (f << 9) >> 9;
+	minus = (t_u32)f >> 31;
+	exp = (((t_u32)f << 1) >> 24) - 127;
+	mantissa = ((t_u32)f << 9) >> 9;
 	result = ft_strnew(0);
 	if (ft_isalpha(style))
 	{
-		result = ft_ftoa_base_exp(base, sign, exp, mantissa);
-		result[ft_strchar(result, '\t')] = style;
+		result = ft_ftoa_base_exp(base, minus, exp, mantissa);
+		result[ft_strfind(result, '\t')] = style;
 	}
 	else
-		result = ft_ftoa_base_point(base, sign, exp, mantissa);
+		result = ft_ftoa_base_point(base, minus, exp, mantissa);
 	return (result);
 }

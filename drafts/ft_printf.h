@@ -150,8 +150,8 @@ t_types			read_format_type(char const *fmt_part, t_format *info, int i);
 /*
 ** handlers.c
 **
-** static t_str		handle_uchar_type(t_len_flag len_flag, va_list args);
-** static t_str		handle_str_type(t_format info, va_list args);
+** static t_str		handle_uchar_type(t_len_flag len_flag, va_list args); //handler_utils_str.c
+** static t_str		handle_str_type(t_format info, va_list args); //handler_utils_str.c
 */
 
 t_str			handle_format(t_format info, char const *fmt, va_list args);
@@ -186,7 +186,7 @@ char			*build_utf8(wchar_t *unicode_str);
 ** static void	t_str_append(t_str *acc, t_str *next);
 */
 
-t_str			to_single_t_str(t_list *lststr);
-t_str			str_to_t_str(char const *str);
+t_str			to_single_t_str(t_list *lststr); //handlers?
+t_str			str_to_t_str(char const *str); //converters? 
 
 #endif

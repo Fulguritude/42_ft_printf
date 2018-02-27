@@ -12,12 +12,11 @@
 
 /*
 ** TODO
-** Fix strpad,
-** strlspad,
+** Fix strlspad,
 ** boolean functions,
 ** str_replace
 ** lstinsert
-** lstnew without copy DONE
+** strcnew
 ** lstpop with pointers ? and rename lstpopi ?
 ** add ft_puthex_llstelem to libft, maybe rename putlst_hex
 ** vim -c  sed \ti++; to \t++i;
@@ -56,10 +55,14 @@ typedef struct			s_list
 
 typedef union	u_varint
 {
-	t_u8			c;
-	t_u16			s;
-	t_u32			i;
-	t_u64			l;
+	t_s8			sc;
+	t_s16			ss;
+	t_s32			si;
+	t_s64			sl;
+	t_u8			uc;
+	t_u16			us;
+	t_u32			ui;
+	t_u64			ul;
 }				t_varint;
 
 typedef union	u_varfloat
@@ -67,6 +70,10 @@ typedef union	u_varfloat
 	float			f;
 	double			d;
 }				t_varfloat;
+
+# define ABS(X) (X < 0 ? -X : X)
+# define MAX(X, Y) (X < Y ? Y : X)
+# define MIN(X, Y) (X < Y ? X : Y)
 
 /*
 ** ============ Memory Functions ===========
@@ -294,15 +301,18 @@ char					*ft_ftoa(float f);
 
 /*
 ** Returns the standard representation of f as a string in the base "base".
+** Style specifies either exponential with an alphabetic char as exponent,
+** or dot notation is a non-alpha character is given.
 */
 
-char					*ft_ftoa_base(float f, char const *base);
+char					*ft_ftoa_base(float f, char const *base, char style);
 
 /*
 ** Returns the standard representation of lf as a string in the base "base".
+** Style specifies either exponential with an alphabetic char as exponent,
 */
 
-char					*ft_lftoa_base(double lf, char const *base);
+char					*ft_lftoa_base(double lf, char const *base, char style);
 
 /*
 ** =========== Character Functions ==========
@@ -380,10 +390,23 @@ size_t					ft_strlen(char const *str);
 char					*ft_strnew(size_t size);
 
 /*
-** Creates a 2D rectangle of newly allocated memory.
+** Returns a newly-allocated string of size 'size' set to 'c'.
 */
 
-char					**ft_strlsnew(t_u32 y, size_t x, char const c);
+char					*ft_strcnew(size_t size, char const c);
+
+/*
+** Returns a 2D rectangle of dimensions (y,x), 2D-null-terminated and set to 0.
+*/
+
+char					**ft_strlsnew(t_u32 y, size_t x);
+
+/*
+** Creates a 2D rectangle of newly allocated memory, all set to c,
+** all null-terminated.
+*/
+
+char					**ft_strlscnew(t_u32 y, size_t x, char const c);
 
 /*
 ** Deletes the string pointed to by 'ptr', freeing memory.
@@ -509,6 +532,12 @@ char					*ft_strchr(char const *str, int c);
 */
 
 char					*ft_strrchr(char const *str, int c);
+
+/*
+** Returns the first index at which c is found in str, or -1 if c is absent.
+*/
+
+int						ft_strfind(char const *str, int c);
 
 /*
 ** Returns the first occurence of the string 'sub' inside the given string

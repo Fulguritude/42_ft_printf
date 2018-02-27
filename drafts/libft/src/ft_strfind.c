@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strinsert.c                                     :+:      :+:    :+:   */
+/*   ft_strfind.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/26 19:04:14 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/02/26 19:14:46 by fulguritu        ###   ########.fr       */
+/*   Created: 2018/02/27 17:46:28 by fulguritu         #+#    #+#             */
+/*   Updated: 2018/02/27 17:48:49 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strinsert(char **dest, char const *src, t_u32 index)
+int		ft_strfind(char const *str, int c)
 {
-	char	*tmp;
+	int		i;
 
-	tmp = ft_strsub(*dest, 0, index);
-	ft_strappend(&tmp, src);
-	ft_strappend(&tmp, (*dest) + index);
-	free(*dest);
-	*dest = tmp;
-	return (*dest);
+	i = -1;
+	while (str[++i])
+		if (str[i] == c)
+			return (i);
+	return (-1);
 }

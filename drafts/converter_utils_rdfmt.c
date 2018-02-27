@@ -106,7 +106,7 @@ t_types			read_format_type(char const *fmt_part, t_format *info, int i)
 	t_types	result;
 
 	c = fmt_part[i];
-	info.type_char = c;
+	info->type_char = c;
 	result = c == '%' ? percent : no_type_error;
 	result = c == 'd' || c == 'i' || c == 'D' ? int_dec : result;
 	result = c == 'o' || c == 'O' ? int_uoct : result;
@@ -117,10 +117,8 @@ t_types			read_format_type(char const *fmt_part, t_format *info, int i)
 	result = c == 'B' ? int_ubin_u : result;
 	result = c == 'c' || c == 'C' ? uchar : result;
 	result = c == 's' || c == 'S' ? string : result;
-	result = c == 'a' || c == 'A' || c == 'e' || c == 'E' || c == 'f' ||
-			c == 'F' || c == 'g' || c == 'G') ? float_pt : result;
-	info->len_flag = (c == 'D' || c == 'O' || c == 'U' || c == 'p' ||
-			c == 'C'|| c == 'S') ? fl_l : info->len_flag;
+	result = ft_strfind("aAeEfFgG", c) != -1 ? float_pt : result;
+	info->len_flag = ft_strfind("DOUpCS", c) != -1 ? fl_l : info->len_flag;
 	if (c == 'p')
 		info->flags |= FL_HASH;
 	return (result);

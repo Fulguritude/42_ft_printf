@@ -10,6 +10,14 @@
 #define C_CYAN    "\x1b[36m"
 #define RESET     "\x1b[0m"
 
+static void	check_retvals(int j, int *return_values)
+{
+	(return_values[j - 1] == return_values[j - 2]) ?
+		printf(C_GREEN"\nReturn values EQUAL"RESET) :
+		printf(C_RED"\nReturn values UNEQUAL."RESET);
+	printf("\n");
+}
+
 int		main()
 {
 	float f	= 123.456789;

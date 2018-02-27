@@ -76,14 +76,6 @@ int				ft_vasprintf(char **res, const char *format, va_list args)
 	i = -1;
 	while (fmt_strls[++i])
 	{
-/*  //supprimer vu que printf ne considere pas cela comme une erreur vraiment 
-		if (convert_str(fmt_strls[i], res_lststr, args) == -1)
-		{
-			ft_strlsdel(&fmt_strls);
-			ft_lstdel(&res_lststr);
-			return (-1);
-		}
-*/
 ft_putstr("\n\t--Called fmt_str : \n\t\t");
 ft_putendl(fmt_strls[i]);
 ft_putstr("\n\t++Called fmt_str end.\n");

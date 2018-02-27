@@ -1,23 +1,23 @@
-static char	*ft_ftoa_varfloat(t_varfloat varf, char const *base,
-								t_u8 style, t_u8 is_dbl)
-{
-	
-}
+#include "ft_printf.h"
 
-static char	*handle_g_type(t_format info, varfloat_t varf, t_u8 is_dbl)
+
+//TODO REMOVE
+#include <stdio.h>
+
+static char	*handle_g_type(t_format info, double lf, int exp)
 {
 	char	*result;
 	char	*tmp;
 	t_u32	i;
 
-	if (exp < -4 || info.prec <= exp))
-		tmp = ft_ftoa_varfloat(f, DECIM, '\0', is_dbl);
+	if (exp < -4 || info.prec <= exp)
+		tmp = ft_lftoa_base(lf, DECIM, '\0');
 	else
-		tmp = ft_ftoa_varfloat(f, DECIM,
-									info.type_char == 'g' ? 'e' : 'E', is_dbl);
+		tmp = ft_lftoa_base(lf, DECIM,
+									info.type_char == 'g' ? 'e' : 'E');
 	i = 0;
 	while ((ft_isdigit(tmp[i]) || tmp[i] == '-' || tmp[i] == '.') &&
-			i < info.prec + (tmp[0] == '-') + 1)
+			i < (t_u32)(info.prec + (tmp[0] == '-') + 1))
 		++i;
 	result = ft_strsub(tmp, 0, i);
 	while (tmp[i - 1] == '0')
@@ -27,45 +27,59 @@ static char	*handle_g_type(t_format info, varfloat_t varf, t_u8 is_dbl)
 			break ;
 		}
 	result[i] = '\0';
-	info.type_char == 'g' ? ft_strappend(&result, tmp + ft_strchr(tmp, 'e')) :
-							ft_strappend(&result, tmp + ft_strchr(tmp, 'E'));
-//TODO WIDTH ??
+	info.type_char == 'g' ? ft_strappend(&result, tmp + ft_strfind(tmp, 'e')) :
+							ft_strappend(&result, tmp + ft_strfind(tmp, 'E'));
+//TODO WIDTH ?? PREC ??
 	free(tmp);
 	return (result);
 }
 
+static char	*handle_a_type(t_format info, double lf)
+{
+	char	*res;
+
+	if (info.type_char == 'a')
+	{
+		res = ft_lftoa_base(lf, HXLOW, 'p');
+		ft_strprepend("0x", &res);
+	}
+	else
+	{
+		res = ft_lftoa_base(lf, HXUPP, 'P');
+		ft_strprepend("0X", &res);
+	}
+	return (res);
+}
+
 t_str		handle_float_type(t_format info, va_list args)
 {
-	t_varfloat	varf;
-	t_u8		is_dbl;
+	double		lf;
 	char		*res;
 	int			exp;
 
-	is_dbl = (info.len_flag == fl_l || info.len_flag == fl_ll) ? 1 : 0;
-	varf.d = 0;
-	if (is_dbl)
-		varf.d = va_arg(args, double);
-	else
-		varf.f = va_arg(args, float);
-	exp = (int)(is_dbl ? ((varf.d << 1) >> 52) - 1023 :
-						((varf.d << 33) >> 56) - 127);
+	lf = 0;
+//if (info.len_flag == fl_l || info.len_flad == fl_ll)
+	lf = va_arg(args, double);
+printf("\t\t\tlf: %lx\n", (t_u64)lf);
+	exp = (int)((((t_u64)lf << 1) >> 52) - 1023); //Make a macro for he appropriate shift for readability ?
+printf("\t\t\texp: %x\n", (t_u32)exp); 
+//# define FLOAT_EXP(X) (((t_u64)X << 1) >> 52) - 1023
+//# define DOUBLE_EXP(X) (((t_u64)X << 33) >> 56) - 127
 	if (info.type_char == 'e')
-		res = ft_ftoa_varfloat(f, DECIM, 'e', is_dbl);
+		res = ft_lftoa_base(lf, DECIM, 'e');
 	else if (info.type_char == 'E')
-		res = ft_ftoa_varfloat(f, DECIM, 'E', is_dbl);
-	else if (info.type_char == 'a')
-		res = ft_strprepend("0x", ft_ftoa_varfloat(f, HXLOW, 'p', is_dbl));
-	else if (info.type_char == 'A')
-		res = ft_strprepend("0X", ft_ftoa_varfloat(f, HXUPP, 'P', is_dbl));
+		res = ft_lftoa_base(lf, DECIM, 'E');
+	else if (info.type_char == 'a' || info.type_char == 'A')
+		res = handle_a_type(info, lf);
+	else if (info.type_char == 'g' || info.type_char == 'G')
+		res = handle_g_type(info, lf, exp);
 	else if (info.type_char == 'f' || info.type_char == 'F')
 	{
-		res = ft_ftoa_varfloat(f, DECIM, '\0', is_dbl);
+		res = ft_lftoa_base(lf, DECIM, '\0');
 		
 
 
 	}
-	else if (info.type_char == 'g' || info.type_char == 'G')
-		res = handle_g_type(info, f, is_dbl);
 	else
 		res = ft_strdup("float_handler_error");
 	return (str_to_t_str(res));
