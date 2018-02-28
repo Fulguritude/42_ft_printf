@@ -15,6 +15,7 @@ LFT		=	libft.a
 
 CC		=	gcc
 CFLAGS	=	-Wall -Werror -Wextra
+DBFLAGS =	-fsanitize=address
 
 HDRDIR	=	./
 LFTDIR	=	./libft/
@@ -33,6 +34,7 @@ OBJS	=	$(SRCS:.c=.o)
 
 MAIN	=	main.c
 BONUS	=	main_bonus.c
+ASMAIN	=	main_asprintf.c
 TEST	=	test.out
 
 #dependencies are taken care of in libft's makefile.
@@ -55,6 +57,7 @@ clean:
 	@rm -f $(OBJS)
 	@rm -f $(TSTDIR)$(MAIN:.c=.o)
 	@rm -f $(TSTDIR)$(BONUS:.c=.o)
+	@rm -f $(TSTDIR)$(ASMAIN:.c=.o)
 	@rm -f $(TEST)
 
 fclean:clean
@@ -68,15 +71,23 @@ re:fclean all
 test:fclean $(NAME)
 	@printf "Rebuilding test.out for rule 'test'...\n"
 	@$(CC) $(CFLAGS) -c $(TSTDIR)$(MAIN) -o $(TSTDIR)$(MAIN:.c=.o)
-	@$(CC) $(OBJS) $(TSTDIR)$(MAIN:.c=.o) -lftprintf -L./ -o $(TEST)
+	@$(CC) $(OBJS) $(TSTDIR)$(MAIN:.c=.o) -lftprintf -L./ -lasan -o $(TEST)
 	./$(TEST)
 	@make clean
 	@printf "Done !\n"
 
 bonus:fclean $(NAME)
 	@printf "Rebuilding test.out for rule 'bonus'...\n"
-	@$(CC) $(CFLAGS) -c $(TSTDIR)$(BONUS) -o $(TSTDIR)$(BONUS:.c=.o)
-	@$(CC) $(OBJS) $(TSTDIR)$(BONUS:.c=.o) -lftprintf -L./ -o $(TEST)
+	@$(CC) $(CFLAGS) $(DBFLAGS) -c $(TSTDIR)$(BONUS) -o $(TSTDIR)$(BONUS:.c=.o)
+	@$(CC) $(OBJS) $(TSTDIR)$(BONUS:.c=.o) -lftprintf -L./ -lasan -o $(TEST)
+	./$(TEST)
+	@make clean
+	@printf "Done !\n"
+
+astest:fclean $(NAME)
+	@printf "Rebuilding test.out for rule 'astest'...\n"
+	@$(CC) $(CFLAGS) $(DBFLAGS) -c $(TSTDIR)$(ASMAIN) -o $(TSTDIR)$(ASMAIN:.c=.o)
+	@$(CC) $(OBJS) $(TSTDIR)$(ASMAIN:.c=.o) -lftprintf -L./ -lasan -o $(TEST)
 	./$(TEST)
 	@make clean
 	@printf "Done !\n"

@@ -44,6 +44,7 @@ SRCS	=	ft_memset.c					\
 			ft_strdel.c					\
 			ft_strlsdel.c				\
 			ft_strrev.c					\
+			ft_strhex.c					\
 			ft_strclr.c					\
 			ft_strdup.c					\
 			ft_strcdup.c				\
@@ -59,6 +60,7 @@ SRCS	=	ft_memset.c					\
 			ft_strfind.c				\
 			ft_strstr.c					\
 			ft_strnstr.c				\
+			ft_stristr.c				\
 			ft_strcat.c					\
 			ft_strncat.c				\
 			ft_strlcat.c				\
@@ -73,9 +75,13 @@ SRCS	=	ft_memset.c					\
 			ft_strappend.c				\
 			ft_strprepend.c				\
 			ft_strinsert.c				\
+			ft_strreplace.c				\
 			ft_strtrim.c				\
 			ft_strsplit.c				\
-			ft_strhex.c					\
+			ft_strsplitstr.c			\
+			ft_strremove.c				\
+			ft_strreplace.c				\
+			ft_strreplace_inplace.c		\
 			ft_strlsjoin.c				\
 			ft_strdivide.c				\
 			ft_str_countchar.c			\

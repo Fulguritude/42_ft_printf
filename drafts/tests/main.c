@@ -68,7 +68,10 @@ int main()
 /*
 ** Before setlocale
 */
-
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf %%c with 0 : |%c|\n", 0);
+	  return_values[j++] =    printf("   printf %%c with 0 : |%c|\n", 0);
+	check_retvals(j, return_values);
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_printf("ft_printf %%c L'é': %c\n", L'é');
 	  return_values[j++] =    printf("   printf %%c L'é': %c\n", L'é');

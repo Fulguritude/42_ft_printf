@@ -435,6 +435,13 @@ char					*ft_strdup(char const *str);
 char					*ft_strcdup(char const *str, char const c);
 
 /*
+** Returns a big-endian hexadecimal string of the elements of str considered
+** as unsigned char.
+*/
+
+char					*ft_strhex(char const *str);
+
+/*
 ** Returns a newly allocated string containing the same characters as
 ** 'str', in reverse order.
 */
@@ -552,6 +559,12 @@ char					*ft_strstr(char const *str, char const *sub);
 */
 
 char					*ft_strnstr(char const *str, char const *sub, size_t n);
+
+/*
+** Returns the index of the first occurrence of sub in str, or -1 upon failure.
+*/
+
+int						ft_stristr(char const *str, char const *sub);
 
 /*
 ** Compares the two given strings, and returns the first difference of
@@ -675,11 +688,33 @@ char					**ft_strsplit(char const *str, char c);
 char					**ft_split(char const *str, char const *sep_chars);
 
 /*
-** Returns a big-endian hexadecimal string of the elements of str considered
-** as unsigned char.
+** Returns an array of substrings of 'str', where 'sub' acts as a separator.
+** If "" is used as sub, will return a division into letters.
 */
 
-char					*ft_strhex(char const *str);
+char					**ft_strsplitstr(char const *str, char const *sub);
+
+/*
+** Returns a newly allocated version of str where all instances of "sub" 
+** have been removed.
+*/
+
+char					*ft_strremove(char const *str, char const *sub);
+
+/*
+** Returns a newly allocated version of str where all instances of "sub"
+** have been replaced by "rep".
+*/
+
+char					*ft_strreplace(char const *str, char const *sub,
+										char const *rep);
+
+/*
+** Edits "str" so that all instances of "sub" are replaced by "rep".
+*/
+
+void					ft_strreplace_inplace(char **a_str, char const *sub,
+										char const *rep);
 
 /*
 ** Returns a newly allocated string that is the sum of strings in strls, and
