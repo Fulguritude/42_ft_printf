@@ -91,3 +91,19 @@ astest:fclean $(NAME)
 	./$(TEST)
 	@make clean
 	@printf "Done !\n"
+
+vgastest:fclean $(NAME)
+	@printf "Rebuilding test.out for rule 'vgastest'...\n"
+	@$(CC) $(CFLAGS) -c $(TSTDIR)$(ASMAIN) -o $(TSTDIR)$(ASMAIN:.c=.o)
+	@$(CC) $(OBJS) $(TSTDIR)$(ASMAIN:.c=.o) -lftprintf -L./ -o $(TEST)
+	valgrind -v --track-origins=yes ./$(TEST)
+	@make clean
+	@printf "Done !\n"
+
+vgleakastest:fclean $(NAME)
+	@printf "Rebuilding test.out for rule 'vgleakastest'...\n"
+	@$(CC) $(CFLAGS) -c $(TSTDIR)$(ASMAIN) -o $(TSTDIR)$(ASMAIN:.c=.o)
+	@$(CC) $(OBJS) $(TSTDIR)$(ASMAIN:.c=.o) -lftprintf -L./ -o $(TEST)
+	valgrind -v --track-origins=yes --leak-check=full ./$(TEST)
+	@make clean
+	@printf "Done !\n"

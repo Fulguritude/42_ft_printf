@@ -40,10 +40,10 @@ static t_u32	count_distinct_sub_in_str(char const *str, char const *sub)
 
 char			*get_next_chunk(char const *str, char const *sub, t_u32 *i)
 {
+	char	*result;
 	t_u32	sub_len;
 	t_u32	str_len;
 	int		new_len;
-	char	*result;
 
 	sub_len = ft_strlen(sub);
 	str_len = ft_strlen(str);
@@ -73,11 +73,11 @@ char			**ft_strsplitstr(char const *str, char const *sub)
 	if (sub[0] == '\0')
 		return (ft_strdivide(str, 1));
 	reslen = count_distinct_sub_in_str(str, sub) + 1;
-	if (!(result = ft_ptrarrnew(reslen)))
+	if (!(result = (char**)ft_ptrarrnew(reslen)))
 		return (NULL);
 	i = 0;
 	j = 0;
-	if (reslen == 0)
+	if (reslen == 1)
 		result[0] = ft_strdup(str);
 	else
 		while (j < reslen && i < ft_strlen(str))

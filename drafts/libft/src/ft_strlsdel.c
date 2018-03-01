@@ -22,6 +22,7 @@ void	ft_strlsdel(char ***a_strls)
 		while ((*a_strls)[i])
 		{
 			ft_strdel((*a_strls) + i);
+			++i;
 		}
 		ft_memdel((void**)a_strls);
 	}

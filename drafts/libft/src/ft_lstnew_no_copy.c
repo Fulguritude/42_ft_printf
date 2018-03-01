@@ -17,7 +17,7 @@ t_list		*ft_lstnew_no_copy(void *content, size_t content_size)
 	t_list	*new_elem;
 
 	if (!(new_elem = (t_list*)malloc(sizeof(t_list))))
-		return (0);
+		return (NULL);
 	if (content)
 	{
 		new_elem->content = content;

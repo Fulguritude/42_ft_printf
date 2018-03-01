@@ -147,15 +147,17 @@ static void		handle_int_prec_n_flzero(char **a_str, t_format info,
 **  - if FL_SPACE or FL_PLUS, and no FL_MINUS, append ZEROS first
 */
 
-static t_str	build_int_str(t_format info, intmax_t n, t_u8 bytes)
+static t_str	*build_int_str(t_format info, intmax_t n, t_u8 bytes)
 {
 	char	*str;
 	int		digits;
-	t_str	result;
+	t_str	*result;
 
+	if (!(result = (t_str*)malloc(sizeof(t_str))))
+		return (NULL);
 //printf("val_to_str arg n is: %lx\n\t\t\t", n);
 	str = val_to_str(info, n, &digits, bytes);
-printf("build_int_str str: %s\n", str); //\t\t\t
+//printf("build_int_str str: %s\n", str); //\t\t\t
 //printf("\t\t\tbuild_int_str digits: %d\n", digits);
 	handle_int_prec_n_flzero(&str, info, digits);
 //printf("\t\t\tbuild_int_str prec or zero with width: %s\n", str);
@@ -166,17 +168,16 @@ printf("build_int_str str: %s\n", str); //\t\t\t
 			ft_strpad_right_inplace(&str, ' ', info.width - digits) :
 			ft_strpad_left_inplace(&str, ' ', info.width - digits);
 //printf("\t\t\tbuild_int_str str: %s\n", str);
-	result.data = ft_strdup(str);
-	free(str);
+	result->data = str;
 //printf("\t\t\tinfo.width : %d; digits : %d\n", info.width, digits);
-	result.len = MAX(info.width, digits);
-//printf("\t\t\tbuild_int_str result: data = %s ; len = %lu\n", result.data, result.len);
+	result->len = MAX(info.width, digits);
+//printf("\t\t\tbuild_int_str result: data = %s ; len = %lu\n", result->data, result->len);
 	return (result);
 }
 
-t_str			handle_int_type(t_format info, va_list args)
+t_str			*handle_int_type(t_format info, va_list args)
 {
-	t_str	result;
+	t_str	*result;
 
 	if (info.len_flag == fl_hh)
 		result = build_int_str(info, (char)va_arg(args, int), BYTELEN_CHAR);

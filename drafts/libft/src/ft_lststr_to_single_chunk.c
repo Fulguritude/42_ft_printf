@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lststr_to_single_chunk.c                        :+:      :+:    :+:   */
+/*   ft_lststrfold.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,23 +12,7 @@
 
 #include "libft.h"
 
-/*static void	ft_lstmemfold(t_list *lst, size_t *size_acc)
-{
-	if (!size_acc)
-		return ;
-	while (lst)
-	{
-		*size_acc += lst->content_size;
-		lst = lst->next;
-	}
-}
-
-static void	ft_pcat(char **a, char **b)
-{
-	
-}*/
-
-t_list		*ft_lststr_to_single_chunk(t_list *lst)
+t_list		*ft_lststrfold(t_list *lst)
 {
 	char	*res_str;
 	size_t	tot_size;

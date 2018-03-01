@@ -132,7 +132,8 @@ int				ft_vasprintf(char **res, const char *format, va_list args);
 */
 
 char			**format_to_strls(char const *format);
-void			convert_str(char *fmt_part, t_list **a_lststr, va_list args);
+void			convert_str(char const *fmt_part, t_list **a_lststr,
+							va_list args);
 t_format		read_format(char const *fmt_part);
 
 /*
@@ -150,11 +151,11 @@ t_types			read_format_type(char const *fmt_part, t_format *info, int i);
 /*
 ** handlers.c
 **
-** static t_str		handle_uchar_type(t_len_flag len_flag, va_list args); //handler_utils_str.c
-** static t_str		handle_str_type(t_format info, va_list args); //handler_utils_str.c
+** static t_str		*handle_uchar_type(t_len_flag len_flag, va_list args); //handler_utils_str.c
+** static t_str		*handle_str_type(t_format info, va_list args); //handler_utils_str.c
 */
 
-t_str			handle_format(t_format info, char const *fmt, va_list args);
+t_str			*handle_format(t_format info, char const *fmt, va_list args);
 
 /*
 ** handler_utils_int.c
@@ -164,13 +165,13 @@ t_str			handle_format(t_format info, char const *fmt, va_list args);
 ** static t_str	build_int_str(t_format info, intmax_t n)
 */
 
-t_str			handle_int_type(t_format info, va_list args);
+t_str			*handle_int_type(t_format info, va_list args);
 
 /*
 ** handler_utils_float.c
 */
 
-t_str			handle_float_type(t_format info, va_list args);
+t_str			*handle_float_type(t_format info, va_list args);
 
 /*
 ** handler_utils_unicode.c
@@ -186,7 +187,8 @@ char			*build_utf8(wchar_t *unicode_str);
 ** static void	t_str_append(t_str *acc, t_str *next);
 */
 
+void			del_t_str(void *content, size_t content_size);
 t_str			to_single_t_str(t_list *lststr); //handlers?
-t_str			str_to_t_str(char const *str); //converters? 
+t_str			*str_to_t_str(char const *str); //converters? 
 
 #endif

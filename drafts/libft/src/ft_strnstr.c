@@ -29,9 +29,9 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 				return ((char*)big + i);
 			if (i + j >= len)
 				return (NULL);
-			j++;
+			++j;
 		}
-		i++;
+		++i;
 	}
 	return (NULL);
 }

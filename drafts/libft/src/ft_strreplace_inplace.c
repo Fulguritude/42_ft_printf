@@ -17,6 +17,6 @@ void	ft_strreplace_inplace(char **a_str, char const *sub, char const *rep)
 	char	*tmp;
 
 	tmp = ft_strreplace(*a_str, sub, rep);
-	free(*a_str);
+	ft_strdel(a_str);
 	*a_str = tmp;
 }

@@ -12,20 +12,20 @@
 
 #include "libft.h"
 
-static void	ft_strnb_charnb_in_strls(const char **str_ls, int *w_nb, int *c_nb)
+static void	ft_strnb_charnb_in_strls(const char **strls, int *w_nb, int *c_nb)
 {
 	int str_at;
 
 	str_at = 0;
-	while (str_ls[str_at])
+	while (strls[str_at])
 	{
-		*(c_nb) += ft_strlen(str_ls[str_at]);
+		*(c_nb) += ft_strlen(strls[str_at]);
 		str_at++;
 	}
 	*w_nb = str_at;
 }
 
-static void	ft_build_str(char *dest, const char **str_ls, const char *sep)
+static void	ft_build_str(char *dest, char const **strls, char const *sep)
 {
 	int i;
 	int words;
@@ -35,19 +35,19 @@ static void	ft_build_str(char *dest, const char **str_ls, const char *sep)
 	i = 0;
 	sep_i = 0;
 	words = -1;
-	while (str_ls[++words])
+	while (strls[++words])
 	{
 		chars = 0;
-		while (str_ls[words][chars])
-			dest[i++] = str_ls[words][chars++];
+		while (strls[words][chars])
+			dest[i++] = strls[words][chars++];
 		sep_i = 0;
-		while (sep[sep_i] && str_ls[words + 1])
+		while (sep[sep_i] && strls[words + 1])
 			dest[i++] = sep[sep_i++];
 	}
 	dest[i] = '\0';
 }
 
-char		*ft_strlsjoin(const char **strls, const char *sep)
+char		*ft_strlsjoin(char const **strls, char const *sep)
 {
 	char	*str;
 	int		strls_str_nb;
@@ -57,10 +57,12 @@ char		*ft_strlsjoin(const char **strls, const char *sep)
 
 	if (!strls || !sep)
 		return (NULL);
+	strls_str_nb = 0;
+	strls_char_nb = 0;
 	ft_strnb_charnb_in_strls(strls, &strls_str_nb, &strls_char_nb);
 	total_sep_char_nb = (strls_str_nb - 1) * ft_strlen(sep);
 	total_char_nb = total_sep_char_nb + strls_char_nb;
-	if (!(str = (char*)malloc((total_char_nb + 1) * sizeof(*str))))
+	if (!(str = ft_strnew(total_char_nb + 1)))
 		return (NULL);
 	ft_build_str(str, strls, sep);
 	return (str);

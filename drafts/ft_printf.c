@@ -44,7 +44,7 @@ int				ft_vprintf_fd(int fd, const char *format, va_list args)
 	{
 		if (write(fd, str, status) == -1)
 			return (-1);
-		free(str);
+		ft_strdel(&str);
 	}
 	return (status);
 }
@@ -76,17 +76,17 @@ int				ft_vasprintf(char **res, const char *format, va_list args)
 	i = -1;
 	while (fmt_strls[++i])
 	{
-ft_putstr("\n\t--Called fmt_str : \n\t\t");
-ft_putendl(fmt_strls[i]);
-ft_putstr("\n\t++Called fmt_str end.\n");
+//ft_putstr("\n\t--Called fmt_str : \n\t\t");
+//ft_putendl(fmt_strls[i]);
+//ft_putstr("\n\t++Called fmt_str end.\n");
 		convert_str(fmt_strls[i], &res_lststr, args);
-ft_putstr("\n\t--Reslst_str : \n\t\t");
-ft_putendl(((t_str*)(ft_lstget(res_lststr, i)->content))->data);
-ft_putstr("\n\t++Reslst_str end.\n");
+//ft_putstr("\n\t--Reslst_str : \n\t\t");
+//ft_putendl(((t_str*)(ft_lstget(res_lststr, i)->content))->data);
+//ft_putstr("\n\t++Reslst_str end.\n");
 	}
 	tmp_res = to_single_t_str(res_lststr);
 	*res = tmp_res.data;
 	ft_strlsdel(&fmt_strls);
-	ft_lstdel(&res_lststr, ft_delete);
+	ft_lstdel(&res_lststr, del_t_str);
 	return (tmp_res.len);
 }

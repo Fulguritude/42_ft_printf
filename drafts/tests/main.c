@@ -11,8 +11,8 @@
 #define RESET     "\x1b[0m"
 
 # define VAL_1	-123 //123
-# define VAL_2	-123456 //123456
-# define VAL_3	123456789 //123456789
+# define VAL_2	123456 //-123456
+# define VAL_3	1234567890123 //1234567890123
 
 
 /*
@@ -61,10 +61,12 @@ static void	check_retvals(int j, int *return_values)
 
 int main()
 {
-	int i = -1;
-	int j = 0;
-	int return_values[400];
+	int 		i = -1;
+	int 		j = 0;
+	int 		return_values[400];
+	t_varint	vint;
 
+	vint.ul = VAL_3;
 /*
 ** Before setlocale
 */
@@ -266,6 +268,7 @@ int main()
 	  return_values[j++] =    printf("   printf %#5.0X\n", 0);
 	check_retvals(j, return_values);
 
+
 //	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 //	  return_values[j++] = ft_printf("ft_printf %#-+05.5d and %#-+06.5d\n", VAL_2, VAL_1);
 //	  return_values[j++] =    printf("   printf %#-+05.5d and %#-+06.5d\n", VAL_2, VAL_1);
@@ -362,6 +365,39 @@ printf("\n\n\n");
 //	  return_values[j++] =    printf("   printf: %hhs\n", "rasuma hhs");
 //	check_retvals(j, return_values);
 
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf: %s gives %hhd\n", "%hhd", vint.sc);
+	  return_values[j++] =    printf("   printf: %s gives %hhd\n", "%hhd", vint.sc);
+	check_retvals(j, return_values);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf: %s gives %hd\n", "%hd", vint.ss);
+	  return_values[j++] =    printf("   printf: %s gives %hd\n", "%hd", vint.ss);
+	check_retvals(j, return_values);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf: %s gives %ld\n", "%ld", vint.sl);
+	  return_values[j++] =    printf("   printf: %s gives %ld\n", "%ld", vint.sl);
+	check_retvals(j, return_values);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf: %s gives %lld\n", "%lld", (long long) vint.sl);
+	  return_values[j++] =    printf("   printf: %s gives %lld\n", "%lld", (long long) vint.sl);
+	check_retvals(j, return_values);
+
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf: %s gives %hhu\n", "%hhu", vint.uc);
+	  return_values[j++] =    printf("   printf: %s gives %hhu\n", "%hhu", vint.uc);
+	check_retvals(j, return_values);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf: %s gives %hu\n", "%hu", vint.us);
+	  return_values[j++] =    printf("   printf: %s gives %hu\n", "%hu", vint.us);
+	check_retvals(j, return_values);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf: %s gives %lu\n", "%lu", vint.ul);
+	  return_values[j++] =    printf("   printf: %s gives %lu\n", "%lu", vint.ul);
+	check_retvals(j, return_values);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_printf("ft_printf: %s gives %llu\n", "%llu", (long long)vint.ul);
+	  return_values[j++] =    printf("   printf: %s gives %llu\n", "%llu", (long long)vint.ul);
+	check_retvals(j, return_values);
 
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_printf("ft_printf: %s gives %.5s\n", "%.5s", "ft_printf");
@@ -653,20 +689,20 @@ printf("\n\n");
 //	  return_values[j++] =    printf("   printf: %s gives %0.2d\n", "%0.2d", VAL_1);
 //	check_retvals(j, return_values);
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
-	  return_values[j++] = ft_printf("ft_printf: %s gives %2d\n", "%2d", VAL_3);
-	  return_values[j++] =    printf("   printf: %s gives %2d\n", "%2d", VAL_3);
+	  return_values[j++] = ft_printf("ft_printf: %s gives %2d\n", "%2d", VAL_2);
+	  return_values[j++] =    printf("   printf: %s gives %2d\n", "%2d", VAL_2);
 	check_retvals(j, return_values);
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
-	  return_values[j++] = ft_printf("ft_printf: %s gives %.3d\n", "%.3d", VAL_3);
-	  return_values[j++] =    printf("   printf: %s gives %.3d\n", "%.3d", VAL_3);
+	  return_values[j++] = ft_printf("ft_printf: %s gives %.3d\n", "%.3d", VAL_2);
+	  return_values[j++] =    printf("   printf: %s gives %.3d\n", "%.3d", VAL_2);
 	check_retvals(j, return_values);
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
-	  return_values[j++] = ft_printf("ft_printf: %s gives %2.3d\n", "%2.3d", VAL_3);
-	  return_values[j++] =    printf("   printf: %s gives %2.3d\n", "%2.3d", VAL_3);
+	  return_values[j++] = ft_printf("ft_printf: %s gives %2.3d\n", "%2.3d", VAL_2);
+	  return_values[j++] =    printf("   printf: %s gives %2.3d\n", "%2.3d", VAL_2);
 	check_retvals(j, return_values);
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
-	  return_values[j++] = ft_printf("ft_printf: %s gives %4.3d\n", "%4.3d", VAL_3);
-	  return_values[j++] =    printf("   printf: %s gives %4.3d\n", "%4.3d", VAL_3);
+	  return_values[j++] = ft_printf("ft_printf: %s gives %4.3d\n", "%4.3d", VAL_2);
+	  return_values[j++] =    printf("   printf: %s gives %4.3d\n", "%4.3d", VAL_2);
 	check_retvals(j, return_values);
 
 

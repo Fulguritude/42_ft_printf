@@ -88,8 +88,7 @@ t_len_flag		read_format_len_flag(char const *fmt_part, int *i)
 	else if (ft_in_base(fmt_part[*i], LGTHS) != -1)
 		return (incoherent_len_flag);
 	if (count == 2 && ((len_flag_c != 'l' && len_flag_c != 'h') ||
-						len_flag_c != fmt_part[*i] ||
-						(ft_in_base(fmt_part[*i + 1], LGTHS) != -1)))
+						(ft_in_base(fmt_part[*i], LGTHS) != -1)))
 		return (incoherent_len_flag);
 	if (count == 2)
 		return (len_flag_c == 'l' ? fl_ll : fl_hh);
