@@ -19,7 +19,7 @@ char	*ft_strinsert(char **dest, char const *src, t_u32 index)
 	tmp = ft_strsub(*dest, 0, index);
 	ft_strappend(&tmp, src);
 	ft_strappend(&tmp, (*dest) + index);
-	free(*dest);
+	ft_strdel(dest);
 	*dest = tmp;
 	return (*dest);
 }

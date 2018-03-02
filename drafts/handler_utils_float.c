@@ -57,15 +57,37 @@ t_str		*handle_float_type(t_format info, va_list args)
 	char		*tmp;
 	int			exp;
 	t_str		*result;
+	t_u64		extract;
 
 	lf = 0;
 //if (info.len_flag == fl_l || info.len_flad == fl_ll)
 	lf = va_arg(args, double);
-printf("\t\t\tlf: %lx\n", (t_u64)lf);
-	exp = (int)((((t_u64)lf << 1) >> 52) - 1023); //Make a macro for he appropriate shift for readability ?
-printf("\t\t\texp: %x\n", (t_u32)exp); 
+	extract = 0;
+	ft_memcpy(&extract, &lf, 8);;
+printf("\tlf u64: %#lx\n", extract);
+printf("\tlf hex: %la\n", lf);
+printf("\tlf exp: %le\n", lf);
+printf("\tlf dot: %.5lf\n", lf);
+	exp = (int)((((extract) << 1) >> 53) - 1023); //Make a macro for he appropriate shift for readability ?
+printf("\texp: %d\n", exp); 
 //# define FLOAT_EXP(X) (((t_u64)X << 1) >> 52) - 1023
 //# define DOUBLE_EXP(X) (((t_u64)X << 33) >> 56) - 127
+
+	t_u8	minus;
+	t_u64	mantissa;
+
+	minus = extract >> 63;
+	exp = ((extract << 1) >> 53) - 1023;
+	mantissa = ((extract << 12) >> 12) | 0x10000000000000;
+printf("\tminus = %hhd\n\texp2 = %d\n\tmantissa = %lx\n", minus, exp, mantissa);
+
+	char arr[8];
+	ft_memcpy(arr, &lf, 8);
+printf("\n\tarr = %#lx\n", *((unsigned long *)arr));
+	char * str = ft_memhex(arr, 8);
+printf("\tarr = %s\n", str);
+ft_strdel(&str);
+
 	if (info.type_char == 'e')
 		tmp = ft_lftoa_base(lf, DECIM, 'e');
 	else if (info.type_char == 'E')
@@ -87,6 +109,24 @@ printf("\t\t\texp: %x\n", (t_u32)exp);
 	free(tmp);
 	return (result);
 }
+
+
+/*
+** Our double: 
+** in hex_fp : -0x1.123456789abcdp+1010
+** in memory :	cdab8967452311ff (little endian)
+** in hex:		ff1123456789abcd
+** in binary : 1111111100010001001000110100010101100111100010011010101111001101
+**	where:
+** 		sign =	1
+** 		exp =	11111110001 (1010 + 1023 is 11111110001 in binary; 11 b)
+**			 	7F1 (hex)
+** 		mantissa = 0001001000110100010101100111100010011010101111001101 (52 b)
+**				   123456789ABCD
+*/
+
+
+
 
 /*
 
@@ -162,11 +202,14 @@ Field width
               hexadecimal notation (using the letters abcdef) in the style [-]0xh.hhhhp±; for A  conversion
               the  prefix 0X, the letters ABCDEF, and the exponent separator P is used.  There is one hexa‐
               decimal digit before the decimal point, and the number of digits after it  is  equal  to  the
-              precision.   The  default  precision  suffices for an exact represultentation of the value if an
-              exact represultentation in base 2 exists and otherwise is sufficiently large to distinguish val‐
+              precision.   The  default  precision  suffices for an exact representation of the value if an
+              exact representation in base 2 exists and otherwise is sufficiently large to distinguish val‐
               ues of type double.  The digit before the decimal point is unspecified for nonnormalized num‐
               bers, and nonzero but otherwise unspecified for normalized numbers.
-
+		=> hexadecimal floating-point constant http://www.exploringbinary.com/hexadecimal-floating-point-constants/
+			=> TODO code this hex_fp_cst format in lftoa
+		=> digits after p represent a power of 2 written in base 10, neither are base sixteen. I suppose 
+				they picked the letter p because of "power".  
 
 %m ?
 

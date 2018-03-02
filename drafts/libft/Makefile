@@ -167,18 +167,24 @@ GREEN	=	"\033[0;32m"
 #$^ is a call to the string of the current dependencies
 #$< is a call to the string of the first dependency in case of multiple deps
 
+
+mkstruct:
+	@mkdir -p $(HDRDIR)
+	@mkdir -p $(SRCDIR)
+	@mkdir -p $(OBJDIR)
+
 $(OBJDIR)%.o: $(SRCDIR)%.c
 	@printf "Compiling file: "$@" -> "$(RED)
 	@$(CC) $(CFLAGS) -c $< -I$(HDRDIR) -o $@
 	@printf $(GREEN)"OK!"$(RESET)"\n"
 
-$(NAME): $(addprefix $(OBJDIR),$(OBJS))
+$(NAME):mkstruct $(addprefix $(OBJDIR),$(OBJS))
 	@printf "Compiling library: "$@" -> "$(RED)
-	@ar -rc $@ $^
+	@ar -rc $@ $(addprefix $(OBJDIR),$(OBJS))
 	@ranlib $@
 	@printf $(GREEN)"OK!"$(RESET)"\n"
 
-all: $(NAME)
+all:mkstruct $(NAME)
 
 clean:
 	@printf "Calling libft clean...\n"

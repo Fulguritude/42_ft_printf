@@ -3,6 +3,7 @@
 #endif
 #include "../ft_printf.h"
 #include <stdio.h>
+#include <float.h>
 
 #define C_RED     "\x1b[31m"
 #define C_GREEN   "\x1b[32m"
@@ -43,6 +44,9 @@
 **		large numbers, small numbers... As this is how the test suite was built
 **		out to work. Some errors may arise for field length of number. Use
 **		t_varint union provided.
+**
+**	 -	Normalized floats refer to floats expressed as sign-exp-mantissa.
+**		Denormalized floats are reserved, special values (NaN, +Inf, -Inf, etc).
 **
 **	 -	Calling a va_arg() on a non-existing argument always causes a segfault.
 **
@@ -97,8 +101,8 @@ static int	check_retvals(int j, int *return_values, char **a_str1, char *str2)
 
 int		main()
 {
-	//float 	f	= 123.456789;
-	double 	d = 1234567.8987654321;
+	float 	f =   0xf.edcba012345p-64; //other vals: 123.456789;
+	double 	d =  -0x1.123456789abcdp+1010; //other vals: 1234567.8987654321;
 	char	*str1 = NULL;
 	char	*str2 = NULL;
 	int		i = -1;
@@ -107,11 +111,28 @@ int		main()
 
 	printf(C_BLUE"\nTesting bonuses that can be compared to printf."RESET); printf("\n");
 
-#if 0
+	double	plus_inf = DBL_MAX;
+	double	minus_inf = -DBL_MAX;
+	double	mach_err = DBL_EPSILON;
+
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %lf\n", "%lf", minus_inf);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %lf\n", "%lf", minus_inf);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %lf\n", "%lf", plus_inf);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %lf\n", "%lf", plus_inf);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %lf\n", "%lf", mach_err);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %lf\n", "%lf", mach_err);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %f\n", "%f", f);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %f\n", "%f", f);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %.0f\n", "%.0f", f);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %.0f\n", "%.0f", f);
@@ -343,7 +364,6 @@ int		main()
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %-20.3g\n", "%-20.3g", f);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %-20.3g\n", "%-20.3g", f);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
-#endif
 
 /*
 ** fl_l
@@ -637,6 +657,16 @@ printf("\n\n");
 	printf(C_BLUE"Testing binary %%b: "RESET); printf("\n");
 	ft_printf("\t%b\n", 0xAAAAAAAA);
 	printf("Expected :\n\t10101010101010101010101010101010\n\n"); 
+
+	printf(C_BLUE"Testing binary %%#b: "RESET); printf("\n");
+	ft_printf("\t%#b\n", 0xAAAAAAAA);
+	printf("Expected :\n\t0b10101010101010101010101010101010\n\n");
+	printf(C_BLUE"Testing binary %%B: "RESET); printf("\n");
+	ft_printf("\t%B\n", 0xAAAAAAAA);
+	printf("Expected :\n\t10101010101010101010101010101010\n\n");
+	printf(C_BLUE"Testing binary %%#B: "RESET); printf("\n");
+	ft_printf("\t%#B\n", 0xAAAAAAAA);
+	printf("Expected :\n\t0B10101010101010101010101010101010\n\n"); 
 
 # if 0
 	printf(C_BLUE"Testing non-printables %r: "RESET); prinft("\n");
