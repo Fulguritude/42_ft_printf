@@ -43,11 +43,14 @@
 
 # define ALL_SYMBOLS "#0- +pdDibBoOuUxXcCsSeEfFgGaA%.0123456789hljz"
 
-# define BINAR "01"
-# define OCTAL "01234567"
-# define DECIM "0123456789"
-# define HXLOW "0123456789abcdef"
-# define HXUPP "0123456789ABCDEF"
+# ifndef __BASES__
+#  define __BASES__
+#  define BINAR "01"
+#  define OCTAL "01234567"
+#  define DECIM "0123456789"
+#  define HXLOW "0123456789abcdef"
+#  define HXUPP "0123456789ABCDEF"
+# endif
 
 # define FL_HASH 0x1
 # define FL_PLUS 0x2

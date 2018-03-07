@@ -117,6 +117,9 @@ int		main()
 
 	printf(C_BLUE"\nTesting bonuses that can be compared to printf."RESET); printf("\n");
 
+/*
+** TODO Verify all values
+*/
 	double	plus_inf = 0x0.000000000000p-1;
 	double	plus_zero = 0x0.000000000000p+0;
 	double	dbl_max = DBL_MAX;
@@ -147,8 +150,8 @@ int		main()
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %lf\n", "%lf", plus_zero);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
-	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %lf\n", "%lf", not_a_nb);
-	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %lf\n", "%lf", not_a_nb);
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: test NaN: %s gives %lf\n", "%lf", not_a_nb);
+	  return_values[j++] =    asprintf(&str2, "   printf: test NaN: %s gives %lf\n", "%lf", not_a_nb);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %lf\n", "%lf", dbl_min);
@@ -165,7 +168,6 @@ int		main()
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %f\n", "%f", f);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %f\n", "%f", f);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
-
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %.0f\n", "%.0f", f);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %.0f\n", "%.0f", f);
@@ -201,6 +203,10 @@ int		main()
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %20f\n", "%20f", f);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %20f\n", "%20f", f);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %020f\n", "%020f", f);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %020f\n", "%020f", f);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %20.15f\n", "%20.15f", f);
@@ -263,6 +269,10 @@ int		main()
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %20e\n", "%20e", f);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %020e\n", "%020e", f);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %020e\n", "%020e", f);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %20.15e\n", "%20.15e", f);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %20.15e\n", "%20.15e", f);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
@@ -323,6 +333,10 @@ int		main()
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %20a\n", "%20a", f);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %020a\n", "%020a", f);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %020a\n", "%020a", f);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %20.15a\n", "%20.15a", f);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %20.15a\n", "%20.15a", f);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
@@ -380,6 +394,10 @@ int		main()
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %20g\n", "%20g", f);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %20g\n", "%20g", f);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %020g\n", "%020g", f);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %020g\n", "%020g", f);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %20.15g\n", "%20.15g", f);
@@ -443,6 +461,10 @@ int		main()
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %20lf\n", "%20lf", d);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %020lf\n", "%020lf", d);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %020lf\n", "%020lf", d);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %20.15lf\n", "%20.15lf", d);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %20.15lf\n", "%20.15lf", d);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
@@ -501,6 +523,10 @@ int		main()
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %20le\n", "%20le", d);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %20le\n", "%20le", d);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %020le\n", "%020le", d);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %020le\n", "%020le", d);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %20.15le\n", "%20.15le", d);
@@ -563,6 +589,10 @@ int		main()
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %20la\n", "%20la", d);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %020la\n", "%020la", d);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %020la\n", "%020la", d);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %20.15la\n", "%20.15la", d);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %20.15la\n", "%20.15la", d);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
@@ -620,6 +650,10 @@ int		main()
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %20lg\n", "%20lg", d);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %20lg\n", "%20lg", d);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %020lg\n", "%020lg", d);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %020lg\n", "%020lg", d);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %20.15lg\n", "%20.15lg", d);

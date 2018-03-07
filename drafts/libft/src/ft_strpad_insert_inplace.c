@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_strpad_insert_inplace.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
+/*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/17 21:31:49 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/30 18:59:25 by tduquesn         ###   ########.fr       */
+/*   Created: 2018/03/07 19:23:03 by fulguritu         #+#    #+#             */
+/*   Updated: 2018/03/07 19:29:49 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_itoa(long n)
+void		ft_strpad_insert_inplace(char **a_str, char const c,
+										t_u32 start, size_t len)
 {
-	return (ft_itoa_base(n, DECIM));
+	char	*tmp;
+
+	tmp = ft_strcnew(len, c);
+	ft_strinsert(a_str, tmp, start);
+	ft_strdel(&tmp);
 }

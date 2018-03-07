@@ -21,8 +21,8 @@ char	*ft_strhex(const char *str)
 
 	if (!str)
 		return (NULL);
-	hex_base = "0123456789ABCDEF";
-	if (!(new_str = malloc(ft_strlen(str) * 2 + 1)))
+	hex_base = HXUPP;
+	if (!(new_str = ft_strnew(ft_strlen(str) * 2)))
 		return (NULL);
 	i = 0;
 	j = 0;
@@ -30,7 +30,7 @@ char	*ft_strhex(const char *str)
 	{
 		new_str[j++] = hex_base[(t_u8)str[i] / 16];
 		new_str[j++] = hex_base[(t_u8)str[i] % 16];
-		i++;
+		++i;
 	}
 	new_str[j] = '\0';
 	return (new_str);

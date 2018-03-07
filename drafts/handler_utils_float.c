@@ -10,7 +10,7 @@ static char	*handle_g_type(t_format info, double lf, int exp)
 	char	*tmp;
 	t_u32	i;
 
-	if (exp < -4 || info.prec <= exp)
+	if (exp < -4 || info.prec <= exp) //exponent after conversion, not before
 		tmp = ft_lftoa_base(lf, DECIM, '\0');
 	else
 		tmp = ft_lftoa_base(lf, DECIM,
@@ -20,34 +20,45 @@ static char	*handle_g_type(t_format info, double lf, int exp)
 			i < (t_u32)(info.prec + (tmp[0] == '-') + 1))
 		++i;
 	result = ft_strsub(tmp, 0, i);
-	while (tmp[i - 1] == '0')
-		if (tmp[--i] == '.')
-		{
-			--i;
-			break ;
-		}
-	result[i] = '\0';
+	if ((i = ft_in_base('.', result) != -1))
+		ft_strctrim_right_inplace(&result, '0');
+	if (i == ft_strlen(tmp) - 1)
+		result[i] = '\0';
 	info.type_char == 'g' ? ft_strappend(&result, tmp + ft_strfind(tmp, 'e')) :
 							ft_strappend(&result, tmp + ft_strfind(tmp, 'E'));
 //TODO WIDTH ?? PREC ??
-	free(tmp);
+	ft_strdel(&tmp);
 	return (result);
 }
 
 static char	*handle_a_type(t_format info, double lf)
 {
 	char	*result;
+	char	exp_c;
+	t_u32	start;
+	int		size;
 
-	if (info.type_char == 'a')
-	{
-		result = ft_lftoa_base(lf, HXLOW, 'p');
-		ft_strprepend("0x", &result);
-	}
-	else
-	{
-		result = ft_lftoa_base(lf, HXUPP, 'P');
-		ft_strprepend("0X", &result);
-	}
+	exp_c = info.type_char == 'a' ? 'p' : 'P';
+	result = ft_lftoa_base(lf, exp_c == 'p' ? HXLOW : HXUPP, exp_c);
+	start = ft_in_base('.', result) + 1 + info.prec;
+	size = ft_in_base(exp_c, result) - start;
+	if (size > 0)
+		ft_strsub_rm_inplace(&result, start, size);
+	else if (size < 0)
+		ft_strpad_insert_inplace(&result, '0', start + size, -size);
+	start -= 1 + info.prec;
+	if (result[start] == '.' && result[start + 1] == 'p')		
+		ft_strsub_rm_inplace(&result, start, 1);
+	if ((info.flags & (FL_SPACE | FL_PLUS)) && !(((t_u64)lf) >> 63))
+		ft_strprepend(info.flags & FL_SPACE ? " " : "+", &result);
+	size = ft_strlen(result);
+	start = ft_in_base('x', result) + 1;
+	if (info.width > size && (info.flags & FL_MINUS))
+		ft_strpad_right_inplace(&result, ' ', info.width - size);
+	else if (info.width > size && !(info.flags & (FL_MINUS | FL_ZERO)))
+		ft_strpad_left_inplace(&result, ' ', info.width - size);
+	else if (info.width > size)
+		ft_strpad_insert_inplace(&result, '0', start, info.width - size);
 	return (result);
 }
 

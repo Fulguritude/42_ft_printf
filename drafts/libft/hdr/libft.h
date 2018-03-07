@@ -6,7 +6,7 @@
 /*   By: tduquesn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 12:45:43 by tduquesn          #+#    #+#             */
-/*   Updated: 2018/02/20 21:38:31 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/03/07 19:32:38 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 ** TODO
 ** Fix strlspad,
 ** boolean functions,
-** str_replace
+** strinsert is an inplace which returns itself: make other inplace functions
+** 				like this ? 
 ** lstinsert
-** strmerge
 ** lstpop with pointers ? and rename lstpopi ?
 ** add ft_puthex_llstelem to libft, maybe rename putlst_hex
 ** vim -c  sed \ti++; to \t++i;
@@ -35,6 +35,15 @@
 # include <unistd.h>
 # include <string.h>
 # include <inttypes.h>
+
+# ifndef __BASES__
+#  define __BASES__
+#  define BINAR "01"
+#  define OCTAL "01234567"
+#  define DECIM "0123456789"
+#  define HXLOW "0123456789abcdef"
+#  define HXUPP "0123456789ABCDEF"
+# endif
 
 typedef	unsigned char	t_u8;
 typedef	unsigned short	t_u16;
@@ -651,6 +660,14 @@ void					ft_strpad_right_inplace(char **a_str,
 											char const c, t_u32 len);
 
 /*
+** Returns an insertion of a string containing 'len' times the character 'c'
+** at index 'start' of reference 'a_str'.
+*/
+
+void					ft_strpad_insert_inplace(char **a_str, char const c,
+										t_u32 start, size_t len);
+
+/*
 ** Returns a pointer to the first occurence of a char 'c' in the given string
 ** 'str' (or NULL if nothing matched).
 */
@@ -762,11 +779,25 @@ char					**ft_strlssub(char const **strls,
 										t_u32 start, t_u32 len);
 
 /*
+** Returns str but where the substring defined by start and len have been 
+** removed.
+*/
+
+void					ft_strsub_rm_inplace(char **a_str,
+										t_u32 start, size_t len);
+
+/*
 ** Returns a new string which is the result of the concatenation of the
 ** two given strings.
 */
 
 char					*ft_strjoin(char const *str1, char const *str2);
+
+/*
+** Returns a new concatenation of s1 and s2, and frees them as needed.
+*/
+
+char					*ft_strmerge(char **a_s1, char **a_s2);
 
 /*
 ** Returns the concatenation of dest and src inside the pointer of dest.

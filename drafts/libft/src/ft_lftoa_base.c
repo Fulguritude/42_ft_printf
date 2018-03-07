@@ -33,18 +33,12 @@ static char		*ft_lftoa_base_exp(char const *base, t_u8 minus,
 printf("\t\ttmp mantissa : %s\n", tmp);
 	result = ft_strinsert(&tmp, ".", 1);
 printf("\t\tresult mantissa : %s\n", tmp);
-//	free(tmp);
 	tmp = ft_itoa_base(exp_b2, base);
 printf("\t\ttmp exp_b2   : %s\n", tmp);
 	if (tmp[0] != '-' && ft_strlen(tmp) < 2)
 		ft_strprepend("+0", &tmp);
 	else if (tmp[0] != '-')
-		ft_strprepend("+", &tmp);		
-	else if (tmp[0] == '-' && ft_strlen(tmp) < 3)
-	{
-		tmp[0] = base[0];
-		ft_strprepend("-", &tmp);
-	}
+		ft_strprepend("+", &tmp);
 printf("\t\ttmp exp_b2 2 : %s\n", tmp);
 	ft_strappend(&result, "\t");
 printf("\t\tresult : %s\n", result);
@@ -57,13 +51,9 @@ printf("\t\tresult : %s\n", result);
 	return (result);
 }
 
-static char		*ft_lftoa_base_hexfp(char style, t_u8 minus,
-									int exp_b2, t_u64 mantissa)
-{
-printf("TODO : %c, %hhd, %d, %lx\n", style, minus, exp_b2, mantissa);
-
-	return (NULL);
-}
+//TODO replace by two exp protocols; one for large numbers and one for small ones
+//both protocols should depend on lftoa_b_pt or another converter to code here
+//but only one protocol should call it for its floor
 
 static char		*ft_lftoa_base_point(char const *base, t_u8 minus,
 									int exp_b2, t_u64 mantissa)
@@ -73,25 +63,24 @@ static char		*ft_lftoa_base_point(char const *base, t_u8 minus,
 	t_u64	floor;
 	char	*fractional;
 
-	bin_mant = ft_uimaxtoa_base(mantissa, "01");
+	bin_mant = ft_uitoa_base(mantissa, BINAR);
 	if (exp_b2 < 0)
 	{
 		floor = 0;
 		fractional = ft_strpad_left(bin_mant, '0', -exp_b2 - 1);
+		result = ft_uitoa_base(floor, DECIM);
 	}
 	else if (0 <= exp_b2 && exp_b2 < 53)
 	{
 		floor = mantissa >> (52 - exp_b2);
 		ft_strntrim_left_inplace(&bin_mant, exp_b2 + 1);
-		fractional = bin_mant;	
+		fractional = bin_mant;
+		result = ft_uitoa_base(floor, DECIM);
 	}
 	else
 	{
-		ft_putendl_fd("LFTOA not implemented", 2);
-		floor = 0;
-		fractional = bin_mant;
-		//ft_strpad_right_inplace(&result, '0', exp_b2 - 52); //won't work because of long overflow
-		//result = ft_uconvert_base(bin_mant, BINAR, DECIM);
+		ft_strpad_right_inplace(&bin_mant, '0', exp_b2 - 52);
+		//TODO ft_nbstr_convert_base();
 	}
 	result = ft_itoa_base(floor, base);
 	ft_strappend(&result, ".");
@@ -122,12 +111,12 @@ char			*ft_lftoa_base(double lf, char const *base, char style)
 printf("\t\tmantissa : %lx\n", mantissa);
 printf("\t\tmantissa : %ld\n", (long)mantissa);
 	result = NULL;
-	if (style == 'a' || style == 'A')
-		result = ft_lftoa_base_hexfp(style, minus, exp_b2, mantissa);
-	else if (ft_isalpha(style))
+	if (ft_isalpha(style))
 	{
 		result = ft_lftoa_base_exp(base, minus, exp_b2, mantissa);
 		result[ft_strfind(result, '\t')] = style;
+		if (style == 'p' || style == 'P')
+			ft_strprepend(style == 'p' ? "0x" : "0X", &result);
 	}
 	else
 		result = ft_lftoa_base_point(base, minus, exp_b2, mantissa);

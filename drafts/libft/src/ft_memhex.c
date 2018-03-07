@@ -21,7 +21,7 @@ char	*ft_memhex(const void *s, size_t n)
 
 	if (!s)
 		return (NULL);
-	hex_base = "0123456789ABCDEF";
+	hex_base = HXUPP;
 	if (!(new_str = malloc(n * 2 + 1)))
 		return (NULL);
 	i = 0;

@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_strmerge.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
+/*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/17 21:31:49 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/30 18:59:25 by tduquesn         ###   ########.fr       */
+/*   Created: 2018/03/07 17:01:26 by fulguritu         #+#    #+#             */
+/*   Updated: 2018/03/07 17:42:34 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_itoa(long n)
+char	*ft_strmerge(char **a_s1, char **a_s2)
 {
-	return (ft_itoa_base(n, DECIM));
+	char	*result;
+
+	result = ft_strjoin(*a_s1, *a_s2);
+	ft_strdel(a_s1);
+	ft_strdel(a_s2);
+	return (result);
 }

@@ -66,12 +66,15 @@ SRCS	=	ft_memset.c					\
 			ft_strlcat.c				\
 			ft_strsub.c					\
 			ft_strlssub.c				\
+			ft_strsub_rm_inplace.c		\
 			ft_strpad_left.c			\
 			ft_strpad_left_inplace.c	\
 			ft_strlspad_left.c			\
 			ft_strpad_right.c			\
 			ft_strpad_right_inplace.c	\
+			ft_strpad_insert_inplace.c	\
 			ft_strjoin.c				\
+			ft_strmerge.c				\
 			ft_strappend.c				\
 			ft_strprepend.c				\
 			ft_strinsert.c				\
