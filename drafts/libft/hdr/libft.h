@@ -16,7 +16,7 @@
 ** boolean functions,
 ** str_replace
 ** lstinsert
-** strcnew
+** strmerge
 ** lstpop with pointers ? and rename lstpopi ?
 ** add ft_puthex_llstelem to libft, maybe rename putlst_hex
 ** vim -c  sed \ti++; to \t++i;
@@ -53,7 +53,10 @@ typedef struct			s_list
 	struct s_list	*next;
 }						t_list;
 
-typedef union	u_varint
+/*
+** Unions used for difficult casting conditions.
+*/
+typedef union			u_varint
 {
 	t_s8			sc;
 	t_s16			ss;
@@ -63,17 +66,37 @@ typedef union	u_varint
 	t_u16			us;
 	t_u32			ui;
 	t_u64			ul;
-}				t_varint;
+}						t_varint;
 
-typedef union	u_varfloat
+typedef union			u_varfloat
 {
 	float			f;
 	double			d;
-}				t_varfloat;
+}						t_varfloat;
 
-# define ABS(X) (X < 0 ? -X : X)
-# define MAX(X, Y) (X < Y ? Y : X)
-# define MIN(X, Y) (X < Y ? X : Y)
+/*
+** Number string struct
+**		- rev_mant:	the absolute value of our n, reversed for ease of iteration
+**					(dynamically allocated);
+**		- digits: 	ft_strlen(rev_mant);
+**		- base:		the base rev_mant is expressed in. Operators do not check
+**					for validity (statically allocated).
+**		- base_n:	ft_strlen(base), the number of symbols.
+**		- neg:		true iff the value is considered to be negative.
+**
+** Call ft_nbstr_to_str for conversion to human-readable.
+*/
+/*
+** TODO add a typedef struct t_vlq to nbstr
+*/
+typedef struct	s_nbstr
+{
+	char			*rev_mant;
+	t_u32			digits;
+	char const		*base;
+	t_u8			base_n;
+	t_u8			neg;
+}				t_nbstr;
 
 /*
 ** ============ Memory Functions ===========
@@ -172,6 +195,10 @@ void					ft_delete(void *p, size_t mem_size);
 ** =============== Math Functions ===================
 */
 
+# define ABS(X) (X < 0 ? -X : X)
+# define MAX(X, Y) (X < Y ? Y : X)
+# define MIN(X, Y) (X < Y ? X : Y)
+
 /*
 ** Returns max of a and b, signed.
 */
@@ -236,6 +263,14 @@ int						ft_atoi(char const *str);
 long					ft_atoi_base(char const *str, char const *base);
 
 /*
+** Returns an unsigned long parsed from the given string number 'str',
+** according to the given 'base' (returns 0 if 'str' is invalid). DOES NOT
+** CHECK FOR LONG OVERFLOW.
+*/
+
+t_u64					ft_atoui_base(char const *str, char const *base);
+
+/*
 ** Returns a new string which is the representation of the given number 'n'.
 */
 
@@ -269,11 +304,23 @@ char					*ft_uimaxtoa_base(uintmax_t nb, const char *base);
 /*
 ** Takes a string as a number written in base "base_from" (digit val == index
 ** of digit symbol in string) and returns a newly allocated (itoa_base) string
-** in base "base_to".
+** in base "base_to", passing the argument through a long int.
 */
 
-char					*ft_convert_base(char const *nbr, char const *base_from,
+char					*ft_convert_base(char const *nbr,
+										char const *base_from,
 										char const *base_to);
+
+/*
+** Takes a string as a number written in base "base_from" (digit val == index
+** of digit symbol in string) and returns a newly allocated (itoa_base) string
+** in base "base_to", passing the argument through an unsigned long int.
+*/
+
+char					*ft_uconvert_base(char const *nbr,
+										char const *base_from,
+										char const *base_to);
+
 /*
 ** Returns 1 if base contains only distinct symbols and contains only printable
 ** characters. Returns 0 otherwise, or if '+' or '-' are used as symbols in
@@ -313,6 +360,77 @@ char					*ft_ftoa_base(float f, char const *base, char style);
 */
 
 char					*ft_lftoa_base(double lf, char const *base, char style);
+
+/*
+** =========== NbStr Functions ==========
+**
+** Rather inefficient for VLQs (lage int-like types): this was made mostly for
+** ease-of-use when formatting strings representing very large numbers. Behavior
+** on base incoherence is undefined and checking is left to implementation.
+*/
+
+/*
+** Returns a well allocated/instantiate nbstr struct. rev_mant is filled with
+** '\0' chars.
+*/
+
+t_nbstr					ft_nbstrnew(t_u32 size, char const *base);
+
+/*
+** Compares the absolute value of two nbstr contained in rev_mant.
+*/
+
+int						ft_nbstrcmp(t_nbstr const ns1, t_nbstr const ns2);
+
+/*
+** Returns true if nbstr is a sequence of zeros, false otherwise.
+*/
+
+int						ft_nbstr_iszero(t_nbstr const ns);
+
+/*
+** Returns a new number string from a given long. If neg, calls itoa else uitoa.
+*/
+/*
+** t_nbstr				ft_vari_to_nbstr(t_u64 nb, char const *base, t_u8 neg);
+*/
+/*
+** Returns a human-readable string of the VLQ stored in nbstr.
+*/
+
+char					*ft_nbstr_to_str(t_nbstr const nbstr, char const flag);
+
+/*
+** Returns the addition of two VLQs stored as number strings in the same base.
+** Handles any combination of positive and negative inputs. Minimal optimisation
+** if largest number is given first.
+*/
+
+t_nbstr					ft_nbstr_add(t_nbstr const a, t_nbstr const b);
+
+/*
+** Returns the subtraction of two VLQs stored as number strings in a same base
+** b. Will return a t_nbstr with empty base in case of error. Only works with
+** both inputs having different signs. May return a negative nbstr.
+** Favor use of "ns_add".
+*/
+
+t_nbstr					ft_nbstr_sub(t_nbstr const a, t_nbstr const b);
+
+/*
+** Returns the multiplication of two VLQs stored as number strings in a same 
+** base b. Will return a t_nbstr with empty base in case of error. Handles
+** negatives.
+*/
+
+t_nbstr					ft_nbstr_mul(t_nbstr const a, t_nbstr const b);
+
+/*
+** Returns the division of two VLQs stored as number strings in a same base b.
+** Will return a t_nbstr with empty base in case of error.
+*/
+
+t_nbstr					ft_nbstr_div(t_nbstr const a, t_nbstr const b);
 
 /*
 ** =========== Character Functions ==========
@@ -447,6 +565,12 @@ char					*ft_strhex(char const *str);
 */
 
 char					*ft_strrev(char const *str);
+
+/*
+** Flips a string's order on itself. Reallocates.
+*/
+
+void					ft_strrev_inplace(char **a_str);
 
 /*
 ** Copies the given string 'src' into 'dest' (null-terminator included),
@@ -672,6 +796,33 @@ char					*ft_strinsert(char **dest, char const *src,
 */
 
 char					*ft_strtrim(char const *str);
+
+/*
+** Returns Reallocates 'str' so that all leading characters equal to
+** 'c' have been removed.
+*/
+
+void					ft_strctrim_left_inplace(char **a_str, char const c);
+
+/*
+** Returns Reallocates 'str' so that all trailing characters equal to
+** 'c' have been removed.
+*/
+
+void					ft_strctrim_right_inplace(char **a_str, char const c);
+
+/*
+** Returns Reallocates 'str' so that n leading characters are removed.
+*/
+
+void					ft_strntrim_left_inplace(char **a_str, size_t n);
+
+/*
+** Returns Reallocates 'str' so that n trailing characters are removed.
+*/
+
+void					ft_strntrim_right_inplace(char **a_str, size_t n);
+
 
 /*
 ** Returns an array of substrings of 'str', where each element is a section

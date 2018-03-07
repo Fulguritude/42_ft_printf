@@ -77,6 +77,10 @@ SRCS	=	ft_memset.c					\
 			ft_strinsert.c				\
 			ft_strreplace.c				\
 			ft_strtrim.c				\
+			ft_strctrim_left_inplace.c	\
+			ft_strctrim_right_inplace.c	\
+			ft_strntrim_left_inplace.c	\
+			ft_strntrim_right_inplace.c	\
 			ft_strsplit.c				\
 			ft_strsplitstr.c			\
 			ft_strremove.c				\
@@ -117,10 +121,20 @@ SRCS	=	ft_memset.c					\
 			ft_ftoa_base.c				\
 			ft_lftoa_base.c				\
 			ft_atoi_base.c				\
+			ft_atoui_base.c				\
 			ft_convert_base.c			\
+			ft_uconvert_base.c			\
 			ft_digits.c					\
 			ft_digits_base.c			\
 			ft_udigits_base.c			\
+			ft_nbstrnew.c				\
+			ft_nbstrcmp.c				\
+			ft_nbstr_iszero.c			\
+			ft_nbstr_add.c				\
+			ft_nbstr_sub.c				\
+			ft_nbstr_mul.c				\
+			ft_nbstr_div.c				\
+			ft_nbstr_to_str.c			\
 			ft_putchar_fd.c				\
 			ft_putstr_fd.c				\
 			ft_putendl_fd.c				\

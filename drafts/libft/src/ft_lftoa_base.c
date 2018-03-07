@@ -17,6 +17,12 @@
 #include <stdio.h>
 
 
+/*
+** Special rules if exponent is minimal (0x00), called denormalized numbers.
+** The implicit leading 1 bit not added.
+** https://blog.penjee.com/binary-numbers-floating-point-conversion/
+*/
+
 static char		*ft_lftoa_base_exp(char const *base, t_u8 minus,
 									int exp_b2, t_u64 mantissa)
 {
@@ -54,8 +60,8 @@ printf("\t\tresult : %s\n", result);
 static char		*ft_lftoa_base_hexfp(char style, t_u8 minus,
 									int exp_b2, t_u64 mantissa)
 {
-//TODO
 printf("TODO : %c, %hhd, %d, %lx\n", style, minus, exp_b2, mantissa);
+
 	return (NULL);
 }
 
@@ -63,23 +69,33 @@ static char		*ft_lftoa_base_point(char const *base, t_u8 minus,
 									int exp_b2, t_u64 mantissa)
 {
 	char	*result;
-	int		index;
-	int		exp_b10;
+	char	*bin_mant;
+	t_u64	floor;
+	char	*fractional;
 
-	exp_b10 = exp_b2 * 30103 / 100000; //0.30103 ~= ln(2)/ln(10)
-	result = ft_uimaxtoa_base(mantissa, base);
-printf("\t\tresult mantissa : %s\n", result);
-	if (exp_b10 > 0)
-		ft_strpad_right_inplace(&result, base[0], exp_b10);
-	else if (exp_b10 < 0 && (index = ft_strlen(result) - exp_b10) > 0)
-		ft_strinsert(&result, ".", index);
-	else if (exp_b10 < 0 && index <= 0)
+	bin_mant = ft_uimaxtoa_base(mantissa, "01");
+	if (exp_b2 < 0)
 	{
-		ft_strpad_left_inplace(&result, base[0], -index);
-		ft_strprepend(".", &result);
-		ft_strpad_left_inplace(&result, base[0], 1);
+		floor = 0;
+		fractional = ft_strpad_left(bin_mant, '0', -exp_b2 - 1);
 	}
-printf("\t\tresult after pads : %s\n", result);
+	else if (0 <= exp_b2 && exp_b2 < 53)
+	{
+		floor = mantissa >> (52 - exp_b2);
+		ft_strntrim_left_inplace(&bin_mant, exp_b2 + 1);
+		fractional = bin_mant;	
+	}
+	else
+	{
+		ft_putendl_fd("LFTOA not implemented", 2);
+		floor = 0;
+		fractional = bin_mant;
+		//ft_strpad_right_inplace(&result, '0', exp_b2 - 52); //won't work because of long overflow
+		//result = ft_uconvert_base(bin_mant, BINAR, DECIM);
+	}
+	result = ft_itoa_base(floor, base);
+	ft_strappend(&result, ".");
+	ft_strappend(&result, fractional);	
 	if (minus)
 		ft_strprepend("-", &result);
 	return (result);
@@ -97,7 +113,12 @@ char			*ft_lftoa_base(double lf, char const *base, char style)
 	ft_memcpy(&extract, &lf, 8);
 	minus = extract >> 63;
 	exp_b2 = ((extract << 1) >> 53) - 1023;
-	mantissa = (((extract << 12) >> 12) | 0x10000000000000);
+	mantissa = ((extract << 12) >> 12);
+	if (exp_b2 != -1023)
+		mantissa |= 0x10000000000000;
+	else
+		++exp_b2;
+//Mantissa should be appropriately separated with its point before each part can be converted, no ?
 printf("\t\tmantissa : %lx\n", mantissa);
 printf("\t\tmantissa : %ld\n", (long)mantissa);
 	result = NULL;

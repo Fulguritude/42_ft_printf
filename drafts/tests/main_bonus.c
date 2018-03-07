@@ -34,6 +34,9 @@
 **		how various	printf implementations handle basic undefined outputs
 **		(remove CFLAGS in Makefile beforehand).
 **
+**	 -	Consider special case mentioned in: 
+**		https://ryanstutorials.net/binary-tutorial/binary-floating-point.php
+**
 **	 -  To debug your own printf efficiently, I suggest you start the printf
 **		calls inside your ft_printf subcalls by an appropriate number of tabs,
 **		so that each subcall looks more and more "internal" and errors can be
@@ -47,6 +50,9 @@
 **
 **	 -	Normalized floats refer to floats expressed as sign-exp-mantissa.
 **		Denormalized floats are reserved, special values (NaN, +Inf, -Inf, etc).
+**		Subnormal floats are floats with an exponent field of 0 which behave 
+**			strangely.
+**		https://randomascii.wordpress.com/2012/03/08/float-precisionfrom-zero-to-100-digits-2/ 
 **
 **	 -	Calling a va_arg() on a non-existing argument always causes a segfault.
 **
@@ -101,8 +107,8 @@ static int	check_retvals(int j, int *return_values, char **a_str1, char *str2)
 
 int		main()
 {
-	float 	f =   0xf.edcba012345p-64; //other vals: 123.456789;
-	double 	d =  -0x1.123456789abcdp+1010; //other vals: 1234567.8987654321;
+	float 	f = 0.55555; // 0xf.edcba012345p-64;		//other vals: 123.456789;
+	double 	d = 16.125; //-0x1.123456789abcdp+1010;	//other vals: 1234567.8987654321;
 	char	*str1 = NULL;
 	char	*str2 = NULL;
 	int		i = -1;
@@ -111,9 +117,14 @@ int		main()
 
 	printf(C_BLUE"\nTesting bonuses that can be compared to printf."RESET); printf("\n");
 
-	double	plus_inf = DBL_MAX;
-	double	minus_inf = -DBL_MAX;
+	double	plus_inf = 0x0.000000000000p-1;
+	double	plus_zero = 0x0.000000000000p+0;
+	double	dbl_max = DBL_MAX;
+	double	minus_inf = -0x0.000000000000p-1;
+	double	minus_zero = -0x0.000000000000p+0;
+	double	dbl_min = -DBL_MAX;
 	double	mach_err = DBL_EPSILON;
+	double	not_a_nb = -0x1.01A010p-1;
 
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %lf\n", "%lf", minus_inf);
@@ -127,6 +138,28 @@ int		main()
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %lf\n", "%lf", mach_err);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %lf\n", "%lf", mach_err);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %lf\n", "%lf", minus_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %lf\n", "%lf", minus_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %lf\n", "%lf", plus_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %lf\n", "%lf", plus_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %lf\n", "%lf", not_a_nb);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %lf\n", "%lf", not_a_nb);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %lf\n", "%lf", dbl_min);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %lf\n", "%lf", dbl_min);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %lf\n", "%lf", dbl_max);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %lf\n", "%lf", dbl_max);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+
+
 
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %f\n", "%f", f);
