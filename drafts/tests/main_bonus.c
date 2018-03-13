@@ -120,14 +120,14 @@ int		main()
 /*
 ** TODO Verify all values
 */
-	double	plus_inf = 0x0.000000000000p-1;
+	double	plus_inf = 1./0.;
 	double	plus_zero = 0x0.000000000000p+0;
 	double	dbl_max = DBL_MAX;
-	double	minus_inf = -0x0.000000000000p-1;
+	double	minus_inf = -(1./0.);
 	double	minus_zero = -0x0.000000000000p+0;
 	double	dbl_min = -DBL_MAX;
 	double	mach_err = DBL_EPSILON;
-	double	not_a_nb = -0x1.01A010p-1;
+	double	not_a_nb = 0.0f / 0.0f; //NAN; //NAN == 0.0f / 0.0f
 
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %lf\n", "%lf", minus_inf);
@@ -148,6 +148,14 @@ int		main()
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %lf\n", "%lf", plus_zero);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %lf\n", "%lf", plus_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %+lf\n", "%+lf", minus_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %+lf\n", "%+lf", minus_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %+lf\n", "%+lf", plus_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %+lf\n", "%+lf", plus_zero);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: test NaN: %s gives %lf\n", "%lf", not_a_nb);

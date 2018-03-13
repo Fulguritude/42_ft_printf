@@ -44,6 +44,7 @@ SRCS	=	ft_memset.c					\
 			ft_strdel.c					\
 			ft_strlsdel.c				\
 			ft_strrev.c					\
+			ft_strrev_inplace.c			\
 			ft_strhex.c					\
 			ft_strclr.c					\
 			ft_strdup.c					\
@@ -100,6 +101,8 @@ SRCS	=	ft_memset.c					\
 			ft_striteri.c				\
 			ft_strmap.c					\
 			ft_strmapi.c				\
+			ft_strlsmap.c				\
+			ft_strlsmap_inplace.c		\
 			ft_isalpha.c				\
 			ft_isdigit.c				\
 			ft_isalnum.c				\
@@ -112,6 +115,7 @@ SRCS	=	ft_memset.c					\
 			ft_min.c					\
 			ft_umax.c					\
 			ft_umin.c					\
+			ft_ilog2.c					\
 			ft_atoi.c					\
 			ft_itoa.c					\
 			ft_in_base.c				\
@@ -130,14 +134,6 @@ SRCS	=	ft_memset.c					\
 			ft_digits.c					\
 			ft_digits_base.c			\
 			ft_udigits_base.c			\
-			ft_nbstrnew.c				\
-			ft_nbstrcmp.c				\
-			ft_nbstr_iszero.c			\
-			ft_nbstr_add.c				\
-			ft_nbstr_sub.c				\
-			ft_nbstr_mul.c				\
-			ft_nbstr_div.c				\
-			ft_nbstr_to_str.c			\
 			ft_putchar_fd.c				\
 			ft_putstr_fd.c				\
 			ft_putendl_fd.c				\

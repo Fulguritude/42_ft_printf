@@ -10,15 +10,19 @@ static char	*handle_g_type(t_format info, double lf, int exp)
 	char	*tmp;
 	t_u32	i;
 
+printf("printf 1\n");
 	if (exp < -4 || info.prec <= exp) //exponent after conversion, not before
 		tmp = ft_lftoa_base(lf, DECIM, '\0');
 	else
 		tmp = ft_lftoa_base(lf, DECIM,
 									info.type_char == 'g' ? 'e' : 'E');
+
+printf("printf 2\n");
 	i = 0;
-	while ((ft_isdigit(tmp[i]) || tmp[i] == '-' || tmp[i] == '.') &&
+	while (tmp[i] && (ft_isdigit(tmp[i]) || tmp[i] == '-' || tmp[i] == '.') &&
 			i < (t_u32)(info.prec + (tmp[0] == '-') + 1))
 		++i;
+printf("printf 3\n");
 	result = ft_strsub(tmp, 0, i);
 	if ((i = ft_in_base('.', result) != -1))
 		ft_strctrim_right_inplace(&result, '0');

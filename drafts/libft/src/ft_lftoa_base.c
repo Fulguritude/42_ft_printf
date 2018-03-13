@@ -18,9 +18,15 @@
 
 
 /*
+** Before anything, read this:
+** https://www.cs.tufts.edu/~nr/cs257/archive/florian-loitsch/printf.pdf
+**
 ** Special rules if exponent is minimal (0x00), called denormalized numbers.
 ** The implicit leading 1 bit not added.
 ** https://blog.penjee.com/binary-numbers-floating-point-conversion/
+**
+** https://www.codeproject.com/Tips/311714/Natural-Logarithms-and-Exponent
+** Max trustworthy precision is roughly 7 for float and 15 for double
 */
 
 static char		*ft_lftoa_base_exp(char const *base, t_u8 minus,
@@ -51,42 +57,14 @@ printf("\t\tresult : %s\n", result);
 	return (result);
 }
 
-//TODO replace by two exp protocols; one for large numbers and one for small ones
-//both protocols should depend on lftoa_b_pt or another converter to code here
-//but only one protocol should call it for its floor
-
 static char		*ft_lftoa_base_point(char const *base, t_u8 minus,
 									int exp_b2, t_u64 mantissa)
 {
 	char	*result;
-	char	*bin_mant;
-	t_u64	floor;
-	char	*fractional;
 
-	bin_mant = ft_uitoa_base(mantissa, BINAR);
-	if (exp_b2 < 0)
-	{
-		floor = 0;
-		fractional = ft_strpad_left(bin_mant, '0', -exp_b2 - 1);
-		result = ft_uitoa_base(floor, DECIM);
-	}
-	else if (0 <= exp_b2 && exp_b2 < 53)
-	{
-		floor = mantissa >> (52 - exp_b2);
-		ft_strntrim_left_inplace(&bin_mant, exp_b2 + 1);
-		fractional = bin_mant;
-		result = ft_uitoa_base(floor, DECIM);
-	}
-	else
-	{
-		ft_strpad_right_inplace(&bin_mant, '0', exp_b2 - 52);
-		//TODO ft_nbstr_convert_base();
-	}
-	result = ft_itoa_base(floor, base);
-	ft_strappend(&result, ".");
-	ft_strappend(&result, fractional);	
-	if (minus)
-		ft_strprepend("-", &result);
+	result = NULL;
+	if (base && minus && exp_b2 && mantissa)
+		result = ft_strdup("lftoa base point not implemented.");
 	return (result);
 }
 
@@ -98,6 +76,8 @@ char			*ft_lftoa_base(double lf, char const *base, char style)
 	int		exp_b2;
 	t_u64	mantissa;
 
+	if (lf != lf)
+		return (ft_strdup("nan"));
 	extract = 0;
 	ft_memcpy(&extract, &lf, 8);
 	minus = extract >> 63;

@@ -1,22 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrev_inplace.c                                :+:      :+:    :+:   */
+/*   ft_ilog2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/06 05:57:36 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/06 06:00:12 by fulguritu        ###   ########.fr       */
+/*   Created: 2018/03/10 03:16:52 by fulguritu         #+#    #+#             */
+/*   Updated: 2018/03/10 03:18:25 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			ft_strrev_inplace(char **a_str)
+/*
+** Returns the power to which 2 must be raised to open pow_of_2. If the number
+** given is not a positive power of 2, then it returns -1.
+*/
+int		ft_ilog2(t_u64 pow_of_2)
 {
-	char	*tmp;
+	int		i;
 
-	tmp = ft_strrev(*a_str);
-	ft_strdel(a_str);
-	*a_str = tmp;
+	if (pow_of_2 == 0)
+		return (-1);
+	i = 0;
+	while (pow_of_2 >> 1)
+	{
+		if (pow_of_2 % 2)
+			return (-1);
+		pow_of_2 >>= 1;
+		++i;
+	}
+	return (i);
 }

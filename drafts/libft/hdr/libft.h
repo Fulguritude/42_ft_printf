@@ -25,8 +25,8 @@
 ** make a t_uple type with pragmas to dynamically define type.
 */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#ifndef __LIBFT_H
+# define __LIBFT_H
 
 # define OK 0
 # define ERROR 1
@@ -82,30 +82,6 @@ typedef union			u_varfloat
 	float			f;
 	double			d;
 }						t_varfloat;
-
-/*
-** Number string struct
-**		- rev_mant:	the absolute value of our n, reversed for ease of iteration
-**					(dynamically allocated);
-**		- digits: 	ft_strlen(rev_mant);
-**		- base:		the base rev_mant is expressed in. Operators do not check
-**					for validity (statically allocated).
-**		- base_n:	ft_strlen(base), the number of symbols.
-**		- neg:		true iff the value is considered to be negative.
-**
-** Call ft_nbstr_to_str for conversion to human-readable.
-*/
-/*
-** TODO add a typedef struct t_vlq to nbstr
-*/
-typedef struct	s_nbstr
-{
-	char			*rev_mant;
-	t_u32			digits;
-	char const		*base;
-	t_u8			base_n;
-	t_u8			neg;
-}				t_nbstr;
 
 /*
 ** ============ Memory Functions ===========
@@ -231,6 +207,13 @@ t_u64					ft_umax(t_u64 a, t_u64 b);
 */
 
 t_u64					ft_umin(t_u64 a, t_u64 b);
+
+/*
+** Returns the power to which 2 must be raised to obtain pow_of_2. If the number
+** given is not a positive power of 2, returns -1.
+*/
+
+int						ft_ilog2(t_u64 pow_of_2);
 
 /*
 ** ========== Str-Int Conversion Functions ==========
@@ -370,76 +353,7 @@ char					*ft_ftoa_base(float f, char const *base, char style);
 
 char					*ft_lftoa_base(double lf, char const *base, char style);
 
-/*
-** =========== NbStr Functions ==========
-**
-** Rather inefficient for VLQs (lage int-like types): this was made mostly for
-** ease-of-use when formatting strings representing very large numbers. Behavior
-** on base incoherence is undefined and checking is left to implementation.
-*/
 
-/*
-** Returns a well allocated/instantiate nbstr struct. rev_mant is filled with
-** '\0' chars.
-*/
-
-t_nbstr					ft_nbstrnew(t_u32 size, char const *base);
-
-/*
-** Compares the absolute value of two nbstr contained in rev_mant.
-*/
-
-int						ft_nbstrcmp(t_nbstr const ns1, t_nbstr const ns2);
-
-/*
-** Returns true if nbstr is a sequence of zeros, false otherwise.
-*/
-
-int						ft_nbstr_iszero(t_nbstr const ns);
-
-/*
-** Returns a new number string from a given long. If neg, calls itoa else uitoa.
-*/
-/*
-** t_nbstr				ft_vari_to_nbstr(t_u64 nb, char const *base, t_u8 neg);
-*/
-/*
-** Returns a human-readable string of the VLQ stored in nbstr.
-*/
-
-char					*ft_nbstr_to_str(t_nbstr const nbstr, char const flag);
-
-/*
-** Returns the addition of two VLQs stored as number strings in the same base.
-** Handles any combination of positive and negative inputs. Minimal optimisation
-** if largest number is given first.
-*/
-
-t_nbstr					ft_nbstr_add(t_nbstr const a, t_nbstr const b);
-
-/*
-** Returns the subtraction of two VLQs stored as number strings in a same base
-** b. Will return a t_nbstr with empty base in case of error. Only works with
-** both inputs having different signs. May return a negative nbstr.
-** Favor use of "ns_add".
-*/
-
-t_nbstr					ft_nbstr_sub(t_nbstr const a, t_nbstr const b);
-
-/*
-** Returns the multiplication of two VLQs stored as number strings in a same 
-** base b. Will return a t_nbstr with empty base in case of error. Handles
-** negatives.
-*/
-
-t_nbstr					ft_nbstr_mul(t_nbstr const a, t_nbstr const b);
-
-/*
-** Returns the division of two VLQs stored as number strings in a same base b.
-** Will return a t_nbstr with empty base in case of error.
-*/
-
-t_nbstr					ft_nbstr_div(t_nbstr const a, t_nbstr const b);
 
 /*
 ** =========== Character Functions ==========
@@ -762,6 +676,23 @@ char					*ft_strmap(char const *str, char (*f)(char));
 */
 
 char					*ft_strmapi(char const *str, char (*f)(t_u32, char));
+
+/*
+** Returns a newly-allocated strls which is the result of applying the protocol
+** 'f' to every string of 'strls'.
+*/
+
+char					**ft_strlsmap(char const **strls,
+										char* (*f)(char const*));
+
+/*
+** Returns strls where every string has been replaced and/or reallocated
+** properly according to the protocol given by f. Should also work with
+** functions that edit a string in place and return its address.
+*/
+
+void					ft_strlsmap_inplace(char ***a_strls,
+											char* (*f)(char*));
 
 /*
 ** Returns a new string which is a subsection of 'str', starting at 'start'

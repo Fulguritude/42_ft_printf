@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmap.c                                        :+:      :+:    :+:   */
+/*   ft_strlsmap_inplace.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/17 21:32:00 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/28 13:32:06 by tduquesn         ###   ########.fr       */
+/*   Created: 2018/03/10 21:32:00 by tduquesn          #+#    #+#             */
+/*   Updated: 2018/03/11 13:32:06 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_strmap(char const *s, char (*f)(char))
+
+void		ft_strlsmap_inplace(char ***a_strls, char* (*f)(char*))
 {
 	t_u32	i;
-	char	*new;
+	char	*tmp;
 
-	if (!s || !f || !(new = ft_strnew(ft_strlen(s))))
-		return (NULL);
+	if (!a_strls || !*a_strls || !f)
+		return ;
 	i = 0;
-	while (s[i])
+	while (a_strls[i])
 	{
-		new[i] = (*f)(s[i]);
+		tmp = (*f)((*a_strls)[i]);
+		if (tmp != (*a_strls)[i])
+			ft_strdel(*a_strls + i);
+		(*a_strls)[i] = tmp;
 		++i;
 	}
-	return (new);
 }

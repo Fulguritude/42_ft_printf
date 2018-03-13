@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmap.c                                        :+:      :+:    :+:   */
+/*   ft_lfpowi.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
+/*   By: tduquesn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/17 21:32:00 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/28 13:32:06 by tduquesn         ###   ########.fr       */
+/*   Created: 2017/09/05 11:27:32 by tduquesn          #+#    #+#             */
+/*   Updated: 2017/09/05 11:37:10 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_strmap(char const *s, char (*f)(char))
+int		ft_lfpowi(double lf, int power)
 {
-	t_u32	i;
-	char	*new;
+	int			i;
+	double		result;
 
-	if (!s || !f || !(new = ft_strnew(ft_strlen(s))))
-		return (NULL);
+	result = 1.;
 	i = 0;
-	while (s[i])
+	if (power == 0)
+		return (result);
+	else if (power > 0)
+		while (++i <= power)
+			result *= lf;
+	else
 	{
-		new[i] = (*f)(s[i]);
-		++i;
+		power = -power;
+		while (++i <= power)
+			result /= lf;
 	}
-	return (new);
+	return (result);
 }

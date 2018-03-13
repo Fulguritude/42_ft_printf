@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nbstrnew.c                                      :+:      :+:    :+:   */
+/*   ft_strlsmap.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
+/*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/06 02:46:09 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/06 02:54:32 by fulguritu        ###   ########.fr       */
+/*   Created: 2018/03/10 21:32:00 by tduquesn          #+#    #+#             */
+/*   Updated: 2018/03/11 13:32:06 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_nbstr				ft_nbstrnew(t_u32 size, char const *base)
+char		**ft_strlsmap(char const **strls, char* (*f)(char const*))
 {
-	t_nbstr		result;
+	t_u32	i;
+	char	**result;
 
-	result.digits = size;
-	result.rev_mant = ft_strcnew(size, base[0]);
-	result.base = base;
-	result.base_n = ft_strlen(base);
-	result.neg = 2;
+	if (!strls || !*strls || !f ||
+		!(result = ft_ptrarrnew(ft_ptrarrlen(strls))))
+		return (NULL);
+	i = 0;
+	while (strls[i])
+	{
+		result[i] = (*f)(strls[i]);
+		++i;
+	}
 	return (result);
 }

@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nbstr_to_str.c                                  :+:      :+:    :+:   */
+/*   ft_logn.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/07 02:56:36 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/07 03:06:17 by fulguritu        ###   ########.fr       */
+/*   Created: 2018/03/11 06:05:08 by fulguritu         #+#    #+#             */
+/*   Updated: 2018/03/11 06:55:47 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_nbstr_to_str(t_nbstr const ns, char const flag)
+/*
+** Returns the power to which n should be raised to obtain lf.
+*/
+double		ft_logn(double lf, double n, t_u8 decim_prec)
 {
-	char	*result;
-
-	result = ft_strrev(ns.rev_mant);
-	if (ns.neg == 2)
-		ft_putendl_fd("Improper nbstr conversion error.", 2);
-	else if (ns.neg)
-		ft_strprepend("-", &result);
-	else if (flag == ' ' && !ns.neg)
-		ft_strprepend(" ", &result);
-	else if (flag == '+' && !ns.neg)
-		ft_strprepend("+", &result);
-	return (result);
+	return (ft_ln(lf, decim_prec) / ft_ln(n, decim_prec));
 }

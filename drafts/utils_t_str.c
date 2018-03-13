@@ -35,6 +35,8 @@ static void	t_str_append(void *s1, void *s2)
 	t_str	*acc;
 	t_str	*next;
 
+	if (!s1 || !s2)
+		return ;
 	acc = (t_str*)s1;
 	next = (t_str*)s2;
 	len = acc->len + next->len;

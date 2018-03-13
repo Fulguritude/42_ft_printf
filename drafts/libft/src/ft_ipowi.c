@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nbstr_iszero.c                                  :+:      :+:    :+:   */
+/*   ft_ipowi.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
+/*   By: tduquesn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/06 03:40:40 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/06 06:40:19 by fulguritu        ###   ########.fr       */
+/*   Created: 2017/09/05 11:27:32 by tduquesn          #+#    #+#             */
+/*   Updated: 2017/09/05 11:37:10 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int				ft_nbstr_iszero(t_nbstr const ns)
+int		ft_ipowi(int nb, int power)
 {
 	int		i;
+	int		result;
 
-	if (ns.rev_mant[0] == ns.base[0] && ns.rev_mant[1] == '\0')
+	result = 1;
+	if (power < 0)
+		return (0);
+	if (power == 0)
 		return (1);
 	i = 0;
-	while (ns.rev_mant[i] == ns.base[0])
-		if (ns.rev_mant[++i] != ns.base[0] && ns.rev_mant != '\0')
-			return (0);
-	return (2);
+	while (++i <= power)
+		result *= nb;
+	return (result);
 }
