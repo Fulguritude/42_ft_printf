@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putllst.c                                       :+:      :+:    :+:   */
+/*   ft_putlst.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,9 +12,9 @@
 
 #include "libft.h"
 
-void	ft_putllst(t_list *lst)
+void	ft_putlst(t_list *lst)
 {
 	if (!lst)
 		return ;
-	ft_putllst_fd(lst, 1);
+	ft_putlst_fd(lst, 1);
 }

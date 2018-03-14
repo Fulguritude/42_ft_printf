@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_llst_fd.c                                :+:      :+:    :+:   */
+/*   ft_ceil.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
+/*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/17 22:39:57 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/28 11:44:38 by tduquesn         ###   ########.fr       */
+/*   Created: 2018/03/13 16:13:36 by fulguritu         #+#    #+#             */
+/*   Updated: 2018/03/13 16:15:55 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_llst_fd(t_list *lst, int fd)
+long	ft_ceil(double lf)
 {
-	while (lst)
-	{
-		ft_putnbr_llstelem_fd(lst, fd);
-		ft_putchar_fd('\n', fd);
-		lst = lst->next;
-	}
+	return (ft_floor(lf) + 1);
 }

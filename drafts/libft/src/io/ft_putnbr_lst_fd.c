@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lfpowi.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_lst_fd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tduquesn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/05 11:27:32 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/09/05 11:37:10 by tduquesn         ###   ########.fr       */
+/*   Created: 2017/11/17 22:39:57 by tduquesn          #+#    #+#             */
+/*   Updated: 2017/11/28 11:44:38 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_lfpowi(double lf, int power)
+void	ft_putnbr_lst_fd(t_list *lst, int fd)
 {
-	int			i;
-	double		result;
-
-	result = 1.;
-	i = 0;
-	if (power == 0)
-		return (result);
-	else if (power > 0)
-		while (++i <= power)
-			result *= lf;
-	else
+	while (lst)
 	{
-		power = -power;
-		while (++i <= power)
-			result /= lf;
+		ft_putnbr_lstelem_fd(lst, fd);
+		ft_putchar_fd('\n', fd);
+		lst = lst->next;
 	}
-	return (result);
 }

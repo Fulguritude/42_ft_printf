@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putllstelem.c                                   :+:      :+:    :+:   */
+/*   ft_putlstelem.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,8 +12,8 @@
 
 #include "libft.h"
 
-void	ft_putllstelem(t_list *elem)
+void	ft_putlstelem(t_list *elem)
 {
 	if (elem)
-		ft_putllstelem_fd(elem, 1);
+		ft_putlstelem_fd(elem, 1);
 }

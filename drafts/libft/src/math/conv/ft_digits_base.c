@@ -12,13 +12,13 @@
 
 #include "libft.h"
 
-int		ft_digits_base(intmax_t n, int base)
+int		ft_digits_base(intmax_t n, int radix)
 {
 	int		i;
 
-	if (base < 1)
+	if (radix < 1)
 		return (-1);
-	if (base == 1)
+	if (radix == 1)
 		return (n);
 	if (n == 0)
 		return (1);
@@ -28,7 +28,7 @@ int		ft_digits_base(intmax_t n, int base)
 		while (n != 0)
 		{
 			i++;
-			n /= base;
+			n /= radix;
 		}
 	}
 	return (i);

@@ -12,6 +12,9 @@
 
 #include "libft.h"
 
+/*
+** TODO Verify that end condition works on large numbers
+*/
 static double	ln_taylor_series(double lf, double prec_test, double diff)
 {
 	double	result;
@@ -43,9 +46,9 @@ double		ft_ln(double lf, t_u8 decim_prec)
 	double	diff;
 
 	if (lf <= 0)
-		return (NAN);
+		return (0.0f / 0.0f);
 	if (decim_prec > 15)
-		prec = 15;
+		decim_prec = 15;
 	prec_test = 1. / ft_lfpowi(10., decim_prec + 1);
 	lf = lf - 1.;
 	diff = 2.;

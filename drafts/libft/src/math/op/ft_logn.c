@@ -17,5 +17,5 @@
 */
 double		ft_logn(double lf, double n, t_u8 decim_prec)
 {
-	return (ft_ln(lf, decim_prec) / ft_ln(n, decim_prec));
+	return (ft_ln(lf, decim_prec + 1) / ft_ln(n, decim_prec + 1));
 }
