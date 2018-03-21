@@ -23,13 +23,11 @@ char	**format_to_strls(char const *fmt)
 	char	**result;
 
 	if (!(result = ft_ptrarrnew(2 + 2 * ft_str_countchar(fmt, '%'))))
-		return (NULL);
+		return (NULL); //remove if moulinette ? or add ++j to if in first while below ? 
 	k = -1;
 	i = 0;
 	while (fmt[i])
 	{
-//ft_putstr("Curr str : ");
-//ft_putendl(fmt + i);
 		j = 1;
 		if (fmt[i] == '%')
 			while (fmt[i + j] && ft_in_base(fmt[i + j], ALL_SYMBOLS) != -1)
@@ -44,7 +42,7 @@ char	**format_to_strls(char const *fmt)
 		result[++k] = ft_strsub(fmt, i, j);
 		i += j;
 	}
-	result[++k] = NULL;
+//	result[++k] = NULL;
 	return (result);
 }
 
@@ -89,9 +87,7 @@ void	convert_str(char const *fmt_part, t_list **a_lststr, va_list args)
 //printf("%d flags, %d width, %d prec, %d len_flag, %d type\n\t\t++Format_info end.\n", format_info.flags, format_info.width, format_info.prec, format_info.len_flag, format_info.type);
 //printf("\t\t--Handled result :\n\t\t\t");
 			result = handle_format(format_info, fmt_part, args);
-//printf("data: %s, len: %lu\n\t\t++Handled result end.\n", result->data, result->len);  
-			//if (result.len == -1)
-				//TODO ? make various -n error codes using the length of the t_str ?
+//printf("data: %s, len: %lu\n\t\t++Handled result end.\n", result->data, result->len);
 		}
 	}
 //printf("\tFinal result :\n\t\tdata: %s;\n\t\tlen: %lu\n", result->data, result->len);

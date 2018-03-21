@@ -65,8 +65,10 @@ static char		*val_to_str(t_format info, intmax_t n, int *digits, t_u8 bytes)
 	str = NULL;
 	prec = info.prec <= 0 ? 0 :
 		(t_u32)info.prec - (info.type == int_uoct && (info.flags & FL_HASH));
-	if (n == 0)
+	if (n == 0 && info.prec == 0)
 		str = ft_strnew(0);
+	else if (n == 0)
+		str = ft_strcnew(1, '0');
 	else if (info.type == int_dec)
 		str = ft_ivartoa_base(n, DECIM, bytes, 1);
 	else if (info.type == int_udec)

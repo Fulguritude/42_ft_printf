@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+//TODO remove fsanitize from makefile
+
 #ifndef __FT_PRINTF
 # define __FT_PRINTF
 
@@ -37,11 +39,11 @@
 **     NB : printf("%*d", width, num) <=> printf("%2$*1$d", width, num)
 */
 
-# define FLAGS "#0- +"
-# define TYPES "pdDibBoOuUxXcCsSeEfFgGaA%" //n
+# define FLAGS "#0- +" //'
+# define TYPES "pdDibBoOuUxXcCsSeEfFgGaAr%" //n
 # define LGTHS "hljz" //L, t
 
-# define ALL_SYMBOLS "#0- +pdDibBoOuUxXcCsSeEfFgGaA%.0123456789hljz"
+# define ALL_SYMBOLS "#0- +pdDibBoOuUxXcCsSeEfFgGaAr%.0123456789hljz"
 
 # ifndef __BASES__
 #  define __BASES__
@@ -50,6 +52,28 @@
 #  define DECIM "0123456789"
 #  define HXLOW "0123456789abcdef"
 #  define HXUPP "0123456789ABCDEF"
+# endif
+
+# ifndef __ANSI_COLOR_CODES__
+#  define __ANSI_COLORS_CODES__
+#  define C_RED		"\x1b[31m"
+#  define C_GREEN	"\x1b[32m"
+#  define C_YELLOW	"\x1b[33m"
+#  define C_BLUE	"\x1b[34m"
+#  define C_MAGENTA	"\x1b[35m"
+#  define C_CYAN	"\x1b[36m"
+#  define C_RESET	"\x1b[0m"
+# endif
+
+# ifndef __FT_PRINTF_COLOR_STRINGS__
+#  define __FT_PRINTF_COLOR_STRINGS__
+#  define STR_RED		"{red}"
+#  define STR_GREEN		"{green}"
+#  define STR_YELLOW	"{yellow}"
+#  define STR_BLUE		"{blue}"
+#  define STR_MAGENTA	"{magenta}"
+#  define STR_CYAN		"{cyan}"
+#  define STR_RESET		"{eoc}"
 # endif
 
 # define FL_HASH 0x1
@@ -107,7 +131,7 @@ typedef enum	e_len_flag
 typedef struct	s_str
 {
 	char			*data;
-	size_t			len;
+	int				len;
 }				t_str;
 
 typedef struct	s_format
@@ -123,7 +147,6 @@ typedef struct	s_format
 /*
 ** ft_printf.c
 */
-
 int				ft_printf(const char *format, ...);
 int				ft_printf_fd(int fd, const char *format, ...);
 int				ft_vprintf_fd(int fd, const char *format, va_list args);
@@ -133,7 +156,6 @@ int				ft_vasprintf(char **res, const char *format, va_list args);
 /*
 ** converters.c
 */
-
 char			**format_to_strls(char const *format);
 void			convert_str(char const *fmt_part, t_list **a_lststr,
 							va_list args);
@@ -144,7 +166,6 @@ t_format		read_format(char const *fmt_part);
 **
 ** TODO, when out of norminette, put in the same file as read_format as static
 */
- 
 t_u8			read_format_flags(char const *fmt_part, int *i);
 int				read_format_width(char const *fmt_part, int *i);
 int				read_format_prec(char const *fmt_part, int *i);
@@ -153,11 +174,7 @@ t_types			read_format_type(char const *fmt_part, t_format *info, int i);
 
 /*
 ** handlers.c
-**
-** static t_str		*handle_uchar_type(t_len_flag len_flag, va_list args); //handler_utils_str.c
-** static t_str		*handle_str_type(t_format info, va_list args); //handler_utils_str.c
 */
-
 t_str			*handle_format(t_format info, char const *fmt, va_list args);
 
 /*
@@ -167,29 +184,27 @@ t_str			*handle_format(t_format info, char const *fmt, va_list args);
 ** static char  *flag_prepend(t_types type, t_u8 flags, intmax_t n, char **a_s)
 ** static t_str	build_int_str(t_format info, intmax_t n)
 */
-
 t_str			*handle_int_type(t_format info, va_list args);
 
 /*
 ** handler_utils_float.c
 */
-
 t_str			*handle_float_type(t_format info, va_list args);
 
 /*
-** handler_utils_unicode.c
+** handler_utils_str.c
+**
+** static char			*encode_unicodepoint_to_utf8(wchar_t c);
+** static char			*build_utf8(wchar_t *unicode_str);
 */
-
-char			*encode_unicodepoint_to_utf8(wchar_t c);
-char			*build_utf8(wchar_t *unicode_str);
-
+t_str			*handle_uchar_type(t_len_flag len_flag, va_list args);
+t_str			*handle_str_type(t_format info, va_list args);
 
 /*
 ** utils_t_str.c
 **
 ** static void	t_str_append(t_str *acc, t_str *next);
 */
-
 void			del_t_str(void *content, size_t content_size);
 t_str			to_single_t_str(t_list *lststr); //handlers?
 t_str			*str_to_t_str(char const *str); //converters? 

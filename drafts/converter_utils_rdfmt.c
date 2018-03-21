@@ -115,7 +115,7 @@ t_types			read_format_type(char const *fmt_part, t_format *info, int i)
 	result = c == 'b' ? int_ubin_l : result;
 	result = c == 'B' ? int_ubin_u : result;
 	result = c == 'c' || c == 'C' ? uchar : result;
-	result = c == 's' || c == 'S' ? string : result;
+	result = c == 's' || c == 'S' || c == 'r' ? string : result;
 	result = ft_strfind("aAeEfFgG", c) != -1 ? float_pt : result;
 	info->len_flag = ft_strfind("DOUpCS", c) != -1 ? fl_l : info->len_flag;
 	if (c == 'p')

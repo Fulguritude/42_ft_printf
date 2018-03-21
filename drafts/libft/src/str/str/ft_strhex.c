@@ -28,8 +28,8 @@ char	*ft_strhex(const char *str)
 	j = 0;
 	while (str[i])
 	{
-		new_str[j++] = hex_base[(t_u8)str[i] / 16];
-		new_str[j++] = hex_base[(t_u8)str[i] % 16];
+		new_str[j++] = hex_base[((t_u8)str[i]) / 16];
+		new_str[j++] = hex_base[((t_u8)str[i]) % 16];
 		++i;
 	}
 	new_str[j] = '\0';

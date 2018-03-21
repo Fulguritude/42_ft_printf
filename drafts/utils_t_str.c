@@ -16,14 +16,42 @@ void		del_t_str(void *content, size_t content_size)
 	}
 }
 
+static void		handle_color_t_str(t_str *a_t_str)
+{
+ft_putstr_fd("\nBefore : ", 2);
+ft_putendl_fd(a_t_str->data, 2);
+ft_putmem_fd(a_t_str->data, 2);
+	ft_strreplace_inplace(&(a_t_str->data), STR_RED, C_RED);
+	ft_strreplace_inplace(&(a_t_str->data), STR_GREEN, C_GREEN);
+	ft_strreplace_inplace(&(a_t_str->data), STR_YELLOW, C_YELLOW);
+	ft_strreplace_inplace(&(a_t_str->data), STR_BLUE, C_BLUE);
+	ft_strreplace_inplace(&(a_t_str->data), STR_MAGENTA, C_MAGENTA);
+	ft_strreplace_inplace(&(a_t_str->data), STR_CYAN, C_CYAN);
+	ft_strreplace_inplace(&(a_t_str->data), STR_RESET, C_RESET);
+	a_t_str->len = ft_strlen(a_t_str->data);
+ft_putstr_fd("\nAfter : ", 2);
+ft_putendl_fd(a_t_str->data, 2);
+ft_putmem_fd(a_t_str->data, 2);
+}
+
 t_str		*str_to_t_str(char const *str)
 {
 	t_str	*result;
 
-	if (!str || !(result = (t_str*)malloc(sizeof(t_str))))
+	if (!(result = (t_str*)malloc(sizeof(t_str))))
 		return (NULL);
-	result->data = ft_strdup(str);
-	result->len = ft_strlen(str);
+	if (!str)
+	{
+		result->data = NULL;
+		result->len = -1;
+	}
+	else
+	{
+		result->data = ft_strdup(str);
+		result->len = ft_strlen(str);
+	}
+	if (ft_strfind(str, '{') < ft_strfind(str, '}'))
+		handle_color_t_str(result);
 //printf("str_to_t_str : %s, %s\n", str, result.data);
 	return (result);
 }
@@ -39,6 +67,12 @@ static void	t_str_append(void *s1, void *s2)
 		return ;
 	acc = (t_str*)s1;
 	next = (t_str*)s2;
+	if (!(next->data) || next->len == -1)
+	{
+		ft_strdel(&(next->data));
+		next->data = ft_strdup(next->len == -1 ? "(error)" : "(null)");
+		next->len = 6 + (next->len == -1);
+	}
 	len = acc->len + next->len;
 	tmp = ft_strnew(len);
 	ft_memcpy(tmp, acc->data, acc->len);

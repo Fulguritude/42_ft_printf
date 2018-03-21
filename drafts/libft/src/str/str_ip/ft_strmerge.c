@@ -19,5 +19,7 @@ char	*ft_strmerge(char **a_s1, char **a_s2)
 	result = ft_strjoin(*a_s1, *a_s2);
 	ft_strdel(a_s1);
 	ft_strdel(a_s2);
+	*a_s1 = result;
+	*a_s2 = result;
 	return (result);
 }

@@ -1,16 +1,16 @@
 #ifndef __LIBFT_LST_H
 # define __LIBFT_LST_H
 
-# ifndef __LIBFT_H
-#  include "libft.h"
-# endif
-
 typedef struct			s_list
 {
 	void			*content;
 	size_t			content_size;
 	struct s_list	*next;
 }						t_list;
+
+# ifndef __LIBFT_H
+#  include "libft.h"
+# endif
 
 /*
 ** ============= List Functions =============

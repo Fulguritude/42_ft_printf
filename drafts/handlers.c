@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-
+//TODO remove
 #include <stdio.h>
 
 
@@ -32,62 +32,6 @@
 ** floating point types double and long double, and pointer types are not
 ** promoted at all but are passed to the function as is. 
 */
-
-/*
-** FL_ZERO doesn't apply to strings
-*/
-
-static t_str	*handle_str_type(t_format info, va_list args)
-{
-	char	*str;
-	t_str	*result;
-
-	if (!(result = (t_str*)malloc(sizeof(t_str))))
-		return (NULL);
-	if (info.len_flag == fl_l)
-		str = build_utf8((wchar_t*)va_arg(args, wchar_t*));
-	else
-		str = ft_strdup((char*)va_arg(args, char*));
-////printf("\tbuild_pcs_str : %s\n", str);
-	if (info.prec != -1 && (t_u64)info.prec < ft_strlen(str))
-	{
-		if (info.len_flag == fl_l)
-			while ((t_u8)str[info.prec] >> 6 == (t_u8)0x2)
-				--info.prec;
-		str[info.prec] = '\0';
-	}
-	if (info.width != -1 && info.width > (int)ft_strlen(str))
-		result->data = (info.flags & FL_MINUS) ?
-			ft_strpad_right(str, ' ', info.width - ft_strlen(str)) :
-			ft_strpad_left(str, ' ', info.width - ft_strlen(str));
-	else
-		result->data = ft_strdup(str);
-	free(str);
-	result->len = ft_strlen(result->data);
-	return (result);
-}
-
-static t_str		*handle_uchar_type(t_len_flag len_flag, va_list args)
-{
-	t_str	*result;
-	wchar_t wc;
-
-	if (!(result = (t_str*)malloc(sizeof(t_str))))
-		return (NULL);
-	if (len_flag == fl_l)
-	{
-		wc = (wchar_t)va_arg(args, wchar_t);
-		result->data = encode_unicodepoint_to_utf8(wc);
-		result->len = 1 + (wc > 0x7F) + (wc > 0x7FF) + (wc > 0xFFFF);
-	}
-	else
-	{
-		result->data = ft_strnew(1);
-		result->data[0] = (char)va_arg(args, int);
-		result->len = 1;
-	}
-	return (result);
-}
 
 t_str				*handle_format(t_format info, char const *fmt, va_list args)
 {

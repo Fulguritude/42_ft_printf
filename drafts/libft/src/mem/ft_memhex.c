@@ -22,7 +22,7 @@ char	*ft_memhex(const void *s, size_t n)
 	if (!s)
 		return (NULL);
 	hex_base = HXUPP;
-	if (!(new_str = malloc(n * 2 + 1)))
+	if (!(new_str = ft_strnew(n * 2)))
 		return (NULL);
 	i = 0;
 	j = 0;

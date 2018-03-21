@@ -14,5 +14,8 @@
 
 char	*ft_strdup(const char *s)
 {
-	return (ft_memdup(s, ft_strlen(s) + 1));
+	if (s)
+		return (ft_memdup(s, ft_strlen(s) + 1));
+	else
+		return (NULL);
 }

@@ -62,6 +62,9 @@ typedef	unsigned short	t_u16;
 typedef	unsigned int	t_u32;
 typedef	unsigned long	t_u64;
 
+typedef float			t_f32;
+typedef double			t_f64;
+
 /*
 ** Unions used for difficult casting conditions.
 */
@@ -79,8 +82,8 @@ typedef union			u_varint
 
 typedef union			u_varfloat
 {
-	float			f;
-	double			d;
+	t_f32			f;
+	t_f64			lf;
 }						t_varfloat;
 
 # ifndef __LIBFT_LST_H
@@ -97,6 +100,9 @@ typedef union			u_varfloat
 # endif
 # ifndef __LIBFT_MATH_H
 #  include "libft_math.h"
+# endif
+# ifndef __LIBFT_BIGNB_H
+#  include "libft_bignb.h"
 # endif
 
 /*
@@ -128,5 +134,19 @@ char					*ft_ftoa_base(float f, char const *base, char style);
 */
 
 char					*ft_lftoa_base(double lf, char const *base, char style);
+
+/*
+** Returns a value such that every bit b that is not at index i <= b < j is
+** switched off. Returns -1 (ie, 0xFFF...FF) in case of error. 
+** TODO: add to libft_mem.h and appropriate doc
+** TODO: make it work with a byte_len argument 1, 2, 4 or 8, like ft_swap ?
+*/
+t_u64					ft_u64bits_itoj(t_u64 ul, t_u8 i, t_u8 j);
+
+/*
+** Converts non-printable characters into ASCII printable '\xhh', where h is a
+** HXLOW digit.
+*/
+char					*ft_str_toprint(char const *str);
 
 #endif

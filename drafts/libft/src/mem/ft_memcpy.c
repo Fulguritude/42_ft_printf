@@ -16,6 +16,11 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
 	size_t	i;
 
+	if (!dest || !src)
+	{
+		ft_putendl_fd("null operand given to ft_memcpy.", 2);
+		return (NULL);
+	}
 	i = 0;
 	while (i < n)
 	{

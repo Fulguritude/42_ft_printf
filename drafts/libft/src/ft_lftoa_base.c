@@ -64,7 +64,9 @@ static char		*ft_lftoa_base_point(char const *base, t_u8 minus,
 
 	result = NULL;
 	if (base && minus && exp_b2 && mantissa)
-		result = ft_strdup("lftoa base point not implemented.");
+		result = ft_strdup("lftoa base point not implemented (if).");
+	else
+		result = ft_strdup("lftoa base point not implemented (else).");
 	return (result);
 }
 

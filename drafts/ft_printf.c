@@ -68,7 +68,7 @@ int				ft_vasprintf(char **res, const char *format, va_list args)
 	t_str	tmp_res;
 
 //ft_putstr("\nformat_to_strls\n");
-	if (!(fmt_strls = format_to_strls(format)))
+	if (!format || !(fmt_strls = format_to_strls(format)))
 		return (-1);
 //ft_putendl("fmt_strls");
 //ft_putstrls((const char **)fmt_strls);

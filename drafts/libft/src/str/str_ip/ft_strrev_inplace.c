@@ -14,9 +14,16 @@
 
 void			ft_strrev_inplace(char **a_str)
 {
-	char	*tmp;
+	t_u32	i;
+	t_u32	len;
 
-	tmp = ft_strrev(*a_str);
-	ft_strdel(a_str);
-	*a_str = tmp;
+	if (!a_str || !*a_str)
+		return ;
+	len = ft_strlen(*a_str);
+	i = 0;
+	while (i < len / 2)
+	{
+		ft_swap(*a_str + i, *a_str + len - 1 - i, sizeof(char));
+		++i;
+	}
 }

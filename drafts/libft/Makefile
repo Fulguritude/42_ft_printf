@@ -39,6 +39,7 @@ SRCDIR_LST	= lst/
 SRCDIR_MATH	= math/
 SRCDIR_MATH_CV = conv/
 SRCDIR_MATH_OP = op/
+SRCDIR_MATH_BN = bignb/
 
 
 OBJDIR	=	./obj/
@@ -221,14 +222,66 @@ SRC_MATH_OP	=	ft_max.c					\
 				ft_ln.c						\
 				ft_logn.c
 
+SRC_MATH_BN =	ft_bignbnew.c						\
+				ft_atobignb.c						\
+				ft_bignb_strcmp.c					\
+				ft_bignb_iszero.c					\
+				ft_bignb_to_str.c					\
+				ft_bignb_vlq_updates_revns.c		\
+				ft_bignb_revns_updates_vlq.c		\
+				ft_bignb_str_base2bin_inplace.c		\
+				ft_bignb_str_bin2base_inplace.c		\
+				ft_bignbdel.c						\
+				ft_bignb_add.c						\
+				ft_bignb_sub.c						\
+				ft_bignb_mul.c						\
+				ft_bignb_str_add.c					\
+				ft_bignb_str_sub.c					\
+				ft_bignb_str_mul.c					\
+				ft_bignb_str_div.c					\
+				ft_bignb_add_acc.c					\
+				ft_bignb_sub_acc.c					\
+				ft_bignb_div_acc.c					\
+				ft_vlqnew.c						\
+				ft_atovlq.c						\
+				ft_vlqdup.c						\
+				ft_pow_2_to_vlq.c				\
+				ft_vlqlen.c						\
+				ft_vlqcmp.c						\
+				ft_vlq_count_sigbit.c			\
+				ft_vlq_count_sigbit_of_part.c	\
+				ft_vlqhex.c						\
+				ft_vlqtrim.c					\
+				ft_vlqdel.c						\
+				ft_vlq_add.c					\
+				ft_vlq_sub.c					\
+				ft_vlq_mul.c					\
+				ft_vlq_div.c					\
+				ft_vlq_divmod.c					\
+				ft_vlq_pow.c					\
+				ft_vlq_bsl.c					\
+				ft_vlq_bsr.c					\
+				ft_vlq_add_acc.c				\
+				ft_vlq_sub_acc.c				\
+				ft_vlq_mul_acc.c				\
+				ft_vlq_bsl_acc.c				\
+				ft_vlq_bsr_acc.c
+				#ft_vlq_bwa.c
+				#ft_vlq_bwo.c
+
 SRC_MATH=	$(addprefix $(SRCDIR_MATH), \
 				$(addprefix $(SRCDIR_MATH_CV),$(SRC_MATH_CV))	\
 				$(addprefix $(SRCDIR_MATH_OP),$(SRC_MATH_OP))	\
+				$(addprefix $(SRCDIR_MATH_BN),$(SRC_MATH_BN))	\
 			)
 
 SRC_TMP	=	ft_ftoa.c					\
 			ft_ftoa_base.c				\
-			ft_lftoa_base.c
+			ft_lftoa_base.c				\
+			ft_str_toprint.c			\
+			ft_putmem.c					\
+			ft_putmem_fd.c				\
+			ft_u64bits_itoj.c
 
 SRCS	=	$(SRC_MEM)		\
 			$(SRC_STR)		\
@@ -293,6 +346,7 @@ mkobjstruct:
 	@mkdir -p $(OBJDIR)$(SRCDIR_MATH)
 	@mkdir -p $(OBJDIR)$(SRCDIR_MATH)$(SRCDIR_MATH_CV)
 	@mkdir -p $(OBJDIR)$(SRCDIR_MATH)$(SRCDIR_MATH_OP)
+	@mkdir -p $(OBJDIR)$(SRCDIR_MATH)$(SRCDIR_MATH_BN)
 
 test:build_test
 	@make clean

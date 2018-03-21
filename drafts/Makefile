@@ -28,7 +28,7 @@ SRCS	=	ft_printf.c					\
 			utils_t_str.c				\
 			handlers.c					\
 			handler_utils_int.c			\
-			handler_utils_unicode.c		\
+			handler_utils_str.c			\
 			handler_utils_float.c
 OBJS	=	$(SRCS:.c=.o)
 

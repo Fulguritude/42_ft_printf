@@ -17,9 +17,9 @@ printf("printf 1\n");
 		tmp = ft_lftoa_base(lf, DECIM,
 									info.type_char == 'g' ? 'e' : 'E');
 
-printf("printf 2\n");
+printf("printf 2: %s\n", tmp);
 	i = 0;
-	while (tmp[i] && (ft_isdigit(tmp[i]) || tmp[i] == '-' || tmp[i] == '.') &&
+	while ((ft_isdigit(tmp[i]) || tmp[i] == '-' || tmp[i] == '.') &&
 			i < (t_u32)(info.prec + (tmp[0] == '-') + 1))
 		++i;
 printf("printf 3\n");

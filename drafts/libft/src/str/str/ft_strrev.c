@@ -26,7 +26,7 @@ char	*ft_strrev(const char *s)
 	while (i < len / 2)
 	{
 		ft_swap(&rev[i], &rev[len - 1 - i], sizeof(char));
-		i++;
+		++i;
 	}
 	return (rev);
 }
