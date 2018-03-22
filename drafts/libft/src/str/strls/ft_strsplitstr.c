@@ -80,7 +80,7 @@ char			**ft_strsplitstr(char const *str, char const *sub)
 	if (reslen == 1)
 		result[0] = ft_strdup(str);
 	else
-		while (j < reslen && i < ft_strlen(str))
+		while (j < reslen)
 		{
 			result[j] = get_next_chunk(str, sub, &i);
 			++j;			

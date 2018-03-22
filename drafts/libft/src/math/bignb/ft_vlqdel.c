@@ -21,7 +21,7 @@ void		ft_vlqdel(t_vlq *a_vlq)
 		if (*a_vlq)
 		{	
 			i = 0;
-			while ((*a_vlq)[i] & _MSB_)
+			while (MSB((*a_vlq)[i]))
 			{
 				(*a_vlq)[i] = 0;
 				++i;

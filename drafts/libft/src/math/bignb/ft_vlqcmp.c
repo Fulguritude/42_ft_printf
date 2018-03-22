@@ -18,7 +18,7 @@ long	ft_vlqcmp(t_vlq const a, t_vlq const b)
 	t_u32	a_len;
 	t_u32	i;
 
-	if (!NOT_MSB(a[0]) || !NOT_MSB(b[0]))
+	if ((!NOT_MSB(a[0]) && MSB(a[0])) || (!NOT_MSB(b[0]) && MSB(b[0])))
 	{
 		ft_putendl_fd("Improper vlq in vlqcmp.", 2);
 		return (0);

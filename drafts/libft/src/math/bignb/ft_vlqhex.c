@@ -28,6 +28,7 @@ char	*ft_vlqhex(t_vlq const vlq)
 	while (i < len)
 	{
 		tmp = ft_uitoa_base(vlq[i], HXLOW);
+		ft_strpad_left_inplace(&tmp, '0', 16 - ft_strlen(tmp));
 		ft_strappend(&tmp, (i + 1) % 4 ? ", 0x" : ",\n 0x");
 		ft_strappend(&result, tmp);
 		ft_strdel(&tmp);

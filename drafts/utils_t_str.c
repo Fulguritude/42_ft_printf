@@ -18,9 +18,6 @@ void		del_t_str(void *content, size_t content_size)
 
 static void		handle_color_t_str(t_str *a_t_str)
 {
-ft_putstr_fd("\nBefore : ", 2);
-ft_putendl_fd(a_t_str->data, 2);
-ft_putmem_fd(a_t_str->data, 2);
 	ft_strreplace_inplace(&(a_t_str->data), STR_RED, C_RED);
 	ft_strreplace_inplace(&(a_t_str->data), STR_GREEN, C_GREEN);
 	ft_strreplace_inplace(&(a_t_str->data), STR_YELLOW, C_YELLOW);
@@ -29,9 +26,6 @@ ft_putmem_fd(a_t_str->data, 2);
 	ft_strreplace_inplace(&(a_t_str->data), STR_CYAN, C_CYAN);
 	ft_strreplace_inplace(&(a_t_str->data), STR_RESET, C_RESET);
 	a_t_str->len = ft_strlen(a_t_str->data);
-ft_putstr_fd("\nAfter : ", 2);
-ft_putendl_fd(a_t_str->data, 2);
-ft_putmem_fd(a_t_str->data, 2);
 }
 
 t_str		*str_to_t_str(char const *str)
@@ -86,8 +80,6 @@ t_str		to_single_t_str(t_list *lststr)
 {
 	t_str	acc;
 
-//	if (!(acc = (t_str*)malloc(sizeof(t_str))))
-//		return (NULL);
 	acc.data = ft_strnew(0);
 	acc.len = 0;
 	ft_lstfold(lststr, &acc, &t_str_append);

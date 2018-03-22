@@ -7,11 +7,10 @@
 
 # include <unistd.h>
 
-/* TODO
+//TODO fix
 # ifndef __FT_PRINTF_H
-#  include "ft_print.h"
+#  include "../../ft_printf.h"
 # endif
-*/
 
 /*
 ** ============ Readers ============

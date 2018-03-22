@@ -32,9 +32,9 @@ void			ft_vlqtrim(t_vlq *a_vlq)
 					break ;
 			if (i > 0)
 			{
-				tmp = ft_memalloc(sizeof(t_u64) * (len - i));
-				while (--len >= i);
-					tmp[len - i] = (*a_vlq)[len];
+				tmp = ft_vlqnew(len - i);
+				while (--len >= i)
+					tmp[len - i] |= NOT_MSB((*a_vlq)[len]);
 				ft_vlqdel(a_vlq);
 				*a_vlq = tmp;
 			}

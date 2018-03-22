@@ -14,5 +14,12 @@
 
 void		ft_strntrim_right_inplace(char **a_str, size_t n)
 {
-	*a_str[ft_strlen(*a_str) - n] = '\0';
+	int		len;
+
+	if (!a_str || !(*a_str))
+		return ;
+	len = ft_strlen(*a_str) - n;
+	if (len < 0)
+		len = 0;
+	(*a_str)[len] = '\0';
 }

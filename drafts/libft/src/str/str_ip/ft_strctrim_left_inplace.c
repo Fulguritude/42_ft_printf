@@ -17,10 +17,12 @@ void		ft_strctrim_left_inplace(char **a_str, char const c)
 	int		i;
 	char	*tmp;
 
+	if ((*a_str)[0] != c)
+		return ;
 	i = 0;
-	while (*a_str[i] == c)
+	while ((*a_str)[i] == c)
 		++i;
-	tmp = ft_strdup(*a_str + i);
+	tmp = ft_strdup((*a_str) + i);
 	ft_strdel(a_str);
 	*a_str = tmp;
 }

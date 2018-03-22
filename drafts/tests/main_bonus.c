@@ -801,9 +801,10 @@ printf("\n\n");
 	printf(C_YELLOW"\n\nThis function tests in-string shortcuts, each word should be its corresponding color and each semicolon should be white :"C_RESET); printf("\n");
 
 	ft_printf("\n{red}red{eoc} ; {yellow}yellow{eoc} ; {green}green{eoc} ; {cyan}cyan{eoc} ; {blue}blue{eoc} ; {magenta}magenta{eoc}\n");
-	ft_printf("\n{red}%s{eoc} ; {yellow}%s {eoc} ; {green}green, null_%c_char{eoc} ; {cyan}cyan_fake_eoc_%s_in_a_%%s{eoc} ; {blue}blue, %#+09x{eoc} ; {magenta} %s{eoc}\n", "red, {}only_a_%s_between{}", "yellow, {}trailing_space {}", 0, "{eoc}", 0x123456, "magenta, {} leading_space{}");
+	ft_printf("\n{red}%s{eoc} ; {yellow}%s {eoc} ; {green}green, null_%c_char{eoc} ; {cyan}cyan, fake_eoc_%s_in_a_%%s{eoc} ; {blue}blue, %#+09x{eoc} ; {magenta} %s{eoc}\n", "red, {}only_a_%s_between{}", "yellow, {}trailing_space {}", 0, "{eoc}", 0x123456, "magenta, {} leading_space{}");
 
-/*	tmp = NULL;
+#if 0
+	tmp = NULL;
 
 	ft_asprintf(&tmp, "{red}red{eoc} ; {yellow}yellow{eoc} ; {green}green{eoc} ; {cyan}cyan{eoc} ; {blue}blue{eoc} ; {magenta}magenta{eoc}\n");
 	ft_putmem(tmp);
@@ -811,10 +812,10 @@ printf("\n\n");
 
 	printf("\n");
 
-	ft_asprintf(&tmp, "{red}%s{eoc} ; {yellow}%s {eoc} ; {green}green, null_%c_char{eoc} ; {cyan}cyan_fake_eoc_%s_in_a_%%s{eoc} ; {blue}blue, %#+09x{eoc} ; {magenta} %s{eoc}\n", "red, {}only_a_%s_between{}", "yellow, {}trailing_space {}", 1, "{eoc}", 0x123456, "magenta, {} leading_space{}");
+	ft_asprintf(&tmp, "{red}%s{eoc} ; {yellow}%s {eoc} ; {green}green, null_%c_char{eoc} ; {cyan}cyan, fake_eoc_%s_in_a_%%s{eoc} ; {blue}blue, %#+09x{eoc} ; {magenta} %s{eoc}\n", "red, {}only_a_%s_between{}", "yellow, {}trailing_space {}", 1, "{eoc}", 0x123456, "magenta, {} leading_space{}");
 	ft_putmem(tmp);
 	ft_strdel(&tmp);
-*/
+#endif
 	#endif
 
 

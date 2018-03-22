@@ -35,6 +35,7 @@ OBJS	=	$(SRCS:.c=.o)
 MAIN	=	main.c
 BONUS	=	main_bonus.c
 ASMAIN	=	main_asprintf.c
+BNBMAIN	=	main_bignb.c
 TEST	=	test.out
 
 #dependencies are taken care of in libft's makefile.
@@ -58,6 +59,7 @@ clean:
 	@rm -f $(TSTDIR)$(MAIN:.c=.o)
 	@rm -f $(TSTDIR)$(BONUS:.c=.o)
 	@rm -f $(TSTDIR)$(ASMAIN:.c=.o)
+	@rm -f $(TSTDIR)$(BNBMAIN:.c=.o)
 	@rm -f $(TEST)
 
 fclean:clean
@@ -105,5 +107,13 @@ vgleakastest:fclean $(NAME)
 	@$(CC) $(CFLAGS) -c $(TSTDIR)$(ASMAIN) -o $(TSTDIR)$(ASMAIN:.c=.o)
 	@$(CC) $(OBJS) $(TSTDIR)$(ASMAIN:.c=.o) -lftprintf -L./ -o $(TEST)
 	valgrind -v --track-origins=yes --leak-check=full ./$(TEST)
+	@make clean
+	@printf "Done !\n"
+
+bignbtest:$(NAME)
+	@printf "Rebuilding test.out for rule 'bignbtest'...\n"
+	@$(CC) $(CFLAGS) $(DBFLAGS) -c $(TSTDIR)$(BNBMAIN) -o $(TSTDIR)$(BNBMAIN:.c=.o)
+	@$(CC) $(OBJS) $(TSTDIR)$(BNBMAIN:.c=.o) -lftprintf -L./ -lasan -o $(TEST)
+	./$(TEST)
 	@make clean
 	@printf "Done !\n"
