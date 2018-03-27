@@ -23,7 +23,7 @@ void		ft_putmem_fd(char const *str, int fd)
 		return ;
 	tmp = ft_strhex(str);
 	wordlen = 4;
-	cols = 6;
+	cols = HEXCOLS;
 	tmp_strls = ft_strdivide(tmp, 2);
 	ft_strdel(&tmp);
 	tmp = ft_strlsjoin((char const **)tmp_strls, " ");

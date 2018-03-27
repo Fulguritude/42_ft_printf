@@ -44,6 +44,9 @@ static t_vlq		bin_atovlq(char const *a)
 	return (result);
 }
 
+/*
+*/
+
 static t_vlq		anybase_atovlq(char const *a, char const *base,
 									t_vlq *radix)
 {
@@ -62,9 +65,29 @@ static t_vlq		anybase_atovlq(char const *a, char const *base,
 	{
 		val = ft_vlqnew(1);
 		val[0] = ft_in_base(a[len], base);
+/*
+char *str;
+char *(*vlq_disp)(t_vlq);
+
+vlq_disp = &ft_vlq_abstractval_as_hex;//  ft_vlqhex
+str = vlq_disp(base_pow);
+ft_printf("\tSTART\tval = %d\n\t\tbase_pow = {cyan}%s{eoc}\n", val[0], str);
+ft_strdel(&str);*/
 		ft_vlq_mul_acc(&val, base_pow);
+/*
+str = vlq_disp(val);
+ft_printf("\t\tvalres   = {blue}%s{eoc} (valres = val * base_pow)\n", str);
+ft_strdel(&str);*/
 		ft_vlq_add_acc(&result, val);
+/*
+str = vlq_disp(result);
+ft_printf("\t\tfull_res = {bold}{blue}%s{eoc} (full_res = full_res + valres)\n", str);
+ft_strdel(&str); */
 		ft_vlq_mul_acc(&base_pow, *radix);
+/*
+str = vlq_disp(base_pow);
+ft_printf("\tEND\tbase_pow = {bold}{cyan}%s{eoc} (base_pow *= radix))\n", str);
+ft_strdel(&str);*/
 		ft_vlqdel(&val);	
 	}
 	ft_vlqdel(&base_pow);

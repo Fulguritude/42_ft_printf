@@ -38,10 +38,6 @@ ASMAIN	=	main_asprintf.c
 BNBMAIN	=	main_bignb.c
 TEST	=	test.out
 
-#dependencies are taken care of in libft's makefile.
-$(LFT):
-	$(MAKE) -C $(LFTDIR) $(LFT)
-
 $(NAME): $(LFT) $(OBJS)
 	@printf "Compiling library: "$@" -> "$(RED)
 	@cp $(LFTDIR)$(LFT) ./$@
@@ -49,6 +45,10 @@ $(NAME): $(LFT) $(OBJS)
 	@ar -r $@ $(OBJS)
 	@ranlib $@
 	@printf $(GREEN)"OK!"$(RESET)"\n"
+
+#dependencies are taken care of in libft's makefile.
+$(LFT):
+	$(MAKE) -C $(LFTDIR) $(LFT)
 
 all: $(NAME)
 
@@ -117,3 +117,5 @@ bignbtest:$(NAME)
 	./$(TEST)
 	@make clean
 	@printf "Done !\n"
+
+.PHONY: all clean re

@@ -18,13 +18,25 @@ void		del_t_str(void *content, size_t content_size)
 
 static void		handle_color_t_str(t_str *a_t_str)
 {
+	ft_strreplace_inplace(&(a_t_str->data), STR_BOLD, BOLD);
+	ft_strreplace_inplace(&(a_t_str->data), STR_UNDERLINE, UNDERLINE);
+	ft_strreplace_inplace(&(a_t_str->data), STR_BLACK, C_BLACK);
 	ft_strreplace_inplace(&(a_t_str->data), STR_RED, C_RED);
 	ft_strreplace_inplace(&(a_t_str->data), STR_GREEN, C_GREEN);
 	ft_strreplace_inplace(&(a_t_str->data), STR_YELLOW, C_YELLOW);
 	ft_strreplace_inplace(&(a_t_str->data), STR_BLUE, C_BLUE);
 	ft_strreplace_inplace(&(a_t_str->data), STR_MAGENTA, C_MAGENTA);
 	ft_strreplace_inplace(&(a_t_str->data), STR_CYAN, C_CYAN);
-	ft_strreplace_inplace(&(a_t_str->data), STR_RESET, C_RESET);
+	ft_strreplace_inplace(&(a_t_str->data), STR_WHITE, C_WHITE);
+	ft_strreplace_inplace(&(a_t_str->data), STR_BG_BLACK, BG_BLACK);
+	ft_strreplace_inplace(&(a_t_str->data), STR_BG_RED, BG_RED);
+	ft_strreplace_inplace(&(a_t_str->data), STR_BG_GREEN, BG_GREEN);
+	ft_strreplace_inplace(&(a_t_str->data), STR_BG_YELLOW, BG_YELLOW);
+	ft_strreplace_inplace(&(a_t_str->data), STR_BG_BLUE, BG_BLUE);
+	ft_strreplace_inplace(&(a_t_str->data), STR_BG_MAGENTA, BG_MAGENTA);
+	ft_strreplace_inplace(&(a_t_str->data), STR_BG_CYAN, BG_CYAN);
+	ft_strreplace_inplace(&(a_t_str->data), STR_BG_WHITE, BG_WHITE);
+	ft_strreplace_inplace(&(a_t_str->data), STR_RESET, RESET);
 	a_t_str->len = ft_strlen(a_t_str->data);
 }
 

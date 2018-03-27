@@ -12,6 +12,8 @@
 #  include "../../ft_printf.h"
 # endif
 
+# define HEXCOLS	6
+
 /*
 ** ============ Readers ============
 */
@@ -116,9 +118,16 @@ void					ft_putnbr_lstelem_fd(t_list *elem, int fd);
 void					ft_putnbr_lst_fd(t_list *lst, int fd);
 
 /*
-** Prints memory in 'str' in 6 columns of 4 distinct bytes to 'fd'.
+** Prints memory in  (null-term) 'str' in HEXCOLS columns of 4 distinct bytes to
+** 'fd'.
 */
 void					ft_putmem_fd(char const *str, int fd);
+
+/*
+** Prints memory in  (null-term) 'str' in HEXCOLS columns of 4 distinct bytes to
+** stdout.
+*/
+void					ft_putmem(char const *str);
 
 /*
 ** ============ Printf family ===============

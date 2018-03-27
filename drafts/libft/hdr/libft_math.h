@@ -65,10 +65,10 @@ long					ft_ceil(double lf);
 int						ft_ilog2(t_u64 pow_of_2);
 
 /*
-** Returns an int to the power of an int, without checking for overflow.
+** Returns an int to the power of a uint, checking for overflow.
 */
 
-int						ft_ipowi(int x, int pow);
+t_u64					ft_ipowi(t_u32 x, t_u8 pow);
 
 /*
 ** Returns a double to the power of an int, without checking for overflow.
@@ -86,8 +86,6 @@ double					ft_exp(double x);
 /*
 ** Returns the natural logarithm of lf, using the Taylor expansion to build
 ** precision up to decim_prec.
-**
-** TODO : extract exponent first for more precision ?
 */
 
 double					ft_ln(double lf, t_u8 decim_prec);

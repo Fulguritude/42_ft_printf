@@ -69,6 +69,7 @@ SRC_MEM_MEM	=	ft_memset.c					\
 				ft_memhex.c					\
 				ft_swap.c					\
 				ft_delete.c					\
+				ft_u64bits_itoj.c			\
 				ft_ptrarrlen.c				\
 				ft_ptrarrnew.c
 
@@ -115,6 +116,7 @@ SRC_STR_STR	=	ft_strlen.c					\
 				ft_strtrim.c				\
 				ft_strremove.c				\
 				ft_strreplace.c				\
+				ft_str_toprint.c			\
 				ft_str_countchar.c			\
 				ft_striter.c				\
 				ft_striteri.c				\
@@ -185,6 +187,8 @@ SRC_IO_IO	=	ft_putchar_fd.c				\
 				ft_putstr.c					\
 				ft_putendl.c				\
 				ft_putnbr.c					\
+				ft_putmem.c					\
+				ft_putmem_fd.c				\
 				ft_putstrls.c				\
 				ft_putlstelem_fd.c			\
 				ft_putlst_fd.c				\
@@ -275,13 +279,13 @@ SRC_MATH=	$(addprefix $(SRCDIR_MATH), \
 				$(addprefix $(SRCDIR_MATH_BN),$(SRC_MATH_BN))	\
 			)
 
-SRC_TMP	=	ft_ftoa.c					\
-			ft_ftoa_base.c				\
-			ft_lftoa_base.c				\
-			ft_str_toprint.c			\
-			ft_putmem.c					\
-			ft_putmem_fd.c				\
-			ft_u64bits_itoj.c
+SRC_TMP	=	ft_ftoa.c						\
+			ft_ftoa_base.c					\
+			ft_lftoa_base.c					\
+			ft_vlq_get_greatest_sub_pow10.c \
+			ft_vlq_abstractval_as_hex.c		\
+			ft_str_base_to_base_expn.c		\
+			ft_str_base_expn_to_base.c
 
 SRCS	=	$(SRC_MEM)		\
 			$(SRC_STR)		\

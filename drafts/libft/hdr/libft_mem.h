@@ -99,6 +99,13 @@ char					*ft_memhex(void const *ptr, size_t n);
 void					ft_delete(void *p, size_t mem_size);
 
 /*
+** Returns a value such that every bit b that is not at index i <= b < j is
+** switched off. Returns -1 (ie, 0xFFF...FF) in case of error.
+** TODO: make it work with a byte_len argument 1, 2, 4 or 8, like ft_swap ?
+*/
+t_u64					ft_u64bits_itoj(t_u64 ul, t_u8 i, t_u8 j);
+
+/*
 ** Returns the number of lines in a nul-terminated strls, or just a general
 ** null-terminated pointer array.
 */

@@ -54,33 +54,57 @@
 #  define HXUPP "0123456789ABCDEF"
 # endif
 
-# ifndef __ANSI_COLOR_CODES__
-#  define __ANSI_COLORS_CODES__
-#  define C_RED		"\x1b[31m"
-#  define C_GREEN	"\x1b[32m"
-#  define C_YELLOW	"\x1b[33m"
-#  define C_BLUE	"\x1b[34m"
-#  define C_MAGENTA	"\x1b[35m"
-#  define C_CYAN	"\x1b[36m"
-#  define C_RESET	"\x1b[0m"
+# ifndef __ANSI_CODES__
+#  define __ANSI_CODES__
+#  define BOLD			"\x1b[1m"
+#  define UNDERLINE		"\x1b[4m"
+#  define C_BLACK		"\x1b[30m"
+#  define C_RED			"\x1b[31m"
+#  define C_GREEN		"\x1b[32m"
+#  define C_YELLOW		"\x1b[33m"
+#  define C_BLUE		"\x1b[34m"
+#  define C_MAGENTA		"\x1b[35m"
+#  define C_CYAN		"\x1b[36m"
+#  define C_WHITE		"\x1b[37m"
+#  define BG_BLACK		"\x1b[40m"
+#  define BG_RED		"\x1b[41m"
+#  define BG_GREEN		"\x1b[42m"
+#  define BG_YELLOW		"\x1b[43m"
+#  define BG_BLUE		"\x1b[44m"
+#  define BG_MAGENTA	"\x1b[45m"
+#  define BG_CYAN		"\x1b[46m"
+#  define BG_WHITE		"\x1b[47m"
+#  define RESET			"\x1b[0m"
 # endif
 
-# ifndef __FT_PRINTF_COLOR_STRINGS__
-#  define __FT_PRINTF_COLOR_STRINGS__
-#  define STR_RED		"{red}"
-#  define STR_GREEN		"{green}"
-#  define STR_YELLOW	"{yellow}"
-#  define STR_BLUE		"{blue}"
-#  define STR_MAGENTA	"{magenta}"
-#  define STR_CYAN		"{cyan}"
-#  define STR_RESET		"{eoc}"
+# ifndef __FT_PRINTF_ANSI_STRINGS__
+#  define __FT_PRINTF_ANSI_STRINGS__
+#  define STR_BOLD			"{bold}"
+#  define STR_UNDERLINE		"{uline}"
+#  define STR_BLACK			"{black}"
+#  define STR_RED			"{red}"
+#  define STR_GREEN			"{green}"
+#  define STR_YELLOW		"{yellow}"
+#  define STR_BLUE			"{blue}"
+#  define STR_MAGENTA		"{magenta}"
+#  define STR_CYAN			"{cyan}"
+#  define STR_WHITE			"{white}"
+#  define STR_BG_BLACK		"{black_bg}"
+#  define STR_BG_RED		"{red_bg}"
+#  define STR_BG_GREEN		"{green_bg}"
+#  define STR_BG_YELLOW		"{yellow_bg}"
+#  define STR_BG_BLUE		"{blue_bg}"
+#  define STR_BG_MAGENTA	"{magenta_bg}"
+#  define STR_BG_CYAN		"{cyan_bg}"
+#  define STR_BG_WHITE		"{white_bg}"
+#  define STR_RESET			"{eoc}"
 # endif
 
-# define FL_HASH 0x1
-# define FL_PLUS 0x2
-# define FL_MINUS 0x4
-# define FL_SPACE 0x8
-# define FL_ZERO 0x10
+# define FL_HASH	0x1
+# define FL_PLUS	0x2
+# define FL_MINUS	0x4
+# define FL_SPACE	0x8
+# define FL_ZERO	0x10
 /*
 ** # define FL_QUOTE 0x20 //add "\'" to flags
 */

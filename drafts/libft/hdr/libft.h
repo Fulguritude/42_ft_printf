@@ -37,6 +37,7 @@
 # include <unistd.h>
 # include <string.h>
 # include <inttypes.h>
+# include <limits.h>
 
 //# include "ft_printf.h" here, or in io, seeing that asprintf is a string function ?
 
@@ -135,18 +136,17 @@ char					*ft_ftoa_base(float f, char const *base, char style);
 
 char					*ft_lftoa_base(double lf, char const *base, char style);
 
-/*
-** Returns a value such that every bit b that is not at index i <= b < j is
-** switched off. Returns -1 (ie, 0xFFF...FF) in case of error. 
-** TODO: add to libft_mem.h and appropriate doc
-** TODO: make it work with a byte_len argument 1, 2, 4 or 8, like ft_swap ?
-*/
-t_u64					ft_u64bits_itoj(t_u64 ul, t_u8 i, t_u8 j);
 
-/*
-** Converts non-printable characters into ASCII printable '\xhh', where h is a
-** HXLOW digit.
-*/
-char					*ft_str_toprint(char const *str);
+
+char		*ft_str_base_to_base_expn(char const *str, char const *base_f,
+									char const *base_t, t_u32 expn);
+
+char		*ft_str_base_expn_to_base(char const *str, char const *base_f,
+									char const *base_t, t_u32 expn);
+
+char		*ft_vlq_abstractval_as_hex(t_vlq const vlq);
+
+
+t_vlq		ft_vlq_get_greatest_sub_pow10(t_vlq vlq);
 
 #endif

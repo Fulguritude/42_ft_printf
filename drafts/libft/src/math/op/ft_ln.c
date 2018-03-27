@@ -45,13 +45,14 @@ double		ft_ln(double lf, t_u8 decim_prec)
 	double	prec_test;
 	double	diff;
 
-	if (lf <= 0)
+	if (lf <= 0.)
 		return (0.0f / 0.0f);
+	if (lf >= 2.)
+		return (-ft_ln(1. / lf, decim_prec));
 	if (decim_prec > 15)
 		decim_prec = 15;
 	prec_test = 1. / ft_lfpowi(10., decim_prec + 1);
-	lf = lf - 1.;
 	diff = 2.;
-	result = ln_taylor_series(lf, prec_test, diff);
+	result = ln_taylor_series(lf - 1, prec_test, diff);
 	return (result);
 }

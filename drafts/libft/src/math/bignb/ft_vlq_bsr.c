@@ -20,7 +20,7 @@
 ** bsl. This is to maintain a sort of symmetry that puts the parsing order
 ** first and foremost in order to make the code more legible.
 */
-static t_vlq	bsr_chunk_shift(t_vlq const vlq, t_u32 s63, 
+static t_vlq	bsr_chunk_shift(t_vlq const vlq, t_u32 sm63, 
 								t_u8 size, t_u8 vlqmsb_offset)
 {
 	t_vlq	result;
@@ -28,24 +28,27 @@ static t_vlq	bsr_chunk_shift(t_vlq const vlq, t_u32 s63,
 	t_s8	sum;
 	int		i;
 	
+	if (sm63 == 0)
+		sm63 = 63;
 	result = ft_vlqnew(size);
-	sum = s63 + vlqmsb_offset;
+	sum = sm63 + vlqmsb_offset;
 	i = -1;
 	while (++i < size)
 	{
 		tmp = 0;
+//ft_printf("{blue}Read %d, sum = %d, sm63 = %d\n{eoc}", i, sum, sm63);
 		if (sum < 63)
 		{
 			if (0 < i)
-				tmp |= ft_u64bits_itoj(vlq[i - 1], 64 - s63, 64) << (63 - s63);
-			tmp |= ft_u64bits_itoj(vlq[i], 1, 64 - s63) >> s63;
+				tmp |= ft_u64bits_itoj(vlq[i - 1], 64 - sm63, 64) << (63 - sm63);
+			tmp |= ft_u64bits_itoj(vlq[i], 1, 64 - sm63) >> sm63;
 		}
 		else
 		{
-			tmp |= ft_u64bits_itoj(vlq[i], 64 - s63, 64) << (63 - s63);
-			if (i + 1 < size)
-				tmp |= ft_u64bits_itoj(vlq[i + 1], 1, 64 - s63) >> s63;
+			tmp |= ft_u64bits_itoj(vlq[i], 64 - sm63, 64) << (63 - sm63);
+			tmp |= ft_u64bits_itoj(vlq[i + 1], 1, 64 - sm63) >> sm63;
 		}
+//ft_printf("{green}Read %d, tmp = %#lx\n{eoc}", i, tmp);
 		result[i] |= tmp;
 	}
 	return (result);
@@ -68,6 +71,7 @@ t_vlq		ft_vlq_bsr(t_vlq const vlq, t_u32 shift)
 	{
 		vlqmsb_offset = 63 - ft_vlq_count_sigbit_of_part(vlq[0]);
 		size = ft_vlqlen(vlq) - ((shift + vlqmsb_offset) / 63);
+ft_printf("vlqlen %d ; shift + vlqmsb %d ; size = %d\n", ft_vlqlen(vlq), shift + vlqmsb_offset, size);
 		result = bsr_chunk_shift(vlq, shift % 63, size, vlqmsb_offset);
 	}
 	return (result);

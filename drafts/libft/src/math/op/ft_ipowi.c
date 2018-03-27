@@ -12,18 +12,18 @@
 
 #include "libft.h"
 
-int		ft_ipowi(int nb, int power)
+t_u64	ft_ipowi(t_u32 nb, t_u8 power)
 {
 	int		i;
-	int		result;
+	t_u64	result;
 
 	result = 1;
-	if (power < 0)
-		return (0);
-	if (power == 0)
-		return (1);
 	i = 0;
 	while (++i <= power)
+	{
+		if (ULONG_MAX / nb < result)
+			return (0);
 		result *= nb;
+	}
 	return (result);
 }

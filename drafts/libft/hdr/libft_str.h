@@ -301,6 +301,12 @@ char					*ft_strjoin(char const *str1, char const *str2);
 char					*ft_strtrim(char const *str);
 
 /*
+** Converts non-printable characters into ASCII printable '\xhh', where h is a
+** HXLOW digit.
+*/
+char					*ft_str_toprint(char const *str);
+
+/*
 ** Returns a newly allocated version of str where all instances of "sub" 
 ** have been removed.
 */

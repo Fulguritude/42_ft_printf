@@ -30,7 +30,7 @@ t_vlq		ft_vlq_add(t_vlq const a, t_vlq const b)
 	b_len = ft_vlqlen(b) - 1;
 	result = ft_vlqnew((MAX(a_len, b_len) + 2));
 	carry = 0;
-	while (a_len >= 0 || b_len >= 0)
+	while (a_len >= 0 || b_len >= 0 || carry)
 	{
 //ft_printf("alen %d : blen %d\n", a_len, b_len);
 		cur_part = carry;
