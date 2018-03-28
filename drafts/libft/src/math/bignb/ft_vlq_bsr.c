@@ -71,7 +71,7 @@ t_vlq		ft_vlq_bsr(t_vlq const vlq, t_u32 shift)
 	{
 		vlqmsb_offset = 63 - ft_vlq_count_sigbit_of_part(vlq[0]);
 		size = ft_vlqlen(vlq) - ((shift + vlqmsb_offset) / 63);
-ft_printf("vlqlen %d ; shift + vlqmsb %d ; size = %d\n", ft_vlqlen(vlq), shift + vlqmsb_offset, size);
+//ft_printf("vlqlen %d ; shift + vlqmsb %d ; size = %d\n", ft_vlqlen(vlq), shift + vlqmsb_offset, size);
 		result = bsr_chunk_shift(vlq, shift % 63, size, vlqmsb_offset);
 	}
 	return (result);

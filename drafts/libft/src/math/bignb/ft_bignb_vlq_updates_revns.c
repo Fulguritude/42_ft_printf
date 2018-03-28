@@ -36,11 +36,13 @@ static char			*vlq_to_bin_revns(t_vlq const vlq)
 {
 	char	*result;
 	char	*tmp;
-	int		i;
+	t_u32	i;
+	t_u32	len;
 
 	result = ft_strnew(0);
+	len = ft_vlqlen(vlq);
 	i = 0;
-	while ((vlq[i] & _MSB_))
+	while (i < len)
 	{
 		tmp = vlqpart_to_tmp_binstr(NOT_MSB(vlq[i]));
 		ft_strmerge(&tmp, &result);
@@ -79,10 +81,12 @@ static char			*vlq_to_bin_revns(t_vlq const vlq)
 ** voire une formule generale pour anybase.
 */
 
+/*
+** This is as naive an implementation as it gets, but it should suffice for most
+** bases.
+*/
 static char		*vlq_to_anybase_revns(t_vlq const vlq, char const *base)
 {
-	//TODO this is as naive an implementation as it gets...
-
 	char	*result;
 	t_vlq	tmp_vlq;
 	t_vlq	div;
@@ -90,27 +94,35 @@ static char		*vlq_to_anybase_revns(t_vlq const vlq, char const *base)
 	t_u64	radix;
 
 	result = ft_strnew(0);
-	tmp_vlq = vlq;
+	tmp_vlq = ft_vlqdup(vlq);
 	radix = ft_strlen(base);
-	while (tmp_vlq)
+	while (tmp_vlq[0])
 	{
+//char *str = ft_vlqhex(tmp_vlq);
+//ft_printf("tmp_vlq = %s\n", str);
+//ft_strdel(&str);
 		ft_vlq_divmod(tmp_vlq, &radix, &div, &mod);
-		ft_strpad_left_inplace(&result, base[*mod], 1);
+		ft_strpad_left_inplace(&result, base[mod[0]], 1);
 		ft_vlqdel(&tmp_vlq);
+		ft_vlqdel(&mod);
 		tmp_vlq = div;
 	}
+	ft_vlqdel(&tmp_vlq);
+	ft_strrev_inplace(&result);
 	return (result);
 }
 
 static char		*vlq_to_decim_revns(t_vlq const vlq)
 {
-	//TODO placeholder: optimize for base_10
+	//TODO placeholder: optimize for base_10 ? Or leave that to finding the topmost digits in lftoa ?
 
 	return (vlq_to_anybase_revns(vlq, DECIM));
 }
 
 void		ft_bignb_vlq_updates_revns(t_bignb *bn)
 {
+	if (!bn)
+		return ;
 	if (!bn->vlq)
 	{
 		ft_putendl_fd("Empty vlq field in bignb_vlq_updates_revns arg.", 2);

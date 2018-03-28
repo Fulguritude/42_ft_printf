@@ -38,6 +38,10 @@ static long	ft_vlqlexcmp(t_vlq const a, t_vlq const b, int diff)
 		tmp = ft_vlq_bsl(b, diff);
 		result = ft_vlqcmp(a, tmp);
 	}
+/*
+char *str = ft_vlqhex(a), *str2 = ft_vlqhex(b), *str3 = ft_vlqhex(tmp);
+ft_printf("\t\t{blue}a   = %s\n\t\t{cyan}b   = %s\n\t\t{green}tmp = %s{eoc}\n\t\tresult = %ld; a < b ? %d\n", str, str2, str3, result, result < 0);
+ft_strdel(&str); ft_strdel(&str2); ft_strdel(&str3); */
 	ft_vlqdel(&tmp);
 	return (result);
 }
@@ -45,14 +49,14 @@ static long	ft_vlqlexcmp(t_vlq const a, t_vlq const b, int diff)
 /*
 ** Returns the number of trailing zeros in the astract binary value of vlq.
 */
-t_u32		ft_vlq_is_pow2_divisible(t_vlq const vlq)
+static t_u32	ft_vlq_is_pow2_divisible(t_vlq const vlq)
 {
 	t_u32	pow2;
 	t_s32	i;
 	t_s8	j;
 
 	if (!NOT_MSB(vlq[0]))
-		return (0);
+		return (0); 
 	pow2 = 0;
 	i = ft_vlqlen(vlq);
 	while (--i >= 0)
@@ -71,27 +75,29 @@ t_u32		ft_vlq_is_pow2_divisible(t_vlq const vlq)
 
 /*
 ** 'ops % 63' is the sigbits of res_q[0] because ops == quo_sigbits,
-** '63 - sigbits' is the 0s before these sigbits,
+** '63 - sigbits' is the 0s before these sigbits, called vlqmsb_offset elsewhere
 ** '++cbi' with each new operation,
 ** 'cbi / 63' is to get the index from the bitindex inside the vlq,
 **		given by (63 - (ops % 63) + i)
 **
 ** TODO verify usage of extra to make sure 
 */
-static t_vlq	do_vlqdiv(t_vlq *tmp_n, t_vlq *tmp_d,
-						t_u32 ops, t_vlq *mod)
+static t_vlq	do_vlqdiv(t_vlq *tmp_n, t_vlq *tmp_d, t_u32 ops)
 {
 	t_vlq	res_q;
 	long	i;
-	t_u8	cbi; //current absolute vlq bit index of res_q
+	t_u8	cbi; //current absolute (abstract value) vlq bit index of res_q
 	t_u8	extra;
 
-	ft_vlq_bsl_acc(tmp_d, ops);
+	ft_vlq_bsl_acc(tmp_d, ops - 1);
 	res_q = ft_vlqnew((ops / 63) + 1);
 	cbi = 63 - (ops % 63);
 	i = 0;
 	while (i < ops)
-	{
+	{ /*
+char *str = ft_vlqhex(*tmp_n), *str2 = ft_vlqhex(*tmp_d);
+ft_printf("\t\tcbi = %d, i = %d\n\t\t{blue}tmp_n = %s\n\t\t{cyan}tmp_d = %s{eoc}\n", cbi, i, str, str2);
+ft_strdel(&str); ft_strdel(&str2);*/
 		extra = 1;
 		if (ft_vlqcmp(*tmp_n, *tmp_d) >= 0)
 		{
@@ -104,7 +110,6 @@ static t_vlq	do_vlqdiv(t_vlq *tmp_n, t_vlq *tmp_d,
 		cbi += extra;
 		i += extra;
 	}
-	*mod = mod ? ft_vlqdup(*tmp_n) : NULL;
 	return (res_q);
 }
 
@@ -136,7 +141,7 @@ void		ft_vlq_divmod(t_vlq const num, t_vlq const den,
 	int		diff;
 	t_u32	end_0s;
 
-	if (!div || !NOT_MSB(num[0]) || !NOT_MSB(den[0]))
+	if (!div || num[0] == _MSB_ || !NOT_MSB(den[0]))
 	{
 		ft_putendl_fd("Improper vlq operand or division by 0 in vlq_div.", 2);
 		return ;
@@ -150,9 +155,17 @@ void		ft_vlq_divmod(t_vlq const num, t_vlq const den,
 	diff = ft_vlq_count_sigbit(num) - ft_vlq_count_sigbit(den);
 	quo_sigbits = ABS(diff) + (ft_vlqlexcmp(num, den, diff) >= 0);
 	end_0s = ft_min(ft_vlq_is_pow2_divisible(num), ft_vlq_is_pow2_divisible(den));
+
+
 	tmp_n = ft_vlq_bsr(num, end_0s);
 	tmp_d = ft_vlq_bsr(den, end_0s);
-	*div = do_vlqdiv(&tmp_n, &tmp_d, quo_sigbits, mod);
+/*
+char *str = ft_vlqhex(num), *str2 = ft_vlqhex(den);
+ft_printf("\t{blue}num = %s\n\t{cyan}den = %s{eoc}\n\tend_0s = %d; diff = %d; ops = %d\n", str, str2, end_0s, diff, quo_sigbits);
+ft_strdel(&str); ft_strdel(&str2);
+*/
+	*div = do_vlqdiv(&tmp_n, &tmp_d, quo_sigbits);
+	*mod = mod ? ft_vlq_bsl(tmp_n, end_0s) : NULL;
 	ft_vlqdel(&tmp_n);
 	ft_vlqdel(&tmp_d);
 }

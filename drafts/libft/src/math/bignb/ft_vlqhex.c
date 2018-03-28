@@ -23,6 +23,8 @@ char	*ft_vlqhex(t_vlq const vlq)
 	t_u32		len;
 	t_u32		columns;
 
+	if (!vlq)
+		return (ft_strdup("(null_vlq)"));
 	columns = 8;
 	result = ft_strdup("0x");
 	len = ft_vlqlen(vlq);
@@ -37,6 +39,5 @@ char	*ft_vlqhex(t_vlq const vlq)
 		++i;
 	}
 	ft_strntrim_right_inplace(&result, 4 + (i % columns == 0));
-//	ft_strappend(&result, "\n");
 	return (result);
 }

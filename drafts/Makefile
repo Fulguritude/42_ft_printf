@@ -15,7 +15,7 @@ LFT		=	libft.a
 
 CC		=	gcc
 CFLAGS	=	-Wall -Werror -Wextra
-DBFLAGS =	-fsanitize=address
+DBFLAGS =	-fsanitize=leak
 
 HDRDIR	=	./
 LFTDIR	=	./libft/
@@ -118,4 +118,4 @@ bignbtest:$(NAME)
 	@make clean
 	@printf "Done !\n"
 
-.PHONY: all clean re
+.PHONY: all clean re bonus test

@@ -36,6 +36,23 @@ void	ft_strdelmul(t_u32 nb_to_delete, ...)
 	va_end(args);
 }
 
+void	ft_bignbdelmul(t_u32 nb_to_delete, ...)
+{
+	va_list	args;
+	t_u32	i;
+	t_bignb	*tmp;
+
+	va_start(args, nb_to_delete);
+	i = 0;
+	while (i < nb_to_delete)
+	{
+		tmp = (t_bignb*)va_arg(args, t_bignb*);
+		ft_bignbdel(tmp);
+		++i;
+	}
+	va_end(args);
+}
+
 int		main(void)
 {
 	char*(*vlq_tostring)(t_vlq);
@@ -53,8 +70,12 @@ int		main(void)
 
 	int		i = 0;
 
+
+//VLQ tests
+ft_printf("\n{blue_bg}VLQ test\n\n{eoc}");
+
 //vlqnew, vlqdel
-printf("Test %d: vlqnew, vlqdel\n", ++i);
+printf("Test %d: vlqnew, vlqdel\n\n", ++i);
 	vlq1 = ft_vlqnew(0);
 		assert(vlq1 == NULL);
 
@@ -253,7 +274,6 @@ printf("Test %d: bitshift right 4\n", ++i);
 	ft_strdelmul(3, &str1, &stre, &strr);
 
 //multiplication
-
 printf("Test %d: multiplication 1\n", ++i);
 	vlq1 = ft_atovlq( "11111111111111111111111111111111111011011111111111111111111111111111111111111111", BINAR);
 	vlq2 = ft_atovlq("100000000000000000000000000000000000000000000000000000000000000000000000000000001", BINAR);
@@ -267,12 +287,7 @@ printf("Test %d: multiplication 1\n", ++i);
 		assert(ft_vlqcmp(vlqe, vlqr) == 0);
 	ft_vlqdelmul(4, &vlq1, &vlq2, &vlqe, &vlqr);
 	ft_strdelmul(4, &str1, &str2, &stre, &strr);
-/*
-111000111000111111000111000111111000111000111111000111000111111000111000111111000111000111111000111000111 *
-11101010101010101010111111111111111111111111111111011011111111111111111111111111101010101011
 
-11010000100110010010010111101111111010111101111110110111101111110111011101111110101000110010100000000011100001111011101101001101000101111100101000101111101001000101111101000100101111101010111101101
-*/
 printf("Test %d: multiplication 2\n", ++i);
 	vlq1 = ft_atovlq("11101010101010101010111111111111111111111111111111011011111111111111111111111111101010101011", BINAR);
 	vlq2 = ft_atovlq("111000111000111111000111000111111000111000111111000111000111111000111000111111000111000111111000111000111", BINAR);
@@ -378,7 +393,7 @@ printf("Test %d: atovlq decimal 2\n", ++i);
 	ft_strdelmul(2, &stre, &strr);
 
 //subtraction, a < b, a > b.
-printf("Test %d.1: subtraction a > b\n", ++i);
+printf("Test %d.1: subtraction a > b, no carry, same size\n", ++i);
 	vlq1 = ft_atovlq("11111111111111111111111111111111111111111111111111111111111111111111111111111111", BINAR);
 	vlq2 = ft_atovlq("10101010101010101010101010101010101010101010101010101010101010101010101010101010", BINAR);
 	vlqe = ft_atovlq( "1010101010101010101010101010101010101010101010101010101010101010101010101010101", BINAR);
@@ -389,10 +404,10 @@ printf("Test %d.1: subtraction a > b\n", ++i);
 		strr = vlq_tostring(vlqr);
 		ft_printf("\tstr1 = %s\n\tstr2 = %s\n\tstre = %s\n\tstrr = %s\n\n", str1, str2, stre, strr);
 		assert(ft_vlqcmp(vlqe, vlqr) == 0);
-	ft_vlqdelmul(4, &vlq1, &vlq2, &vlqe, &vlqr);
-	ft_strdelmul(4, &str1, &str2, &stre, &strr);
+	ft_vlqdelmul(4, &vlq1, &vlq2, &vlqr, &vlqe);
+	ft_strdelmul(4, &str1, &str2, &strr, &stre);
 
-printf("Test %d.2: subtraction a < b\n", i);
+printf("Test %d.2: subtraction a < b, no carry, same size\n", i);
 	vlq2 = ft_atovlq("987654321987654321987654321", DECIM);
 	vlq1 = ft_atovlq("876543210876543210876543210", DECIM);
 	vlqe = ft_atovlq("111111111111111111111111111", DECIM);
@@ -406,7 +421,40 @@ printf("Test %d.2: subtraction a < b\n", i);
 	ft_vlqdelmul(4, &vlq1, &vlq2, &vlqe, &vlqr);
 	ft_strdelmul(4, &str1, &str2, &stre, &strr);
 
+printf("Test %d.3: subtraction a > b, lots of carries, very different size\n", ++i);
+	vlq1 = ft_atovlq("100000000000000000000000000000000000000000000000000000000000000000000000000000\
+000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000", BINAR);
+	vlq2 = ft_atovlq(																							"1", BINAR);
+	vlqe = ft_atovlq("111111111111111111111111111111111111111111111111111111111111111111111111111111\
+11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111", BINAR);
+	vlqr = ft_vlq_sub(vlq1, vlq2);
+		str1 = vlq_tostring(vlq1);
+		str2 = vlq_tostring(vlq2);
+		stre = vlq_tostring(vlqe);
+		strr = vlq_tostring(vlqr);
+		ft_printf("\tstr1 = %s\n\tstr2 = %s\n\tstre = %s\n\tstrr = %s\n\n", str1, str2, stre, strr);
+		assert(ft_vlqcmp(vlqe, vlqr) == 0);
+	ft_vlqdelmul(4, &vlq1, &vlq2, &vlqe, &vlqr);
+	ft_strdelmul(4, &str1, &str2, &stre, &strr);
+
+printf("Test %d.4: subtraction a > b, carry makes first index 0, and index 0 must be removed\n", ++i);
+	vlq1 = ft_atovlq("100000000000000000000000000000000000000000000000000000000000000000000000000000\
+0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000", BINAR);
+	vlq2 = ft_atovlq(																						  "1", BINAR);
+	vlqe = ft_atovlq("111111111111111111111111111111111111111111111111111111111111111111111111111111\
+111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111", BINAR);
+	vlqr = ft_vlq_sub(vlq1, vlq2);
+		str1 = vlq_tostring(vlq1);
+		str2 = vlq_tostring(vlq2);
+		stre = vlq_tostring(vlqe);
+		strr = vlq_tostring(vlqr);
+		ft_printf("\tstr1 = %s\n\tstr2 = %s\n\tstre = %s\n\tstrr = %s\n\n", str1, str2, stre, strr);
+		assert(ft_vlqcmp(vlqe, vlqr) == 0);
+	ft_vlqdelmul(4, &vlq1, &vlq2, &vlqe, &vlqr);
+	ft_strdelmul(4, &str1, &str2, &stre, &strr);
+
 //subtraction with accumulator and carry
+printf("Test %d: subtraction with accumulator a > b\n", ++i);
 	vlq1 = ft_atovlq("987654321987654321987654321", DECIM);
 	vlq2 = ft_atovlq("876543210876543210876543210", DECIM);
 	vlqe = ft_atovlq("111111111111111111111111111", DECIM);
@@ -421,5 +469,174 @@ printf("Test %d.2: subtraction a < b\n", i);
 	ft_vlqdelmul(4, &vlq1, &vlq2, &vlqe, &vlqr);
 	ft_strdelmul(4, &str1, &str2, &stre, &strr);
 
+//division
+	t_vlq	vlqm = NULL;
+	t_vlq	vlqf = NULL;
+	char	*strf;
+	char	*strm;
+
+printf("Test %d: division 1\n", ++i);
+	vlq1 = ft_atovlq("100000000000000000000000000000000000000000000000000000000000000000000000000000001", BINAR);
+	vlq2 = ft_atovlq( "11111111111111111111111111111111111011011111111111111111111111111111111111111111", BINAR);
+	vlqe = ft_atovlq(																				 "1", BINAR);
+	vlqf = ft_atovlq(									 "100100000000000000000000000000000000000000010", BINAR);
+	ft_vlq_divmod(vlq1, vlq2, &vlqr, &vlqm);
+		str1 = vlq_tostring(vlq1);
+		str2 = vlq_tostring(vlq2);
+		stre = vlq_tostring(vlqe);
+		strr = vlq_tostring(vlqr);
+		strf = vlq_tostring(vlqf);
+		strm = vlq_tostring(vlqm);
+		ft_printf("\tstr1 = %s\n\tstr2 = %s\n\t{blue}stre = %s\n\tstrr = %s\n\t{cyan}strf = %s\n\tstrm = %s{eoc}\n\n", str1, str2, stre, strr, strf, strm);
+		assert(ft_vlqcmp(vlqe, vlqr) == 0);
+		assert(ft_vlqcmp(vlqf, vlqm) == 0);
+	ft_vlqdelmul(6, &vlq1, &vlq2, &vlqe, &vlqr, &vlqf, &vlqm);
+	ft_strdelmul(6, &str1, &str2, &stre, &strr, &strf, &strm);
+
+
+printf("Test %d: division 2\n", ++i);
+	vlq1 = ft_atovlq( "11111111111111111111111111111111111011011111111111111111111111111111111111111111", BINAR);
+	vlq2 = ft_atovlq("100000000000000000000000000000000000000000000000000000000000000000000000000000001", BINAR);
+	vlqe = ft_atovlq(																				 "0", BINAR);
+	vlqf = ft_atovlq( "11111111111111111111111111111111111011011111111111111111111111111111111111111111", BINAR);
+	ft_vlq_divmod(vlq1, vlq2, &vlqr, &vlqm);
+		str1 = vlq_tostring(vlq1);
+		str2 = vlq_tostring(vlq2);
+		stre = vlq_tostring(vlqe);
+		strr = vlq_tostring(vlqr);
+		strf = vlq_tostring(vlqf);
+		strm = vlq_tostring(vlqm);
+		ft_printf("\tstr1 = %s\n\tstr2 = %s\n\t{blue}stre = %s\n\tstrr = %s\n\t{cyan}strf = %s\n\tstrm = %s{eoc}\n\n", str1, str2, stre, strr, strf, strm);
+		assert(ft_vlqcmp(vlqe, vlqr) == 0);
+		assert(ft_vlqcmp(vlqf, vlqm) == 0);
+	ft_vlqdelmul(6, &vlq1, &vlq2, &vlqe, &vlqr, &vlqf, &vlqm);
+	ft_strdelmul(6, &str1, &str2, &stre, &strr, &strf, &strm);
+/*
+36058579944795813131401201709511
+/ 4539115051501886157277362859
+= 7943
+R 4389090716331384147108520474
+*/
+printf("Test %d: division 3\n", ++i);
+	vlq1 = ft_atovlq("111000111000111111000111000111111000111000111111000111000111111000111000111111000111000111111000111000111", BINAR);
+	vlq2 = ft_atovlq(			  "11101010101010101010111111111111111111111111111111011011111111111111111111111111101010101011", BINAR);
+	vlqe = ft_atovlq("1111100000111"																							, BINAR);
+	vlqf = ft_atovlq(			  "11100010111010010010000111000111111001111110110011000011000111111001100010010110001000011010", BINAR);
+	ft_vlq_divmod(vlq1, vlq2, &vlqr, &vlqm);
+		str1 = vlq_tostring(vlq1);
+		str2 = vlq_tostring(vlq2);
+		stre = vlq_tostring(vlqe);
+		strr = vlq_tostring(vlqr);
+		strf = vlq_tostring(vlqf);
+		strm = vlq_tostring(vlqm);
+		ft_printf("\tstr1 = %s\n\tstr2 = %s\n\t{blue}stre = %s\n\tstrr = %s\n\t{cyan}strf = %s\n\tstrm = %s{eoc}\n\n", str1, str2, stre, strr, strf, strm);
+		assert(ft_vlqcmp(vlqe, vlqr) == 0);
+		assert(ft_vlqcmp(vlqf, vlqm) == 0);
+	ft_vlqdelmul(6, &vlq1, &vlq2, &vlqe, &vlqr, &vlqf, &vlqm);
+	ft_strdelmul(6, &str1, &str2, &stre, &strr, &strf, &strm);
+/*
+36058579944795813131401201709511
+/ 4345686920363545489324374699
+= 8297
+R 2415566539476206476864831908
+*/
+
+printf("Test %d: division 4\n", ++i);
+	vlq1 = ft_atovlq("111000111000111111000111000111111000111000111111000111000111111000111000111111000111000111111000111000111", BINAR);
+	vlq2 = ft_atovlq(			  "11100000101010101010111111111111111111111111111111011011111111111111111111111111101010101011", BINAR);
+	vlqe = ft_atovlq("10000001101001"																							, BINAR);
+	vlqf = ft_atovlq(			   "1111100111000011100000111000111111010000001111010001011000111111001100100001100000110100100", BINAR);
+	ft_vlq_divmod(vlq1, vlq2, &vlqr, &vlqm);
+		str1 = vlq_tostring(vlq1);
+		str2 = vlq_tostring(vlq2);
+		stre = vlq_tostring(vlqe);
+		strr = vlq_tostring(vlqr);
+		strf = vlq_tostring(vlqf);
+		strm = vlq_tostring(vlqm);
+		ft_printf("\tstr1 = %s\n\tstr2 = %s\n\t{blue}stre = %s\n\tstrr = %s\n\t{cyan}strf = %s\n\tstrm = %s{eoc}\n\n", str1, str2, stre, strr, strf, strm);
+		assert(ft_vlqcmp(vlqe, vlqr) == 0);
+		assert(ft_vlqcmp(vlqf, vlqm) == 0);
+	ft_vlqdelmul(6, &vlq1, &vlq2, &vlqe, &vlqr, &vlqf, &vlqm);
+	ft_strdelmul(6, &str1, &str2, &stre, &strr, &strf, &strm);
+
+/*
+36058579944795813131401201709504
+/ 3592
+= 10038580162805070470880067291
+R 232
+*/
+printf("Test %d: division 5\n", ++i);
+	vlq1 = ft_atovlq("111000111000111111000111000111111000111000111111000111000111111000111000111111000111000111111000111000000", BINAR);
+	vlq2 = ft_atovlq(																							  "111000001000", BINAR);
+	vlqe = ft_atovlq("1000000110111110111000000010010000111100100100111011101111011100110001101111100111111011011011"			, BINAR);
+	vlqf = ft_atovlq(																								  "11101000", BINAR);
+	ft_vlq_divmod(vlq1, vlq2, &vlqr, &vlqm);
+		str1 = vlq_tostring(vlq1);
+		str2 = vlq_tostring(vlq2);
+		stre = vlq_tostring(vlqe);
+		strr = vlq_tostring(vlqr);
+		strf = vlq_tostring(vlqf);
+		strm = vlq_tostring(vlqm);
+		ft_printf("\tstr1 = %s\n\tstr2 = %s\n\t{blue}stre = %s\n\tstrr = %s\n\t{cyan}strf = %s\n\tstrm = %s{eoc}\n\n", str1, str2, stre, strr, strf, strm);
+		assert(ft_vlqcmp(vlqe, vlqr) == 0);
+		assert(ft_vlqcmp(vlqf, vlqm) == 0);
+	ft_vlqdelmul(6, &vlq1, &vlq2, &vlqe, &vlqr, &vlqf, &vlqm);
+	ft_strdelmul(6, &str1, &str2, &stre, &strr, &strf, &strm);
+
+//BIGNB tests
+	t_bignb	bignb1;
+	t_bignb	bignb2;
+	t_bignb	bignbe;
+	t_bignb bignbr;
+
+ft_printf("{blue_bg}\n\nBigNb test\n{eoc}");
+//bignbnew, bignbdel
+printf("Test %d: bignbnew, bignbdel\n", ++i);
+	bignb1 = ft_bignbnew(0, NULL);
+		assert(bignb1.vlq == NULL && bignb1.rev_ns == NULL && bignb1.base == NULL
+			&& bignb1.neg == 2);
+	ft_bignbdel(&bignb1);
+
+	bignb1 = ft_bignbnew(2, BINAR);
+		assert(bignb1.vlq[0] == 0 && ft_strequ(bignb1.rev_ns, "00"));
+	ft_bignbdel(&bignb1);
+		assert(bignb1.vlq == NULL && bignb1.rev_ns == NULL && bignb1.base == NULL
+			&& bignb1.radix == 0 && bignb1.digits == 0 && bignb1.neg == 3);
+
+//atobignb, bignb_to_str
+printf("Test %d: atobignb, bignb_to_str\n", ++i);
+	bignb1 = ft_atobignb("36058579944795813131401201709504", DECIM);
+	bignb2 = ft_atobignb("-4345686920363545489324374699", DECIM);
+
+	str1 = ft_bignb_to_str(bignb1);
+	str2 = ft_bignb_to_str(bignb2);
+
+	ft_printf("\tstr1 = %s\n\tstr2 = %s\n\n", str1, str2);
+
+assert(ft_strequ(str1, "36058579944795813131401201709504") && ft_strequ(str2, "-4345686920363545489324374699"));
+
+//addition expected 36054234257875449585911877334805
+	//addition by vlq
+printf("Test %d: bignb_add\n", ++i);
+	bignbe = ft_atobignb("36054234257875449585911877334805", DECIM);
+	bignbr = ft_bignb_add(bignb1, bignb2);
+		stre = ft_bignb_to_str(bignbe);
+		strr = ft_bignb_to_str(bignbr);
+		ft_printf("\tstre = %s\n\tstrr = %s\n\n", stre, strr);
+		assert(ft_vlqcmp(bignbe.vlq, bignbr.vlq) == 0);
+	ft_bignbdelmul(2, &bignbe, &bignbr);
+	ft_strdelmul(2, &stre, &strr);
+
+	//addition by str
+
+//subtraction expected 36062925631716176676890526084203
+
+//multiplication expected 156699299232982421286267321447241622119307779880214645439296
+
+//div expected 8297
+
+
+	ft_bignbdelmul(4, &bignb1, &bignb2, &bignbe, &bignbr);
+	ft_strdelmul(4, &str1, &str2, &stre, &strr);
 	return (0);
 }

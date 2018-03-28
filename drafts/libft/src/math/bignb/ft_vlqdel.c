@@ -19,7 +19,7 @@ void		ft_vlqdel(t_vlq *a_vlq)
 	if (a_vlq)
 	{
 		if (*a_vlq)
-		{	
+		{
 			i = 0;
 			while (MSB((*a_vlq)[i]))
 			{

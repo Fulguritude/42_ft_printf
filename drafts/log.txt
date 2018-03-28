@@ -1,0 +1,12 @@
+ASAN:SIGSEGV
+=================================================================
+==22908==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x000000406f7e bp 0x7ffee9fbd000 sp 0x7ffee9fbcfe0 T0)
+    #0 0x406f7d in ft_vlqcmp (/home/fulguritude/Desktop/42/Workspace/04_ft_printf/drafts/test.out+0x406f7d)
+    #1 0x4055b0 in main (/home/fulguritude/Desktop/42/Workspace/04_ft_printf/drafts/test.out+0x4055b0)
+    #2 0x7f40b3cab82f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
+    #3 0x400798 in _start (/home/fulguritude/Desktop/42/Workspace/04_ft_printf/drafts/test.out+0x400798)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV ??:0 ft_vlqcmp
+==22908==ABORTING
+make: *** [bignbtest] Error 1

@@ -29,6 +29,7 @@ t_bignb		ft_atobignb(char const *a, char const *base)
 	result.neg = (a[0] == '-');
 	tmp = ft_strdup((a[0] == '+' || a[0] == '-') ? a + 1 : a); 
 	ft_strrev_inplace(&tmp);
+//ft_printf("atobn tmp %s and %p\n", tmp, tmp);
 	result.rev_ns = tmp;
 	result.digits = ft_strlen(tmp);
 	return (result);

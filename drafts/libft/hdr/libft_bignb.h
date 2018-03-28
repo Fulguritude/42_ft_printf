@@ -251,6 +251,11 @@ void			ft_vlq_bsl_acc(t_vlq *vlq, t_u32 shift);
 void			ft_vlq_bsr_acc(t_vlq *vlq, t_u32 shift);
 
 /*
+** Returns 10^exp10 as a vlq. Inspiration taken from Dragon4 for speed.
+*/
+t_vlq			ft_vlq_getpow10(t_u32 exp10);
+
+/*
 ** TODO bwa bwa_acc bwo bwo_acc
 */
 

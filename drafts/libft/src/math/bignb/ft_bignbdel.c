@@ -17,7 +17,7 @@ void		ft_bignbdel(t_bignb *a_bn)
 	ft_vlqdel(&(a_bn->vlq));
 	ft_strdel(&(a_bn->rev_ns));
 	a_bn->neg = 3;
-	a_bn->digits = -1;
-	a_bn->radix = -1;
+	a_bn->digits = 0;
+	a_bn->radix = 0;
 	a_bn->base = NULL;
 }

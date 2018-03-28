@@ -32,6 +32,7 @@ t_bignb					ft_bignb_add(t_bignb const a, t_bignb const b)
 		bn.neg = 0;
 	bn.base = a.base;
 	bn.radix = a.radix;
+	bn.rev_ns = NULL;
 	ft_bignb_vlq_updates_revns(&bn);
 	return (bn);
 }

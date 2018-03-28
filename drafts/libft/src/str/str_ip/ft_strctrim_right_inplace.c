@@ -16,6 +16,8 @@ void	ft_strctrim_right_inplace(char **a_str, char const c)
 {
 	int 	i;
 
+	if (!a_str || !(*a_str))
+		return ;
 	i = ft_strlen(*a_str) - 1;
 	while ((*a_str)[i] == c)
 		--i;

@@ -24,9 +24,11 @@ static t_vlq		bin_atovlq(char const *a)
 	t_u32	i;
 	int		j;
 
+	if (a[0] == '0' && a[1] == '\0')
+		return (ft_vlqnew(1));
 	tmp = ft_strdup(a);
 	ft_strctrim_left_inplace(&tmp, '0');
-	ft_strpad_left_inplace(&tmp, '0', 63 - (ft_strlen(tmp) % 63));
+	ft_strpad_left_inplace(&tmp, '0', (63 - (ft_strlen(tmp) % 63)) % 63);
 	size = ft_strlen(tmp) / 63;
 	result = ft_vlqnew(size);
 	i = 0;
@@ -41,11 +43,9 @@ static t_vlq		bin_atovlq(char const *a)
 		}
 		++i;
 	}
+	ft_strdel(&tmp);
 	return (result);
 }
-
-/*
-*/
 
 static t_vlq		anybase_atovlq(char const *a, char const *base,
 									t_vlq *radix)

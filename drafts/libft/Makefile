@@ -269,7 +269,8 @@ SRC_MATH_BN =	ft_bignbnew.c						\
 				ft_vlq_sub_acc.c				\
 				ft_vlq_mul_acc.c				\
 				ft_vlq_bsl_acc.c				\
-				ft_vlq_bsr_acc.c
+				ft_vlq_bsr_acc.c				\
+				ft_vlq_getpow10.c
 				#ft_vlq_bwa.c
 				#ft_vlq_bwo.c
 
@@ -308,19 +309,18 @@ GREEN	=	"\033[0;32m"
 #$^ is a call to the string of the current dependencies
 #$< is a call to the string of the first dependency in case of multiple deps
 
+$(NAME):mkobjstruct $(addprefix $(OBJDIR)$,$(OBJS))
+	@printf "Compiling library: "$@" -> "$(RED)
+	@ar -rc $@ $(addprefix $(OBJDIR)$,$(OBJS))
+	@ranlib $@
+	@printf $(GREEN)"OK!"$(RESET)"\n"
+
 $(OBJDIR)%.o:$(SRCDIR)%.c
 	@printf "Compiling file: "$@" -> "$(RED)
 	@$(CC) $(CFLAGS) -c $< -I$(HDRDIR) -o $@
 	@printf $(GREEN)"OK!"$(RESET)"\n"
 
-$(NAME):$(addprefix $(OBJDIR)$,$(OBJS))
-	@make mkobjstruct || exit
-	@printf "Compiling library: "$@" -> "$(RED)
-	@ar -rc $@ $^
-	@ranlib $@
-	@printf $(GREEN)"OK!"$(RESET)"\n"
-
-all:$(NAME)
+all: $(NAME)
 
 clean:
 	@printf "Calling libft clean...\n"

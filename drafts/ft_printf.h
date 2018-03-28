@@ -45,6 +45,16 @@
 
 # define ALL_SYMBOLS "#0- +pdDibBoOuUxXcCsSeEfFgGaAr%.0123456789hljz"
 
+/*
+** Leftover letters
+** b, k, m, n, q, r, t, v, w, y
+** used b binary, r, printable
+** => maybe change r to w for "writeable"
+** => add %v to print the vlq type
+** => add %m or %t for strls
+** => add %t or %k for dates
+*/
+
 # ifndef __BASES__
 #  define __BASES__
 #  define BINAR "01"

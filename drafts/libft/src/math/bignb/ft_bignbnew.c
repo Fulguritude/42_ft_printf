@@ -18,9 +18,9 @@ t_bignb				ft_bignbnew(t_u32 size, char const *base)
 
 	result.digits = size;
 	result.vlq = size > 0 ? ft_vlqnew(1) : NULL;
-	result.rev_ns = size > 0 ? ft_strcnew(size, base[0]) : NULL;
+	result.rev_ns = size > 0 && base ? ft_strcnew(size, base[0]) : NULL;
 	result.base = base;
-	result.radix = ft_strlen(base);
+	result.radix = base ? ft_strlen(base) : 0;
 	result.neg = 2;
 	return (result);
 }
