@@ -12,6 +12,11 @@
 #  include "libft.h"
 # endif
 
+# ifndef __CONSTANTS__
+#  define __CONSTANTS__
+#  define LN2_DIV_LN10	0x1.34413509F79FEp-2
+# endif
+
 # define ABS(X) (X < 0 ? -X : X)
 # define MAX(X, Y) (X < Y ? Y : X)
 # define MIN(X, Y) (X < Y ? X : Y)
@@ -202,6 +207,12 @@ char					*ft_uconvert_base(char const *nbr,
 */
 
 int						ft_is_valid_base(char const *base);
+
+/*
+** Returns true iff base is a valid base and nbstr can be read in base.
+*/
+t_u8					ft_is_valid_nbstr_in_base(char const *nbstr,
+													char const *base);
 
 /*
 ** Returns the index of c in base, which is also its digit value. Inputting '\0'

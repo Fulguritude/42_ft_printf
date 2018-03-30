@@ -12,10 +12,9 @@ static char	*handle_g_type(t_format info, double lf, int exp)
 
 printf("printf 1\n");
 	if (exp < -4 || info.prec <= exp) //exponent after conversion, not before
-		tmp = ft_lftoa_base(lf, DECIM, '\0');
+		tmp = ft_lftoa(lf, '\0');
 	else
-		tmp = ft_lftoa_base(lf, DECIM,
-									info.type_char == 'g' ? 'e' : 'E');
+		tmp = ft_lftoa(lf, info.type_char == 'g' ? 'e' : 'E');
 
 printf("printf 2: %s\n", tmp);
 	i = 0;
@@ -43,16 +42,20 @@ static char	*handle_a_type(t_format info, double lf)
 	int		size;
 
 	exp_c = info.type_char == 'a' ? 'p' : 'P';
-	result = ft_lftoa_base(lf, exp_c == 'p' ? HXLOW : HXUPP, exp_c);
-	start = ft_in_base('.', result) + 1 + info.prec;
-	size = ft_in_base(exp_c, result) - start;
-	if (size > 0)
-		ft_strsub_rm_inplace(&result, start, size);
-	else if (size < 0)
-		ft_strpad_insert_inplace(&result, '0', start + size, -size);
-	start -= 1 + info.prec;
-	if (result[start] == '.' && result[start + 1] == 'p')		
-		ft_strsub_rm_inplace(&result, start, 1);
+	result = ft_lftoa(lf, exp_c);
+	if (!ft_strequ(result, "inf") && !ft_strequ(result, "-inf") &&
+		!ft_strequ(result, "nan") && !ft_strequ(result, "-nan"))
+	{
+		start = ft_in_base('.', result) + 1 + info.prec;
+		size = ft_in_base(exp_c, result) - start;
+		if (size > 0)
+			ft_strsub_rm_inplace(&result, start, size);
+		else if (size < 0)
+			ft_strpad_insert_inplace(&result, '0', start + size, -size);
+		start -= 1 + info.prec;
+		if (result[start] == '.' && result[start + 1] == 'p')		
+			ft_strsub_rm_inplace(&result, start, 1);
+	}
 	if ((info.flags & (FL_SPACE | FL_PLUS)) && !(((t_u64)lf) >> 63))
 		ft_strprepend(info.flags & FL_SPACE ? " " : "+", &result);
 	size = ft_strlen(result);
@@ -100,20 +103,20 @@ printf("\tminus = %hhd\n\texp2 = %d\n\tmantissa = %lx\n", minus, exp, mantissa);
 	ft_memcpy(arr, &lf, 8);
 printf("\n\tarr = %#lx\n", *((unsigned long *)arr));
 	char * str = ft_memhex(arr, 8);
-printf("\tarr = %s\n", str);
+printf("\tarr = %s ; style = %c\n", str, info.type_char);
 ft_strdel(&str);
 
 	if (info.type_char == 'e')
-		tmp = ft_lftoa_base(lf, DECIM, 'e');
+		tmp = ft_lftoa(lf, 'e');
 	else if (info.type_char == 'E')
-		tmp = ft_lftoa_base(lf, DECIM, 'E');
+		tmp = ft_lftoa(lf, 'E');
 	else if (info.type_char == 'a' || info.type_char == 'A')
 		tmp = handle_a_type(info, lf);
 	else if (info.type_char == 'g' || info.type_char == 'G')
 		tmp = handle_g_type(info, lf, exp);
 	else if (info.type_char == 'f' || info.type_char == 'F')
 	{
-		tmp = ft_lftoa_base(lf, DECIM, '\0');
+		tmp = ft_lftoa(lf, '\0');
 		
 
 

@@ -583,15 +583,33 @@ printf("Test %d: division 5\n", ++i);
 	ft_vlqdelmul(6, &vlq1, &vlq2, &vlqe, &vlqr, &vlqf, &vlqm);
 	ft_strdelmul(6, &str1, &str2, &stre, &strr, &strf, &strm);
 
+printf("Test %d: division 6\n", ++i);
+	vlq1 = ft_atovlq("111000111000111111000111000111111000111000111111000111000111111000111000111111000111000111111000111000000", BINAR);
+	vlq2 = ft_atovlq(																							  			 "1", BINAR);
+	vlqe = ft_atovlq("111000111000111111000111000111111000111000111111000111000111111000111000111111000111000111111000111000000", BINAR);
+	vlqf = ft_atovlq(																								 		 "0", BINAR);
+	ft_vlq_divmod(vlq1, vlq2, &vlqr, &vlqm);
+		str1 = vlq_tostring(vlq1);
+		str2 = vlq_tostring(vlq2);
+		stre = vlq_tostring(vlqe);
+		strr = vlq_tostring(vlqr);
+		strf = vlq_tostring(vlqf);
+		strm = vlq_tostring(vlqm);
+		ft_printf("\tstr1 = %s\n\tstr2 = %s\n\t{blue}stre = %s\n\tstrr = %s\n\t{cyan}strf = %s\n\tstrm = %s{eoc}\n\n", str1, str2, stre, strr, strf, strm);
+		assert(ft_vlqcmp(vlqe, vlqr) == 0);
+		assert(ft_vlqcmp(vlqf, vlqm) == 0);
+	ft_vlqdelmul(6, &vlq1, &vlq2, &vlqe, &vlqr, &vlqf, &vlqm);
+	ft_strdelmul(6, &str1, &str2, &stre, &strr, &strf, &strm);
+
 //BIGNB tests
 	t_bignb	bignb1;
 	t_bignb	bignb2;
 	t_bignb	bignbe;
 	t_bignb bignbr;
 
-ft_printf("{blue_bg}\n\nBigNb test\n{eoc}");
+ft_printf("{blue_bg}\n\nBigNb tests\n\n{eoc}");
 //bignbnew, bignbdel
-printf("Test %d: bignbnew, bignbdel\n", ++i);
+printf("Test %d: bignbnew, bignbdel\n\n", ++i);
 	bignb1 = ft_bignbnew(0, NULL);
 		assert(bignb1.vlq == NULL && bignb1.rev_ns == NULL && bignb1.base == NULL
 			&& bignb1.neg == 2);
@@ -604,7 +622,7 @@ printf("Test %d: bignbnew, bignbdel\n", ++i);
 			&& bignb1.radix == 0 && bignb1.digits == 0 && bignb1.neg == 3);
 
 //atobignb, bignb_to_str
-printf("Test %d: atobignb, bignb_to_str\n", ++i);
+printf("Test %d: atobignb, bignb_to_str (pos, neg)\n", ++i);
 	bignb1 = ft_atobignb("36058579944795813131401201709504", DECIM);
 	bignb2 = ft_atobignb("-4345686920363545489324374699", DECIM);
 
@@ -615,9 +633,49 @@ printf("Test %d: atobignb, bignb_to_str\n", ++i);
 
 assert(ft_strequ(str1, "36058579944795813131401201709504") && ft_strequ(str2, "-4345686920363545489324374699"));
 
-//addition expected 36054234257875449585911877334805
+
+//addition with (pos + pos), expected 36062925631716176676890526084203
+	bignb2.neg = 0;
 	//addition by vlq
-printf("Test %d: bignb_add\n", ++i);
+printf("Test %d: bignb_add (pos pos)\n", ++i);
+	bignbe = ft_atobignb("36062925631716176676890526084203", DECIM);
+	bignbr = ft_bignb_add(bignb1, bignb2);
+		stre = ft_bignb_to_str(bignbe);
+		strr = ft_bignb_to_str(bignbr);
+		ft_printf("\tstre = %s\n\tstrr = %s\n\n", stre, strr);
+		assert(ft_vlqcmp(bignbe.vlq, bignbr.vlq) == 0);
+	ft_bignbdelmul(2, &bignbe, &bignbr);
+	ft_strdelmul(2, &stre, &strr);
+
+	//addition with accumulator
+printf("Test %d: bignb_add_acc (pos pos)\n", ++i);
+	bignbe = ft_atobignb("36062925631716176676890526084203", DECIM);
+	bignbr = ft_bignbdup(bignb1);
+	ft_bignb_add_acc(&bignbr, bignb2);
+	ft_bignb_vlq_updates_revns(&bignbr);
+		stre = ft_bignb_to_str(bignbe);
+		strr = ft_bignb_to_str(bignbr);
+		ft_printf("\tstre = %s\n\tstrr = %s\n\n", stre, strr);
+		assert(ft_vlqcmp(bignbe.vlq, bignbr.vlq) == 0);
+	ft_bignbdelmul(2, &bignbe, &bignbr);
+	ft_strdelmul(2, &stre, &strr);
+
+	//addition by str, note that behavior is to call str_sub if signs are different
+printf("Test %d: bignb_str_add (pos pos)\n", ++i);
+	bignbe = ft_atobignb("36062925631716176676890526084203", DECIM);
+	bignbr = ft_bignb_str_add(bignb1, bignb2);
+		stre = ft_bignb_to_str(bignbe);
+		strr = ft_bignb_to_str(bignbr);
+		ft_printf("\tstre = %s\n\tstrr = %s\n\n", stre, strr);
+		assert(ft_vlqcmp(bignbe.vlq, bignbr.vlq) == 0);
+	ft_bignbdelmul(2, &bignbe, &bignbr);
+	ft_strdelmul(2, &stre, &strr);
+
+
+//addition with (pos + neg), expected 36054234257875449585911877334805
+	bignb2.neg = 1;
+	//addition by vlq
+printf("Test %d: bignb_add (pos neg)\n", ++i);
 	bignbe = ft_atobignb("36054234257875449585911877334805", DECIM);
 	bignbr = ft_bignb_add(bignb1, bignb2);
 		stre = ft_bignb_to_str(bignbe);
@@ -627,9 +685,66 @@ printf("Test %d: bignb_add\n", ++i);
 	ft_bignbdelmul(2, &bignbe, &bignbr);
 	ft_strdelmul(2, &stre, &strr);
 
-	//addition by str
+	//addition with accumulator
+printf("Test %d: bignb_add_acc (pos neg)\n", ++i);
+	bignbe = ft_atobignb("36054234257875449585911877334805", DECIM);
+	bignbr = ft_bignbdup(bignb1);
+	ft_bignb_add_acc(&bignbr, bignb2);
+	ft_bignb_vlq_updates_revns(&bignbr);
+		stre = ft_bignb_to_str(bignbe);
+		strr = ft_bignb_to_str(bignbr);
+		ft_printf("\tstre = %s\n\tstrr = %s\n\n", stre, strr);
+		assert(ft_vlqcmp(bignbe.vlq, bignbr.vlq) == 0);
+	ft_bignbdelmul(2, &bignbe, &bignbr);
+	ft_strdelmul(2, &stre, &strr);
 
-//subtraction expected 36062925631716176676890526084203
+	//addition by str, note that behavior is to call str_sub if signs are different
+printf("Test %d: bignb_str_add (pos neg)\n", ++i);
+	bignbe = ft_atobignb("36054234257875449585911877334805", DECIM);
+	bignbr = ft_bignb_str_add(bignb1, bignb2);
+		stre = ft_bignb_to_str(bignbe);
+		strr = ft_bignb_to_str(bignbr);
+		ft_printf("\tstre = %s\n\tstrr = %s\n\n", stre, strr);
+		assert(ft_vlqcmp(bignbe.vlq, bignbr.vlq) == 0);
+	ft_bignbdelmul(2, &bignbe, &bignbr);
+	ft_strdelmul(2, &stre, &strr);
+
+//subtraction with negative number, expected 36062925631716176676890526084203
+	//subtraction by vlq
+printf("Test %d: bignb_sub\n", ++i);
+	bignbe = ft_atobignb("36062925631716176676890526084203", DECIM);
+	bignbr = ft_bignb_sub(bignb1, bignb2);
+		stre = ft_bignb_to_str(bignbe);
+		strr = ft_bignb_to_str(bignbr);
+		ft_printf("\tstre = %s\n\tstrr = %s\n\n", stre, strr);
+		assert(ft_vlqcmp(bignbe.vlq, bignbr.vlq) == 0);
+	ft_bignbdelmul(2, &bignbe, &bignbr);
+	ft_strdelmul(2, &stre, &strr);
+
+	//subtraction with accumulator
+printf("Test %d: bignb_sub_acc\n", ++i);
+	bignbe = ft_atobignb("36062925631716176676890526084203", DECIM);
+	bignbr = ft_bignbdup(bignb1);
+	ft_bignb_sub_acc(&bignbr, bignb2);
+	ft_bignb_vlq_updates_revns(&bignbr);
+		stre = ft_bignb_to_str(bignbe);
+		strr = ft_bignb_to_str(bignbr);
+		ft_printf("\tstre = %s\n\tstrr = %s\n\n", stre, strr);
+		assert(ft_vlqcmp(bignbe.vlq, bignbr.vlq) == 0);
+	ft_bignbdelmul(2, &bignbe, &bignbr);
+	ft_strdelmul(2, &stre, &strr);
+
+	//subtraction by str, not that behavior is to fail if signs are the same, and return ABS(a - b) if signs are the same, so the result expected is different here.
+printf("Test %d: bignb_str_sub\n", ++i);
+	bignbe = ft_atobignb("36054234257875449585911877334805", DECIM);
+	bignbr = ft_bignb_str_sub(bignb1, bignb2);
+		stre = ft_bignb_to_str(bignbe);
+		strr = ft_bignb_to_str(bignbr);
+		ft_printf("\tstre = %s\n\tstrr = %s\n\n", stre, strr);
+		assert(ft_vlqcmp(bignbe.vlq, bignbr.vlq) == 0);
+	ft_bignbdelmul(2, &bignbe, &bignbr);
+	ft_strdelmul(2, &stre, &strr);
+
 
 //multiplication expected 156699299232982421286267321447241622119307779880214645439296
 

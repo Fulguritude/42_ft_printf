@@ -78,7 +78,6 @@ as inspiration for global t
 # define _ALLBITS_		0xFFFFFFFFFFFFFFFF
 
 typedef t_u64*	t_vlq;
-typedef t_vlq	t_vlui;
 
 /*
 ** ============= VLQ functions ============
@@ -130,14 +129,20 @@ t_u32			ft_vlq_log2(t_vlq const vlq);
 /*
 ** Returns a newly allocated vlq with a single bit set to 1 (other than the
 ** MSBs' 1s which allow for null-termination) at the appropriate position
-** for the return value to be equal to pow(2, pow)
+** for the return value to be equal to pow(2, exp).
 */
-t_vlq			ft_pow_2_to_vlq(t_u32 pow);
+t_vlq			ft_vlq_getpow2(t_u32 exp);
+
+/*
+** Returns a newly allocated vlq == pow(10, exp). Only accepts exponents up to
+** 511.
+*/
+t_vlq			ft_vlq_getpow10(t_u32 exp);
 
 /*
 ** Returns a string in 'base' representing the value vlq.
 */
-//char			*ft_vlq_to_base_revns(t_vlq const vlq, char const *base);
+char			*ft_vlqtoa_base(t_vlq const vlq, char const *base);
 
 /*
 ** Counts the minimal number one must give a right shift to send vlq_p to zero,
@@ -314,6 +319,12 @@ typedef struct	s_bignb
 ** (meaning size > 0), a string of size 'size' is filled with base[0].
 */
 t_bignb					ft_bignbnew(t_u32 size, char const *base);
+
+/*
+** Copies the non-dynamic data of bignb as is (even if it is incoherent), and
+** calls strdup and vlqdup for the appropriate fields, if non-null.
+*/
+t_bignb					ft_bignbdup(t_bignb const bn);
 
 /*
 ** Returns a bignb from a string "a" representing a number in 'base'.

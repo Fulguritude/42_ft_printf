@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strctrim_right_inplace.c                        :+:      :+:    :+:   */
+/*   ft_strcsplit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
+/*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/06 17:16:15 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/06 17:25:49 by fulguritu        ###   ########.fr       */
+/*   Created: 2017/11/17 21:32:02 by tduquesn          #+#    #+#             */
+/*   Updated: 2017/11/28 11:44:44 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_strctrim_right_inplace(char **a_str, char const c)
+char	**ft_strcsplit(char const *s, char c)
 {
-	int 	i;
+	char	cstr[2];
 
-	if (!a_str || !(*a_str))
-		return ;
-	i = ft_strlen(*a_str) - 1;
-	while ((*a_str)[i] == c)
-	{
-		(*a_str)[i] = '\0';
-		--i;
-	}
+	if (!s)
+		return (NULL);
+	cstr[0] = c;
+	cstr[1] = '\0';
+	return (ft_split(s, cstr));
 }

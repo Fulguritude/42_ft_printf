@@ -14,14 +14,15 @@
 
 /*
 ** En gros: tu fais ton uitoa en commençant par le most significant digit.
-** Comment faire pour un bigint ? Tu trouves la puissance de 10 juste en dessous.
+** Comment faire pour un bigint ? Tu trouves la puissance de 10 juste en
+** dessous.
 **
 ** Le procédé c'est en gros ça:
 ** => log2(nb) = exp_base_2
 ** => log10(nb) = exp_base_10
 ** (noter que "base" c'est au sens de "base" d'une exponentielle ou d'un
 ** logarithme, pas de "base numérique")
-** => nb * 2^eb2 = nb * 10^eb10 ssi 2^eb2 = 10^eb10
+** => nb * 2^eb2 = nb * 10^eb10   <=>   eb2*ln(2) = eb10*ln(10)
 ** => donc eb10 = eb2 * ln(2) / ln(10)
 **
 ** Disons qu'on tombe sur eb10 = 225.54343......
@@ -51,14 +52,12 @@
 */
 t_vlq		ft_vlq_get_greatest_sub_pow10(t_vlq vlq)
 {
-	double			ln2_by_ln10;
 	t_u32			exp2;
 	t_u32			exp10;
 
 	if (vlq[0] < 10)
 		return (0);
-	ln2_by_ln10 = 0x1.34413509F79FEp-2;
 	exp2 = ft_vlq_count_sigbit(vlq) - 1;
-	exp10 = ft_floor(ln2_by_ln10 * exp2);
+	exp10 = ft_floor(LN2_DIV_LN10 * exp2);
 	return (ft_vlq_getpow10(exp10));
 }

@@ -20,13 +20,21 @@
 # define VERBOSE							1
 # define SHOW_CORRECT_RESULT_COMPARISON 	1
 
-# define _SMALL_BONUSES_					1
+# define _SMALL_BONUSES_					0
 #  define PERCENT_b							1
 #  define PERCENT_B							1
 #  define PERCENT_r							1
 #  define COLOR_BONUS						1
 # define SMALL_BONUSES 						_SMALL_BONUSES_ && (PERCENT_b || PERCENT_B || PERCENT_r)
 
+# define _FLOAT_BONUSES_					1
+#  define PERCENT_aA						1
+#  define PERCENT_eE						1
+#  define PERCENT_fF						1
+#  define PERCENT_gG						0
+#  define SPECIAL_CASES						1 && (PERCENT_aA || PERCENT_eE || PERCENT_fF || PERCENT_gG)
+#  define NORMAL_CASES						1 && (PERCENT_aA || PERCENT_eE || PERCENT_fF || PERCENT_gG)
+# define FLOAT_BONUSES						_FLOAT_BONUSES_ && (NORMAL_CASES || SPECIAL_CASES)
 /*
 ** ---------------------------------------------------------------------------
 **
@@ -123,13 +131,14 @@ static int	check_retvals(int j, int *return_values, char **a_str1, char *str2)
 
 int		main()
 {
-	float 	f = 0.55555; // 0xf.edcba012345p-64;		//other vals: 123.456789;
-	double 	d = 16.125; //-0x1.123456789abcdp+1010;	//other vals: 1234567.8987654321;
 	char	*str1 = NULL;
 	char	*str2 = NULL;
+
+#if FLOAT_BONUSES
 	int		i = -1;
 	int		j = 0;
 	int		return_values[400];
+	int		str_fails = -1;
 
 	printf(C_BLUE"\nTesting bonuses that can be compared to printf."C_RESET); printf("\n");
 
@@ -137,6 +146,8 @@ int		main()
 ** TODO Verify all values
 ** TODO add subnormal checks
 */
+
+# if SPECIAL_CASES
 	double	plus_inf = 1./0.;
 	double	plus_zero = 0x0.000000000000p+0;
 	double	dbl_max = DBL_MAX;
@@ -146,6 +157,7 @@ int		main()
 	double	mach_err = DBL_EPSILON;
 	double	not_a_nb = 0.0f / 0.0f; //NAN; //NAN == 0.0f / 0.0f
 
+#  if PERCENT_fF
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (-inf) gives %lf\n", "%lf", minus_inf);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s (-inf) gives %lf\n", "%lf", minus_inf);
@@ -187,8 +199,188 @@ int		main()
 	  return_values[j++] =    asprintf(&str2, "   printf: %s (DBL_MAX) gives %lf\n", "%lf", dbl_max);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (-inf) gives %.300lf\n", "%.300lf", minus_inf);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (-inf) gives %.300lf\n", "%.300lf", minus_inf);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (+inf) gives %.300lf\n", "%.300lf", plus_inf);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (+inf) gives %.300lf\n", "%.300lf", plus_inf);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (eps) gives %.300lf\n", "%.300lf", mach_err);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (eps) gives %.300lf\n", "%.300lf", mach_err);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (-0.0) gives %.300lf\n", "%.300lf", minus_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (-0.0) gives %.300lf\n", "%.300lf", minus_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (+0.0) gives %.300lf\n", "%.300lf", plus_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (+0.0) gives %.300lf\n", "%.300lf", plus_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (-0.0) gives %+.300lf\n", "%+.300lf", minus_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (-0.0) gives %+.300lf\n", "%+.300lf", minus_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (+0.0) gives %+.300lf\n", "%+.300lf", plus_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (+0.0) gives %+.300lf\n", "%+.300lf", plus_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (NaN) gives %.300lf\n", "%.300lf", not_a_nb);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (NaN) gives %.300lf\n", "%.300lf", not_a_nb);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (-DBL_MAX) gives %.300lf\n", "%.300lf", dbl_min);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (-DBL_MAX) gives %.300lf\n", "%.300lf", dbl_min);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (DBL_MAX) gives %.300lf\n", "%.300lf", dbl_max);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (DBL_MAX) gives %.300lf\n", "%.300lf", dbl_max);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+#  endif
 
 
+#  if PERCENT_eE
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (-inf) gives %le\n", "%le", minus_inf);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (-inf) gives %le\n", "%le", minus_inf);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (+inf) gives %le\n", "%le", plus_inf);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (+inf) gives %le\n", "%le", plus_inf);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (eps) gives %le\n", "%le", mach_err);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (eps) gives %le\n", "%le", mach_err);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (-0.0) gives %le\n", "%le", minus_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (-0.0) gives %le\n", "%le", minus_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (+0.0) gives %le\n", "%le", plus_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (+0.0) gives %le\n", "%le", plus_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (-0.0) gives %+le\n", "%+le", minus_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (-0.0) gives %+le\n", "%+le", minus_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (+0.0) gives %+le\n", "%+le", plus_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (+0.0) gives %+le\n", "%+le", plus_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (NaN) gives %le\n", "%le", not_a_nb);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (NaN) gives %le\n", "%le", not_a_nb);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (-DBL_MAX) gives %le\n", "%le", dbl_min);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (-DBL_MAX) gives %le\n", "%le", dbl_min);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (DBL_MAX) gives %le\n", "%le", dbl_max);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (DBL_MAX) gives %le\n", "%le", dbl_max);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+#  endif
+
+
+#  if PERCENT_gG
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (-inf) gives %lg\n", "%lg", minus_inf);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (-inf) gives %lg\n", "%lg", minus_inf);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (+inf) gives %lg\n", "%lg", plus_inf);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (+inf) gives %lg\n", "%lg", plus_inf);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (eps) gives %lg\n", "%lg", mach_err);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (eps) gives %lg\n", "%lg", mach_err);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (-0.0) gives %lg\n", "%lg", minus_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (-0.0) gives %lg\n", "%lg", minus_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (+0.0) gives %lg\n", "%lg", plus_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (+0.0) gives %lg\n", "%lg", plus_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (-0.0) gives %+lg\n", "%+lg", minus_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (-0.0) gives %+lg\n", "%+lg", minus_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (+0.0) gives %+lg\n", "%+lg", plus_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (+0.0) gives %+lg\n", "%+lg", plus_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (NaN) gives %lg\n", "%lg", not_a_nb);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (NaN) gives %lg\n", "%lg", not_a_nb);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (-DBL_MAX) gives %lg\n", "%lg", dbl_min);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (-DBL_MAX) gives %lg\n", "%lg", dbl_min);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (DBL_MAX) gives %lg\n", "%lg", dbl_max);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (DBL_MAX) gives %lg\n", "%lg", dbl_max);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+#  endif
+
+
+#  if PERCENT_aA
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (-inf) gives %la\n", "%la", minus_inf);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (-inf) gives %la\n", "%la", minus_inf);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (+inf) gives %la\n", "%la", plus_inf);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (+inf) gives %la\n", "%la", plus_inf);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (eps) gives %la\n", "%la", mach_err);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (eps) gives %la\n", "%la", mach_err);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (-0.0) gives %la\n", "%la", minus_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (-0.0) gives %la\n", "%la", minus_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (+0.0) gives %la\n", "%la", plus_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (+0.0) gives %la\n", "%la", plus_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (-0.0) gives %+la\n", "%+la", minus_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (-0.0) gives %+la\n", "%+la", minus_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (+0.0) gives %+la\n", "%+la", plus_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (+0.0) gives %+la\n", "%+la", plus_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (NaN) gives %la\n", "%la", not_a_nb);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (NaN) gives %la\n", "%la", not_a_nb);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (-DBL_MAX) gives %la\n", "%la", dbl_min);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (-DBL_MAX) gives %la\n", "%la", dbl_min);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s (DBL_MAX) gives %la\n", "%la", dbl_max);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s (DBL_MAX) gives %la\n", "%la", dbl_max);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+#  endif
+# endif
+
+
+
+# if NORMAL_CASES
+	float 	f = 0.55555; // 0xf.edcba012345p-64;		//other vals: 123.456789;
+	double 	d = 16.125; //-0x1.123456789abcdp+1010;	//other vals: 1234567.8987654321;
+
+#  if PERCENT_fF
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %f\n", "%f", f);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %f\n", "%f", f);
@@ -249,10 +441,10 @@ int		main()
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %-20.3f\n", "%-20.3f", f);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %-20.3f\n", "%-20.3f", f);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+#  endif
 
 
-
-
+#  if PERCENT_eE
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %e\n", "%e", f);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %e\n", "%e", f);
@@ -313,10 +505,10 @@ int		main()
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %-20.3e\n", "%-20.3e", f);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %-20.3e\n", "%-20.3e", f);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+#  endif
 
 
-
-
+#  if PERCENT_aA
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %a\n", "%a", f);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %a\n", "%a", f);
@@ -377,9 +569,10 @@ int		main()
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %-20.3a\n", "%-20.3a", f);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %-20.3a\n", "%-20.3a", f);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+#  endif
 
 
-
+#  if PERCENT_gG
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %g\n", "%g", f);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %g\n", "%g", f);
@@ -440,11 +633,13 @@ int		main()
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %-20.3g\n", "%-20.3g", f);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %-20.3g\n", "%-20.3g", f);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+#  endif
 
 /*
 ** fl_l
 */
 
+#  if PERCENT_fF
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %lf\n", "%lf", d);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %lf\n", "%lf", d);
@@ -505,10 +700,10 @@ int		main()
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %-20.3lf\n", "%-20.3lf", d);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %-20.3lf\n", "%-20.3lf", d);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+#  endif
 
 
-
-
+#  if PERCENT_eE
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %le\n", "%le", d);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %le\n", "%le", d);
@@ -569,10 +764,10 @@ int		main()
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %-20.3le\n", "%-20.3le", d);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %-20.3le\n", "%-20.3le", d);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+#  endif
 
 
-
-
+#  if PERCENT_aA
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %la\n", "%la", d);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %la\n", "%la", d);
@@ -633,9 +828,10 @@ int		main()
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %-20.3la\n", "%-20.3la", d);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %-20.3la\n", "%-20.3la", d);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+#  endif
 
 
-
+#  if PERCENT_gG
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %lg\n", "%lg", d);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %lg\n", "%lg", d);
@@ -695,9 +891,9 @@ int		main()
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %-20.3lg\n", "%-20.3lg", d);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %-20.3lg\n", "%-20.3lg", d);
-	int str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2); //last call to checkvals should return of static var
-
-//add color and color tests ?
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2); //last call to checkvals should return of static var
+#  endif
+# endif
 
 printf("\n\n");
 printf(C_BLUE"\nTests on return values :"C_RESET);
@@ -741,6 +937,8 @@ printf("\n\n");
 		printf(C_RED"\nThere are %d failed tests based on str_output values.\n"C_RESET, str_fails);
 	}
 	printf("\n");
+#endif
+
 
 
 #if SMALL_BONUSES
@@ -752,7 +950,7 @@ printf("\n\n");
 	char	*tmp;
 
 
-	#if PERCENT_b
+#  if PERCENT_b
 	printf(C_BLUE"Testing binary %%b: "C_RESET); printf("\n");
 	ft_printf("\t%b\n", 0xAAAAAAAA);
 	printf("Expected :\n\t10101010101010101010101010101010\n\n"); 
@@ -760,21 +958,20 @@ printf("\n\n");
 	printf(C_BLUE"Testing binary %%#b: "C_RESET); printf("\n");
 	ft_printf("\t%#b\n", 0xAAAAAAAA);
 	printf("Expected :\n\t0b10101010101010101010101010101010\n\n");
-	#endif
+#  endif
 
-	#if PERCENT_B
+#  if PERCENT_B
 	printf(C_BLUE"Testing binary %%B: "C_RESET); printf("\n");
 	ft_printf("\t%B\n", 0xAAAAAAAA);
 	printf("Expected :\n\t10101010101010101010101010101010\n\n");
 	printf(C_BLUE"Testing binary %%#B: "C_RESET); printf("\n");
 	ft_printf("\t%#B\n", 0xAAAAAAAA);
 	printf("Expected :\n\t0B10101010101010101010101010101010\n\n"); 
-	#endif
+#  endif
 
 
 
-	#if PERCENT_r
-
+#  if PERCENT_r
 	printf(C_BLUE"Testing non-printables %%r: "C_RESET); printf("\n");
 	printf(C_YELLOW"For what follows, no printable output should start with \"\\x\"."C_RESET); printf("\n");
 	printf("  0 - ascii input \\x00 is unprintable. Because of how C strings work, this character is ignored.\n");
@@ -785,11 +982,11 @@ printf("\n\n");
 			i, i, ft_isprint(i) ? "printable" : "unprintable", tmp);
 		free(tmp);
 	}	
-	#endif
+#  endif
 
 
 
-	#if COLOR_BONUS
+# if COLOR_BONUS
 	printf(C_YELLOW"\n\nTwo examples to teach possible color usage that works by default for any C function that outputs to modern stdout. These are not tests, you should just look at the main."C_RESET); printf("\n");
 
 	   printf(C_BLUE"\nTesting    printf BLUE."C_RESET); printf("\n");
@@ -816,7 +1013,7 @@ printf("\n\n");
 	ft_putmem(tmp);
 	ft_strdel(&tmp);
 #endif
-	#endif
+# endif
 
 
 #endif

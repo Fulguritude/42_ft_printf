@@ -36,24 +36,24 @@ static char		*ft_lftoa_base_exp(char const *base, t_u8 minus,
 	char	*tmp;
 
 	tmp = ft_uitoa_base(mantissa, base);
-printf("\t\ttmp mantissa : %s\n", tmp);
+//printf("\t\ttmp mantissa : %s\n", tmp);
 	result = ft_strinsert(&tmp, ".", 1);
-printf("\t\tresult mantissa : %s\n", tmp);
+//printf("\t\tresult mantissa : %s\n", tmp);
 	tmp = ft_itoa_base(exp_b2, base);
-printf("\t\ttmp exp_b2   : %s\n", tmp);
+//printf("\t\ttmp exp_b2   : %s\n", tmp);
 	if (tmp[0] != '-' && ft_strlen(tmp) < 2)
 		ft_strprepend("+0", &tmp);
 	else if (tmp[0] != '-')
 		ft_strprepend("+", &tmp);
-printf("\t\ttmp exp_b2 2 : %s\n", tmp);
+//printf("\t\ttmp exp_b2 2 : %s\n", tmp);
 	ft_strappend(&result, "\t");
-printf("\t\tresult : %s\n", result);
+//printf("\t\tresult : %s\n", result);
 	ft_strappend(&result, tmp);
-printf("\t\tresult : %s\n", result);
+//printf("\t\tresult : %s\n", result);
 	free(tmp);
 	if (minus)
 		ft_strprepend("-", &result);
-printf("\t\tresult : %s\n", result);
+//printf("\t\tresult : %s\n", result);
 	return (result);
 }
 

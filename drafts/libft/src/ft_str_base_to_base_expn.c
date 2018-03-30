@@ -48,21 +48,12 @@ static char	*convert_base_to_basen(char const *str, char const *base_f,
 char		*ft_str_base_to_base_expn(char const *str, char const *base_f,
 									char const *base_t, t_u32 expn)
 {
-	int		i;
-
-	if (!str || !base_f || !base_t || !ft_is_valid_base(base_f) ||
+	if (!str || !base_f || !base_t || !ft_is_valid_nbstr_in_base(str, base_f) ||
 		!ft_is_valid_base(base_t) || expn == 0)
 	{
 		ft_putendl_fd("Invalid operand given to str_base_to_base_expn.", 2);
 		return (NULL);
 	}
-	i = (str[0] == '+' || str[0] == '-') - 1;
-	while (str[++i])
-		if (ft_in_base(str[i], base_f) == -1)
-		{
-			ft_putendl_fd("Str mismatches base in str_base_to_base_expn.", 2);
-			return (NULL);
-		}
 	if (ft_ipowi(ft_strlen(base_f), expn) != ft_strlen(base_t))
 	{
 		ft_putendl_fd("Invalid exponent in str_base_to_base_expn.", 2);

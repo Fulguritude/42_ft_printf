@@ -241,3 +241,34 @@ ar -M <<EOM
     END
 EOM
 ranlib libab.a
+
+
+
+
+Taking care of fractions
+
+ex: arbitrary abstract float (after mantissa and exp are dealt with): 0.0101 (in base 2)
+0.0101 = 1/4 + 1/16; in decimal 0.3125 => note that 4 digits after '.' in binary is also 4 digits after '.' in decimal since 10 = 5 * 2 and so 1/10^n = 1/2^n * 1/5^n.
+frac = "0101", 4 digits
+(conversion of frac to frac_vlq)
+(as vlq) 0101 * 10^4 = 1100001101010000, 4 zeros (10^4[10] is 10011100010000[2])
+bitshift right 4
+110000110101 to decim_str = "3215" 
+
+BUT WAIT
+
+ex2 : 0.000011011, 9 frac_digits.
+0.000011011 = 1/32 + 1/64 + 1/256 + 1/512 = 0,052734375
+
+0.000011011[2] * 10^9 = sigdits_as_uint
+<=>
+(11011[2] / 2^9) * 10^9 = sigdits_as_uint
+<=>
+(11011[2] * 10^9) / 2^9 = sigdits_as_uint
+<=>
+(11011[2] * 10^9) >> 9 = (27[10]) * 5^9 = 52734375 = sigdits_as_uint
+  (operations for vlq) |  (in decimal)  | result
+=>
+padleft ('0', 9 - strlen("52734375") = "052734375" (extra step compared to ex1)
+
+

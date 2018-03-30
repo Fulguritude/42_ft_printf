@@ -37,8 +37,10 @@ t_bignb					ft_bignb_str_add(t_bignb const a, t_bignb const b)
 		++i;
 	}
 	bn.base = a.base;
-	bn.radix = a.radix;
+	bn.radix = a.radix;	
 	bn.digits = ft_strlen(bn.rev_ns);
+	bn.vlq = NULL;
+	bn.neg = a.neg == 1 && b.neg == 1 ? 1 : 0;
 	ft_bignb_revns_updates_vlq(&bn);
 	return (bn);
 }

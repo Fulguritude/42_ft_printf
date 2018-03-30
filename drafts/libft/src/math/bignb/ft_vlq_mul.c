@@ -21,7 +21,7 @@
 **	abstract value is contained.
 ** Second part checks if there is an active bit in the rest of the vlq array.
 */
-static int		ft_vlq_getpow2(t_vlq const vlq)
+static int		ft_vlq_ispow2(t_vlq const vlq)
 {
 	t_u32	len;
 	t_u32	len2;
@@ -131,9 +131,12 @@ ft_strdel(&str);
 			}
 	}
 }
+
 /*
-0001 1100
-0011 1000
+** Basic implementation of binary multiplication with bitshift.
+**
+** Si t'es chaud Michel... essaye ca:
+** https://en.wikipedia.org/wiki/Sch%C3%B6nhage%E2%80%93Strassen_algorithm
 */
 t_vlq			ft_vlq_mul(t_vlq const a, t_vlq const b)
 {
@@ -145,9 +148,9 @@ t_vlq			ft_vlq_mul(t_vlq const a, t_vlq const b)
 	diff = ft_vlqcmp(a, b);
 	max = diff < 0 ? b : a;
 	min = diff < 0 ? a : b;
-	if ((diff = ft_vlq_getpow2(max)) >= 0)
+	if ((diff = ft_vlq_ispow2(max)) >= 0)
 		return (ft_vlq_bsl(min, diff));
-	else if ((diff = ft_vlq_getpow2(min)) >= 0)
+	else if ((diff = ft_vlq_ispow2(min)) >= 0)
 		return (ft_vlq_bsl(max, diff));
 	diff = ft_vlq_count_active_bits(a) - ft_vlq_count_active_bits(b);
 	max = diff < 0 ? b : a;

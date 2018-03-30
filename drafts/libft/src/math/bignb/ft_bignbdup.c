@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsplit.c                                      :+:      :+:    :+:   */
+/*   ft_bignbdup.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
+/*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/17 21:32:02 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/28 11:44:44 by tduquesn         ###   ########.fr       */
+/*   Created: 2018/03/28 16:11:39 by fulguritu         #+#    #+#             */
+/*   Updated: 2018/03/28 16:18:15 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	**ft_strsplit(char const *s, char c)
+t_bignb		ft_bignbdup(t_bignb const bn)
 {
-	char	cstr[2];
+	t_bignb		result;
 
-	if (!s)
-		return (NULL);
-	cstr[0] = c;
-	cstr[1] = '\0';
-	return (ft_split(s, cstr));
+	result = bn;
+	result.vlq = bn.vlq ? ft_vlqdup(bn.vlq) : NULL;
+	result.rev_ns = bn.rev_ns ? ft_strdup(bn.rev_ns) : NULL;
+	return (result);
 }

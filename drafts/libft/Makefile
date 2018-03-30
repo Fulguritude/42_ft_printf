@@ -130,6 +130,7 @@ SRC_STR_SIP	=	ft_strmerge.c				\
 				ft_strinsert.c				\
 				ft_strreplace_inplace.c		\
 				ft_strrev_inplace.c			\
+				ft_str_csubstitute.c		\
 				ft_strsub_rm_inplace.c		\
 				ft_strpad_left_inplace.c	\
 				ft_strpad_right_inplace.c	\
@@ -141,7 +142,7 @@ SRC_STR_SIP	=	ft_strmerge.c				\
 
 SRC_STR_SLS =	ft_strlsnew.c				\
 				ft_strlscnew.c				\
-				ft_strsplit.c				\
+				ft_strcsplit.c				\
 				ft_split.c					\
 				ft_strsplitstr.c			\
 				ft_strdivide.c				\
@@ -203,6 +204,7 @@ SRC_MATH_CV	=	ft_atoi.c					\
 				ft_itoa.c					\
 				ft_in_base.c				\
 				ft_is_valid_base.c			\
+				ft_is_valid_nbstr_in_base.c \
 				ft_itoa_base.c				\
 				ft_imaxtoa_base.c			\
 				ft_uitoa_base.c				\
@@ -219,6 +221,8 @@ SRC_MATH_OP	=	ft_max.c					\
 				ft_min.c					\
 				ft_umax.c					\
 				ft_umin.c					\
+				ft_floor.c					\
+				ft_ceil.c					\
 				ft_ipowi.c					\
 				ft_lfpowi.c					\
 				ft_ilog2.c					\
@@ -227,6 +231,7 @@ SRC_MATH_OP	=	ft_max.c					\
 				ft_logn.c
 
 SRC_MATH_BN =	ft_bignbnew.c						\
+				ft_bignbdup.c						\
 				ft_atobignb.c						\
 				ft_bignb_strcmp.c					\
 				ft_bignb_iszero.c					\
@@ -249,7 +254,9 @@ SRC_MATH_BN =	ft_bignbnew.c						\
 				ft_vlqnew.c						\
 				ft_atovlq.c						\
 				ft_vlqdup.c						\
-				ft_pow_2_to_vlq.c				\
+				ft_vlq_getpow2.c				\
+				ft_vlq_getpow10.c				\
+				ft_vlqtoa_base.c				\
 				ft_vlqlen.c						\
 				ft_vlqcmp.c						\
 				ft_vlq_count_sigbit.c			\
@@ -283,6 +290,7 @@ SRC_MATH=	$(addprefix $(SRCDIR_MATH), \
 SRC_TMP	=	ft_ftoa.c						\
 			ft_ftoa_base.c					\
 			ft_lftoa_base.c					\
+			ft_lftoa.c						\
 			ft_vlq_get_greatest_sub_pow10.c \
 			ft_vlq_abstractval_as_hex.c		\
 			ft_str_base_to_base_expn.c		\
