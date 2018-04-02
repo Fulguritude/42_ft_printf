@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_logn.c                                          :+:      :+:    :+:   */
+/*   ft_islower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/11 06:05:08 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/11 06:55:47 by fulguritu        ###   ########.fr       */
+/*   Created: 2018/03/30 23:09:03 by fulguritu         #+#    #+#             */
+/*   Updated: 2018/03/30 23:09:06 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Returns the power to which n should be raised to obtain lf.
-*/
-double		ft_logn(double lf, double n, t_u8 decim_prec)
+inline int	ft_islower(int c)
 {
-	double	ln_base;
-
-	ln_base = n == 10 ? LN10 : ft_ln(n, decim_prec + 1);
-	return (ft_ln(lf, decim_prec + 1) / ln_base);
+	return ('a' <= c && c <= 'z');
 }

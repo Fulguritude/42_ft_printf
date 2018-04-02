@@ -61,51 +61,21 @@ static char		*ft_lftoa_hexfp(int exp_b2, t_u64 mantissa, char style)
 	ft_strpad_left_inplace(&tmp, style, 1);
 //printf("\t\ttmp exp_b2   : %s\n", tmp);
 	result = tmp;
-	tmp = ft_uitoa_base(mantissa, style == 'p' ? HXLOW : HXUPP);
+	tmp = ft_uitoa_base(mantissa, HXLOW);
 //printf("\t\ttmp mantissa : %s\n", tmp);
 	ft_strctrim_right_inplace(&tmp, '0');
 	if (ft_strequ(tmp, "") || ft_strequ(tmp, "-"))
 		tmp[(tmp[0] == '-')] = '0';
-//	if (ft_strlen(tmp) > 1)
-		ft_strinsert(&tmp, ".", 1);
+	ft_strinsert(&tmp, ".", (tmp[0] == '-') + 1);
+	if (tmp[ft_strlen(tmp) - 1] == '.')
+		ft_strappend(&tmp, "0");
 	ft_strprepend(tmp, &result);
 	ft_strinsert(&result, "0x", result[0] == '-');
 	free(tmp);
 ft_printf("\t\tresult : %s\n", result);
 	return (result);
 }
-#if 0
-static char	*ft_lftoa_hexfp(char **bin_strs, int exp_b2, char style)
-{
-	char	*result;
-	char	*floor;
-	char	*frac;
-	char	*base;
 
-	base = style == 'p' ? HXLOW : HXUPP;
-	result = ft_itoa(exp_b2);
-	floor = NULL;
-	frac = NULL;
-	if (exp_b2 >= 0)
-	{
-		ft_strprepend(ft_strlen(result) == 1 ? "+0" : "+", &result);
-		ft_strpad_left_inplace(&result, style, 1);
-		floor = ft_str_base_to_base_expn(bin_strs[0], BINAR, base, 4);
-		ft_strctrim_right_inplace(&floor, '0');
-	}
-	if (0 <= exp_b2 && exp_b2 < 52)
-	{
-		
-	}
-	else if (ft_strequ(bin_strs[], "0")
-	frac = ft_str_base_to_base_expn(bin_strs[1], BINAR, base, 4);
-	
-	return (result);
-
-
-		return (ft_strmerge(&floor, &result));
-}
-#endif
 static char	*ft_lftoa_fp(char **bin_strs) //, int exp_b2)
 {
 	char	*result;
@@ -170,20 +140,26 @@ static char	*ft_lftoa_exp(char **bin_strs, int exp_b2, char style)
 	char	*tmp;
 	int		exp_b10;
 
+	tmp = ft_lftoa_fp(bin_strs); //, exp_b2); //change with comment when functional
 	exp_b10 = ft_floor(LN2_DIV_LN10 * exp_b2) + (exp_b2 >= 0) - 1;
-//ft_printf("exp_b2 = %d; exp_b10 = %d\n", exp_b2, exp_b10);
+ft_printf("{cyan}exp_b2 = %d; exp_b10 = %d, pure exp_b10 = %.20lf{eoc}\n", exp_b2, exp_b10, LN2_DIV_LN10 * exp_b2);
 	result = ft_itoa(exp_b10);
 	if (ft_strlen(result) < 3 && result[0] == '-')
 		ft_strinsert(&result, "0", 1);
-	else
+	else if (result[0] != '-')
 		ft_strprepend(ft_strlen(result) == 1 ? "+0" : "+", &result);
 	ft_strpad_left_inplace(&result, style, 1);
-	tmp = ft_lftoa_fp(bin_strs); //, exp_b2); //change with comment when functional
+	
 	ft_strreplace_inplace(&tmp, ".", "");
+	ft_strctrim_right_inplace(&tmp, '0');
 	ft_strctrim_left_inplace(&tmp, '0');
-	ft_strinsert(&tmp, ".", 1);
+	if (ft_strequ(tmp, ""))
+		ft_strappend(&tmp, "0");
+	ft_strinsert(&tmp, ft_strequ(tmp, "0") ? ".0" : ".", 1);
 	ft_strprepend(tmp, &result);
 	ft_strdel(&tmp);
+	if (result[0] == 'e')
+		ft_strprepend("0", &result);
 	return (result);
 }
 
@@ -209,14 +185,15 @@ ft_printf("lftoa\n");
 	else
 		exp_b2 = 0;
 	bin_strs = float_info_to_float_binstrs(exp_b2, mantissa);
-	if (style == 'p' || style == 'P')
+	if (style == 'p')
 		result = ft_lftoa_hexfp(exp_b2, mantissa, style);
-	else if (style == 'e' || style == 'E')
+	else if (style == 'e')
 		result = ft_lftoa_exp(bin_strs, exp_b2, style);
 	else
 		result = ft_lftoa_fp(bin_strs); //, exp_b2);
 	if (extract >> 63)
 		ft_strprepend("-", &result);
 	ft_strlsdel(&bin_strs);
+ft_printf("lftoa result: %s\n", result);
 	return (result);
 }

@@ -14,7 +14,8 @@
 
 # ifndef __CONSTANTS__
 #  define __CONSTANTS__
-#  define LN2_DIV_LN10	0x1.34413509F79FEp-2
+#  define LN2_DIV_LN10	0x1.34413509F79FFp-2
+#  define LN10			0x1.26BB1BBB55516p+1
 # endif
 
 # define ABS(X) (X < 0 ? -X : X)

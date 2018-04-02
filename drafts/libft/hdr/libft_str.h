@@ -16,6 +16,15 @@
 int						ft_isalpha(int c);
 
 /*
+** Returns 1 if the given char 'c' is uppercase, and 0 otherwise.
+*/
+int						ft_isupper(int c);
+/*
+** Returns 1 if the given char 'c' is lowercase, and 0 otherwise.
+*/
+int						ft_islower(int c);
+
+/*
 ** Returns 1 if the given char 'c' is a numerical digit, and 0 otherwise.
 */
 int						ft_isdigit(int c);
@@ -145,7 +154,6 @@ char					*ft_strncat(char *dest, char const *src, size_t n);
 ** Concatenates up to ('size' - 1) characters of the given string 'src' to the
 ** end of 'dest', null-terminating the result, and returning the resulting size.
 */
-
 size_t					ft_strlcat(char *dest, char const *src, size_t size);
 
 /*

@@ -272,3 +272,19 @@ ex2 : 0.000011011, 9 frac_digits.
 padleft ('0', 9 - strlen("52734375") = "052734375" (extra step compared to ex1)
 
 
+
+
+
+
+log10(10^x) = x
+log10(e^x*ln(10)) = x
+ln(10) * x * log10(e) = x
+log10(e) = 1 / ln(10)
+log10(e) = ln(e) / ln(10)
+
+
+a * 2 ^ e2 = b * 10 ^ e10
+=>ln(a) + e2 * ln(2) = ln(b) + e10 * ln(10)
+e10 = (e2 * ln(2) + ln(a) - ln(b))/ln(10)
+e10 = e2 * log10(2) + log10(a) - log10(b)
+where a and b are the respective value of the mantissa of the number in each form (a is base 2, b is base 10). The reason these two values are different is because of the offset during exponent conversion (think of the approximation 10^3 and 2^10: it isn't perfect, and there is no power pair (safe for (0,0)) for which 10^x and 2^y can be equal, log10(a) - log10(b) represents this error in a sense).

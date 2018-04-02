@@ -76,6 +76,8 @@ SRC_MEM_MEM	=	ft_memset.c					\
 SRC_MEM	=	$(addprefix $(SRCDIR_MEM), $(SRC_MEM_MEM))
 
 SRC_STR_CHR	=	ft_isalpha.c				\
+				ft_isupper.c				\
+				ft_islower.c				\
 				ft_isdigit.c				\
 				ft_isalnum.c				\
 				ft_isascii.c				\

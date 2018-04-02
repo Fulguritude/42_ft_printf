@@ -4,24 +4,115 @@
 //TODO REMOVE
 #include <stdio.h>
 
+static void round_up(char **a_res, char const *tmp, int dig_ind, char exp_c)
+{
+	char	maxdigit;
+	t_u8	no_rounding;
+	char	*base;
+
+	base = exp_c == 'p' ? HXLOW : DECIM;
+	maxdigit = base[ft_strlen(base) - 1];
+	no_rounding = (maxdigit != '9') ? (ft_in_base(tmp[dig_ind], OCTAL) >= 0) :
+								('0' <= tmp[dig_ind] && tmp[dig_ind] <= '4'); //TODO verify printf rounding rules for 5 in DECIM and 8 HXUPP; or maybe it's just that they find digits 1 by 1 for exp by handing precision to lftoa ?
+//ft_printf("\t\t{magenta}unrounded %s\n", *a_res);
+//ft_printf("\t\t{magenta}      tmp %s ; dig_ing %d\n", tmp, dig_ind);
+	if (!no_rounding)
+	{
+		while (tmp[--dig_ind] == maxdigit || tmp[dig_ind] == '.')
+		{
+			if (tmp[dig_ind] == '.')
+				continue ;
+			if (dig_ind == 0)
+			{
+				ft_strprepend("0", a_res);
+				++dig_ind;
+			}
+			(*a_res)[dig_ind] = '0'; //  - ((*a_res)[dig_int] == '.')
+		}
+		(*a_res)[dig_ind] = base[ft_in_base((*a_res)[dig_ind], base) + 1];
+	}
+//ft_printf("\t\t{magenta}  rounded %s\n", *a_res);
+}
+
+static void	apply_float_prec(t_format info, char **a_flstr, char exp_c)
+{
+	char	*result;
+	char	*tmp;
+	int		newlen;
+	int		trulen;
+
+	tmp = ft_strcdup(*a_flstr, exp_c);
+	if ((newlen = ft_in_base('.', tmp)) == -1)
+		ft_putendl_fd("No dot found in flstr in apply_float_prec", 2);
+	newlen += info.prec + 1; // info.prec + (info.prec != 0);
+	result = ft_strnew(newlen);
+	ft_strncpy(result, tmp, newlen);
+//ft_printf("before rounding : %s, tmp = %s\n", result, tmp);
+	if ((trulen = ft_strlen(result)) < newlen)
+		ft_strpad_right_inplace(&result, '0', newlen - trulen);
+	else if (!ft_strequ(result, tmp))
+		round_up(&result, tmp, newlen, exp_c);
+//ft_printf("after rounding : %s, tmp = %s\n", result, tmp);
+	if (exp_c)
+		ft_strappend(&result, ft_strchr(*a_flstr, exp_c));
+	ft_strdel(&tmp);
+	ft_strdel(a_flstr);
+	*a_flstr = result;
+	if (info.prec == 0)
+		ft_strreplace_inplace(a_flstr, ".", "");
+}
+
+static void apply_float_width(t_format info, char **a_flstr)
+{
+	t_u32	start;
+	int		size;
+
+	if ((info.flags & (FL_SPACE | FL_PLUS)) && (*a_flstr)[0] != '-')
+		ft_strprepend(info.flags & FL_SPACE ? " " : "+", a_flstr);
+	size = ft_strlen(*a_flstr);
+	start = ft_in_base('x', (*a_flstr)) + 1;
+	if (info.width > size && (info.flags & FL_MINUS))
+		ft_strpad_right_inplace(a_flstr, ' ', info.width - size);
+	else if (info.width > size && !(info.flags & (FL_MINUS | FL_ZERO)))
+		ft_strpad_left_inplace(a_flstr, ' ', info.width - size);
+	else if (info.width > size)
+		ft_strpad_insert_inplace(a_flstr, '0', start, info.width - size);
+}
+
+static char *handle_f_type(t_format info, double lf)
+{
+	char	*result;
+
+	result = ft_lftoa(lf, info.type_char);
+	if (!ft_strequ(result, "inf") && !ft_strequ(result, "-inf") &&
+		!ft_strequ(result, "nan") && !ft_strequ(result, "-nan"))
+		apply_float_prec(info, &result, '\0');
+	apply_float_width(info, &result);
+	return (result);
+}
+
+
 static char	*handle_g_type(t_format info, double lf, int exp)
 {
 	char	*result;
 	char	*tmp;
 	t_u32	i;
 
-printf("printf 1\n");
+printf("g printf 1\n");
+	exp = ft_floor(LN2_DIV_LN10 * exp) + (exp >= 0) - 1;
+/*ft_floor(LN2_DIV_LN10 * exp) + ft_logn(lf_mantissa, 10, 5) -
+				ft_logn(ft_atoui(lftoa_result_mantissa), 10, 5) + (exp >= 0) - 1;*/
 	if (exp < -4 || info.prec <= exp) //exponent after conversion, not before
 		tmp = ft_lftoa(lf, '\0');
 	else
 		tmp = ft_lftoa(lf, info.type_char == 'g' ? 'e' : 'E');
 
-printf("printf 2: %s\n", tmp);
+printf("g printf 2: %s\n", tmp);
 	i = 0;
 	while ((ft_isdigit(tmp[i]) || tmp[i] == '-' || tmp[i] == '.') &&
 			i < (t_u32)(info.prec + (tmp[0] == '-') + 1))
 		++i;
-printf("printf 3\n");
+printf("g printf 3\n");
 	result = ft_strsub(tmp, 0, i);
 	if ((i = ft_in_base('.', result) != -1))
 		ft_strctrim_right_inplace(&result, '0');
@@ -34,38 +125,19 @@ printf("printf 3\n");
 	return (result);
 }
 
-static char	*handle_a_type(t_format info, double lf)
+static char	*handle_ae_type(t_format info, double lf)
 {
 	char	*result;
 	char	exp_c;
-	t_u32	start;
-	int		size;
 
-	exp_c = info.type_char == 'a' ? 'p' : 'P';
+	exp_c = info.type_char == 'e' || info.type_char == 'E' ? 'e' : 'p';
 	result = ft_lftoa(lf, exp_c);
 	if (!ft_strequ(result, "inf") && !ft_strequ(result, "-inf") &&
-		!ft_strequ(result, "nan") && !ft_strequ(result, "-nan"))
-	{
-		start = ft_in_base('.', result) + 1 + info.prec;
-		size = ft_in_base(exp_c, result) - start;
-		if (size > 0)
-			ft_strsub_rm_inplace(&result, start, size);
-		else if (size < 0)
-			ft_strpad_insert_inplace(&result, '0', start + size, -size);
-		start -= 1 + info.prec;
-		if (result[start] == '.' && result[start + 1] == 'p')		
-			ft_strsub_rm_inplace(&result, start, 1);
-	}
-	if ((info.flags & (FL_SPACE | FL_PLUS)) && !(((t_u64)lf) >> 63))
-		ft_strprepend(info.flags & FL_SPACE ? " " : "+", &result);
-	size = ft_strlen(result);
-	start = ft_in_base('x', result) + 1;
-	if (info.width > size && (info.flags & FL_MINUS))
-		ft_strpad_right_inplace(&result, ' ', info.width - size);
-	else if (info.width > size && !(info.flags & (FL_MINUS | FL_ZERO)))
-		ft_strpad_left_inplace(&result, ' ', info.width - size);
-	else if (info.width > size)
-		ft_strpad_insert_inplace(&result, '0', start, info.width - size);
+		!ft_strequ(result, "nan") && !ft_strequ(result, "-nan") &&
+		info.prec != -1)
+		apply_float_prec(info, &result, exp_c);
+	apply_float_width(info, &result);
+	ft_strreplace_inplace(&result, ".0p", "p");
 	return (result);
 }
 
@@ -106,23 +178,17 @@ printf("\n\tarr = %#lx\n", *((unsigned long *)arr));
 printf("\tarr = %s ; style = %c\n", str, info.type_char);
 ft_strdel(&str);
 
-	if (info.type_char == 'e')
-		tmp = ft_lftoa(lf, 'e');
-	else if (info.type_char == 'E')
-		tmp = ft_lftoa(lf, 'E');
-	else if (info.type_char == 'a' || info.type_char == 'A')
-		tmp = handle_a_type(info, lf);
+	if (info.type_char == 'e' || info.type_char == 'E' ||
+		info.type_char == 'a' || info.type_char == 'A')
+		tmp = handle_ae_type(info, lf);
 	else if (info.type_char == 'g' || info.type_char == 'G')
 		tmp = handle_g_type(info, lf, exp);
 	else if (info.type_char == 'f' || info.type_char == 'F')
-	{
-		tmp = ft_lftoa(lf, '\0');
-		
-
-
-	}
+		tmp = handle_f_type(info, lf);
 	else
-		tmp = ft_strdup("float_handler_error");
+		tmp = ft_strdup("(float_handler_error)");
+	if (ft_strfind("AFEG", info.type_char) >= 0)
+		ft_str_toupper_inplace(&tmp);
 	result = str_to_t_str(tmp);
 	free(tmp);
 	return (result);

@@ -58,7 +58,8 @@ t_format		read_format(char const *fmt_part)
 	result.len_flag = read_format_len_flag(fmt_part, &i);
 	result.type = read_format_type(fmt_part, &result, i);
 //ft_putendl("... format read\n");
-	if (result.type == float_pt && result.prec == -1)
+	if (result.type == float_pt && result.prec == -1 &&
+		result.type_char != 'a' && result.type_char != 'A')
 		result.prec = 6;
 	return (result);
 }
