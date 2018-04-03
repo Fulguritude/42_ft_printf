@@ -15,10 +15,10 @@
 /*
 ** Returns the power to which n should be raised to obtain lf.
 */
-double		ft_logn(double lf, double n, t_u8 decim_prec)
+double		ft_logn(double lf, double n)
 {
 	double	ln_base;
 
-	ln_base = n == 10 ? LN10 : ft_ln(n, decim_prec + 1);
-	return (ft_ln(lf, decim_prec + 1) / ln_base);
+	ln_base = n == 10 ? LN10 : ft_ln(n);
+	return (ft_ln(lf) / ln_base);
 }

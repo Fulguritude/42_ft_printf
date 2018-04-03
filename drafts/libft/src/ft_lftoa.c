@@ -129,20 +129,19 @@ free(tmp);
 	return (result);
 }
 /*
-	int		exp_b10;
-
-	exp_b10 = ft_floor(LN2_DIV_LN10 * exp_b2) + (exp_b2 > 0);
-	tmp = ft_itoa(exp_b10);
+** a*2^b = c*10^d with 1 <= a < 2 and 1 <= c < 10
+** => d = floor(log10(a*2^b)) = floor(log10(a) + b * log10(2)); 
 */
-static char	*ft_lftoa_exp(char **bin_strs, int exp_b2, char style)
+static char	*ft_lftoa_exp(char **bin_strs, int exp_b2, char style, double scimant_b2)
 {
 	char	*result;
 	char	*tmp;
 	int		exp_b10;
 
 	tmp = ft_lftoa_fp(bin_strs); //, exp_b2); //change with comment when functional
-	exp_b10 = ft_floor(LN2_DIV_LN10 * exp_b2) + (exp_b2 >= 0) - 1;
-ft_printf("{cyan}exp_b2 = %d; exp_b10 = %d, pure exp_b10 = %.20lf{eoc}\n", exp_b2, exp_b10, LN2_DIV_LN10 * exp_b2);
+	exp_b10 = ft_floor(LN2_DIV_LN10 * ABS(exp_b2) + ft_logn(scimant_b2, 10));
+	exp_b10 = (exp_b10 + (exp_b2 < 0)) * (-1 + 2 * (exp_b2 >= 0)); //ft_floor(LN2_DIV_LN10 * exp_b2) + (exp_b2 >= 0) - 1;
+//ft_printf("{cyan}exp_b2 = %d; exp_b10 = %d, ft_logn(scimant_b2, 10) = %lf, pure exp_b10 = %.20lf{eoc}\n", exp_b2, exp_b10, ft_logn(scimant_b2, 10), LN2_DIV_LN10 * exp_b2 + ft_logn(scimant_b2, 10));
 	result = ft_itoa(exp_b10);
 	if (ft_strlen(result) < 3 && result[0] == '-')
 		ft_strinsert(&result, "0", 1);
@@ -174,8 +173,7 @@ char	*ft_lftoa(double lf, char style)
 ft_printf("lftoa\n");
 	if (lf != lf)
 		return (ft_strdup(MSB((t_u64)lf) ? "-nan" : "nan"));
-	extract = 0;
-	ft_memcpy(&extract, &lf, 8);
+	extract = *(t_u64*)(&lf);
 	exp_b2 = ((extract << 1) >> 53) - 1023;
 	if (exp_b2 == 1024)
 		return (ft_strdup(MSB(extract) ? "-inf" : "inf"));
@@ -188,7 +186,8 @@ ft_printf("lftoa\n");
 	if (style == 'p')
 		result = ft_lftoa_hexfp(exp_b2, mantissa, style);
 	else if (style == 'e')
-		result = ft_lftoa_exp(bin_strs, exp_b2, style);
+		result = ft_lftoa_exp(bin_strs, exp_b2, style,
+			1.0 * mantissa / ft_ipowi(2.0, (ft_digits_base(mantissa, 2) - 1)));
 	else
 		result = ft_lftoa_fp(bin_strs); //, exp_b2);
 	if (extract >> 63)

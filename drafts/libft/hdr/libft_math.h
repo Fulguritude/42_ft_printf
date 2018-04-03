@@ -15,6 +15,7 @@
 # ifndef __CONSTANTS__
 #  define __CONSTANTS__
 #  define LN2_DIV_LN10	0x1.34413509F79FFp-2
+#  define LN2			0x1.62E42FEFA39EFp+1
 #  define LN10			0x1.26BB1BBB55516p+1
 # endif
 
@@ -94,14 +95,14 @@ double					ft_exp(double x);
 ** precision up to decim_prec.
 */
 
-double					ft_ln(double lf, t_u8 decim_prec);
+double					ft_ln(double lf);
 
 /*
 ** Returns the base 'n' logarithm of lf, using the Taylor expansion to build
 ** precision up to decim_prec.
 */
 
-double					ft_logn(double lf, double n, t_u8 decim_prec);
+double					ft_logn(double lf, double n);
 
 /*
 ** ========== Str-Int Conversion Functions ==========

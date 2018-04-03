@@ -133,6 +133,7 @@ SRC_STR_SIP	=	ft_strmerge.c				\
 				ft_strreplace_inplace.c		\
 				ft_strrev_inplace.c			\
 				ft_str_csubstitute.c		\
+				ft_str_toupper.c			\
 				ft_strsub_rm_inplace.c		\
 				ft_strpad_left_inplace.c	\
 				ft_strpad_right_inplace.c	\

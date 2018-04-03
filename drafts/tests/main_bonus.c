@@ -31,7 +31,7 @@
 #  define PERCENT_aA						1
 #  define PERCENT_eE						1
 #  define PERCENT_fF						1
-#  define PERCENT_gG						1
+#  define PERCENT_gG						0
 #  define SPECIAL_CASES						1 && (PERCENT_aA || PERCENT_eE || PERCENT_fF || PERCENT_gG)
 #  define NORMAL_CASES						1 && (PERCENT_aA || PERCENT_eE || PERCENT_fF || PERCENT_gG)
 # define FLOAT_BONUSES						_FLOAT_BONUSES_ && (NORMAL_CASES || SPECIAL_CASES)

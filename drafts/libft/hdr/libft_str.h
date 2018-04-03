@@ -341,6 +341,12 @@ void					ft_str_csubstitute(char *str, char const *tr_f,
 											char const *tr_t);
 
 /*
+** Returns the same string with all characters in uppercase.
+** TODO make it an inline call to str_csubstitute ?
+*/
+void					ft_str_toupper(char *str);
+
+/*
 ** Returns ft_strpad_left by reference rather than new allocation.
 */
 void					ft_strpad_left_inplace(char **a_str,

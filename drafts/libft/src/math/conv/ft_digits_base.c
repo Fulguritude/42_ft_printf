@@ -27,7 +27,7 @@ int		ft_digits_base(intmax_t n, int radix)
 		i = 0;
 		while (n != 0)
 		{
-			i++;
+			++i;
 			n /= radix;
 		}
 	}

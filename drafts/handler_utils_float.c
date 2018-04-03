@@ -188,7 +188,7 @@ ft_strdel(&str);
 	else
 		tmp = ft_strdup("(float_handler_error)");
 	if (ft_strfind("AFEG", info.type_char) >= 0)
-		ft_str_toupper_inplace(&tmp);
+		ft_str_toupper(tmp);
 	result = str_to_t_str(tmp);
 	free(tmp);
 	return (result);
