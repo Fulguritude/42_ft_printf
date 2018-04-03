@@ -315,6 +315,11 @@ int main()
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %+d\n", 0);
+	  return_values[j++] =    asprintf(&str2, "   printf %+d\n", 0);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf %+.0d\n", 0);
 	  return_values[j++] =    asprintf(&str2, "   printf %+.0d\n", 0);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);

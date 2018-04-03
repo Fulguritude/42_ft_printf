@@ -61,6 +61,9 @@ t_format		read_format(char const *fmt_part)
 	if (result.type == float_pt && result.prec == -1 &&
 		result.type_char != 'a' && result.type_char != 'A')
 		result.prec = 6;
+	else if (result.type == float_pt && result.prec == 0 &&
+			(result.type_char == 'g' || result.type_char == 'G'))
+		result.prec = 1;
 	return (result);
 }
 

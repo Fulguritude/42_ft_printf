@@ -18,14 +18,17 @@ static void round_up(char **a_res, char const *tmp, int dig_ind, char exp_c)
 //ft_printf("\t\t{magenta}      tmp %s ; dig_ing %d\n", tmp, dig_ind);
 	if (!no_rounding)
 	{
-		while (tmp[--dig_ind] == maxdigit || tmp[dig_ind] == '.')
+		while ((tmp[--dig_ind] == maxdigit || tmp[dig_ind] == '.'))// && (tmp[0] == maxdigit !tmp[dig_ind] != '9')
 		{
+ft_printf("dig_ind = %d; tmp[dig_ind] = %c\n", dig_ind, tmp[dig_ind]);
 			if (tmp[dig_ind] == '.')
 				continue ;
 			if (dig_ind == 0)
 			{
 				ft_strprepend("0", a_res);
 				++dig_ind;
+				if (dig_ind == 1)
+					break ;
 			}
 			(*a_res)[dig_ind] = '0'; //  - ((*a_res)[dig_int] == '.')
 		}
@@ -47,12 +50,12 @@ static void	apply_float_prec(t_format info, char **a_flstr, char exp_c)
 	newlen += info.prec + 1; // info.prec + (info.prec != 0);
 	result = ft_strnew(newlen);
 	ft_strncpy(result, tmp, newlen);
-//ft_printf("before rounding : %s, tmp = %s\n", result, tmp);
+ft_printf("before rounding : %s, tmp = %s\n", result, tmp);
 	if ((trulen = ft_strlen(result)) < newlen)
 		ft_strpad_right_inplace(&result, '0', newlen - trulen);
 	else if (!ft_strequ(result, tmp))
 		round_up(&result, tmp, newlen, exp_c);
-//ft_printf("after rounding : %s, tmp = %s\n", result, tmp);
+ft_printf("after rounding : %s, tmp = %s\n", result, tmp);
 	if (exp_c)
 		ft_strappend(&result, ft_strchr(*a_flstr, exp_c));
 	ft_strdel(&tmp);
@@ -78,7 +81,7 @@ static void apply_float_width(t_format info, char **a_flstr)
 	else if (info.width > size)
 		ft_strpad_insert_inplace(a_flstr, '0', start, info.width - size);
 }
-
+#if 0
 static char *handle_f_type(t_format info, double lf)
 {
 	char	*result;
@@ -90,47 +93,15 @@ static char *handle_f_type(t_format info, double lf)
 	apply_float_width(info, &result);
 	return (result);
 }
+#endif
 
-
-static char	*handle_g_type(t_format info, double lf, int exp)
-{
-	char	*result;
-	char	*tmp;
-	t_u32	i;
-
-printf("g printf 1\n");
-	exp = ft_floor(LN2_DIV_LN10 * exp) + (exp >= 0) - 1;
-/*ft_floor(LN2_DIV_LN10 * exp) + ft_logn(lf_mantissa, 10, 5) -
-				ft_logn(ft_atoui(lftoa_result_mantissa), 10, 5) + (exp >= 0) - 1;*/
-	if (exp < -4 || info.prec <= exp) //exponent after conversion, not before
-		tmp = ft_lftoa(lf, '\0');
-	else
-		tmp = ft_lftoa(lf, info.type_char == 'g' ? 'e' : 'E');
-
-printf("g printf 2: %s\n", tmp);
-	i = 0;
-	while ((ft_isdigit(tmp[i]) || tmp[i] == '-' || tmp[i] == '.') &&
-			i < (t_u32)(info.prec + (tmp[0] == '-') + 1))
-		++i;
-printf("g printf 3\n");
-	result = ft_strsub(tmp, 0, i);
-	if ((i = ft_in_base('.', result) != -1))
-		ft_strctrim_right_inplace(&result, '0');
-	if (i == ft_strlen(tmp) - 1)
-		result[i] = '\0';
-	info.type_char == 'g' ? ft_strappend(&result, tmp + ft_strfind(tmp, 'e')) :
-							ft_strappend(&result, tmp + ft_strfind(tmp, 'E'));
-//TODO WIDTH ?? PREC ??
-	ft_strdel(&tmp);
-	return (result);
-}
-
-static char	*handle_ae_type(t_format info, double lf)
+static char	*handle_aef_type(t_format info, double lf)
 {
 	char	*result;
 	char	exp_c;
 
 	exp_c = info.type_char == 'e' || info.type_char == 'E' ? 'e' : 'p';
+	exp_c = info.type_char == 'f' || info.type_char == 'F' ? '\0' : exp_c;
 	result = ft_lftoa(lf, exp_c);
 	if (!ft_strequ(result, "inf") && !ft_strequ(result, "-inf") &&
 		!ft_strequ(result, "nan") && !ft_strequ(result, "-nan") &&
@@ -138,6 +109,34 @@ static char	*handle_ae_type(t_format info, double lf)
 		apply_float_prec(info, &result, exp_c);
 	apply_float_width(info, &result);
 	ft_strreplace_inplace(&result, ".0p", "p");
+	return (result);
+}
+
+static char	*handle_g_type(t_format info, double lf)
+{
+	char	*result;
+	double	mant_b2;
+	int		exp_b2;
+	int		exp_b10;
+	int		boolexp;
+
+	exp_b2 = (((*(t_u64*)(&lf)) << 1) >> 53) - 1023;
+	mant_b2 = ((((*(t_u64*)(&lf)) << 12) >> 12) - 1023) | 
+			((exp_b2 != -1023) * 0x10000000000000);
+	mant_b2 = 1.0 * mant_b2 / ft_ipowi(2.0, ft_digits_base(mant_b2, 2) - 1);
+	exp_b10 = ft_floor(LN2_DIV_LN10 * ABS(exp_b2) + ft_logn(mant_b2, 10));
+	exp_b10 = (exp_b10 + (exp_b2 < 0)) * (-1 + 2 * (exp_b2 >= 0));
+	boolexp = (exp_b10 < -4 || (info.prec != -1 && info.prec <= exp_b10)) && lf != 0;
+	result = ft_lftoa(lf, boolexp ? 'e' : '\0');
+	info.prec = info.prec - 1 - ((!boolexp) * exp_b10);
+	if (!ft_strequ(result, "inf") && !ft_strequ(result, "-inf") &&
+		!ft_strequ(result, "nan") && !ft_strequ(result, "-nan"))
+		apply_float_prec(info, &result, boolexp ? 'e' : '\0');
+	if (!(info.flags & FL_HASH))
+		ft_strctrim_right_inplace(&result, '0');
+	apply_float_width(info, &result);
+	if (result[ft_strlen(result) - 1] == '.')
+		result[ft_strlen(result) - 1] = '\0';
 	return (result);
 }
 
@@ -158,11 +157,8 @@ printf("\tlf u64: %#lx\n", extract);
 printf("\tlf hex: %la\n", lf);
 printf("\tlf exp: %le\n", lf);
 printf("\tlf dot: %.5lf\n", lf);
-	exp = (int)((((extract) << 1) >> 53) - 1023); //Make a macro for he appropriate shift for readability ?
-printf("\texp: %d\n", exp); 
-//# define FLOAT_EXP(X) (((t_u64)X << 1) >> 52) - 1023
-//# define DOUBLE_EXP(X) (((t_u64)X << 33) >> 56) - 127
-
+	exp = (int)((((extract) << 1) >> 53) - 1023);
+printf("\texp: %d\n", exp);
 	t_u8	minus;
 	t_u64	mantissa;
 
@@ -178,13 +174,10 @@ printf("\n\tarr = %#lx\n", *((unsigned long *)arr));
 printf("\tarr = %s ; style = %c\n", str, info.type_char);
 ft_strdel(&str);
 
-	if (info.type_char == 'e' || info.type_char == 'E' ||
-		info.type_char == 'a' || info.type_char == 'A')
-		tmp = handle_ae_type(info, lf);
+	if (ft_strfind("aAeEfF", info.type_char) >= 0)
+		tmp = handle_aef_type(info, lf);
 	else if (info.type_char == 'g' || info.type_char == 'G')
-		tmp = handle_g_type(info, lf, exp);
-	else if (info.type_char == 'f' || info.type_char == 'F')
-		tmp = handle_f_type(info, lf);
+		tmp = handle_g_type(info, lf);
 	else
 		tmp = ft_strdup("(float_handler_error)");
 	if (ft_strfind("AFEG", info.type_char) >= 0)
@@ -279,8 +272,6 @@ Field width
 			if ((info.type_char == 'g' || info.type_char == 'G') &&
 				(info.width >= info.prec || exp < -4))
 				style = 'e';
-			if ((info.type == 'g' || info.type == 'G') && info.prec == 0)
-				info.prec = 1;
 
        a, A   (C99; not in SUSv2, but added in SUSv3) For a conversion, the double argument is converted to
               hexadecimal notation (using the letters abcdef) in the style [-]0xh.hhhhp±; for A  conversion

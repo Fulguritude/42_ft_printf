@@ -140,7 +140,7 @@ static char	*ft_lftoa_exp(char **bin_strs, int exp_b2, char style, double sciman
 
 	tmp = ft_lftoa_fp(bin_strs); //, exp_b2); //change with comment when functional
 	exp_b10 = ft_floor(LN2_DIV_LN10 * ABS(exp_b2) + ft_logn(scimant_b2, 10));
-	exp_b10 = (exp_b10 + (exp_b2 < 0)) * (-1 + 2 * (exp_b2 >= 0)); //ft_floor(LN2_DIV_LN10 * exp_b2) + (exp_b2 >= 0) - 1;
+	exp_b10 = (exp_b10 + (exp_b2 < 0)) * (-1 + 2 * (exp_b2 >= 0));
 //ft_printf("{cyan}exp_b2 = %d; exp_b10 = %d, ft_logn(scimant_b2, 10) = %lf, pure exp_b10 = %.20lf{eoc}\n", exp_b2, exp_b10, ft_logn(scimant_b2, 10), LN2_DIV_LN10 * exp_b2 + ft_logn(scimant_b2, 10));
 	result = ft_itoa(exp_b10);
 	if (ft_strlen(result) < 3 && result[0] == '-')
@@ -187,7 +187,7 @@ ft_printf("lftoa\n");
 		result = ft_lftoa_hexfp(exp_b2, mantissa, style);
 	else if (style == 'e')
 		result = ft_lftoa_exp(bin_strs, exp_b2, style,
-			1.0 * mantissa / ft_ipowi(2.0, (ft_digits_base(mantissa, 2) - 1)));
+			1.0 * mantissa / ft_ipowi(2.0, ft_digits_base(mantissa, 2) - 1));
 	else
 		result = ft_lftoa_fp(bin_strs); //, exp_b2);
 	if (extract >> 63)

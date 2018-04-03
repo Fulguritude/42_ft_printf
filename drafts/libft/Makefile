@@ -315,6 +315,8 @@ RESET	=	"\033[0m"
 RED		=	"\033[0;31m"
 GREEN	=	"\033[0;32m"
 
+
+#https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html
 #@ before a function makes it so that its call isn't echoed to stdout
 #$@ is a call to the string of the current rule
 #$^ is a call to the string of the current dependencies
