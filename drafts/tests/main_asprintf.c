@@ -314,6 +314,116 @@ int main()
 	  return_values[j++] =    asprintf(&str2, "   printf %5.0X\n", 0);
 	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 
+#if 0
+//0 works weirdly for a long in printf it seems. Causes a "stack smashing" error
+	unsigned long long_zero = 0;
+
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %ld\n", long_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf %ld\n", long_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %lu\n", long_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf %lu\n", long_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %lo\n", long_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf %lo\n", long_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %lx\n", long_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf %lx\n", long_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %lX\n", long_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf %lX\n", long_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %3ld\n", long_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf %3ld\n", long_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %3lu\n", long_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf %3lu\n", long_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %3lo\n", long_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf %3lo\n", long_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %3lx\n", long_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf %3lx\n", long_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %3lX\n", long_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf %3lX\n", long_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %.0ld\n", long_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf %.0ld\n", long_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %.0lu\n", long_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf %.0lu\n", long_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %.0lo\n", long_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf %.0lo\n", long_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %.0lx\n", long_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf %.0lx\n", long_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %.0lX\n", long_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf %.0lX\n", long_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+
+//	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_asprintf(&str1, "ft_printf %.-4ld\n", long_zero);
+//	  return_values[j++] =    asprintf(&str2, "   printf %.-4ld\n", long_zero);
+//	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+//	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_asprintf(&str1, "ft_printf %.-4lu\n", long_zero);
+//	  return_values[j++] =    asprintf(&str2, "   printf %.-4lu\n", long_zero);
+//	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+//	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_asprintf(&str1, "ft_printf %.-4lo\n", long_zero);
+//	  return_values[j++] =    asprintf(&str2, "   printf %.-4lo\n", long_zero);
+//	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+//	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_asprintf(&str1, "ft_printf %.-4lx\n", long_zero);
+//	  return_values[j++] =    asprintf(&str2, "   printf %.-4lx\n", long_zero);
+//	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+//	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_asprintf(&str1, "ft_printf %.-4lX\n", long_zero);
+//	  return_values[j++] =    asprintf(&str2, "   printf %.-4lX\n", long_zero);
+//	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %5.0ld\n", long_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf %5.0ld\n", long_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %5.0lu\n", long_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf %5.0lu\n", long_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %5.0lo\n", long_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf %5.0lo\n", long_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %5.0lx\n", long_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf %5.0lx\n", long_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %5.0lX\n", long_zero);
+	  return_values[j++] =    asprintf(&str2, "   printf %5.0lX\n", long_zero);
+	check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+#endif
+
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf %+d\n", 0);
 	  return_values[j++] =    asprintf(&str2, "   printf %+d\n", 0);

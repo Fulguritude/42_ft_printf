@@ -15,7 +15,9 @@
 # ifndef __CONSTANTS__
 #  define __CONSTANTS__
 #  define LN2_DIV_LN10	0x1.34413509F79FFp-2
-#  define LN2			0x1.62E42FEFA39EFp+1
+#  define LN_3DIV2		0x1.9F323ECBF984Cp-2
+#  define DIV2_BY3		0x1.5555555555556p-1
+#  define LN2			0x1.62E42FEFA39EFp-1
 #  define LN10			0x1.26BB1BBB55516p+1
 # endif
 

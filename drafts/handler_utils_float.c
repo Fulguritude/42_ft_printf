@@ -3,7 +3,7 @@
 
 //TODO REMOVE
 #include <stdio.h>
-
+#if 0
 static void round_up(char **a_res, char const *tmp, int dig_ind, char exp_c)
 {
 	char	maxdigit;
@@ -14,8 +14,8 @@ static void round_up(char **a_res, char const *tmp, int dig_ind, char exp_c)
 	maxdigit = base[ft_strlen(base) - 1];
 	no_rounding = (maxdigit != '9') ? (ft_in_base(tmp[dig_ind], OCTAL) >= 0) :
 								('0' <= tmp[dig_ind] && tmp[dig_ind] <= '4'); //TODO verify printf rounding rules for 5 in DECIM and 8 HXUPP; or maybe it's just that they find digits 1 by 1 for exp by handing precision to lftoa ?
-//ft_printf("\t\t{magenta}unrounded %s\n", *a_res);
-//ft_printf("\t\t{magenta}      tmp %s ; dig_ing %d\n", tmp, dig_ind);
+ft_printf("\t\t{magenta}unrounded %s\n", *a_res);
+ft_printf("\t\t{magenta}      tmp %s ; dig_ind %d{eoc}\n", tmp, dig_ind);
 	if (!no_rounding)
 	{
 		while ((tmp[--dig_ind] == maxdigit || tmp[dig_ind] == '.'))// && (tmp[0] == maxdigit !tmp[dig_ind] != '9')
@@ -27,8 +27,6 @@ ft_printf("dig_ind = %d; tmp[dig_ind] = %c\n", dig_ind, tmp[dig_ind]);
 			{
 				ft_strprepend("0", a_res);
 				++dig_ind;
-				if (dig_ind == 1)
-					break ;
 			}
 			(*a_res)[dig_ind] = '0'; //  - ((*a_res)[dig_int] == '.')
 		}
@@ -59,6 +57,62 @@ ft_printf("after rounding : %s, tmp = %s\n", result, tmp);
 	if (exp_c)
 		ft_strappend(&result, ft_strchr(*a_flstr, exp_c));
 	ft_strdel(&tmp);
+	ft_strdel(a_flstr);
+	*a_flstr = result;
+	if (info.prec == 0)
+		ft_strreplace_inplace(a_flstr, ".", "");
+}
+#endif
+
+static char	*round_up(char const *tmp, int dig_ind, char exp_c, int *status)
+{
+	char	*result;
+	char	maxdigit;
+	t_u8	no_rounding;
+	char	*base;
+
+	base = exp_c == 'p' ? HXLOW : DECIM;
+	maxdigit = base[ft_strlen(base) - 1];
+	no_rounding = (maxdigit != '9') ? (ft_in_base(tmp[dig_ind], OCTAL) >= 0) :
+								('0' <= tmp[dig_ind] && tmp[dig_ind] <= '4'); //TODO verify printf rounding rules for 5 in DECIM and 8 HXUPP; or maybe it's just that they find digits 1 by 1 for exp by handing precision to lftoa ?
+ft_printf("\t\t{magenta}unrounded %s\n", result);
+ft_printf("\t\t{magenta}      tmp %s ; dig_ind %d{eoc}\n", tmp, dig_ind);
+	result = ft_strnew(dig_ind - 1);
+	if (!no_rounding)
+	{
+		while (tmp[--dig_ind] == maxdigit && dig_ind >= 0) // && (tmp[0] == maxdigit !tmp[dig_ind] != '9')
+		{
+ft_printf("dig_ind = %d; tmp[dig_ind] = %c\n", dig_ind, tmp[dig_ind]);
+			if (dig_ind == 0)
+				ft_strprepend("0", &result);
+			result[dig_ind + (dig_ind == 0)] = '0'; //  - ((*a_res)[dig_int] == '.')
+		}
+		result[dig_ind] = base[ft_in_base(result[dig_ind], base) + 1];
+	}
+	if (!(*status = dig_ind == 0))
+		while (--dig_ind >= 0)
+			result[dig_ind] = tmp[dig_ind];
+ft_printf("\t\t{magenta}  rounded %s\n", result);
+	return (result);
+}
+
+static void	apply_float_prec(t_format info, char **a_flstr, char exp_c)
+{
+	char	*result;
+	char	*tmp;
+	int		dotpos;
+	int		status;
+
+	tmp = ft_strcdup(*a_flstr, exp_c);
+	dotpos = ft_in_base('.', tmp);
+	ft_strreplace_inplace(&tmp, ".", "");
+	status = 0;
+	result = round_up(tmp, dotpos + info.prec + 1, exp_c, &status);
+	result[dotpos + info.prec + 1] = '\0';
+	ft_strdel(&tmp);
+	ft_strinsert(&result, ".", dotpos + (status && !exp_c));
+	if (exp_c)
+		ft_strappend(&result, ft_strchr(*a_flstr, exp_c));
 	ft_strdel(a_flstr);
 	*a_flstr = result;
 	if (info.prec == 0)

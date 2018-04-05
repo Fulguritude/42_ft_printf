@@ -13,7 +13,7 @@
 # define C_BLUE    "\x1b[34m"
 # define C_MAGENTA "\x1b[35m"
 # define C_CYAN    "\x1b[36m"
-# define C_RESET     "\x1b[0m"
+# define C_RESET   "\x1b[0m"
 #endif
 
 
@@ -378,7 +378,7 @@ int		main()
 
 # if NORMAL_CASES
 	float 	f = 0.55555; // 0xf.edcba012345p-64;		//other vals: 123.456789;
-	double 	d = 1e+23;//16.125; //-0x1.123456789abcdp+1010;	//other vals: 1234567.8987654321; 0.000002432543654332000; 1e+23
+	double 	d = 16.125; //-0x1.123456789abcdp+1010;	//other vals: 1234567.8987654321; 0.000002432543654332000; 1e+23
 
 #  if PERCENT_fF
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");

@@ -25,13 +25,13 @@ void			ft_vlqtrim(t_vlq *a_vlq)
 	if (a_vlq)
 		if (*a_vlq)
 		{
-			len = ft_vlqlen(*a_vlq);
 			i = -1;
 			while (MSB((*a_vlq)[++i]))
 				if (NOT_MSB((*a_vlq)[i]))
 					break ;
 			if (i > 0)
 			{
+				len = ft_vlqlen(*a_vlq);
 				tmp = ft_vlqnew(len - i);
 				while (--len >= i)
 					tmp[len - i] |= NOT_MSB((*a_vlq)[len]);
