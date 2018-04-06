@@ -56,6 +56,8 @@ double		ft_ln(double lf)
 		return (-1. / 0.);
 	if (lf == 1.)
 		return (0.);
+	if (lf == 1. / 0.)
+		return (lf);
 	if (lf < 1. || 2. <= lf)
 	{
 		extract = *(t_u64*)(&lf);

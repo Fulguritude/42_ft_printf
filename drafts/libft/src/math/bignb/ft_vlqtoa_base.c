@@ -78,16 +78,16 @@ static char		*vlq_to_anybase(t_vlq const vlq, char const *base)
 	{
 		ft_vlq_divmod(tmp_vlq, &radix, &div, &mod);
 		ft_strpad_left_inplace(&result, base[mod[0]], 1);
-/*
-char *str = ft_vlqhex(tmp_vlq), *str2 = ft_vlqhex(div), *str3 = ft_vlqhex(mod);
+
+/*char *str = ft_vlq_abstractval_as_hex(tmp_vlq), *str2 = ft_vlq_abstractval_as_hex(div), *str3 = ft_vlq_abstractval_as_hex(mod);
 ft_printf("{green}tmp_vlq = %s\n{eoc}radix = %#lx\n{blue}div = %s\n{magenta}mod = %s\n{yellow}result = %s{eoc}\n\n", str, radix, str2, str3, result);
-ft_strdel(&str);ft_strdel(&str2);ft_strdel(&str3);*/
-		ft_vlqdel(&tmp_vlq);
+ft_strdel(&str);ft_strdel(&str2);ft_strdel(&str3);
+*/		ft_vlqdel(&tmp_vlq);
 		ft_vlqdel(&mod);
 		tmp_vlq = div;
 	}
 	ft_vlqdel(&tmp_vlq);
-//ft_printf("{bold}{yellow}final result anybase = %s\n{eoc}", result);
+//ft_printf("final result anybase = {bold}{yellow_bg}{red}%s{eoc}\n", result);
 	return (result);
 }
 

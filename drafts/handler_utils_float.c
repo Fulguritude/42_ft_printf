@@ -175,10 +175,12 @@ static void apply_float_width(t_format info, char **a_flstr)
 	if ((info.flags & (FL_SPACE | FL_PLUS)) && (*a_flstr)[0] != '-')
 		ft_strprepend(info.flags & FL_SPACE ? " " : "+", a_flstr);
 	size = ft_strlen(*a_flstr);
-	start = ft_in_base('x', (*a_flstr)) + 1;
+	start = ft_in_base('x', (*a_flstr)) + 1 + (**a_flstr == '-');
 	if (info.width > size && (info.flags & FL_MINUS))
 		ft_strpad_right_inplace(a_flstr, ' ', info.width - size);
-	else if (info.width > size && !(info.flags & (FL_MINUS | FL_ZERO)))
+	else if (info.width > size &&
+				(!(info.flags & (FL_MINUS | FL_ZERO)) ||
+				ft_strfind(*a_flstr, 'n') >= 0)) //returns true only for nan and inf
 		ft_strpad_left_inplace(a_flstr, ' ', info.width - size);
 	else if (info.width > size)
 		ft_strpad_insert_inplace(a_flstr, '0', start, info.width - size);

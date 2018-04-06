@@ -95,12 +95,12 @@ static t_vlq	do_vlqdiv(t_vlq *tmp_n, t_vlq *tmp_d, t_u32 ops)
 	res_q = ft_vlqnew((ops / 63) + 1);
 	cbi = (63 - (ops % 63)); // % 63;
 	i = 0;
-	while (i < ops)
+	while (i < ops && **tmp_n != 0)
 	{ 
 /*char *str = ft_vlqhex(*tmp_n), *str2 = ft_vlqhex(*tmp_d), *str3 = ft_vlqhex(res_q);
 ft_printf("{bold}{green}START{eoc}\n\t\tcbi = %d, i = %d\n\t\t{blue}tmp_n = %s\n\t\t{cyan}tmp_d = %s\n\t\t{yellow}res_q = %s{eoc}\n\n", cbi, i, str, str2, str3);
-ft_strdel(&str); ft_strdel(&str2); ft_strdel(&str3);*/
-		extra = 1;
+ft_strdel(&str); ft_strdel(&str2); ft_strdel(&str3);
+*/		extra = 1;
 		if (ft_vlqcmp(*tmp_n, *tmp_d) >= 0)
 		{
 			ft_vlq_sub_acc(tmp_n, *tmp_d);
@@ -112,14 +112,15 @@ ft_strdel(&str); ft_strdel(&str2); ft_strdel(&str3);*/
 			extra = extra == 0 ? 1 : extra;
 //ft_printf("\t\t\textra : %d; cbi : %d; i : %d\n", extra, cbi, i);
 		}
-/*char *str = ft_vlqhex(*tmp_d);
+//char *
+/*str = ft_vlqhex(*tmp_d);
 ft_printf("BEFORE : %s\n", str);
-ft_strdel(&str);*/
-		ft_vlq_bsr_acc(tmp_d, extra);
+ft_strdel(&str);
+*/		ft_vlq_bsr_acc(tmp_d, extra);
 /*str = ft_vlqhex(*tmp_d);
 ft_printf("AFTER  : %s\n{bold}{red}END{eoc}\n", str);
-ft_strdel(&str);*/
-		cbi += extra;
+ft_strdel(&str);
+*/		cbi += extra;
 		i += extra;
 	}
 	return (res_q);
@@ -174,8 +175,8 @@ void		ft_vlq_divmod(t_vlq const num, t_vlq const den,
 
 /*char *str = ft_vlqhex(num), *str2 = ft_vlqhex(den);
 ft_printf("\t{blue}num = %s\n\t{cyan}den = %s{eoc}\n\tend_0s = %d; diff = %d; ops = %d\n", str, str2, end_0s, diff, quo_sigbits);
-ft_strdel(&str); ft_strdel(&str2);*/
-
+ft_strdel(&str); ft_strdel(&str2);
+*/
 	*div = do_vlqdiv(&tmp_n, &tmp_d, quo_sigbits);
 ft_vlqtrim(div);
 //ft_printf("%p\n%p\n", mod, *mod);

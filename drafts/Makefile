@@ -78,7 +78,7 @@ test:fclean $(NAME)
 	@make clean
 	@printf "Done !\n"
 
-bonus:fclean $(NAME)
+bonus:$(NAME)
 	@printf "Rebuilding test.out for rule 'bonus'...\n"
 	@$(CC) $(CFLAGS) $(DBFLAGS) -c $(TSTDIR)$(BONUS) -o $(TSTDIR)$(BONUS:.c=.o)
 	@$(CC) $(OBJS) $(TSTDIR)$(BONUS:.c=.o) -lftprintf -L./ -lasan -o $(TEST)
@@ -86,7 +86,7 @@ bonus:fclean $(NAME)
 	@make clean
 	@printf "Done !\n"
 
-astest:fclean $(NAME)
+astest:$(NAME)
 	@printf "Rebuilding test.out for rule 'astest'...\n"
 	@$(CC) $(CFLAGS) $(DBFLAGS) -c $(TSTDIR)$(ASMAIN) -o $(TSTDIR)$(ASMAIN:.c=.o)
 	@$(CC) $(OBJS) $(TSTDIR)$(ASMAIN:.c=.o) -lftprintf -L./ -lasan -o $(TEST)

@@ -2,6 +2,8 @@
 #include <assert.h>
 #include <stdio.h>
 
+#define BIGNB 0
+
 void	ft_vlqdelmul(t_u32 nb_to_delete, ...)
 {
 	va_list	args;
@@ -72,7 +74,7 @@ int		main(void)
 
 
 //VLQ tests
-ft_printf("\n{blue_bg}VLQ test\n\n{eoc}");
+ft_printf("\n{blue_bg}VLQ tests{eoc}\n\n");
 
 //vlqnew, vlqdel
 printf("Test %d: vlqnew, vlqdel\n\n", ++i);
@@ -370,19 +372,6 @@ printf("Test %d: atovlq decimal 1\n", ++i);
 	ft_strdelmul(2, &stre, &strr);
 
 printf("Test %d: atovlq decimal 2\n", ++i);
-/*	vlqr = ft_atovlq("11111111111111111111111111111111111111111111111111111111", DECIM);
-	vlqe = ft_atovlq("1110100000000010110001010111011000111100010100000111100111111\
-11110001110001011000101011100110110001011110010110010101101100101011000111000111000\
-111000111000111000111000111000111000111", BINAR);
-*/
-/*
-11111111111111111111111111111111111111111111111111111111111111111111111111111
-1890aa80be385102083701a2907066f8bd9f2a28b717671c71c71c71c71c71c7
-
-111111111111111111111111111111111111111111111111111111111111111111111111111111111111111 to hex
-3931f10be63df26e5e5c397c87b6ad33a1dc3cdf5b8e9d207ef1c71c71c71c71c71c71c7
-
-*/
 	vlqr = ft_atovlq("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111", DECIM);
 	vlqe = ft_atovlq("3931f10be63df26e5e5c397c87b6ad33a1dc3cdf5b8e9d207ef1c71c71c71c71c71c71c7", HXLOW);
 		stre = vlq_tostring(vlqe);
@@ -601,6 +590,22 @@ printf("Test %d: division 6\n", ++i);
 	ft_vlqdelmul(6, &vlq1, &vlq2, &vlqe, &vlqr, &vlqf, &vlqm);
 	ft_strdelmul(6, &str1, &str2, &stre, &strr, &strf, &strm);
 
+//vlqtoa_base
+printf("Test %d: vlqtoa_base decimal 1\n", ++i);
+	vlqr = ft_atovlq("59638eade54810000000000000000000000000000000000000000000000000\
+000000000000000000000000000000000000000000000000000000000000000000000000000000000000\
+00000000000000000000000000000000000000000000000000000000000000", HXLOW);
+	stre = "999999999999999921096833083214702657554042769375222237286\
+651769671841261663933600278047414170535414411036408111814232401040478571454131\
+528428125775275729162364250341707296785977412047465036916114055333519200963067\
+4782085554695972153397552576515276800";
+	strr = ft_vlqtoa_base(vlqr, DECIM);
+		ft_printf("\t{yellow}{bold}stre = %s\n\tstrr = %s{eoc}\n\n", stre, strr);
+		assert(ft_strcmp(stre, strr) == 0);
+	ft_vlqdelmul(1, &vlqr);
+	ft_strdelmul(1, &strr);
+
+# if BIGNB
 //BIGNB tests
 	t_bignb	bignb1;
 	t_bignb	bignb2;
@@ -753,5 +758,6 @@ printf("Test %d: bignb_str_sub\n", ++i);
 
 	ft_bignbdelmul(4, &bignb1, &bignb2, &bignbe, &bignbr);
 	ft_strdelmul(4, &str1, &str2, &stre, &strr);
+#endif
 	return (0);
 }

@@ -86,9 +86,9 @@ static char	*ft_lftoa_fp(char **bin_strs) //, int exp_b2)
 
 ft_printf("lftoa_fp\n");
 	vlq = ft_atovlq(bin_strs[0], BINAR);
-//tmp = ft_vlqhex(vlq);
-//ft_printf("\tatovlq\n\t\tbin_strs[0] = %s; vlq = %s\n", bin_strs[0], tmp);
-//free(tmp);
+tmp = ft_vlq_abstractval_as_hex(vlq);
+ft_printf("\t{yellow}atovlq\n\t\tbin_strs[0] = %s;\n\t vlq = %s{eoc}\n", bin_strs[0], tmp);
+free(tmp);
 	tmp = ft_vlqtoa_base(vlq, DECIM);
 //ft_printf("\tvlqtoa_base\n\t\ttmp = %s\n", tmp);
 	result = ft_strpad_right(tmp, '.', 1);
@@ -148,7 +148,7 @@ static char	*ft_lftoa_exp(char **bin_strs, int exp_b2, char style, double sciman
 	d = LN2_DIV_LN10 * ABS(exp_b2) + ft_logn(ABS(scimant_b2), 10);
 	exp_b10 = d == ft_floor(d) && d != 0. ? d - 1 : d;
 	exp_b10 = (ft_floor(exp_b10) + (exp_b2 < 0)) * (-1 + 2 * (exp_b2 >= 0));
-ft_printf("{cyan}exp_b2 = %d; exp_b10 = %d; scimant_b2 = %lf, ft_logn(scimant_b2, 10) = %.20lf, pure exp_b10 = %.20lf{eoc}\n", exp_b2, exp_b10, scimant_b2, ft_logn(scimant_b2, 10), LN2_DIV_LN10 * exp_b2 + ft_logn(scimant_b2, 10));
+//ft_printf("{cyan}exp_b2 = %d; exp_b10 = %d; scimant_b2 = %lf, ft_logn(scimant_b2, 10) = %.20lf, pure exp_b10 = %.20lf{eoc}\n", exp_b2, exp_b10, scimant_b2, ft_logn(scimant_b2, 10), LN2_DIV_LN10 * exp_b2 + ft_logn(scimant_b2, 10));
 	result = ft_itoa(exp_b10);
 	if (ft_strlen(result) < 3 && result[0] == '-')
 		ft_strinsert(&result, "0", 1);
