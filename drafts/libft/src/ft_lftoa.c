@@ -144,7 +144,6 @@ static char	*ft_lftoa_exp(char **bin_strs, int exp_b2, char style, double sciman
 	char	*tmp;
 	int		exp_b10;
 
-	tmp = ft_lftoa_fp(bin_strs); //, exp_b2); //change with comment when functional
 	exp_b10 = ft_floor(LN2_DIV_LN10 * ABS(exp_b2) + ft_logn(ABS(scimant_b2), 10));
 	exp_b10 = (exp_b10 + (exp_b2 < 0)) * (-1 + 2 * (exp_b2 >= 0));
 ft_printf("{cyan}exp_b2 = %d; exp_b10 = %d; scimant_b2 = %lf, ft_logn(scimant_b2, 10) = %.20lf, pure exp_b10 = %.20lf{eoc}\n", exp_b2, exp_b10, scimant_b2, ft_logn(scimant_b2, 10), LN2_DIV_LN10 * exp_b2 + ft_logn(scimant_b2, 10));
@@ -154,13 +153,15 @@ ft_printf("{cyan}exp_b2 = %d; exp_b10 = %d; scimant_b2 = %lf, ft_logn(scimant_b2
 	else if (result[0] != '-')
 		ft_strprepend(ft_strlen(result) == 1 ? "+0" : "+", &result);
 	ft_strpad_left_inplace(&result, style, 1);
-	
+
+	tmp = ft_lftoa_fp(bin_strs); //, exp_b2); //change with comment when functional
 	ft_strreplace_inplace(&tmp, ".", "");
 	ft_strctrim_right_inplace(&tmp, '0');
 	ft_strctrim_left_inplace(&tmp, '0');
 	if (ft_strequ(tmp, ""))
 		ft_strappend(&tmp, "0");
 	ft_strinsert(&tmp, ft_strequ(tmp, "0") ? ".0" : ".", 1);
+
 	ft_strprepend(tmp, &result);
 	ft_strdel(&tmp);
 	if (result[0] == 'e')

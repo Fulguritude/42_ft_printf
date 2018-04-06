@@ -63,39 +63,67 @@ ft_printf("after rounding : %s, tmp = %s\n", result, tmp);
 		ft_strreplace_inplace(a_flstr, ".", "");
 }
 #endif
-
-static char	*round_up(char const *tmp, int dig_ind, char exp_c, int *status)
+/*
+**    0	   6	index for res
+** 0       9    index for tmp
+** 99999.999	ft_strlen(tmp) 		= 9
+**    99.999	reslen 				= 6
+**   9 	    	'start' digit index	= 2 = 9 - 6 - 1, then
+**    09.999	'++i, start + i'
+*/
+static char	*round_up(char const *tmp, int reslen, char exp_c, int *status)
 {
 	char	*result;
 	char	maxdigit;
-	t_u8	no_rounding;
 	char	*base;
+	int		start;
+	int		i;
 
 	base = exp_c == 'p' ? HXLOW : DECIM;
 	maxdigit = base[ft_strlen(base) - 1];
-	no_rounding = (maxdigit != '9') ? (ft_in_base(tmp[dig_ind], OCTAL) >= 0) :
-								('0' <= tmp[dig_ind] && tmp[dig_ind] <= '4'); //TODO verify printf rounding rules for 5 in DECIM and 8 HXUPP; or maybe it's just that they find digits 1 by 1 for exp by handing precision to lftoa ?
-ft_printf("\t\t{magenta}unrounded %s\n", result);
-ft_printf("\t\t{magenta}      tmp %s ; dig_ind %d{eoc}\n", tmp, dig_ind);
-	result = ft_strnew(dig_ind - 1);
-	if (!no_rounding)
+	start = ft_strlen(tmp) - reslen - 1;
+ft_printf("{cyan}{bold}unrounded: %s{eoc}\n", tmp + start);
+	if ((maxdigit == '9') ? (ft_strfind("56789", tmp[start]) >= 0) :
+							(ft_strfind("89abcdef", tmp[start]) >= 0))
 	{
-		while (tmp[--dig_ind] == maxdigit && dig_ind >= 0) // && (tmp[0] == maxdigit !tmp[dig_ind] != '9')
+		result = ft_strnew(reslen + 1);
+		result[0] = base[(ft_in_base(tmp[++start], base) + 1) % ft_strlen(base)];
+		i = 0;
+		while (result[i] == '0')
 		{
-ft_printf("dig_ind = %d; tmp[dig_ind] = %c\n", dig_ind, tmp[dig_ind]);
-			if (dig_ind == 0)
-				ft_strprepend("0", &result);
-			result[dig_ind + (dig_ind == 0)] = '0'; //  - ((*a_res)[dig_int] == '.')
+			++i;
+			if (tmp[start + i] == '.')
+			{
+				result[i] = '.';
+				++i;
+			}
+			result[i] = base[(ft_in_base(tmp[start + i], base) + 1) % ft_strlen(base)];
+			if (i + 1 == reslen)
+				*status = 1;
+			if (i == reslen && result[i] == '0')
+				result[++i] = '1';
 		}
-		result[dig_ind] = base[ft_in_base(result[dig_ind], base) + 1];
+		while (++i <= reslen)
+			result[i] = tmp[start + i];
+		ft_strrev_inplace(&result);
 	}
-	if (!(*status = dig_ind == 0))
-		while (--dig_ind >= 0)
-			result[dig_ind] = tmp[dig_ind];
-ft_printf("\t\t{magenta}  rounded %s\n", result);
+	else
+	{
+		result = ft_strrev(tmp);
+	}
+ft_printf("{red}{bold}  rounded: %s{eoc}\n", result);
+	result[reslen] = '\0';
+ft_printf("{red}{bold}  rounded: %s{eoc}\n", result);
 	return (result);
 }
 
+/*
+** - tmp : absolute representation of the string with convention to always have
+**			a single zero before
+** - dotpos + cur_frac_digits == ft_strlen(tmp)
+** - dotpos + info.prec + 1 = length of the result string
+**
+*/
 static void	apply_float_prec(t_format info, char **a_flstr, char exp_c)
 {
 	char	*result;
@@ -104,13 +132,22 @@ static void	apply_float_prec(t_format info, char **a_flstr, char exp_c)
 	int		status;
 
 	tmp = ft_strcdup(*a_flstr, exp_c);
-	dotpos = ft_in_base('.', tmp);
-	ft_strreplace_inplace(&tmp, ".", "");
-	status = 0;
-	result = round_up(tmp, dotpos + info.prec + 1, exp_c, &status);
-	result[dotpos + info.prec + 1] = '\0';
+	dotpos = ft_strfind(tmp, '.');	
+	if ((status = dotpos + info.prec + 1 - ft_strlen(tmp)) > 0)
+		result = ft_strpad_right(tmp, '0', status);
+	else if (status < 0)
+	{
+		status = 0;
+		ft_strrev_inplace(&tmp); //tmp is reversed for ease of iteration
+		result = round_up(tmp, dotpos + info.prec + 1, exp_c, &status); //status should return 1 if an extra digit has been added
+		if (status && exp_c && result + 1 && result + 2)
+			ft_swap(result + 1, result + 2, 1);
+		else if (status && info.prec == 0)
+			result[dotpos] = '\0';
+	}
+	else
+		result = ft_strdup(tmp);
 	ft_strdel(&tmp);
-	ft_strinsert(&result, ".", dotpos + (status && !exp_c));
 	if (exp_c)
 		ft_strappend(&result, ft_strchr(*a_flstr, exp_c));
 	ft_strdel(a_flstr);

@@ -23,6 +23,8 @@ double		ft_exp(double x)
 	i = 1.;
 	result = 1.;
 	acc_x = 1.;
+	acc_i = 1.;
+	prev_res = 0.;
 	while (result != prev_res)
 	{
 		prev_res = result;
