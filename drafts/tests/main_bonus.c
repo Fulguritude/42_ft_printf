@@ -377,8 +377,8 @@ int		main()
 
 
 # if NORMAL_CASES
-	float 	f = 0.55555; // 0xf.edcba012345p-64;		//other vals: 123.456789;
-	double 	d = 16.125; //-0x1.123456789abcdp+1010;	//other vals: 1234567.8987654321; 0.000002432543654332000; 1e+23; 1e+20
+	float 	f = 0.55555; // 0xf.edcba012345p-64;		//other vals: 123.456789; //1e+250;//9.9999;
+	double 	d = 16.125;//1e+250;//1e+23;//16.125; //-0x1.123456789abcdp+1010;	//other vals: 1234567.8987654321; 0.000002432543654332000; 1e+23; 1e+20
 
 #  if PERCENT_fF
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");

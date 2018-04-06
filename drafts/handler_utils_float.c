@@ -98,7 +98,7 @@ ft_printf("{cyan}{bold}unrounded: %s{eoc}\n", tmp + start);
 				++i;
 			}
 			result[i] = base[(ft_in_base(tmp[start + i], base) + 1) % ft_strlen(base)];
-			if (i + 1 == reslen)
+			if (i + 1 == reslen && result[i] == '0')
 				*status = 1;
 			if (i == reslen && result[i] == '0')
 				result[++i] = '1';
@@ -112,7 +112,7 @@ ft_printf("{cyan}{bold}unrounded: %s{eoc}\n", tmp + start);
 		result = ft_strrev(tmp);
 	}
 ft_printf("{red}{bold}  rounded: %s{eoc}\n", result);
-	result[reslen] = '\0';
+	result[reslen + (*status && !exp_c)] = '\0';
 ft_printf("{red}{bold}  rounded: %s{eoc}\n", result);
 	return (result);
 }
@@ -134,22 +134,33 @@ static void	apply_float_prec(t_format info, char **a_flstr, char exp_c)
 	tmp = ft_strcdup(*a_flstr, exp_c);
 	dotpos = ft_strfind(tmp, '.');	
 	if ((status = dotpos + info.prec + 1 - ft_strlen(tmp)) > 0)
+	{
 		result = ft_strpad_right(tmp, '0', status);
+		status = 0;
+	}
 	else if (status < 0)
 	{
 		status = 0;
 		ft_strrev_inplace(&tmp); //tmp is reversed for ease of iteration
 		result = round_up(tmp, dotpos + info.prec + 1, exp_c, &status); //status should return 1 if an extra digit has been added
+		ft_strdel(&tmp);
 		if (status && exp_c && result + 1 && result + 2)
+		{
 			ft_swap(result + 1, result + 2, 1);
-		else if (status && info.prec == 0)
-			result[dotpos] = '\0';
+			tmp = ft_itoa(ft_atoi(ft_strchr(*a_flstr, exp_c) + 2) + 1); //eventually replace by one-line asprintf ?
+			ft_strinsert(&tmp, ft_strlen(tmp) - (tmp[0] == '-') < 2 ? "0" : "", tmp[0] == '-'); 
+			ft_strprepend(ft_strfind((*a_flstr) + 1, '-') >= 0 ? "e-" : "e+", &tmp);
+		}
+		else if (info.prec == 0)
+			result[dotpos + status] = '\0';
 	}
 	else
 		result = ft_strdup(tmp);
-	ft_strdel(&tmp);
-	if (exp_c)
+	if (exp_c && status)
+		ft_strappend(&result, tmp);
+	else if (exp_c)
 		ft_strappend(&result, ft_strchr(*a_flstr, exp_c));
+	ft_strdel(&tmp);
 	ft_strdel(a_flstr);
 	*a_flstr = result;
 	if (info.prec == 0)

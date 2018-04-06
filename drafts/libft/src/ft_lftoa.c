@@ -142,10 +142,12 @@ static char	*ft_lftoa_exp(char **bin_strs, int exp_b2, char style, double sciman
 {
 	char	*result;
 	char	*tmp;
+	double	d;
 	int		exp_b10;
 
-	exp_b10 = ft_floor(LN2_DIV_LN10 * ABS(exp_b2) + ft_logn(ABS(scimant_b2), 10));
-	exp_b10 = (exp_b10 + (exp_b2 < 0)) * (-1 + 2 * (exp_b2 >= 0));
+	d = LN2_DIV_LN10 * ABS(exp_b2) + ft_logn(ABS(scimant_b2), 10);
+	exp_b10 = d == ft_floor(d) && d != 0. ? d - 1 : d;
+	exp_b10 = (ft_floor(exp_b10) + (exp_b2 < 0)) * (-1 + 2 * (exp_b2 >= 0));
 ft_printf("{cyan}exp_b2 = %d; exp_b10 = %d; scimant_b2 = %lf, ft_logn(scimant_b2, 10) = %.20lf, pure exp_b10 = %.20lf{eoc}\n", exp_b2, exp_b10, scimant_b2, ft_logn(scimant_b2, 10), LN2_DIV_LN10 * exp_b2 + ft_logn(scimant_b2, 10));
 	result = ft_itoa(exp_b10);
 	if (ft_strlen(result) < 3 && result[0] == '-')
