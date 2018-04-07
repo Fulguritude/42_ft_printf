@@ -84,11 +84,11 @@ static char	*ft_lftoa_fp(char **bin_strs) //, int exp_b2)
 	t_vlq	vlq;
 	t_vlq	pow10;
 
-ft_printf("lftoa_fp\n");
+//ft_printf("lftoa_fp\n");
 	vlq = ft_atovlq(bin_strs[0], BINAR);
-tmp = ft_vlq_abstractval_as_hex(vlq);
-ft_printf("\t{yellow}atovlq\n\t\tbin_strs[0] = %s;\n\t vlq = %s{eoc}\n", bin_strs[0], tmp);
-free(tmp);
+//tmp = ft_vlq_abstractval_as_hex(vlq);
+//ft_printf("\t{yellow}atovlq\n\t\tbin_strs[0] = %s;\n\t vlq = %s{eoc}\n", bin_strs[0], tmp);
+//free(tmp);
 	tmp = ft_vlqtoa_base(vlq, DECIM);
 //ft_printf("\tvlqtoa_base\n\t\ttmp = %s\n", tmp);
 	result = ft_strpad_right(tmp, '.', 1);
@@ -102,9 +102,9 @@ free(tmp);
 		return (result);
 	}
 	vlq = ft_atovlq(bin_strs[1], BINAR);
-tmp = ft_vlqhex(vlq);
-ft_printf("\tatovlq 2\n\t\tbin_strs[1] = %s; vlq = %s\n", bin_strs[1], tmp);
-free(tmp);
+//tmp = ft_vlqhex(vlq);
+//ft_printf("\tatovlq 2\n\t\tbin_strs[1] = %s; vlq = %s\n", bin_strs[1], tmp);
+//free(tmp);
 	frac_digits = ft_strlen(bin_strs[1]);
 //ft_printf("\t\texp_b2 = %d; frac_digits = %d\n", exp_b2, frac_digits);
 	pow10 = ft_vlq_getpow10(frac_digits);
@@ -184,9 +184,9 @@ ft_printf("lftoa\n");
 		return (ft_strdup(MSB((t_u64)lf) ? "-nan" : "nan"));
 	extract = *(t_u64*)(&lf);
 	exp_b2 = ((extract << 1) >> 53) - 1023;
+	mantissa = ((extract << 12) >> 12);
 	if (exp_b2 == 1024)
 		return (ft_strdup(MSB(extract) ? "-inf" : "inf"));
-	mantissa = ((extract << 12) >> 12);
 	if (exp_b2 != -1023)
 		mantissa |= 0x10000000000000;
 	else

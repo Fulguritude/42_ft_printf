@@ -74,37 +74,38 @@ ft_printf("after rounding : %s, tmp = %s\n", result, tmp);
 static char	*round_up(char const *tmp, int reslen, char exp_c, int *status)
 {
 	char	*result;
-	char	maxdigit;
 	char	*base;
 	int		start;
 	int		i;
+	int		neg;
 
+	neg = ft_strfind(tmp, '-') >= 0;
 	base = exp_c == 'p' ? HXLOW : DECIM;
-	maxdigit = base[ft_strlen(base) - 1];
 	start = ft_strlen(tmp) - reslen - 1;
-ft_printf("{cyan}{bold}unrounded: %s{eoc}\n", tmp + start);
-	if ((maxdigit == '9') ? (ft_strfind("56789", tmp[start]) >= 0) :
+ft_printf("{cyan}{bold}unrounded: %s{eoc}, reslen %d, start %d\n", tmp + start, reslen, start);
+	if ((base[ft_strlen(base) - 1] == '9') ? (ft_strfind("56789", tmp[start]) >= 0) :
 							(ft_strfind("89abcdef", tmp[start]) >= 0))
 	{
-		result = ft_strnew(reslen + 1);
-		result[0] = base[(ft_in_base(tmp[++start], base) + 1) % ft_strlen(base)];
+		result = ft_strnew(reslen + 1 + neg);
+		result[0] = tmp[++start] == '.' ? '.' : base[(ft_in_base(tmp[start], base) + 1) % ft_strlen(base)];
 		i = 0;
-		while (result[i] == '0')
+		while (result[i] == '0' || result[i] == '.')
 		{
 			++i;
 			if (tmp[start + i] == '.')
 			{
 				result[i] = '.';
-				++i;
+				continue ;
 			}
 			result[i] = base[(ft_in_base(tmp[start + i], base) + 1) % ft_strlen(base)];
-			if (i + 1 == reslen && result[i] == '0')
+			if (i + 1 + neg == reslen && result[i] == '0')
 				*status = 1;
-			if (i == reslen && result[i] == '0')
+			if (i + 1 + neg == reslen && result[i] == '0')
 				result[++i] = '1';
 		}
+ft_printf("i = %d\n", i);
 		while (++i <= reslen)
-			result[i] = tmp[start + i];
+			result[i] = tmp[start + i - (result[0] == '.' && *status)];
 		ft_strrev_inplace(&result);
 	}
 	else
@@ -144,38 +145,45 @@ static void	apply_float_prec(t_format info, char **a_flstr, char exp_c)
 		ft_strrev_inplace(&tmp); //tmp is reversed for ease of iteration
 		result = round_up(tmp, dotpos + info.prec + 1, exp_c, &status); //status should return 1 if an extra digit has been added
 		ft_strdel(&tmp);
-		if (status && exp_c && result + 1 && result + 2)
+		int neg = result[0] == '-';
+		if (status && exp_c && result + neg + 1 && result + neg + 2)
 		{
-			ft_swap(result + 1, result + 2, 1);
-			tmp = ft_itoa(ft_atoi(ft_strchr(*a_flstr, exp_c) + 2) + 1); //eventually replace by one-line asprintf ?
+			ft_swap(result + neg + 1, result + neg + 2, 1);
+			tmp = ft_itoa(ft_atoi(ft_strchr(*a_flstr, exp_c) + 1) + 1); //eventually replace by one-line asprintf ?
 			ft_strinsert(&tmp, ft_strlen(tmp) - (tmp[0] == '-') < 2 ? "0" : "", tmp[0] == '-'); 
-			ft_strprepend(ft_strfind((*a_flstr) + 1, '-') >= 0 ? "e-" : "e+", &tmp);
+			ft_strprepend(tmp[0] == '-' ? "e" : "e+", &tmp);
 		}
-		else if (info.prec == 0)
-			result[dotpos + status] = '\0';
+//		else if (info.prec == 0)
+//			result[dotpos + status] = '\0';
 	}
 	else
 		result = ft_strdup(tmp);
+	if (ft_strfind("gG", info.type_char) >= 0 && (!(info.flags & FL_HASH) || info.prec == 1))
+		ft_strctrim_right_inplace(&result, '0');
 	if (exp_c && status)
 		ft_strappend(&result, tmp);
 	else if (exp_c)
 		ft_strappend(&result, ft_strchr(*a_flstr, exp_c));
 	ft_strdel(&tmp);
+
+ft_printf("{cyan}{bold}float prec res: %s{eoc}, exp_c %c\n", result, exp_c);
+	if ((info.prec == 0 || result[ft_strfind(result, '.') + 1] == exp_c) && !(info.flags & FL_HASH))
+		ft_strreplace_inplace(&result, ".", "");
 	ft_strdel(a_flstr);
 	*a_flstr = result;
-	if (info.prec == 0)
-		ft_strreplace_inplace(a_flstr, ".", "");
+ft_printf("{cyan}float prec res: %s{eoc}, exp_c %d\n", result, exp_c);
 }
 
 static void apply_float_width(t_format info, char **a_flstr)
 {
-	t_u32	start;
+	int 	start;
 	int		size;
 
 	if ((info.flags & (FL_SPACE | FL_PLUS)) && (*a_flstr)[0] != '-')
 		ft_strprepend(info.flags & FL_SPACE ? " " : "+", a_flstr);
 	size = ft_strlen(*a_flstr);
-	start = ft_in_base('x', (*a_flstr)) + 1 + (**a_flstr == '-');
+	start = ft_in_base('x', (*a_flstr));
+	start += (start == -1) ? 1 + (**a_flstr == '-') : 1;
 	if (info.width > size && (info.flags & FL_MINUS))
 		ft_strpad_right_inplace(a_flstr, ' ', info.width - size);
 	else if (info.width > size &&
@@ -185,19 +193,6 @@ static void apply_float_width(t_format info, char **a_flstr)
 	else if (info.width > size)
 		ft_strpad_insert_inplace(a_flstr, '0', start, info.width - size);
 }
-#if 0
-static char *handle_f_type(t_format info, double lf)
-{
-	char	*result;
-
-	result = ft_lftoa(lf, info.type_char);
-	if (!ft_strequ(result, "inf") && !ft_strequ(result, "-inf") &&
-		!ft_strequ(result, "nan") && !ft_strequ(result, "-nan"))
-		apply_float_prec(info, &result, '\0');
-	apply_float_width(info, &result);
-	return (result);
-}
-#endif
 
 static char	*handle_aef_type(t_format info, double lf)
 {
@@ -211,8 +206,11 @@ static char	*handle_aef_type(t_format info, double lf)
 		!ft_strequ(result, "nan") && !ft_strequ(result, "-nan") &&
 		info.prec != -1)
 		apply_float_prec(info, &result, exp_c);
+	ft_strreplace_inplace(&result, ".0p", info.flags & FL_HASH ? ".p" : "p");
+//ft_printf("{blue}{bold}float prec res: %s{eoc}, '.' %d\n", result, ft_in_base('.', result));
+	if ((info.flags & FL_HASH) && ft_in_base('.', result) == -1 && ft_in_base('n', result) == -1)
+		ft_strinsert(&result, ".", ft_in_base(exp_c, result));
 	apply_float_width(info, &result);
-	ft_strreplace_inplace(&result, ".0p", "p");
 	return (result);
 }
 
@@ -220,6 +218,7 @@ static char	*handle_g_type(t_format info, double lf)
 {
 	char	*result;
 	double	mant_b2;
+	double	d;
 	int		exp_b2;
 	int		exp_b10;
 	int		boolexp;
@@ -228,19 +227,30 @@ static char	*handle_g_type(t_format info, double lf)
 	mant_b2 = ((((*(t_u64*)(&lf)) << 12) >> 12) - 1023) | 
 			((exp_b2 != -1023) * 0x10000000000000);
 	mant_b2 = 1.0 * mant_b2 / ft_ipowi(2.0, ft_digits_base(mant_b2, 2) - 1);
-	exp_b10 = ft_floor(LN2_DIV_LN10 * ABS(exp_b2) + ft_logn(mant_b2, 10));
-	exp_b10 = (exp_b10 + (exp_b2 < 0)) * (-1 + 2 * (exp_b2 >= 0));
-	boolexp = (exp_b10 < -4 || (info.prec != -1 && info.prec <= exp_b10)) && lf != 0;
+	d = LN2_DIV_LN10 * ABS(exp_b2) + ft_logn(ABS(mant_b2), 10);
+ft_printf("{yellow}true exp_b10 = %f{eoc}\n", d);
+	exp_b10 = d - (d == ft_floor(d) && d != 0. ? 1 : 0) + 0.00001;
+ft_printf("{yellow}exp_b10 = %d{eoc}\n", exp_b10);
+	exp_b10 = (ft_floor(exp_b10) + (exp_b2 < 0)) * (-1 + 2 * (exp_b2 >= 0));
+//	exp_b10 = ft_floor(LN2_DIV_LN10 * ABS(exp_b2) + ft_logn(mant_b2, 10));
+//	exp_b10 = (exp_b10 + (exp_b2 < 0)) * (-1 + 2 * (exp_b2 >= 0));
+
+ft_printf("{yellow}exp_b10 = %d{eoc}\n", exp_b10);
+	boolexp = (exp_b10 < -4 || info.prec <= exp_b10) && lf != 0;
 	result = ft_lftoa(lf, boolexp ? 'e' : '\0');
-	info.prec = info.prec - 1 - ((!boolexp) * exp_b10);
+	info.prec = info.prec - 1 - ((!boolexp) * (exp_b10 - 1 + (exp_b10 < 0) + (exp_b10 > 0))); //TODO FIX THIS
 	if (!ft_strequ(result, "inf") && !ft_strequ(result, "-inf") &&
 		!ft_strequ(result, "nan") && !ft_strequ(result, "-nan"))
 		apply_float_prec(info, &result, boolexp ? 'e' : '\0');
-	if (!(info.flags & FL_HASH))
-		ft_strctrim_right_inplace(&result, '0');
+//	if (!(info.flags & FL_HASH) && !ft_strequ(result, "0"))
+//		ft_strctrim_right_inplace(&result, '0');
+
+//ft_printf("{magenta}{bold}float prec res: %s{eoc}, '.' %d\n", result, ft_in_base('.', result));
+	if ((info.flags & FL_HASH) && ft_in_base('.', result) == -1 && ft_in_base('n', result) == -1)
+		ft_strinsert(&result, ".", ft_in_base(boolexp ? 'e' : '\0', result));
 	apply_float_width(info, &result);
-	if (result[ft_strlen(result) - 1] == '.')
-		result[ft_strlen(result) - 1] = '\0';
+//	if (result[ft_strlen(result) - 1] == '.')
+//		result[ft_strlen(result) - 1] = '\0';
 	return (result);
 }
 
@@ -248,32 +258,32 @@ t_str		*handle_float_type(t_format info, va_list args)
 {
 	double		lf;
 	char		*tmp;
-	int			exp;
 	t_str		*result;
 	t_u64		extract;
 
 	lf = 0;
 //if (info.len_flag == fl_l || info.len_flad == fl_ll)
 	lf = va_arg(args, double);
-	extract = 0;
-	ft_memcpy(&extract, &lf, 8);;
+	extract = *(t_u64*)(&lf);
 printf("\tlf u64: %#lx\n", extract);
 printf("\tlf hex: %la\n", lf);
 printf("\tlf exp: %le\n", lf);
 printf("\tlf dot: %.5lf\n", lf);
-	exp = (int)((((extract) << 1) >> 53) - 1023);
-printf("\texp: %d\n", exp);
+/*	
+	int		exp;
 	t_u8	minus;
 	t_u64	mantissa;
 
+	exp = (int)((((extract) << 1) >> 53) - 1023);
+printf("\texp: %d\n", exp);
 	minus = extract >> 63;
 	exp = ((extract << 1) >> 53) - 1023;
 	mantissa = ((extract << 12) >> 12) | 0x10000000000000;
 printf("\tminus = %hhd\n\texp2 = %d\n\tmantissa = %lx\n", minus, exp, mantissa);
-
+*/
 	char arr[8];
 	ft_memcpy(arr, &lf, 8);
-printf("\n\tarr = %#lx\n", *((unsigned long *)arr));
+//printf("\n\tarr = %#lx\n", *((unsigned long *)arr));
 	char * str = ft_memhex(arr, 8);
 printf("\tarr = %s ; style = %c\n", str, info.type_char);
 ft_strdel(&str);

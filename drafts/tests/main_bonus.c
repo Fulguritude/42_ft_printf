@@ -377,8 +377,8 @@ int		main()
 
 
 # if NORMAL_CASES
-	float 	f = 99.9999;//9.9999; //0.55555; // 0xf.edcba012345p-64;		//other vals: 123.456789; //1e+250;//
-	double 	d = -0x1.123456789abcdp+1010;//1e+250;//1e+23;//16.125; //-0x1.123456789abcdp+1010;	//other vals: 1234567.8987654321; 0.000002432543654332000; 1e+23; 1e+20
+	float 	f = 99.9999;//-0.9999; //0.55555; // 0xf.edcba012345p-64;		//other vals: 123.456789; //1e+250;//2.;
+	double 	d = 1e+23;//-0x1.123456789abcdp+1010;//1e+250;//16.125; //-0x1.123456789abcdp+1010;	//other vals: 1234567.8987654321; 0.000002432543654332000; 1e+23; 1e+20; -0x0.00034543210p-1023;
 
 #  if PERCENT_fF
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
@@ -404,6 +404,10 @@ int		main()
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %#f\n", "%#f", f);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %#f\n", "%#f", f);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %#.0f\n", "%#.0f", f);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %#.0f\n", "%#.0f", f);
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %-.3f\n", "%-.3f", f);
@@ -470,6 +474,10 @@ int		main()
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %#e\n", "%#e", f);
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %#.0e\n", "%#.0e", f);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %#.0e\n", "%#.0e", f);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %-.3e\n", "%-.3e", f);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %-.3e\n", "%-.3e", f);
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
@@ -534,6 +542,10 @@ int		main()
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %#a\n", "%#a", f);
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %#.0a\n", "%#.0a", f);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %#.0a\n", "%#.0a", f);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %-.3a\n", "%-.3a", f);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %-.3a\n", "%-.3a", f);
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
@@ -596,6 +608,10 @@ int		main()
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %#g\n", "%#g", f);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %#g\n", "%#g", f);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %#.0g\n", "%#.0g", f);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %#.0g\n", "%#.0g", f);
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %-.3g\n", "%-.3g", f);
@@ -665,6 +681,10 @@ int		main()
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %#lf\n", "%#lf", d);
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %#.0lf\n", "%#.0lf", d);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %#.0lf\n", "%#.0lf", d);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %-.3lf\n", "%-.3lf", d);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %-.3lf\n", "%-.3lf", d);
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
@@ -727,6 +747,10 @@ int		main()
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %#le\n", "%#le", d);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %#le\n", "%#le", d);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %#.0le\n", "%#.0le", d);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %#.0le\n", "%#.0le", d);
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %-.3le\n", "%-.3le", d);
@@ -793,6 +817,10 @@ int		main()
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %#la\n", "%#la", d);
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %#.0la\n", "%#.0la", d);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %#.0la\n", "%#.0la", d);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %-.3la\n", "%-.3la", d);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %-.3la\n", "%-.3la", d);
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
@@ -855,6 +883,10 @@ int		main()
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %#lg\n", "%#lg", d);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %#lg\n", "%#lg", d);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %#.0lg\n", "%#.0lg", d);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %#.0lg\n", "%#.0lg", d);
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %-.3lg\n", "%-.3lg", d);
@@ -999,20 +1031,6 @@ printf("\n\n");
 
 	ft_printf("\n{red}red{eoc} ; {yellow}yellow{eoc} ; {green}green{eoc} ; {cyan}cyan{eoc} ; {blue}blue{eoc} ; {magenta}magenta{eoc}\n");
 	ft_printf("\n{red}%s{eoc} ; {yellow}%s {eoc} ; {green}green, null_%c_char{eoc} ; {cyan}cyan, fake_eoc_%s_in_a_%%s{eoc} ; {blue}blue, %#+09x{eoc} ; {magenta} %s{eoc}\n", "red, {}only_a_%s_between{}", "yellow, {}trailing_space {}", 0, "{eoc}", 0x123456, "magenta, {} leading_space{}");
-
-#if 0
-	tmp = NULL;
-
-	ft_asprintf(&tmp, "{red}red{eoc} ; {yellow}yellow{eoc} ; {green}green{eoc} ; {cyan}cyan{eoc} ; {blue}blue{eoc} ; {magenta}magenta{eoc}\n");
-	ft_putmem(tmp);
-	ft_strdel(&tmp);
-
-	printf("\n");
-
-	ft_asprintf(&tmp, "{red}%s{eoc} ; {yellow}%s {eoc} ; {green}green, null_%c_char{eoc} ; {cyan}cyan, fake_eoc_%s_in_a_%%s{eoc} ; {blue}blue, %#+09x{eoc} ; {magenta} %s{eoc}\n", "red, {}only_a_%s_between{}", "yellow, {}trailing_space {}", 1, "{eoc}", 0x123456, "magenta, {} leading_space{}");
-	ft_putmem(tmp);
-	ft_strdel(&tmp);
-#endif
 # endif
 
 

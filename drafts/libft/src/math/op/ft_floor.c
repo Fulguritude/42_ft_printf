@@ -12,10 +12,12 @@
 
 #include "libft.h"
 
+//TODO remove for moulinette
+
 long		ft_floor(double lf)
 {
 	long	result;
-	short	exp;
+	int		exp;
 
 	exp = (((t_u64)lf << 1) >> 52) - 1023;
 	if (exp > 308)
