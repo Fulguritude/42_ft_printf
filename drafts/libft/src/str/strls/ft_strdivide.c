@@ -23,7 +23,7 @@ char	**ft_strdivide(const char *str, size_t n)
 		return (NULL);
 	len = ft_strlen(str);
 	lines = len % n == 0 ? len / n : len / n + 1;
-	if (lines == 0 || !(strls = (char**)malloc(sizeof(char*) * (lines + 1))))
+	if (lines == 0 || !(strls = (char**)ft_ptrarrnew(lines)))
 		return (NULL);
 	i = 0;
 	while (i < len)

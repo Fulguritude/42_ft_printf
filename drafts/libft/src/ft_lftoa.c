@@ -43,7 +43,7 @@ static char	**float_info_to_float_binstrs(int exp_b2, t_u64 mantissa)
 		ft_strappend(&tmp, ".0");
 	}
 	result = ft_split(tmp, ".");
-//ft_printf("{red}{bold}binstrs\ntmp = %s\n\tfloor = %s\n\tfrac  = %s\n{eoc}", tmp, result[0], result[1]);
+ft_printf("{red}{bold}binstrs\ntmp = %s\n\tfloor = %s\n\tfrac  = %s\n{eoc}", tmp, result[0], result[1]);
 	ft_strdel(&tmp);
 	return (result);
 }
@@ -145,8 +145,13 @@ static char	*ft_lftoa_exp(char **bin_strs, int exp_b2, char style, double sciman
 	double	d;
 	int		exp_b10;
 
+	while (0. < scimant_b2 && scimant_b2 < 1.)
+	{
+		scimant_b2 *= 2.;
+		++exp_b2;
+	}
 	d = LN2_DIV_LN10 * ABS(exp_b2) + ft_logn(ABS(scimant_b2), 10);
-	exp_b10 = d == ft_floor(d) && d != 0. ? d - 1 : d;
+	exp_b10 = d == ft_floor(d) ? d - 1 : d;
 	exp_b10 = (ft_floor(exp_b10) + (exp_b2 < 0)) * (-1 + 2 * (exp_b2 >= 0));
 //ft_printf("{cyan}exp_b2 = %d; exp_b10 = %d; scimant_b2 = %lf, ft_logn(scimant_b2, 10) = %.20lf, pure exp_b10 = %.20lf{eoc}\n", exp_b2, exp_b10, scimant_b2, ft_logn(scimant_b2, 10), LN2_DIV_LN10 * exp_b2 + ft_logn(scimant_b2, 10));
 	result = ft_itoa(exp_b10);
@@ -180,9 +185,9 @@ char	*ft_lftoa(double lf, char style)
 	char	**bin_strs;
 
 ft_printf("lftoa\n");
-	if (lf != lf)
-		return (ft_strdup(MSB((t_u64)lf) ? "-nan" : "nan"));
 	extract = *(t_u64*)(&lf);
+	if (lf != lf)
+		return (ft_strdup(MSB(extract) ? "-nan" : "nan"));
 	exp_b2 = ((extract << 1) >> 53) - 1023;
 	mantissa = ((extract << 12) >> 12);
 	if (exp_b2 == 1024)
@@ -190,7 +195,7 @@ ft_printf("lftoa\n");
 	if (exp_b2 != -1023)
 		mantissa |= 0x10000000000000;
 	else
-		exp_b2 = 0;
+		exp_b2 = lf == 0. ? 0 : exp_b2 + 1;
 	bin_strs = float_info_to_float_binstrs(exp_b2, mantissa);
 	extract = (extract & (_MSB_ | 0xFFFFFFFFFFFFF)) | 0x3FF0000000000000;
 	if (style == 'p')

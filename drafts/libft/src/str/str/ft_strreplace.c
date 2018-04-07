@@ -12,10 +12,6 @@
 
 #include "libft.h"
 
-
-#include <stdio.h>
-
-
 char	*ft_strreplace(char const *str, char const *sub, char const *rep)
 {
 	char	**strls;

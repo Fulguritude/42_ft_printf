@@ -378,7 +378,7 @@ int		main()
 
 # if NORMAL_CASES
 	float 	f = 99.9999;//-0.9999; //0.55555; // 0xf.edcba012345p-64;		//other vals: 123.456789; //1e+250;//2.;
-	double 	d = 1e+23;//-0x1.123456789abcdp+1010;//1e+250;//16.125; //-0x1.123456789abcdp+1010;	//other vals: 1234567.8987654321; 0.000002432543654332000; 1e+23; 1e+20; -0x0.00034543210p-1023;
+	double 	d = -0x0.00034543210p-1023;//1e+23;//-0x1.123456789abcdp+1010;//1e+250;//16.125; //-0x1.123456789abcdp+1010;	//other vals: 1234567.8987654321; 0.000002432543654332000; 1e+23; 1e+20; 
 
 #  if PERCENT_fF
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
@@ -719,6 +719,10 @@ int		main()
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %-20.3lf\n", "%-20.3lf", d);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %-20.3lf\n", "%-20.3lf", d);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %.360lf\n", "%.360lf", d);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %.360lf\n", "%.360lf", d);
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 #  endif
 

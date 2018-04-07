@@ -38,7 +38,7 @@ static t_u32	count_distinct_sub_in_str(char const *str, char const *sub)
 	return (occ);
 }
 
-char			*get_next_chunk(char const *str, char const *sub, t_u32 *i)
+static char		*get_next_chunk(char const *str, char const *sub, t_u32 *i)
 {
 	char	*result;
 	t_u32	sub_len;

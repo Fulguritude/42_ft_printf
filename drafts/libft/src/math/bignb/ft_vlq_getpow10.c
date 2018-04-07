@@ -14,7 +14,6 @@
 
 static t_vlq	get_larger_pow10(void)
 {
-	
 	static t_u64	pow10_512[28] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 									 0, 0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	t_vlq			init_p10_512;
@@ -109,8 +108,9 @@ t_vlq		ft_vlq_getpow10(t_u32 exp)
 
 	if (exp >= 0x400)
 	{
-		ft_printf_fd(2, "exp= %d >= 1024 in vlq_get_greatest_sub_pow10", exp);
-		return (NULL);
+		result = ft_vlq_getpow10(exp - 512);
+		ft_vlq_mul_acc(&result, get_larger_pow10());
+		return (result);
 	}
 	sub15_exp = exp & 0xF;
 	result = ft_vlqnew(1);

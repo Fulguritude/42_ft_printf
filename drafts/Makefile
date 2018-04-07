@@ -78,6 +78,12 @@ test:fclean $(NAME)
 	@make clean
 	@printf "Done !\n"
 
+freetest:$(NAME)
+	@printf "Rebuilding test.out for rule 'freetest'...\n"
+	@$(CC) $(CFLAGS) $(DBFLAGS) -c $(TSTDIR)$(ASMAIN) -o $(TSTDIR)$(ASMAIN:.c=.o)
+	@$(CC) $(OBJS) $(TSTDIR)$(ASMAIN:.c=.o) -lftprintf -L./ -lasan -o $(TEST)
+	@printf "Done ! Usage: \033[32;m./test.out {value}\033[0;m\n"
+
 bonus:$(NAME)
 	@printf "Rebuilding test.out for rule 'bonus'...\n"
 	@$(CC) $(CFLAGS) $(DBFLAGS) -c $(TSTDIR)$(BONUS) -o $(TSTDIR)$(BONUS:.c=.o)
