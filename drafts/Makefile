@@ -15,7 +15,7 @@ LFT		=	libft.a
 
 CC		=	gcc
 CFLAGS	=	-Wall -Werror -Wextra
-DBFLAGS =	-fsanitize=leak
+DBFLAGS =	-fsanitize=address
 
 HDRDIR	=	./
 LFTDIR	=	./libft/

@@ -41,7 +41,7 @@
 
 # define _FLOAT_BONUSES_					1
 #  define PERCENT_aA						1 //medium, easier than it looks
-#  define PERCENT_eE						1 //very hard, or slow if you go through %f first
+#  define PERCENT_eE						1 //very hard, or slow if you go through %f first like me
 #  define PERCENT_fF						1 //hard
 #  define PERCENT_gG						1 //mostly dependent on e and f, but this one is harder than it seems
 #  define SPECIAL_CASES						1 && (PERCENT_aA || PERCENT_eE || PERCENT_fF || PERCENT_gG)
@@ -1518,9 +1518,14 @@ printf("\n\n");
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %#06o\n", "%#06o", test_int);
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
-	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %#0o\n", "%#.2o", test_int);
-	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %#0o\n", "%#.2o", test_int);
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %#0o\n", "%#0o", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %#0o\n", "%#0o", test_int);
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %#.0o\n", "%#.0o", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %#.0o\n", "%#.0o", test_int);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+
 
 
 printf("\n\n");
@@ -2533,6 +2538,7 @@ printf("\n\n");
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 #   endif
 #  endif
+# endif
 
 printf("\n\n");
 printf(C_BLUE"\nTests on return values :"C_RESET);
@@ -2576,7 +2582,6 @@ printf("\n\n");
 		printf(C_RED"\nThere are %d failed tests based on str_output values.\n"C_RESET, str_fails);
 	}
 	printf("\n");
-# endif
 #endif
 
 

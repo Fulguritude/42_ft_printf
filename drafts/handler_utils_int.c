@@ -65,7 +65,7 @@ static char		*val_to_str(t_format info, intmax_t n, int *digits, t_u8 bytes)
 	str = NULL;
 	prec = info.prec <= 0 ? 0 :
 		(t_u32)info.prec - (info.type == int_uoct && (info.flags & FL_HASH));
-	if (n == 0 && info.prec == 0)
+	if (n == 0 && (info.prec == 0 || (info.type == int_uoct && (info.flags & FL_HASH))))
 		str = ft_strnew(0);
 	else if (n == 0)
 		str = ft_strcnew(1, '0');
@@ -130,7 +130,7 @@ static void		handle_int_prec_n_flzero(char **a_str, t_format info,
 	{
 		if (info.flags & FL_MINUS)
 			ft_strpad_right_inplace(a_str, ' ', info.width - digits);
-		else if ((*a_str)[0] != '-')
+		else if ((*a_str)[0] != '-') //some space can be gleaned here by merging the two elses
 			ft_strpad_left_inplace(a_str, '0', info.width - digits);
 		else
 		{
@@ -173,7 +173,7 @@ static t_str	*build_int_str(t_format info, intmax_t n, t_u8 bytes)
 	result->data = str;
 //printf("\t\t\tinfo.width : %d; digits : %d\n", info.width, digits);
 	result->len = MAX(info.width, digits);
-//printf("\t\t\tbuild_int_str result: data = %s ; len = %lu\n", result->data, result->len);
+//printf("\t\t\tbuild_int_str result: data = %s ; len = %d\n", result->data, result->len);
 	return (result);
 }
 

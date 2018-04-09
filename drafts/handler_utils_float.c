@@ -79,6 +79,7 @@ static char	*round_up(char const *tmp, int reslen, char exp_c, int *status)
 	int		i;
 	int		neg;
 
+//TODO use a dotpos variable instead of neg, or else -0x2.... is unfixable
 	neg = ft_strfind(tmp, '-') >= 0;
 	base = exp_c == 'p' ? HXLOW : DECIM;
 	start = ft_strlen(tmp) - reslen - 1;
@@ -104,7 +105,7 @@ ft_printf("{cyan}{bold}unrounded: %s{eoc}, reslen %d, start %d\n", tmp + start, 
 				result[++i] = '1';
 		}
 ft_printf("i = %d\n", i);
-		while (++i <= reslen)
+		while (++i <= reslen + neg)
 			result[i] = tmp[start + i - (result[0] == '.' && *status)];
 		ft_strrev_inplace(&result);
 	}
@@ -217,40 +218,48 @@ static char	*handle_aef_type(t_format info, double lf)
 static char	*handle_g_type(t_format info, double lf)
 {
 	char	*result;
-	double	mant_b2;
-	double	d;
-	int		exp_b2;
+//	double	mant_b2;
+//	double	d;
+//	int		exp_b2;
 	int		exp_b10;
 	int		boolexp;
 
-	exp_b2 = (((*(t_u64*)(&lf)) << 1) >> 53) - 1023;
-	mant_b2 = ((((*(t_u64*)(&lf)) << 12) >> 12) - 1023) | 
-			((exp_b2 != -1023) * 0x10000000000000);
-	mant_b2 = 1.0 * mant_b2 / ft_ipowi(2.0, ft_digits_base(mant_b2, 2) - 1);
-	d = LN2_DIV_LN10 * ABS(exp_b2) + ft_logn(ABS(mant_b2), 10);
-ft_printf("{yellow}true exp_b10 = %f{eoc}\n", d);
-	exp_b10 = d - (d == ft_floor(d) && d != 0. ? 1 : 0) + 0.00001;
-ft_printf("{yellow}exp_b10 = %d{eoc}\n", exp_b10);
-	exp_b10 = (ft_floor(exp_b10) + (exp_b2 < 0)) * (-1 + 2 * (exp_b2 >= 0));
-//	exp_b10 = ft_floor(LN2_DIV_LN10 * ABS(exp_b2) + ft_logn(mant_b2, 10));
-//	exp_b10 = (exp_b10 + (exp_b2 < 0)) * (-1 + 2 * (exp_b2 >= 0));
+//	exp_b2 = (((*(t_u64*)(&lf)) << 1) >> 53) - 1023;
+//	mant_b2 = ((((*(t_u64*)(&lf)) << 12) >> 12) - 1023) | 
+//			((exp_b2 != -1023) * 0x10000000000000);
+//	mant_b2 = 1.0 * mant_b2 / ft_ipowi(2.0, ft_digits_base(mant_b2, 2) - 1);
+//	d = LN2_DIV_LN10 * ABS(exp_b2) + ft_logn(ABS(mant_b2), 10);
+//ft_printf("{yellow}true exp_b10 = %f{eoc}\n", d);
+//	exp_b10 = d - (d == ft_floor(d) && d != 0. ? 1 : 0) + 0.00001;
+//ft_printf("{yellow}exp_b10 = %d{eoc}\n", exp_b10);
+//	exp_b10 = (ft_floor(exp_b10) + (exp_b2 < 0)) * (-1 + 2 * (exp_b2 >= 0));
+//		exp_b10 = ft_floor(LN2_DIV_LN10 * ABS(exp_b2) + ft_logn(mant_b2, 10));
+//		exp_b10 = (exp_b10 + (exp_b2 < 0)) * (-1 + 2 * (exp_b2 >= 0));
 
-ft_printf("{yellow}exp_b10 = %d{eoc}\n", exp_b10);
-	boolexp = (exp_b10 < -4 || info.prec <= exp_b10) && lf != 0;
-	result = ft_lftoa(lf, boolexp ? 'e' : '\0');
-	info.prec = info.prec - 1 - ((!boolexp) * (exp_b10 - 1 + (exp_b10 < 0) + (exp_b10 > 0))); //TODO FIX THIS
+
+	result = ft_lftoa(lf, 'e');
 	if (!ft_strequ(result, "inf") && !ft_strequ(result, "-inf") &&
 		!ft_strequ(result, "nan") && !ft_strequ(result, "-nan"))
+	{
+		exp_b10 = ft_atoi(ft_strrchr(result, 'e') + 1);
+ft_printf("{yellow}exp_b10 = %d{eoc}\n", exp_b10);
+		if (!(boolexp = (exp_b10 < -4 || info.prec <= exp_b10) && lf != 0))
+		{	
+			ft_strdel(&result);
+			result = ft_lftoa(lf, '\0');
+		}
+		info.prec = info.prec - 1 - ((!boolexp) * (exp_b10));// - 1 + (exp_b10 < 0) + (exp_b10 > 0))); //TODO FIX THIS
 		apply_float_prec(info, &result, boolexp ? 'e' : '\0');
 //	if (!(info.flags & FL_HASH) && !ft_strequ(result, "0"))
 //		ft_strctrim_right_inplace(&result, '0');
 
 //ft_printf("{magenta}{bold}float prec res: %s{eoc}, '.' %d\n", result, ft_in_base('.', result));
-	if ((info.flags & FL_HASH) && ft_in_base('.', result) == -1 && ft_in_base('n', result) == -1)
-		ft_strinsert(&result, ".", ft_in_base(boolexp ? 'e' : '\0', result));
-	apply_float_width(info, &result);
+		if ((info.flags & FL_HASH) && ft_in_base('.', result) == -1 && ft_in_base('n', result) == -1)
+			ft_strinsert(&result, ".", ft_in_base(boolexp ? 'e' : '\0', result));
+		apply_float_width(info, &result);
 //	if (result[ft_strlen(result) - 1] == '.')
 //		result[ft_strlen(result) - 1] = '\0';
+	}
 	return (result);
 }
 
