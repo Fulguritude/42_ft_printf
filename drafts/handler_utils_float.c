@@ -71,12 +71,12 @@ ft_printf("after rounding : %s, tmp = %s\n", result, tmp);
 **   9 	    	'start' digit index	= 2 = 9 - 6 - 1, then
 **    09.999	'++i, start + i'
 */
-static char	*round_up(char const *tmp, int reslen, char exp_c, int *status)
+static char	*round_up(char const *tmp, t_u32 reslen, char exp_c, int *status)
 {
 	char	*result;
 	char	*base;
-	int		start;
-	int		i;
+	t_u32	start;
+	t_u32	i;
 	int		neg;
 
 //TODO use a dotpos variable instead of neg, or else -0x2.... is unfixable
@@ -84,10 +84,10 @@ static char	*round_up(char const *tmp, int reslen, char exp_c, int *status)
 	base = exp_c == 'p' ? HXLOW : DECIM;
 	start = ft_strlen(tmp) - reslen - 1;
 ft_printf("{cyan}{bold}unrounded: %s{eoc}, reslen %d, start %d\n", tmp + start, reslen, start);
-	if ((base[ft_strlen(base) - 1] == '9') ? (ft_strfind("56789", tmp[start]) >= 0) :
+	if (exp_c != 'p' ? (ft_strfind("56789", tmp[start]) >= 0) :
 							(ft_strfind("89abcdef", tmp[start]) >= 0))
 	{
-		result = ft_strnew(reslen + 1 + neg);
+		result = ft_strnew(ft_strlen(tmp));//ft_strnew(reslen + 1 + neg);
 		result[0] = tmp[++start] == '.' ? '.' : base[(ft_in_base(tmp[start], base) + 1) % ft_strlen(base)];
 		i = 0;
 		while (result[i] == '0' || result[i] == '.')
@@ -105,8 +105,8 @@ ft_printf("{cyan}{bold}unrounded: %s{eoc}, reslen %d, start %d\n", tmp + start, 
 				result[++i] = '1';
 		}
 ft_printf("i = %d\n", i);
-		while (++i <= reslen + neg)
-			result[i] = tmp[start + i - (result[0] == '.' && *status)];
+		while (++i <= ft_strlen(tmp))
+			result[i] = tmp[start + i - (*status)];
 		ft_strrev_inplace(&result);
 	}
 	else
