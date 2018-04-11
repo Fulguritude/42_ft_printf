@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft_bignb.h                                      :+:      :+:    :+:   */
+/*   libft_apa.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,24 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __LIBFT_BIGNB_H
-# define __LIBFT_BIGNB_H
+#ifndef __LIBFT_APA_H
+# define __LIBFT_APA_H
 
 # ifndef __LIBFT_H
 #  include "libft.h"
 # endif
-
-/*
-
-t_vlq gl_opptab[] = {{"-", &ft_sub}, \
-{"+", &ft_add}, \
-{"*", &ft_mul}, \
-{"/", &ft_div}, \
-{"%", &ft_mod}, \
-{"", &ft_usage}};
-
-as inspiration for global t
-*/
 
 /*
 ** TODO
@@ -264,192 +252,6 @@ t_vlq			ft_vlq_getpow10(t_u32 exp10);
 ** TODO bwa bwa_acc bwo bwo_acc
 */
 
-/*
-** Big Number
-**
-** Our BigNb type is to be used as follows:
-**		- vlq:		the absolute value of our nb, stored as a specially handled
-**					array of unsigned long (t_u64) (dynamically allocated);
-**		- rev_ns:	the absolute value of our nb, reversed for ease of iteration
-**					(dynamically allocated);
-**		- digits: 	ft_strlen(rev_ns);
-**		- base:		the base rev_ns is expressed in. Operators do not check
-**					for validity (statically allocated).
-**		- radix:	ft_strlen(base), the number of symbols.
-**		- neg:		true iff the value is considered to be negative.
-**
-** Call ft_bignb_to_str for conversion to human-readable.
-*/
-
-typedef struct	s_bignb
-{
-	t_vlq			vlq;
-	char			*rev_ns;
-	t_u32			digits;
-	char const		*base;
-	t_u8			radix;
-	t_u8			neg;
-}				t_bignb;
-
-/*
-** =========== BigNb Functions ==========
-**
-** This was made mostly for ease-of-use when formatting strings representing
-** very large numbers. Behavior on base incoherence in str_op() functions is
-** undefined. bn_str_op and bn_op functions update both vlq and rev_ns, unlike
-** bn_op_acc functions which do not update the format string, but instead leave
-** it null.
-**
-** NB: str_op < op < op_acc ; however, some operations will need str_op, and
-**		op_acc functions need to be followed by a call to vlq_updates_revns().
-**		Also note that str_op always update the vlq.
-** NB: str_op functions do not check for sign.
-*/
-/*
-** TODO verify that all bignb_ops_acc functions act on vlq rather than reallocating a full bignb with rev_ns included
-** TODO check all calls to ops_acc functions to verify this convention is applied.
-*/
-
-/*
-** ~~~~~~~~~ BigNb Utils ~~~~~~~~~
-*/
-/*
-** Returns a well allocated/instantiate bignb struct. rev_ns is filled with
-** '0' chars. If size == 0, a NULL string is returned for rev_ns. Else 
-** (meaning size > 0), a string of size 'size' is filled with base[0].
-*/
-t_bignb					ft_bignbnew(t_u32 size, char const *base);
-
-/*
-** Copies the non-dynamic data of bignb as is (even if it is incoherent), and
-** calls strdup and vlqdup for the appropriate fields, if non-null.
-*/
-t_bignb					ft_bignbdup(t_bignb const bn);
-
-/*
-** Returns a bignb from a string "a" representing a number in 'base'.
-** Checks for base validity before operating. Allocates both rev_ns and vlq.
-*/
-t_bignb					ft_atobignb(char const *a, char const *base);
-
-/*
-** Compares the absolute value of two bignb.
-*/
-int						ft_bignb_strcmp(t_bignb const bn1, t_bignb const bn2);
-
-/*
-** Returns true if bn is coherently zero, false otherwise.
-** This function accepts untrimmed rev_ns, but not untrimmed vlq.
-*/
-int						ft_bignb_iszero(t_bignb const bn);
-
-/*
-** Returns a human-readable string of the rev_ns stored in nbstr.
-** TODO check for coherence first ?
-*/
-char					*ft_bignb_to_str(t_bignb const bn);
-
-/*
-** Uses vlq to redefine rev_ns.
-** TODO many things to fix
-*/
-void					ft_bignb_vlq_updates_revns(t_bignb *bn);
-
-/*
-** Uses rev_ns to redefine vlq.
-*/
-void					ft_bignb_revns_updates_vlq(t_bignb *bn);
-
-/*
-** Alters 'rev_ns' so that it represents the same value in another 'base', with
-** all fields updated adequately. Fails if ns.rev_ns contains anything other
-** than a 0 or a 1.
-*/
-void					ft_bignb_str_bin2base_inplace(t_bignb *a_ns,
-													char const *base);
-
-/*
-** Alters 'rev_ns' so that it represents its number in binary, all other fields
-** change accordingly.
-*/
-void					ft_bignb_str_base2bin_inplace(t_bignb *a_ns);
-
-/*
-** Checks if memory is allocated, if so, cleans and frees memory.
-*/
-void					ft_bignbdel(t_bignb *a_bn);
-
-/*
-** ~~~~~~~~~ BigNb operators ~~~~~~~~~
-*/
-
-/*
-** Returns a + b and updates all fields of said result.
-*/
-t_bignb					ft_bignb_add(t_bignb const a, t_bignb const b);
-
-/*
-** Returns a - b with negative output handled correctly. Updates all fields.
-** Not for speedy use.
-*/
-t_bignb					ft_bignb_sub(t_bignb const a, t_bignb const b);
-
-/*
-** Returns a * b with negative output handled correctly. Update all fields.
-** Not for speedy use.
-*/
-t_bignb					ft_bignb_mul(t_bignb const a, t_bignb const b);
-
-/*
-** Returns the addition of two rev_ns's stored as number strings in the same
-** base. Handles any combination of positive and negative inputs. Minimal
-** optimisation if largest number is given first. Updates vlq.
-*/
-t_bignb					ft_bignb_str_add(t_bignb const a, t_bignb const b);
-
-/*
-** Returns the subtraction of two rev_ns's stored as number strings in a same
-** base b. Will return a t_bignb with empty base in case of error. Only works
-** with both inputs having different signs. Returns ABS(a - b). Updates vlq.
-*/
-t_bignb					ft_bignb_str_sub(t_bignb const a, t_bignb const b);
-
-/*
-** Returns the multiplication of two rev_ns's written in the same 
-** base b. Will return a t_bignb with empty base in case of error. Handles
-** negatives. Updates vlq.
-*/
-t_bignb					ft_bignb_str_mul(t_bignb const a, t_bignb const b);
-
-/*
-** Returns the division of two VLQs stored as number strings in a same base b.
-** Will return a t_bignb with empty base in case of error.
-*/
-t_bignb					ft_bignb_str_div(t_bignb const a, t_bignb const b);
-
-/*
-** Reallocates the result of nbstr_add into acc, and updates acc fields except
-** for rev_ns and digits.
-*/
-void					ft_bignb_add_acc(t_bignb *acc, t_bignb const bn);
-
-/*
-** Reallocates the result of nbstr_sub into acc, and updates acc fields except
-** for rev_ns and digits.
-*/
-void					ft_bignb_sub_acc(t_bignb *acc, t_bignb const bn);
-
-/*
-** Reallocates the result of nbstr_div into acc, and updates acc fields, except
-** for rev_ns and digits.
-*/
-void					ft_bignb_mul_acc(t_bignb *acc, t_bignb const bn);
-
-/*
-** Reallocates the result of nbstr_div into acc, and updates acc fields, except
-** for rev_ns and digits.
-*/
-void					ft_bignb_div_acc(t_bignb *acc, t_bignb const bn);
 
 /*
 ** Very Long Float / Variable length float
@@ -463,8 +265,6 @@ void					ft_bignb_div_acc(t_bignb *acc, t_bignb const bn);
 **					  bitshift right with appropriate understanding of the
 **					  fractional parts in the vlf_ops(); a positive value is a
 **					  bitshift left (appendding zeros);
-**	-	max_prec :	how many of the digits of the binary fraction we should care
-**					  for.
 **	-	neg :		true if vlf < 0, false otherwise.
 */
 
@@ -472,8 +272,7 @@ typedef struct	s_vlf
 {
 	t_vlq			mantissa;
 	int				exp_b2;
-	t_u32			max_prec;
-	t_u8			neg;
+	t_u32			neg;
 }				t_vlf;
 
 /*

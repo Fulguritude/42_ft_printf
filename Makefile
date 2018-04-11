@@ -32,10 +32,8 @@ SRCS	=	ft_printf.c					\
 			handler_utils_float.c
 OBJS	=	$(SRCS:.c=.o)
 
-MAIN	=	main.c
-BONUS	=	main_bonus.c
-ASMAIN	=	main_asprintf.c
-BNBMAIN	=	main_bignb.c
+MAIN	=	main_asprintf.c
+VLQMAIN	=	main_vlq.c
 TEST	=	test.out
 
 $(NAME): $(LFT) $(OBJS)
@@ -57,9 +55,7 @@ clean:
 	@$(MAKE) -C $(LFTDIR) clean
 	@rm -f $(OBJS)
 	@rm -f $(TSTDIR)$(MAIN:.c=.o)
-	@rm -f $(TSTDIR)$(BONUS:.c=.o)
-	@rm -f $(TSTDIR)$(ASMAIN:.c=.o)
-	@rm -f $(TSTDIR)$(BNBMAIN:.c=.o)
+	@rm -f $(TSTDIR)$(VLQMAIN:.c=.o)
 	@rm -f $(TEST)
 
 fclean:clean
@@ -70,58 +66,18 @@ fclean:clean
 re:fclean all
 
 #remove CFLAGS below before testing weirder undefined printf cases
-test:fclean $(NAME)
+test:$(NAME)
 	@printf "Rebuilding test.out for rule 'test'...\n"
-	@$(CC) $(CFLAGS) -c $(TSTDIR)$(MAIN) -o $(TSTDIR)$(MAIN:.c=.o)
+	@$(CC) $(CFLAGS) $(DBFLAGS) -c $(TSTDIR)$(MAIN) -o $(TSTDIR)$(MAIN:.c=.o)
 	@$(CC) $(OBJS) $(TSTDIR)$(MAIN:.c=.o) -lftprintf -L./ -lasan -o $(TEST)
+	@printf "Done ! Usage: ""\033[0;32m""./test.out {value|NULL}""\033[0m""\n"
+
+vlqtest:$(NAME)
+	@printf "Rebuilding test.out for rule 'vlqtest'...\n"
+	@$(CC) $(CFLAGS) $(DBFLAGS) -c $(TSTDIR)$(VLQMAIN) -o $(TSTDIR)$(VLQMAIN:.c=.o)
+	@$(CC) $(OBJS) $(TSTDIR)$(VLQMAIN:.c=.o) -lftprintf -L./ -lasan -o $(TEST)
 	./$(TEST)
 	@make clean
 	@printf "Done !\n"
 
-freetest:$(NAME)
-	@printf "Rebuilding test.out for rule 'freetest'...\n"
-	@$(CC) $(CFLAGS) $(DBFLAGS) -c $(TSTDIR)$(ASMAIN) -o $(TSTDIR)$(ASMAIN:.c=.o)
-	@$(CC) $(OBJS) $(TSTDIR)$(ASMAIN:.c=.o) -lftprintf -L./ -lasan -o $(TEST)
-	@printf "Done ! Usage: \033[32;m./test.out {value}\033[0;m\n"
-
-bonus:$(NAME)
-	@printf "Rebuilding test.out for rule 'bonus'...\n"
-	@$(CC) $(CFLAGS) $(DBFLAGS) -c $(TSTDIR)$(BONUS) -o $(TSTDIR)$(BONUS:.c=.o)
-	@$(CC) $(OBJS) $(TSTDIR)$(BONUS:.c=.o) -lftprintf -L./ -lasan -o $(TEST)
-	./$(TEST)
-	@make clean
-	@printf "Done !\n"
-
-astest:$(NAME)
-	@printf "Rebuilding test.out for rule 'astest'...\n"
-	@$(CC) $(CFLAGS) $(DBFLAGS) -c $(TSTDIR)$(ASMAIN) -o $(TSTDIR)$(ASMAIN:.c=.o)
-	@$(CC) $(OBJS) $(TSTDIR)$(ASMAIN:.c=.o) -lftprintf -L./ -lasan -o $(TEST)
-	./$(TEST)
-	@make clean
-	@printf "Done !\n"
-
-vgastest:fclean $(NAME)
-	@printf "Rebuilding test.out for rule 'vgastest'...\n"
-	@$(CC) $(CFLAGS) -c $(TSTDIR)$(ASMAIN) -o $(TSTDIR)$(ASMAIN:.c=.o)
-	@$(CC) $(OBJS) $(TSTDIR)$(ASMAIN:.c=.o) -lftprintf -L./ -o $(TEST)
-	valgrind -v --track-origins=yes ./$(TEST)
-	@make clean
-	@printf "Done !\n"
-
-vgleakastest:fclean $(NAME)
-	@printf "Rebuilding test.out for rule 'vgleakastest'...\n"
-	@$(CC) $(CFLAGS) -c $(TSTDIR)$(ASMAIN) -o $(TSTDIR)$(ASMAIN:.c=.o)
-	@$(CC) $(OBJS) $(TSTDIR)$(ASMAIN:.c=.o) -lftprintf -L./ -o $(TEST)
-	valgrind -v --track-origins=yes --leak-check=full ./$(TEST)
-	@make clean
-	@printf "Done !\n"
-
-bignbtest:$(NAME)
-	@printf "Rebuilding test.out for rule 'bignbtest'...\n"
-	@$(CC) $(CFLAGS) $(DBFLAGS) -c $(TSTDIR)$(BNBMAIN) -o $(TSTDIR)$(BNBMAIN:.c=.o)
-	@$(CC) $(OBJS) $(TSTDIR)$(BNBMAIN:.c=.o) -lftprintf -L./ -lasan -o $(TEST)
-	./$(TEST)
-	@make clean
-	@printf "Done !\n"
-
-.PHONY: all clean re bonus test
+.PHONY: all clean re test vlqtest
