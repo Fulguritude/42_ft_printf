@@ -33,6 +33,7 @@ SRCS	=	ft_printf.c					\
 OBJS	=	$(SRCS:.c=.o)
 
 MAIN	=	main_asprintf.c
+CAPSMAIN=	main_asprintf_caps.c
 VLQMAIN	=	main_vlq.c
 TEST	=	test.out
 
@@ -55,6 +56,7 @@ clean:
 	@$(MAKE) -C $(LFTDIR) clean
 	@rm -f $(OBJS)
 	@rm -f $(TSTDIR)$(MAIN:.c=.o)
+	@rm -f $(TSTDIR)$(CAPSMAIN:.c=.o)
 	@rm -f $(TSTDIR)$(VLQMAIN:.c=.o)
 	@rm -f $(TEST)
 
@@ -70,6 +72,12 @@ test:$(NAME)
 	@printf "Rebuilding test.out for rule 'test'...\n"
 	@$(CC) $(CFLAGS) $(DBFLAGS) -c $(TSTDIR)$(MAIN) -o $(TSTDIR)$(MAIN:.c=.o)
 	@$(CC) $(OBJS) $(TSTDIR)$(MAIN:.c=.o) -lftprintf -L./ -lasan -o $(TEST)
+	@printf "Done ! Usage: ""\033[0;32m""./test.out {value|NULL}""\033[0m""\n"
+
+capstest:$(NAME)
+	@printf "Rebuilding test.out for rule 'capstest'...\n"
+	@$(CC) $(CFLAGS) $(DBFLAGS) -c $(TSTDIR)$(CAPSMAIN) -o $(TSTDIR)$(CAPSMAIN:.c=.o)
+	@$(CC) $(OBJS) $(TSTDIR)$(CAPSMAIN:.c=.o) -lftprintf -L./ -lasan -o $(TEST)
 	@printf "Done ! Usage: ""\033[0;32m""./test.out {value|NULL}""\033[0m""\n"
 
 vlqtest:$(NAME)
