@@ -226,6 +226,11 @@ t_str			*handle_int_type(t_format info, va_list args);
 t_str			*handle_float_type(t_format info, va_list args);
 
 /*
+** handler_utils_float_prec.c
+*/
+int				apply_float_prec(t_format info, char **a_flstr, char exp_c);
+
+/*
 ** handler_utils_str.c
 **
 ** static char			*encode_unicodepoint_to_utf8(wchar_t c);

@@ -29,7 +29,8 @@ SRCS	=	ft_printf.c					\
 			handlers.c					\
 			handler_utils_int.c			\
 			handler_utils_str.c			\
-			handler_utils_float.c
+			handler_utils_float.c		\
+			handler_utils_float_prec.c
 OBJS	=	$(SRCS:.c=.o)
 
 MAIN	=	main_asprintf.c
