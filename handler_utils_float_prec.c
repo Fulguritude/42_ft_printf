@@ -79,7 +79,7 @@ static char	*round_up(char const *tmp, t_u32 reslen, char exp_c, int *status)
 	return (result);
 }
 
-int			get_rounded_flstr(char **a_result, t_format info,
+static int	get_rounded_flstr(char **a_result, t_format info,
 								char **a_flstr, char exp_c)
 {
 	char	*tmp;
@@ -134,7 +134,8 @@ int			apply_float_prec(t_format info, char **a_flstr, char exp_c)
 	else
 		tmp = ft_strdup(ft_strchr(*a_flstr, exp_c));
 	ft_strmerge(&result, &tmp);
-	if ((info.prec == 0 || result[ft_strfind(result, '.') + 1] == exp_c) && !(info.flags & FL_HASH))
+	if ((info.prec == 0 || result[ft_strfind(result, '.') + 1] == exp_c)
+		&& !(info.flags & FL_HASH))
 		ft_strreplace_inplace(&result, ".", "");
 	ft_strdel(a_flstr);
 	*a_flstr = result;

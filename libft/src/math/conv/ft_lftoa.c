@@ -15,9 +15,9 @@
 */
 #include "libft.h"
 
-static char	**float_info_to_float_binstrs(int exp_b2, t_u64 mantissa)
+static void		float_info_to_float_binstrs(char ***a_res,
+							int exp_b2, t_u64 mantissa)
 {
-	char	**result;
 	char	*tmp;
 
 	tmp = ft_uitoa_base(mantissa, BINAR);
@@ -40,9 +40,8 @@ static char	**float_info_to_float_binstrs(int exp_b2, t_u64 mantissa)
 		ft_strpad_right_inplace(&tmp, '0', exp_b2 - 52);
 		ft_strappend(&tmp, ".0");
 	}
-	result = ft_split(tmp, ".");
+	*a_res = ft_split(tmp, ".");
 	ft_strdel(&tmp);
-	return (result);
 }
 
 static char		*ft_lftoa_hexfp(int exp_b2, t_u64 mantissa)
@@ -71,7 +70,7 @@ static char		*ft_lftoa_hexfp(int exp_b2, t_u64 mantissa)
 	return (result);
 }
 
-static char	*ft_lftoa_fp(char **bin_strs)
+static char		*ft_lftoa_fp(char **bin_strs)
 {
 	char	*result;
 	char	*tmp;
@@ -84,11 +83,6 @@ static char	*ft_lftoa_fp(char **bin_strs)
 	result = ft_strpad_right(tmp, '.', 1);
 	ft_strdel(&tmp);
 	ft_vlqdel(&vlq);
-	if (ft_strequ(bin_strs[1], "0")) //maybe this if is unnecessary
-	{
-		ft_strappend(&result, "0");
-		return (result);
-	}
 	vlq = ft_atovlq(bin_strs[1], BINAR);
 	frac_digits = ft_strlen(bin_strs[1]);
 	pow10 = ft_vlq_getpow10(frac_digits);
@@ -106,27 +100,23 @@ static char	*ft_lftoa_fp(char **bin_strs)
 ** a*2^b = c*10^d with 1 <= a < 2 and 1 <= c < 10
 ** => d = floor(log10(a*2^b)) = floor(log10(a) + b * log10(2)); 
 */
-static char	*ft_lftoa_exp(char **bin_strs)
+static char		*ft_lftoa_exp(char **bin_strs)
 {
 	char	*result;
 	char	*tmp;
-	int		neg;
 	int		exp_b10;
 	int		i;
 
-	tmp = ft_lftoa_fp(bin_strs);
-	if ((neg = (tmp[0] == '-')))
-		ft_strctrim_left_inplace(&result, '-');
-	if (ft_strequ(tmp, "0.0"))
+	if (ft_strequ((tmp = ft_lftoa_fp(bin_strs)), "0.0"))
 	{
 		ft_strappend(&tmp, "e+00");
 		return (tmp);
 	}
 	i = 0;
 	if ((exp_b10 = ft_strfind(tmp, '.')) == 1)
-		while (tmp[2 + neg + i] == '0')
+		while (tmp[2 + i] == '0')
 			++i;
-	exp_b10 = exp_b10 == 1 && tmp[2 + neg + i] ? -i - (tmp[0] == '0') : exp_b10 - 1;
+	exp_b10 = exp_b10 == 1 && tmp[2 + i] ? -i - (tmp[0] == '0') : exp_b10 - 1;
 	result = ft_itoa(exp_b10);
 	if (ft_strlen(result) < 3 && result[0] == '-')
 		ft_strinsert(&result, "0", 1);
@@ -136,13 +126,10 @@ static char	*ft_lftoa_exp(char **bin_strs)
 	ft_strmerge(&tmp, &result);
 	ft_strreplace_inplace(&result, ".", "");
 	ft_strctrim_left_inplace(&result, '0');
-	ft_strinsert(&result, ".", 1);
-	if (neg)
-		ft_strprepend("-", &result); 
-	return (result);
+	return (ft_strinsert(&result, ".", 1));
 }
 
-char	*ft_lftoa(double lf, char style)
+char			*ft_lftoa(double lf, char style)
 {
 	char	*result;
 	t_u64	extract;
@@ -153,15 +140,15 @@ char	*ft_lftoa(double lf, char style)
 	extract = *(t_u64*)(&lf);
 	if (lf != lf)
 		return (ft_strdup(MSB(extract) ? "-nan" : "nan"));
-	exp_b2 = ((extract << 1) >> 53) - 1023;
 	mantissa = ((extract << 12) >> 12);
-	if (exp_b2 == 1024)
+	if ((exp_b2 = ((extract << 1) >> 53) - 1023) == 1024)
 		return (ft_strdup(MSB(extract) ? "-inf" : "inf"));
 	if (exp_b2 != -1023)
 		mantissa |= 0x10000000000000;
 	else
 		exp_b2 = lf == 0. ? 0 : exp_b2 + 1;
-	bin_strs = float_info_to_float_binstrs(exp_b2, mantissa);
+	bin_strs = NULL;
+	float_info_to_float_binstrs(&bin_strs, exp_b2, mantissa);
 	result = style == 'p' ? ft_lftoa_hexfp(exp_b2, mantissa) : NULL;
 	result = style == 'e' ? ft_lftoa_exp(bin_strs) : result;
 	result = style == '\0' ? ft_lftoa_fp(bin_strs) : result;

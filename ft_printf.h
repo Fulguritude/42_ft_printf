@@ -39,9 +39,9 @@
 **     NB : printf("%*d", width, num) <=> printf("%2$*1$d", width, num)
 */
 
-# define FLAGS "#0- +" //'
-# define TYPES "pdDibBoOuUxXcCsSeEfFgGaAr%" //n
-# define LGTHS "hljz" //L, t
+# define FLAGS "#0- +"
+# define TYPES "pdDibBoOuUxXcCsSeEfFgGaAr%"
+# define LGTHS "hljz"
 
 # define ALL_SYMBOLS "#0- +pdDibBoOuUxXcCsSeEfFgGaAr%.0123456789hljz"
 
@@ -222,11 +222,21 @@ t_str			*handle_int_type(t_format info, va_list args);
 
 /*
 ** handler_utils_float.c
+**
+** static void	apply_float_width(t_format info, char **a_flstr)
+** static char	*handle_aef_type(t_format info, double lf)
+** static char	*handle_g_type(t_format info, double lf)
 */
 t_str			*handle_float_type(t_format info, va_list args);
 
 /*
 ** handler_utils_float_prec.c
+**
+** static int	rounding_loop(char **a_res, char const *tmp,
+**							  t_u32 reslen, char const *b)
+** static char *round_up(char const *tmp, t_u32 reslen, char exp_c, int *status)
+** static int  get_rounded_flstr(char **a_result, t_format info,
+**								 char **a_flstr, char exp_c)
 */
 int				apply_float_prec(t_format info, char **a_flstr, char exp_c);
 
@@ -245,7 +255,7 @@ t_str			*handle_str_type(t_format info, va_list args);
 ** static void	t_str_append(t_str *acc, t_str *next);
 */
 void			del_t_str(void *content, size_t content_size);
-t_str			to_single_t_str(t_list *lststr); //handlers?
-t_str			*str_to_t_str(char const *str); //converters? 
+t_str			to_single_t_str(t_list *lststr);
+t_str			*str_to_t_str(char const *str);
 
 #endif

@@ -15,7 +15,7 @@
 /*
 ** strfind(src, 'n') returns true only for nan and inf
 */
-static void apply_float_width(t_format info, char **a_flstr)
+static void	apply_float_width(t_format info, char **a_flstr)
 {
 	int 	start;
 	int		size;
@@ -59,30 +59,26 @@ static char	*handle_g_type(t_format info, double lf)
 {
 	char	*result;
 	int		exp_b10;
-	int		boolexp;
+	int		boolxp;
 
-	result = ft_lftoa(lf, 'e');
-	if (ft_strfind(result, 'n') == -1)
+	if (ft_strfind((result = ft_lftoa(lf, 'e')), 'n') == -1)
 	{
 		exp_b10 = ft_atoi(ft_strrchr(result, 'e') + 1);
-		if (!(boolexp = (exp_b10 < -4 || info.prec <= exp_b10) && lf != 0))
+		if (!(boolxp = (exp_b10 < -4 || info.prec <= exp_b10) && lf != 0))
 		{	
 			ft_strdel(&result);
 			result = ft_lftoa(lf, '\0');
 		}
-		info.prec = info.prec - 1 - ((!boolexp) * (exp_b10));
-		if ((exp_b10 = apply_float_prec(info, &result, boolexp ? 'e' : '\0'))
-			&& !(info.flags & FL_HASH) && boolexp)
+		info.prec = info.prec - 1 - ((!boolxp) * (exp_b10));
+		if ((exp_b10 = apply_float_prec(info, &result, boolxp ? 'e' : '\0'))
+			&& !(info.flags & FL_HASH) && boolxp)
 		{
 			ft_strreplace_inplace(&result, "0e", "e");
 			ft_strreplace_inplace(&result, ".e", "e");
 		}
-//		else if (exp_b10 && (info.flags & FL_HASH) && !boolexp &&
-//				ft_strfind(result, '.') >= 0)
-//			ft_strntrim_right_inplace(&result, 1);
 		if ((info.flags & FL_HASH) && ft_in_base('.', result) == -1 &&
 				ft_in_base('n', result) == -1)
-			ft_strinsert(&result, ".", ft_in_base(boolexp ? 'e' : '\0', result));
+			ft_strinsert(&result, ".", ft_in_base(boolxp ? 'e' : '\0', result));
 	}
 	apply_float_width(info, &result);
 	return (result);
