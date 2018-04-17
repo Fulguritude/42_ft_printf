@@ -69,7 +69,6 @@ static char	*round_up(char const *tmp, t_u32 reslen, char exp_c, int *status)
 		result = ft_strnew(ft_strlen(tmp));
 		result[0] = tmp[++start] == '.' ? '.' :
 			base[(ft_in_base(tmp[start], base) + 1) % ft_strlen(base)];
-		//result, i, tmp, start, base, reslen
 		*status = rounding_loop(&result, tmp, reslen, base);
 		ft_strrev_inplace(&result);
 	}

@@ -1,8 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_t_str.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/04/16 16:36:44 by fulguritu         #+#    #+#             */
+/*   Updated: 2018/04/16 16:36:47 by fulguritu        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
-
-
-//TODO remove
-#include <stdio.h>
 
 void		del_t_str(void *content, size_t content_size)
 {
@@ -58,7 +66,6 @@ t_str		*str_to_t_str(char const *str)
 	}
 	if (ft_strfind(str, '{') < ft_strfind(str, '}'))
 		handle_color_t_str(result);
-//printf("str_to_t_str : %s, %s\n", str, result.data);
 	return (result);
 }
 

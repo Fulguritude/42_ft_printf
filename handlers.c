@@ -1,13 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handlers.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/04/16 16:12:05 by fulguritu         #+#    #+#             */
+/*   Updated: 2018/04/16 16:12:12 by fulguritu        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
-
-//TODO remove
-#include <stdio.h>
-
 
 /*
 ** http://blog.aaronballman.com/2012/06/how-variable-argument-lists-work-in-c/
 */
-
 /*
 ** In the absence of a prototype the compiler performs default promotions
 ** of certain arguments to functions:
@@ -35,9 +42,6 @@
 
 t_str				*handle_format(t_format info, char const *fmt, va_list args)
 {
-	//return result->len == (size_t)-1 in case of incoherent format
-	//return result->len == (size_t)-2 in case of unicode error
-//printf("handler result: data = %s ; len = %lu\n", result->data, result->len);
 	t_str	*result;
 
 	if (info.type == percent && info.flags == FL_NONE && info.width == -1 &&

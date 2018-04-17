@@ -21,7 +21,6 @@
 **
 ** Standard calls this wcrtomb, wide char to multibyte
 */
-
 static char		*encode_unicodepoint_to_utf8(wchar_t c)
 {
 	size_t	size;
@@ -48,7 +47,6 @@ static char		*encode_unicodepoint_to_utf8(wchar_t c)
 ** known ? strappend so often would probably be quite computation-hungry.
 ** See how this affects performance in the end.
 */
-
 static char		*build_utf8(wchar_t *unicode_str)
 {
 	char	*utf8_str;
@@ -76,7 +74,6 @@ static char		*build_utf8(wchar_t *unicode_str)
 /*
 ** FL_ZERO doesn't apply to strings
 */
-
 t_str			*handle_str_type(t_format info, va_list args)
 {
 	char	*str;
@@ -88,7 +85,6 @@ t_str			*handle_str_type(t_format info, va_list args)
 		str = ft_strdup((char*)va_arg(args, char*));
 	if (!str || !(result = (t_str*)malloc(sizeof(t_str))))
 		return (str_to_t_str("(null)"));
-////printf("\tbuild_pcs_str : %s\n", str);
 	if (info.prec != -1 && (t_u64)info.prec < ft_strlen(str))
 	{
 		if (info.len_flag == fl_l)
