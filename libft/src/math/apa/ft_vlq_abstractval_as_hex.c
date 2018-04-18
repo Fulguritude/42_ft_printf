@@ -19,10 +19,8 @@ char	*ft_vlq_abstractval_as_hex(t_vlq const vlq)
 	t_u32		i;
 	t_u32		len;
 
-	if (!vlq)
-		return (ft_strdup("(null_vlq)"));
-	if (vlq[0] == 0)
-		return (ft_strdup("0"));
+	if (!vlq || vlq[0] == 0)
+		return (ft_strdup(vlq ? "0" : "(null_vlq)"));
 	else if (vlq[0] == _MSB_)
 		return ("Invalid vlq in vlq_abstractval_as_hex");
 	result = NULL;

@@ -16,6 +16,7 @@ LFT		=	libft.a
 CC		=	gcc
 CFLAGS	=	-Wall -Werror -Wextra
 DBFLAGS =	-fsanitize=address
+#PLATFORM=	-DLINUX
 
 HDRDIR	=	./
 LFTDIR	=	./libft/
@@ -89,4 +90,4 @@ vlqtest:$(NAME)
 	@make clean
 	@printf "Done !\n"
 
-.PHONY: all clean re test vlqtest
+.PHONY: all clean re test vlqtest capstest

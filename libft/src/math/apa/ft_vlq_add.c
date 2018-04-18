@@ -32,21 +32,14 @@ t_vlq		ft_vlq_add(t_vlq const a, t_vlq const b)
 	carry = 0;
 	while (a_len >= 0 || b_len >= 0 || carry)
 	{
-//ft_printf("alen %d : blen %d\n", a_len, b_len);
 		cur_part = carry;
-//ft_printf("1 - res = %#lx, a = %#lx\n", cur_part, a[a_len]);
 		cur_part += (a_len >= 0) ? NOT_MSB(a[a_len]) : 0;
-//ft_printf("2 - res = %#lx, b = %#lx\n", cur_part, b[b_len]);
 		cur_part += (b_len >= 0) ? NOT_MSB(b[b_len]) : 0;
-//ft_printf("3 - res = %#lx\n", cur_part);
 		carry = MSB(cur_part);
-//ft_printf("4 - carry = %d\n", carry);
 		result[MAX(a_len, b_len) + 1] |= NOT_MSB(cur_part);
 		--a_len;
 		--b_len;
 	}
-//ft_putendl(ft_vlqhex(result));
 	ft_vlqtrim(&result);
-//ft_putendl(ft_vlqhex(result));
 	return (result);
 }

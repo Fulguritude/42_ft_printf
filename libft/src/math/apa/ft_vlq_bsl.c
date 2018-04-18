@@ -12,7 +12,6 @@
 
 #include "libft.h"
 
-//TODO Remove diff if necessary for moulinette, or see if the if else structure can employ smart ternaries ? 
 /*
 ** (diff = shift - vlqmsb_offset) > 0 iff there's a right shift on the first
 ** chunk, and at least 1 added new index. Also notice that for bsl chunks, those
@@ -47,27 +46,16 @@ static t_vlq	bsl_chunk_shift(t_vlq const vlq, t_u32 sm63,
 		if (diff > 0)
 		{
 			if (0 < i && i - 1 < len)
-{
 				tmp |= ft_u64bits_itoj(vlq[i - 1], 1 + sm63, 64) << sm63;
-//ft_printf("\t\t\t%2d - diff = %d > 0 READ 1; tmp = %20lx; sm63 == %d; voff == %d; vlq[i - 1] == %#lx\n", i, diff, tmp, sm63, vlqmsb_offset, vlq[i - 1]);
-}			if (i < len)
-{
+			if (i < len)
 				tmp |= ft_u64bits_itoj(vlq[i], 1, 1 + sm63) >> (63 - sm63);
-//ft_printf("\t\t\t%2d - diff = %d > 0 READ 2; tmp = %20lx; sm63 == %d; voff == %d; vlq[i    ] == %#lx\n", i, diff, tmp, sm63, vlqmsb_offset, vlq[i]);
-}
 		}
 		else
 		{
 			if (i < len)
-{
 				tmp |= ft_u64bits_itoj(vlq[i], 1 + sm63, 64) << sm63;
-//ft_printf("\t\t\t%2d - diff = %d <= 0 READ 1; tmp = %20lx; sm63 == %d; voff == %d; vlq[i    ] == %#lx\n", i, diff, tmp, sm63, vlqmsb_offset, vlq[i]);
-}
 			if (i + 1 < len)
-{
 				tmp |= ft_u64bits_itoj(vlq[i + 1], 1, 1 + sm63) >> (63 - sm63);
-//ft_printf("\t\t\t%2d - diff = %d <= 0 READ 2; tmp = %20lx; sm63 == %d; voff == %d; vlq[i + 1] == %#lx\n", i, diff, tmp, sm63, vlqmsb_offset, vlq[i + 1]);
-}
 		}
 		if ((i <= len && diff > 0) || (i < len && diff <= 0)) //TODO THIS CONDITION IN BSL
 			result[i] |= tmp;
@@ -95,17 +83,3 @@ t_vlq			ft_vlq_bsl(t_vlq const vlq, t_u32 shift)
 	}
 	return (result);
 }
-
-/*
-** 	max = 0x0de0b6b3a7640000
-			0 000 1101 1110 0000
-**	tmp = 0xef05b59d3b200000, 0x0000000000000000 (shift = 3)
-			1 110 1111 0000
-=> bitshift left 1 de trop et overwrite du bit souhaité qand shift = vlqmsb_os
-**
-**
-	max = 0x6bc75e2d63100000
-			0 110 1011 1100
-	tmp = 0x8000000000000006, 0x5e3af16b18800000 (shift = 3)
-					... 0110    0 101 1110 0011
-*/
