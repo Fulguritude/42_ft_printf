@@ -6,7 +6,7 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/05 15:51:47 by tduquesn          #+#    #+#             */
-/*   Updated: 2018/02/20 17:02:19 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/04/18 21:26:57 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,13 @@ int				ft_vasprintf(char **res, const char *format, va_list args)
 	res_lststr = NULL;
 	i = -1;
 	while (fmt_strls[++i])
-	{
-		convert_str(fmt_strls[i], &res_lststr, args);
-	}
+		if (convert_str(fmt_strls[i], &res_lststr, args) == ERROR)
+		{
+			*res = NULL;
+			ft_strlsdel(&fmt_strls);
+			ft_lstdel(&res_lststr, del_t_str);
+			return (-1);
+		}
 	tmp_res = to_single_t_str(res_lststr);
 	*res = tmp_res.data;
 	ft_strlsdel(&fmt_strls);

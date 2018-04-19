@@ -150,6 +150,12 @@ t_u32			ft_vlq_count_sigbit(t_vlq vlq);
 char			*ft_vlqhex(t_vlq const vlq);
 
 /*
+** Returns the abstract value represented by vlq as a string of hexadecimal
+** digits.
+*/
+char			*ft_vlq_abstractval_as_hex(t_vlq const vlq);
+
+/*
 ** Returns the vlq without its leading zeros. This version reallocates to avoid
 ** future problems with free on *a_vlq.
 */ 
@@ -249,9 +255,13 @@ void			ft_vlq_bsr_acc(t_vlq *vlq, t_u32 shift);
 t_vlq			ft_vlq_getpow10(t_u32 exp10);
 
 /*
+** Returns returns the value res = 10^n <= vlq < 10^(n+1) as a vlq.
+*/
+t_vlq			ft_vlq_get_greatest_sub_pow10(t_vlq const vlq);
+
+/*
 ** TODO bwa bwa_acc bwo bwo_acc
 */
-
 
 /*
 ** Very Long Float / Variable length float
@@ -278,9 +288,9 @@ typedef struct	s_vlf
 /*
 ** =========== VLF Functions ==========
 */
-
-//TODO
-
-//div = mul by inverse ? If so, how does one compute the inverse ? Make sure to warn if infinite fraction !
-
+/*
+** TODO
+**
+** div = mul by inverse ? If so, how does one compute the inverse ? Make sure to warn if infinite fraction !
+*/
 #endif

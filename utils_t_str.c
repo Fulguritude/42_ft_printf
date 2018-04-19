@@ -12,6 +12,9 @@
 
 #include "ft_printf.h"
 
+
+#include <stdio.h>
+
 void		del_t_str(void *content, size_t content_size)
 {
 	t_str	*tstr;
@@ -58,6 +61,7 @@ t_str		*str_to_t_str(char const *str)
 	{
 		result->data = NULL;
 		result->len = -1;
+		return (result);
 	}
 	else
 	{

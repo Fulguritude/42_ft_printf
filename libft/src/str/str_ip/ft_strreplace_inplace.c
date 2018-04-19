@@ -16,9 +16,13 @@ void	ft_strreplace_inplace(char **a_str, char const *sub, char const *rep)
 {
 	char	*tmp;
 
-	if (ft_stristr(*a_str, sub) == -1)
-		return ;
-	tmp = ft_strreplace(*a_str, sub, rep);
-	ft_strdel(a_str);
-	*a_str = tmp;
+	if (a_str)
+		if (*a_str && sub && rep)
+		{
+			if (ft_stristr(*a_str, sub) == -1)
+				return ;
+			tmp = ft_strreplace(*a_str, sub, rep);
+			ft_strdel(a_str);
+			*a_str = tmp;
+		}
 }

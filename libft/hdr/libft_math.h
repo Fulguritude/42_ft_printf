@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libft_math.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/04/19 22:32:41 by fulguritu         #+#    #+#             */
+/*   Updated: 2018/04/19 22:32:42 by fulguritu        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef __LIBFT_MATH_H
 # define __LIBFT_MATH_H
 
@@ -222,8 +234,6 @@ t_u8					ft_is_valid_nbstr_in_base(char const *nbstr,
 ** Returns the index of c in base, which is also its digit value. Inputting '\0'
 ** for c returns strlen, absence of c in base returns -1.
 */
-
 int						ft_in_base(char c, char const *base);
-
 
 #endif

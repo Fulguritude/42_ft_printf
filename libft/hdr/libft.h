@@ -144,12 +144,6 @@ char		*ft_str_base_to_base_expn(char const *str, char const *base_f,
 char		*ft_str_base_expn_to_base(char const *str, char const *base_f,
 									char const *base_t, t_u32 expn);
 
-char		*ft_vlq_abstractval_as_hex(t_vlq const vlq);
-
-
-t_vlq		ft_vlq_get_greatest_sub_pow10(t_vlq const vlq);
-
-
 char		*ft_lftoa(double lf, char style);
 
 #endif

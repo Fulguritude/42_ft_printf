@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 16:02:45 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/04/16 16:02:50 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/04/18 21:25:05 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ char			*ft_ivartoa_base(intmax_t n, char const *base, t_u8 bytes,
 	return (res);
 }
 
-void	convert_str(char const *fmt_part, t_list **a_lststr, va_list args)
+int		convert_str(char const *fmt_part, t_list **a_lststr, va_list args)
 {
 	char		type;
 	t_format	format_info;
@@ -130,5 +130,11 @@ void	convert_str(char const *fmt_part, t_list **a_lststr, va_list args)
 			result = handle_format(format_info, fmt_part, args);
 		}
 	}
+	if (result->len == -1)
+	{
+		free(result);
+		return (ERROR);
+	}
 	ft_lstappend(a_lststr, ft_lstnew_no_copy(result, sizeof(t_str)));
+	return (OK);
 }

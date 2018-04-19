@@ -191,7 +191,7 @@ int				ft_vasprintf(char **res, const char *format, va_list args);
 ** converters.c
 */
 char			**format_to_strls(char const *format);
-void			convert_str(char const *fmt_part, t_list **a_lststr,
+int				convert_str(char const *fmt_part, t_list **a_lststr,
 							va_list args);
 char			*ft_ivartoa_base(intmax_t n, char const *base, t_u8 bytes,
 									t_u8 sign);

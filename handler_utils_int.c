@@ -102,6 +102,8 @@ static t_str	*build_int_str(t_format info, intmax_t n, t_u8 bytes)
 	int		digits;
 	t_str	*result;
 
+	if (n == 0 && info.type_char == 'p')
+		return (str_to_t_str("(nil)"));
 	if (!(result = (t_str*)malloc(sizeof(t_str))))
 		return (NULL);
 	str = val_to_str(info, n, &digits, bytes);

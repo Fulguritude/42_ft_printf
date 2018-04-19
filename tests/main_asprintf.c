@@ -32,21 +32,23 @@
 ** string that's returned. Since the length doesn't change, this is easy.
 */
 
-# define _MAIN_TESTS_						1
+# define _MAIN_TESTS_						1 //mandatory
 #  define INT_HANDLER						1
 #  define STR_HANDLER						1
-#   define UNSET_LOCALE						0
+#   define UNSET_LOCALE						1
 #  define OTHER_HANDLER						1
 # define MAIN_TESTS							_MAIN_TESTS_ && (INT_HANDLER || STR_HANDLER || OTHER_HANDLER)
 
 # define _FLOAT_BONUSES_					1
 #  define PERCENT_aA						1 //medium, easier than it looks
-#  define PERCENT_eE						1 //very hard, or slow if you go through %f first like me
+#  define PERCENT_eE						1 //very hard, or some much slower cases if you go through %f first like me
 #  define PERCENT_fF						1 //hard
 #  define PERCENT_gG						1 //mostly dependent on e and f, but this one is harder than it seems
 #  define SPECIAL_CASES						1 && (PERCENT_aA || PERCENT_eE || PERCENT_fF || PERCENT_gG)
 #  define NORMAL_CASES						1 && (PERCENT_aA || PERCENT_eE || PERCENT_fF || PERCENT_gG)
 # define FLOAT_BONUSES						_FLOAT_BONUSES_ && (NORMAL_CASES || SPECIAL_CASES)
+
+#  define LOCALE_NB_SEP						1 //if 0, handles int and float with locale set to "C"
 
 # define _SMALL_BONUSES_					0
 #  define PERCENT_b							1 //easy if you've done int handling well
@@ -134,8 +136,8 @@
 **		https://randomascii.wordpress.com/2012/03/08/float-precisionfrom-zero-to-100-digits-2/
 **
 **	 -	Setlocale affects which separator is used for floats: ',' or '.'. To
-**		avoid this behavior, our test calls setlocale(LC_ALL, "C") after checks
-**		on strings. It also affects atof etc, so be careful
+**		avoid this behavior, our test has a macro to call setlocale(LC_ALL, "C")
+**		after checks on strings. The locale also affects atof etc, so be careful
 **
 **	 -	Useful links:
 **			- http://www.ryanjuckett.com/programming/printing-floating-point-numbers/
@@ -233,6 +235,7 @@ static void	ft_strnb_charnb_in_strls(const char **strls, int *w_nb, int *c_nb)
 		str_at++;
 	}
 	*w_nb = str_at;
+	w
 }
 
 static void	ft_build_str(char *dest, char const **strls, char const *sep)
@@ -451,6 +454,9 @@ static int	check_retvals(int j, int *return_values, char **a_str1, char *str2)
 	}
 	printf("\n");
 
+
+printf("\tft_str :%p\n\t   str :%p\n", *a_str1, str2);
+printf("\tft_str :%s\n\t   str :%s\n", *a_str1, str2);
 	ft_strreplace_inplace(a_str1, "ft_", "   ");
 	if (ft_strequ(*a_str1, str2))
 	{
@@ -482,7 +488,14 @@ int		main(int argc, char **argv)
 {
 	char		*str1 = NULL;
 	char		*str2 = NULL;
-	char		*input = NULL;
+
+#if MAIN_TESTS || FLOAT_BONUSES
+	char		*input;
+	int			str_fails = -1;
+	int 		i = -1;
+	int 		j = 0;
+	int 		return_values[1000];
+
 
 /*
 ** A single argument can be given, this argument will be sent to both an atoi
@@ -491,22 +504,10 @@ int		main(int argc, char **argv)
 ** of the file.
 */
 	if (argc > 1)
+	{
 		input = argv[1];
-
-#if MAIN_TESTS || FLOAT_BONUSES
-	int			str_fails = -1;
-	int 		i = -1;
-	int 		j = 0;
-	int 		return_values[1000];
-	t_varint	vint;
-
-// Make sure to have your uatoi handle unsigned long, or just use strtoul
-	t_u32		test_int	= input ? strtoul(input, NULL, 10) : 1010101010;
-//-123; //123 is ..0007B in memory; -123 is ..FFF85 in memory
-//	long		test_int2	= input ? strtol(input, NULL, 10) : -0x123456789ABCDEF0;
-//-123456; //123456 is ..0001E240 in memory; -123456 is ..
-	vint.sl					= input ? strtoul(input, NULL, 10) : 1234567890123;
-
+		printf("\nInput is : %s\n", input);
+	}
 /*
 ** Before setlocale
 ** Note that the first test is %c with zero: this is important for check_retvals
@@ -516,7 +517,6 @@ int		main(int argc, char **argv)
 #  if STR_HANDLER
 	char		*null = NULL;
 	wchar_t		*wcnull = NULL;
-
 
 	printf(C_YELLOW"\n/!\\ Note that our string comparison test is not reliable for %%c with argument zero."C_RESET);
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
@@ -659,10 +659,10 @@ printf("\n\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf %%.6ls: %.6ls\n", L"résumé ls");
 	  return_values[j++] =    asprintf(&str2, "   printf %%.6ls: %.6ls\n", L"résumé ls");
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
-	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
-	  return_values[j++] = ft_asprintf(&str1, "ft_printf %%.6S: %.6S\n", L"résumé S");
-	  return_values[j++] =    asprintf(&str2, "   printf %%.6S: %.6S\n", L"résumé S");
-	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+//	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_asprintf(&str1, "ft_printf %%.6S: %.6S\n", L"résumé S");
+//	  return_values[j++] =    asprintf(&str2, "   printf %%.6S: %.6S\n", L"résumé S");
+//	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 //	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 //	  return_values[j++] = ft_asprintf(&str1, "ft_printf %%lls: %lls\n", L"résumé lls");
 //	  return_values[j++] =    asprintf(&str2, "   printf %%lls: %lls\n", L"résumé lls");
@@ -760,12 +760,27 @@ printf("\n\n");
 //	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %013.6ls\n", "%013.6ls", L"ééé   printf");
 //	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 
-
 	setlocale(LC_ALL, "C");
 
 #  endif
 
 #  if INT_HANDLER
+
+
+#   if LOCALE_NB_SEP
+	setlocale(LC_ALL, "");
+#   endif
+
+
+	t_varint	vint;
+
+// Make sure to have your uatoi handle unsigned long, or just use strtoul
+	t_u32		test_int	= input ? strtoul(input, NULL, 10) : 1010101010;
+//-123; //123 is ..0007B in memory; -123 is ..FFF85 in memory
+//	long		test_int2	= input ? strtol(input, NULL, 10) : -0x123456789ABCDEF0;
+//-123456; //123456 is ..0001E240 in memory; -123456 is ..
+	vint.sl					= input ? strtoul(input, NULL, 10) : 1234567890123;
+
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf\n");
 	  return_values[j++] =    asprintf(&str2, "   printf\n");
@@ -1183,6 +1198,10 @@ printf("\n\n");
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %p\n", "%p", &i);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %p\n", "%p", &i);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s with NULL gives %p\n", "%p", NULL);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s with NULL gives %p\n", "%p", NULL);
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %15p\n", "%15p", &i);

@@ -1,0 +1,533 @@
+Norme: ./Makefile
+Warning: Not a valid file
+Norme: ./normlog
+Warning: Not a valid file
+Norme: ./hdr/libft.h
+Error: global scope bad aligned
+Error (line 18): spaces at the end of line
+Error (line 42): C++ comment
+Error (line 42): line has 86 characters
+Error (line 59): must have tabulations between t_s64 and t_u8
+Error (line 91): #  include "libft_lst.h" should be before line 56
+Error (line 94): #  include "libft_io.h" should be before line 56
+Error (line 97): #  include "libft_mem.h" should be before line 56
+Error (line 100): #  include "libft_str.h" should be before line 56
+Error (line 103): #  include "libft_math.h" should be before line 56
+Error (line 106): #  include "libft_apa.h" should be before line 56
+Error (line 139): multiple empty lines
+Error (line 140): multiple empty lines
+Error (line 149): multiple empty lines
+Error (line 152): multiple empty lines
+Norme: ./hdr/libft_io.h
+Error: 42 header not at top of the file
+Error (line 10): C++ comment
+Error (line 21): C++ comment
+Error (line 22): C++ comment
+Error (line 135): C++ comment
+Norme: ./hdr/libft_lst.h
+Error: 42 header not at top of the file
+Error (line 12): #  include "libft.h" should be before line 4
+Norme: ./hdr/libft_math.h
+Error: 42 header not at top of the file
+Error (line 228): multiple empty lines
+Norme: ./hdr/libft_apa.h
+Error (line 44): comment not well formatted
+Error (line 142): spaces at the end of line
+Error (line 155): must begin only by tabulations
+Error (line 155): spaces at the end of line
+Error (line 205): C++ comment
+Error (line 210): C++ comment
+Error (line 255): multiple empty lines
+Error (line 282): C++ comment
+Error (line 284): C++ comment
+Error (line 284): line has 108 characters
+Norme: ./hdr/libft_mem.h
+Error: 42 header not at top of the file
+Norme: ./src/io/ft_putchar.c
+Norme: ./src/io/ft_putchar_fd.c
+Norme: ./src/io/ft_putendl.c
+Norme: ./src/ft_str_base_expn_to_base.c
+Error (line 15): Space before function name
+Norme: ./src/io/ft_putlst.c
+Norme: ./src/ft_str_base_to_base_expn.c
+Error: file must end with a single empty line
+Error (line 15): function convert_base_to_basen has 28 lines
+Error (line 37): spaces at the end of line
+Error (line 67): multiple empty lines
+Norme: ./src/io/ft_putlst_fd.c
+Norme: ./src/io/ft_putlstelem.c
+Norme: ./src/io/ft_putlstelem_fd.c
+Norme: ./src/io/ft_putmem.c
+Error (line 18): spaces at the end of line
+Norme: ./src/io/ft_putnbr.c
+Norme: ./src/io/ft_putnbr_fd.c
+Norme: ./src/io/ft_putnbr_lst_fd.c
+Norme: ./hdr/libft_str.h
+Error: 42 header not at top of the file
+Error (line 279): spaces at the end of line
+Error (line 338): spaces at the end of line
+Error (line 369): spaces at the end of line
+Error (line 462, col 14): space after pointer
+Error (line 470, col 15): space after pointer
+Norme: ./src/io/ft_putstr.c
+Norme: ./src/io/ft_putendl_fd.c
+Norme: ./src/io/ft_putnbr_lstelem_fd.c
+Norme: ./src/io/ft_putstrls.c
+Norme: ./src/io/ft_putstrls_fd.c
+Norme: ./src/lst/ft_lstadd.c
+Norme: ./src/lst/ft_lstappend.c
+Norme: ./src/io/ft_putmem_fd.c
+Error (line 40): spaces at the end of line
+Norme: ./src/lst/ft_lstcpy.c
+Norme: ./src/io/ft_putstr_fd.c
+Norme: ./src/lst/ft_lstdelone.c
+Norme: ./src/lst/ft_lstfold.c
+Norme: ./src/lst/ft_lstdel.c
+Norme: ./src/lst/ft_lstget.c
+Norme: ./src/lst/ft_lstiter.c
+Norme: ./src/lst/ft_lstmap.c
+Norme: ./src/lst/ft_lstnew.c
+Norme: ./src/lst/ft_lstsize.c
+Norme: ./src/lst/ft_lstnew_no_copy.c
+Norme: ./src/lst/ft_lststr_to_single_chunk.c
+Norme: ./src/lst/ft_lstsub.c
+Norme: ./src/lst/ft_lststr_to_strls.c
+Norme: ./src/lst/ft_lstpop.c
+Norme: ./src/math/apa/ft_vlq_add_acc.c
+Norme: ./src/math/apa/ft_vlq_add.c
+Error (line 21): bad spacing before ft_vlq_add
+Norme: ./src/math/apa/ft_vlq_abstractval_as_hex.c
+Norme: ./src/math/apa/ft_vlq_bsl_acc.c
+Norme: ./src/math/apa/ft_vlq_bsr_acc.c
+Norme: ./src/math/apa/ft_vlq_count_sigbit.c
+Error (line 16): spaces at the end of line
+Error (line 19): bad spacing before ft_vlq_count_sigbit
+Norme: ./src/math/apa/ft_vlq_count_sigbit_of_part.c
+Error: file must end with a single empty line
+Error (line 19): bad spacing before ft_vlq_count_sigbit_of_part
+Norme: ./src/math/apa/ft_vlq_bsl.c
+Error (line 25): spaces at the end of line
+Error (line 30): function bsl_chunk_shift has 32 lines
+Error (line 30): declarations must be followed by one empty line in bsl_chunk_shift
+Error (line 30): bad spacing before bsl_chunk_shift
+Error (line 30): spaces at the end of line
+Error (line 38): spaces at the end of line
+Error (line 60): missing newline after if
+Error (line 60): C++ comment
+Error (line 60): line has 91 characters
+Error (line 70): bad spacing before ft_vlq_bsl
+Norme: ./src/math/apa/ft_vlq_div.c
+Norme: ./src/math/apa/ft_atovlq.c
+Error (line 19): function bin_atovlq has 27 lines
+Error (line 19): bad spacing before bin_atovlq
+Error (line 71): spaces at the end of line
+Error (line 71, col 17): bad character after ;
+Error (line 111): bad spacing before ft_atovlq
+Norme: ./src/math/apa/ft_vlq_bsr.c
+Error: global scope bad aligned
+Error (line 15): C++ comment
+Error (line 23): function bsr_chunk_shift has 29 lines
+Error (line 23): declarations must be followed by one empty line in bsr_chunk_shift
+Error (line 23): bad spacing before bsr_chunk_shift
+Error (line 23): spaces at the end of line
+Error (line 30): spaces at the end of line
+Error (line 39): C++ comment
+Error (line 43): line has 82 characters
+Error (line 51): C++ comment
+Error (line 60): bad spacing before ft_vlq_bsr
+Error (line 74): C++ comment
+Error (line 74): line has 105 characters
+Norme: ./src/math/apa/ft_vlq_divmod.c
+Error: global scope bad aligned
+Error (line 1): must begin only by tabulations
+Error (line 1): line has 82 characters
+Error (line 24): bad spacing before ft_vlqlexcmp
+Error (line 36): spaces at the end of line
+Error (line 36, col 1): no newline after block
+Error (line 43): comment not well formatted
+Error (line 43): comment not well placed
+Error (line 45): line has 148 characters
+Error (line 54): bad spacing before ft_vlq_is_pow2_divisible
+Error (line 61): spaces at the end of line
+Error (line 85): spaces at the end of line
+Error (line 87): function do_vlqdiv has 38 lines
+Error (line 87): bad spacing before do_vlqdiv
+Error (line 91): C++ comment
+Error (line 96): C++ comment
+Error (line 99): spaces at the end of line
+Error (line 99, col 1): no newline after block
+Error (line 100): comment not well formatted
+Error (line 100): line has 86 characters
+Error (line 100): comment not well placed
+Error (line 101): line has 162 characters
+Error (line 108): C++ comment
+Error (line 108): line has 87 characters
+Error (line 110): C++ comment
+Error (line 113): C++ comment
+Error (line 114, col 2): no empty line before block
+Error (line 115): C++ comment
+Error (line 116): comment not well formatted
+Error (line 116): comment not well placed
+Error (line 120): comment not well formatted
+Error (line 120): comment not well placed
+Error (line 138): spaces at the end of line
+Error (line 148): function ft_vlq_divmod has 36 lines
+Error (line 148): bad spacing before ft_vlq_divmod
+Error (line 162): bad indentation
+Error (line 162): must begin only by tabulations
+Error (line 165): spaces at the end of line
+Error (line 170): line has 83 characters
+Error (line 171): Empty line
+Error (line 172): multiple empty lines
+Error (line 172): Empty line
+Error (line 175): Empty line
+Error (line 176): comment not well formatted
+Error (line 176): comment not well placed
+Error (line 177): line has 130 characters
+Error (line 181): bad indentation
+Error (line 182): C++ comment
+Error (line 184): C++ comment
+Norme: ./src/math/apa/ft_vlq_get_greatest_sub_pow10.c
+Error (line 53): bad spacing before ft_vlq_get_greatest_sub_pow10
+Norme: ./src/math/apa/ft_vlq_mul_acc.c
+Norme: ./src/math/apa/ft_vlq_getpow2.c
+Error (line 18): bad spacing before ft_vlq_getpow2
+Error (line 28): spaces at the end of line
+Error (line 36): spaces at the end of line
+Error (line 36, col 16): bad character after ;
+Norme: ./src/math/apa/ft_vlq_getpow10.c
+Error: global scope bad aligned
+Error (line 15): bad spacing after get_larger_pow10
+Error (line 18): must begin only by tabulations
+Error (line 18, col 15): space before ,
+Error (line 18, col 15): bad character after ,
+Error (line 34): comment not well formatted
+Error (line 68): function get_large_pow10 has 27 lines
+Error (line 68): bad spacing before get_large_pow10
+Error (line 72, col 26): missing space around =
+Error (line 80): must begin only by tabulations
+Error (line 101): spaces at the end of line
+Error (line 104): bad spacing before ft_vlq_getpow10
+Norme: ./src/math/apa/ft_vlq_pow.c
+Error (line 18): function ft_vlq_pow has 26 lines
+Error (line 18): bad spacing before ft_vlq_pow
+Norme: ./src/math/apa/ft_vlq_sub_acc.c
+Error (line 20): bad spacing before ft_vlq_sub_acc
+Error (line 26): spaces at the end of line
+Norme: ./src/math/apa/ft_vlqcmp.c
+Norme: ./src/math/apa/ft_vlqdup.c
+Norme: ./src/math/apa/ft_vlq_sub.c
+Error: global scope bad aligned
+Error (line 14): preprocessor block must be followed by one empty line
+Error (line 15): Space before function name
+Error (line 15): bad spacing before do_sub_parts
+Error (line 27): spaces at the end of line
+Error (line 34): spaces at the end of line
+Error (line 42): bad spacing after do_vlqsub
+Error (line 62): function do_vlqsub has 30 lines
+Error (line 62): C++ comment
+Error (line 62): bad spacing before do_vlqsub
+Error (line 76): C++ comment
+Error (line 78): C++ comment
+Error (line 78): line has 83 characters
+Error (line 80): C++ comment
+Error (line 80): line has 83 characters
+Error (line 83): C++ comment
+Error (line 85): C++ comment
+Error (line 86): C++ comment
+Error (line 90): C++ comment
+Error (line 92): C++ comment
+Error (line 99): bad spacing before ft_vlq_sub
+Error (line 109): C++ comment
+Error (line 110): C++ comment
+Norme: ./src/math/apa/ft_vlqhex.c
+Error (line 18): bad spacing before ft_vlqhex
+Norme: ./src/math/apa/ft_vlqlen.c
+Norme: ./src/math/apa/ft_vlqnew.c
+Norme: ./src/math/apa/ft_vlq_mul.c
+Error (line 24): function ft_vlq_ispow2 has 26 lines
+Error (line 24): bad spacing before ft_vlq_ispow2
+Error (line 50): C++ comment
+Error (line 58): bad spacing before ft_vlq_count_active_bits
+Error (line 82): function do_vlqmul has 49 lines
+Error (line 82): declarations in do_vlqmul must be at the top of the function
+Error (line 82): declarations must be followed by one empty line in do_vlqmul
+Error (line 82): bad spacing before do_vlqmul
+Error (line 82, col 7): do_vlqmul has 8 variables
+Error (line 92): C++ comment
+Error (line 97): C++ comment
+Error (line 97): line has 92 characters
+Error (line 102): preprocessor block must be followed by one empty line
+Error (line 103): bad indentation
+Error (line 103): multiple declarations
+Error (line 104): C++ comment
+Error (line 105): Empty line
+Error (line 106): C++ comment
+Error (line 107): Empty line
+Error (line 108): bad indentation
+Error (line 109): bad indentation
+Error (line 110): bad indentation
+Error (line 111): bad indentation
+Error (line 111): line has 160 characters
+Error (line 112): 3 instructions
+Error (line 112): bad indentation
+Error (line 112, col 15): bad character after ;
+Error (line 112, col 32): bad character after ;
+Error (line 113): Empty line
+Error (line 114): bad indentation
+Error (line 115): bad indentation
+Error (line 116): bad indentation
+Error (line 117): bad indentation
+Error (line 117): line has 160 characters
+Error (line 118): 3 instructions
+Error (line 118): bad indentation
+Error (line 118, col 15): bad character after ;
+Error (line 118, col 32): bad character after ;
+Error (line 119): preprocessor block must be followed by one empty line
+Error (line 121): preprocessor block must be followed by one empty line
+Error (line 122): bad indentation
+Error (line 123): bad indentation
+Error (line 124): bad indentation
+Error (line 125): Empty line
+Error (line 126): bad indentation
+Error (line 127): bad indentation
+Error (line 128): bad indentation
+Error (line 129): preprocessor block must be followed by one empty line
+Error (line 141): bad spacing before ft_vlq_mul
+Norme: ./src/math/apa/ft_vlqtoa_base.c
+Error: global scope bad aligned
+Error (line 18): bad spacing before vlqpart_to_tmp_binstr
+Error (line 37): bad spacing before vlq_to_binstr
+Error (line 64): function vlq_to_anybase has 26 lines
+Error (line 64): bad spacing before vlq_to_anybase
+Error (line 81): Empty line
+Error (line 82): comment not well formatted
+Error (line 82): line has 130 characters
+Error (line 82): comment not well placed
+Error (line 83): line has 150 characters
+Error (line 90): C++ comment
+Error (line 94): comment not well formatted
+Error (line 97): line has 102 characters
+Error (line 103): function ft_vlqtoa_base has 27 lines
+Error (line 114): C++ comment
+Error (line 115): C++ comment
+Error (line 119): spaces at the end of line
+Error (line 119, col 29): bad character after ;
+Error (line 124): line has 82 characters
+Norme: ./src/math/apa/ft_vlqdel.c
+Norme: ./src/math/conv/ft_atoi.c
+Norme: ./src/math/apa/ft_vlqtrim.c
+Error (line 18): must begin only by tabulations
+Error (line 18): spaces at the end of line
+Error (line 19): bad spacing before ft_vlqtrim
+Norme: ./src/math/conv/ft_atoi_base.c
+Norme: ./src/math/conv/ft_digits.c
+Norme: ./src/math/conv/ft_atoui_base.c
+Norme: ./src/math/conv/ft_in_base.c
+Norme: ./src/math/conv/ft_digits_base.c
+Norme: ./src/math/conv/ft_convert_base.c
+Norme: ./src/math/conv/ft_itoa.c
+Norme: ./src/math/conv/ft_imaxtoa_base.c
+Error: 42 header not well formatted
+Norme: ./src/math/conv/ft_is_valid_nbstr_in_base.c
+Norme: ./src/math/conv/ft_is_valid_base.c
+Norme: ./src/math/conv/ft_itoa_base.c
+Norme: ./src/math/conv/ft_udigits_base.c
+Norme: ./src/math/conv/ft_uconvert_base.c
+Norme: ./src/math/op/ft_ceil.c
+Norme: ./src/math/conv/ft_uimaxtoa_base.c
+Norme: ./src/math/conv/ft_uitoa_base.c
+Norme: ./src/math/op/ft_ilog2.c
+Error (line 19): bad spacing before ft_ilog2
+Norme: ./src/math/op/ft_floor.c
+Error (line 15): C++ comment
+Norme: ./src/math/op/ft_ipowi.c
+Norme: ./src/math/op/ft_lfpowi.c
+Norme: ./src/math/op/ft_ln.c
+Warning: /Users/tduquesn/Workspace/ft_printf/git_files/libft/src/math/op/ft_ln.c may not compile or is invalid for some reasons.
+Norme: ./src/math/op/ft_max.c
+Norme: ./src/math/op/ft_min.c
+Norme: ./src/math/op/ft_umax.c
+Norme: ./src/math/op/ft_umin.c
+Norme: ./src/mem/ft_bzero.c
+Norme: ./src/math/conv/ft_lftoa.c
+Error: 42 header must be followed by one empty line
+Error (line 59): spaces at the end of line
+Error (line 59, col 37): bad character after ;
+Error (line 101): spaces at the end of line
+Error (line 103): bad spacing before ft_lftoa_exp
+Norme: ./src/math/op/ft_exp.c
+Norme: ./src/mem/ft_memalloc.c
+Norme: ./src/math/op/ft_logn.c
+Error (line 18): bad spacing before ft_logn
+Norme: ./src/mem/ft_delete.c
+Norme: ./src/mem/ft_memchr.c
+Norme: ./src/mem/ft_memcmp.c
+Norme: ./src/mem/ft_memcpy.c
+Norme: ./src/mem/ft_memccpy.c
+Norme: ./src/mem/ft_memdel.c
+Norme: ./src/mem/ft_memdup.c
+Norme: ./src/mem/ft_memset.c
+Norme: ./src/mem/ft_ptrarrlen.c
+Norme: ./src/mem/ft_ptrarrnew.c
+Norme: ./src/mem/ft_memmove.c
+Norme: ./src/str/char/ft_isalnum.c
+Norme: ./src/mem/ft_memhex.c
+Norme: ./src/str/char/ft_isalpha.c
+Norme: ./src/str/char/ft_isascii.c
+Norme: ./src/mem/ft_u64bits_itoj.c
+Error (line 17): spaces at the end of line
+Error (line 25): bad spacing before ft_u64bits_itoj
+Error (line 32): C++ comment
+Error (line 32): line has 113 characters
+Error (line 33): C++ comment
+Error (line 34): C++ comment
+Error (line 35): C++ comment
+Error (line 36): C++ comment
+Error (line 36): line has 87 characters
+Norme: ./src/str/char/ft_isdigit.c
+Norme: ./src/str/char/ft_isprint.c
+Norme: ./src/str/char/ft_isspace.c
+Norme: ./src/str/char/ft_isupper.c
+Norme: ./src/str/char/ft_tolower.c
+Norme: ./src/str/char/ft_toupper.c
+Norme: ./src/mem/ft_swap.c
+Norme: ./src/str/char/ft_islower.c
+Norme: ./src/str/str/ft_strcat.c
+Norme: ./src/str/str/ft_str_countchar.c
+Norme: ./src/str/str/ft_strcdup.c
+Norme: ./src/str/str/ft_strchr.c
+Norme: ./src/str/str/ft_strcmp.c
+Norme: ./src/str/str/ft_strclr.c
+Norme: ./src/str/str/ft_strcpy.c
+Norme: ./src/str/str/ft_strdup.c
+Norme: ./src/str/str/ft_strdel.c
+Norme: ./src/str/str/ft_strequ.c
+Norme: ./src/str/str/ft_strfind.c
+Norme: ./src/str/str/ft_str_toprint.c
+Norme: ./src/str/str/ft_strcnew.c
+Error (line 18): bad spacing before ft_strcnew
+Norme: ./src/str/str/ft_striter.c
+Norme: ./src/str/str/ft_stristr.c
+Norme: ./src/str/str/ft_strhex.c
+Norme: ./src/str/str/ft_striteri.c
+Norme: ./src/str/str/ft_strlcat.c
+Norme: ./src/str/str/ft_strlen.c
+Norme: ./src/str/str/ft_strjoin.c
+Norme: ./src/str/str/ft_strlcpy.c
+Norme: ./src/str/str/ft_strmap.c
+Norme: ./src/str/str/ft_strmapi.c
+Norme: ./src/str/str/ft_strncat.c
+Norme: ./src/str/str/ft_strncmp.c
+Norme: ./src/str/str/ft_strnequ.c
+Norme: ./src/str/str/ft_strnew.c
+Error (line 18): bad spacing before ft_strnew
+Norme: ./src/str/str/ft_strncpy.c
+Norme: ./src/str/str/ft_strpad_left.c
+Norme: ./src/str/str/ft_strpad_right.c
+Norme: ./src/str/str/ft_strnstr.c
+Norme: ./src/str/str/ft_strremove.c
+Norme: ./src/str/str/ft_strrchr.c
+Norme: ./src/str/str/ft_strreplace.c
+Norme: ./src/str/str/ft_strsub.c
+Norme: ./src/str/str/ft_strrev.c
+Norme: ./src/str/str/ft_strstr.c
+Norme: ./src/str/str_ip/ft_str_toupper.c
+Norme: ./src/str/str/ft_strtrim.c
+Norme: ./src/str/str_ip/ft_strappend.c
+Norme: ./src/str/str_ip/ft_str_csubstitute.c
+Error (line 18): spaces at the end of line
+Error (line 20): bad spacing before ft_str_csubstitute
+Norme: ./src/str/str_ip/ft_strctrim_right_inplace.c
+Error (line 17, col 4): bad spacing
+Norme: ./src/str/str_ip/ft_strinsert.c
+Norme: ./src/str/str_ip/ft_strctrim_left_inplace.c
+Norme: ./src/str/str_ip/ft_strntrim_left_inplace.c
+Norme: ./src/str/str_ip/ft_strmerge.c
+Norme: ./src/str/str_ip/ft_strntrim_right_inplace.c
+Norme: ./src/str/str_ip/ft_strpad_insert_inplace.c
+Norme: ./src/str/str_ip/ft_strpad_right_inplace.c
+Norme: ./src/str/str_ip/ft_strpad_left_inplace.c
+Norme: ./src/str/str_ip/ft_strreplace_inplace.c
+Norme: ./src/str/str_ip/ft_strprepend.c
+Error: 42 header not well formatted
+Error (line 4): line has 82 characters
+Norme: ./src/str/strls/ft_strcsplit.c
+Norme: ./src/str/str_ip/ft_strrev_inplace.c
+Norme: ./src/str/str_ip/ft_strsub_rm_inplace.c
+Error (line 15): declarations must be followed by one empty line in ft_strsub_rm_inplace
+Error (line 19): spaces at the end of line
+Norme: ./src/str/strls/ft_strls_countchar.c
+Norme: ./src/str/strls/ft_strlsdel.c
+Norme: ./src/str/strls/ft_strdivide.c
+Norme: ./src/str/strls/ft_strlscnew.c
+Norme: ./src/str/strls/ft_strlsmap.c
+Error (line 15, col 44): space after pointer
+Norme: ./src/str/strls/ft_strlsmap_inplace.c
+Error (line 15): multiple empty lines
+Error (line 16): bad spacing before ft_strlsmap_inplace
+Error (line 16, col 47): space after pointer
+Norme: ./src/str/strls/ft_strlsnew.c
+Norme: ./src/str/strls/ft_strlssub.c
+Norme: ./src/str/strls/ft_strlspad_left.c
+Norme: ./src/str/strls/ft_split.c
+Norme: ./src/str/strls/ft_strlsjoin.c
+Norme: ./src/str/strls/ft_strsplitstr.c
+Error (line 86): spaces at the end of line
+Error (line 86, col 6): bad character after ;
+Norme: ./ft_printf.c
+Norme: ./converter_utils_rdfmt.c
+Error (line 43): bad spacing after read_format_width
+Error (line 48): missing newline after if
+Error (line 48): spaces at the end of line
+Error (line 60): multiple empty lines
+Error (line 61): bad spacing before read_format_prec
+Error (line 67): missing newline after if
+Error (line 67): spaces at the end of line
+Error (line 93): missing newline after if
+Error (line 93): spaces at the end of line
+Norme: ./converters.c
+Error: global scope bad aligned
+Error (line 38): spaces at the end of line
+Error (line 80): spaces at the end of line
+Error (line 81): spaces at the end of line
+Error (line 85): bad spacing before ft_ivartoa_base
+Norme: ./handler_utils_float.c
+Error (line 18): bad spacing before apply_float_width
+Error (line 20, col 4): bad spacing
+Error (line 68): spaces at the end of line
+Error (line 68, col 2): no newline after block
+Error (line 89): spaces at the end of line
+Error (line 101): bad spacing before handle_float_type
+Norme: ./handlers.c
+Error (line 21): spaces at the end of line
+Error (line 24): spaces at the end of line
+Error (line 29): spaces at the end of line
+Error (line 34): spaces at the end of line
+Error (line 37): spaces at the end of line
+Error (line 40): spaces at the end of line
+Norme: ./handler_utils_float_prec.c
+Error (line 28): bad spacing before rounding_loop
+Error (line 89): spaces at the end of line
+Error (line 89, col 30): bad character after ;
+Error (line 108): comment not well formatted
+Error (line 115): bad spacing before apply_float_prec
+Error (line 130): spaces at the end of line
+Norme: ./handler_utils_str.c
+Error (line 17): spaces at the end of line
+Error (line 24): bad spacing before encode_unicodepoint_to_utf8
+Error (line 52): bad spacing before build_utf8
+Error (line 68): spaces at the end of line
+Error (line 68, col 2): no newline after block
+Error (line 73): spaces at the end of line
+Error (line 73, col 18): bad character after ;
+Error (line 79): bad spacing before handle_str_type
+Norme: ./utils_t_str.c
+Error: global scope bad aligned
+Norme: ./handler_utils_int.c
+Error: 42 header not at top of the file
+Error (line 12): bad spacing before val_to_str
+Error (line 99): bad spacing before build_int_str
+Error (line 111): spaces at the end of line
+Error (line 136): spaces at the end of line
+Error (line 136, col 25): bad character after ;

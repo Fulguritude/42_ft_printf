@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 16:18:27 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/19 16:22:08 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/04/18 20:49:11 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static char		*encode_unicodepoint_to_utf8(wchar_t c)
 	if (c > 0x10FFFF)
 		return (NULL);
 	size = 1 + (c > 0x7F) + (c > 0x7FF) + (c > 0xFFFF);
+	if (size > MB_CUR_MAX)
+		return ("MB_CUR_MAX_ERROR");
 	if (!(utf8_c = ft_strnew(size)))
 		return (NULL);
 	utf8_c[0] = size > 1 ? ((0x1 << size) - 1) << (8 - size) : 0;
@@ -59,11 +61,11 @@ static char		*build_utf8(wchar_t *unicode_str)
 	while (unicode_str[i])
 	{
 		new_char = encode_unicodepoint_to_utf8(unicode_str[i]);
-		if (new_char == NULL)
+		if (new_char == NULL || ft_strequ(new_char, "MB_CUR_MAX_ERROR"))
 		{
 			free(utf8_str);
-			return (NULL);
-		}
+			return (new_char);
+		}		
 		ft_strappend(&utf8_str, new_char);
 		free(new_char);
 		++i;
@@ -79,12 +81,12 @@ t_str			*handle_str_type(t_format info, va_list args)
 	char	*str;
 	t_str	*result;
 
-	if (info.len_flag == fl_l)
-		str = build_utf8((wchar_t*)va_arg(args, wchar_t*));
-	else
-		str = ft_strdup((char*)va_arg(args, char*));
-	if (!str || !(result = (t_str*)malloc(sizeof(t_str))))
-		return (str_to_t_str("(null)"));
+	str = info.len_flag == fl_l ? build_utf8((wchar_t*)va_arg(args, wchar_t*)) :
+									ft_strdup((char*)va_arg(args, char*));
+	if (!str || ft_strequ(str, "MB_CUR_MAX_ERROR"))
+		return (str_to_t_str(str ? NULL : "(null)"));
+	if (!(result = (t_str*)malloc(sizeof(t_str))))
+		return (NULL);
 	if (info.prec != -1 && (t_u64)info.prec < ft_strlen(str))
 	{
 		if (info.len_flag == fl_l)
@@ -113,6 +115,11 @@ t_str			*handle_uchar_type(t_len_flag len_flag, va_list args)
 	{
 		wc = (wchar_t)va_arg(args, wchar_t);
 		result->data = encode_unicodepoint_to_utf8(wc);
+		if (!result->data || ft_strequ(result->data, "MB_CUR_MAX_ERROR"))
+		{
+			free(result);
+			return (str_to_t_str(NULL));
+		}
 		result->len = 1 + (wc > 0x7F) + (wc > 0x7FF) + (wc > 0xFFFF);
 	}
 	else
