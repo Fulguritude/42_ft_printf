@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcnew.c                                       :+:      :+:    :+:   */
+/*   ft_not_msb.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
+/*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/27 21:32:01 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/28 11:44:43 by tduquesn         ###   ########.fr       */
+/*   Created: 2018/04/20 15:46:02 by fulguritu         #+#    #+#             */
+/*   Updated: 2018/04/20 15:46:29 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** ft_memalloc wipes memory with ft_bzero.
-*/
-
-char	*ft_strcnew(size_t size, char const c)
+inline int		ft_not_msb(t_u64 x)
 {
-	char	*str;
-
-	if (!(str = (char*)malloc(size + 1)))
-		return (NULL);
-	str[size] = '\0';
-	ft_memset(str, c, size);
-	return (str);
+	return (x & _NOT_MSB_);
 }

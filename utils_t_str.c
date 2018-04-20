@@ -12,10 +12,7 @@
 
 #include "ft_printf.h"
 
-
-#include <stdio.h>
-
-void		del_t_str(void *content, size_t content_size)
+void			del_t_str(void *content, size_t content_size)
 {
 	t_str	*tstr;
 

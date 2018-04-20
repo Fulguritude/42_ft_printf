@@ -490,7 +490,7 @@ int		main(int argc, char **argv)
 	char		*str2 = NULL;
 
 #if MAIN_TESTS || FLOAT_BONUSES
-	char		*input;
+	char		*input = NULL;
 	int			str_fails = -1;
 	int 		i = -1;
 	int 		j = 0;

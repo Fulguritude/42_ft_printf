@@ -27,7 +27,7 @@
 ** Maybe just read the string linearly ? With multiple whiles
 */
 
-char	**format_to_strls(char const *fmt)
+char		**format_to_strls(char const *fmt)
 {
 	int		i;
 	int		j;
@@ -35,7 +35,7 @@ char	**format_to_strls(char const *fmt)
 	char	**result;
 
 	if (!(result = ft_ptrarrnew(2 + 2 * ft_str_countchar(fmt, '%'))))
-		return (NULL); 
+		return (NULL);
 	k = -1;
 	i = 0;
 	while (fmt[i])
@@ -56,7 +56,7 @@ char	**format_to_strls(char const *fmt)
 	return (result);
 }
 
-t_format		read_format(char const *fmt_part)
+t_format	read_format(char const *fmt_part)
 {
 	int			i;
 	t_format	result;
@@ -77,12 +77,13 @@ t_format		read_format(char const *fmt_part)
 }
 
 /*
-** => ft_ivartoa_base was coded to force integer casting; memory would be 
-**		filled with ones rather than zeros in a few cases, and the called 
+** => ft_ivartoa_base was coded to force integer casting; memory would be
+**		filled with ones rather than zeros in a few cases, and the called
 **		variable should be of the right "signed" or "unsigned" type when it is
 **		called.
 */
-char			*ft_ivartoa_base(intmax_t n, char const *base, t_u8 bytes,
+
+char		*ft_ivartoa_base(intmax_t n, char const *base, t_u8 bytes,
 									t_u8 sign)
 {
 	t_varint	v;
@@ -111,7 +112,7 @@ char			*ft_ivartoa_base(intmax_t n, char const *base, t_u8 bytes,
 	return (res);
 }
 
-int		convert_str(char const *fmt_part, t_list **a_lststr, va_list args)
+int			convert_str(char const *fmt_part, t_list **a_lststr, va_list args)
 {
 	char		type;
 	t_format	format_info;

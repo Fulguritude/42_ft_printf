@@ -16,7 +16,7 @@ void		ft_strsub_rm_inplace(char **a_str, t_u32 start, size_t len)
 {
 	t_u32	size;
 	t_u32	i;
-	
+
 	if (!*a_str)
 		return ;
 	size = ft_strlen(*a_str);

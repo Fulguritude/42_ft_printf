@@ -45,7 +45,7 @@ int				read_format_width(char const *fmt_part, int *i)
 	int		width;
 	t_u8	digit;
 
-	if (ft_in_base(fmt_part[*i], DECIM) == -1)	
+	if (ft_in_base(fmt_part[*i], DECIM) == -1)
 		return (-1);
 	width = 0;
 	while (ft_in_base(fmt_part[*i], DECIM) != -1)
@@ -57,14 +57,13 @@ int				read_format_width(char const *fmt_part, int *i)
 	return (width);
 }
 
-
 int				read_format_prec(char const *fmt_part, int *i)
 {
 	int		prec;
 	t_u8	digit;
 	t_u8	neg;
 
-	if (fmt_part[*i] != '.')	
+	if (fmt_part[*i] != '.')
 		return (-1);
 	++(*i);
 	neg = 0;
@@ -90,7 +89,7 @@ t_len_flag		read_format_len_flag(char const *fmt_part, int *i)
 	char		count;
 	t_len_flag	result;
 
-	if (ft_in_base(fmt_part[*i], LGTHS) == -1)	
+	if (ft_in_base(fmt_part[*i], LGTHS) == -1)
 		return (no_len_flag);
 	len_flag_c = fmt_part[*i];
 	count = 1;

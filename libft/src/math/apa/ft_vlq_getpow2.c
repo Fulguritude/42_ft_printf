@@ -15,6 +15,7 @@
 /*
 ** Returns 2^exp2 as a vlq.
 */
+
 t_vlq			ft_vlq_getpow2(t_u32 exp2)
 {
 	t_vlq		result;
@@ -25,7 +26,7 @@ t_vlq			ft_vlq_getpow2(t_u32 exp2)
 	arr_size = (exp2 / 63) + 1;
 	bit_pos = exp2 % 63;
 	result = ft_vlqnew(arr_size);
-	result[0] = (arr_size > 1 ? _MSB_ : 0) | (0x1 << bit_pos); 
+	result[0] = (arr_size > 1 ? _MSB_ : 0) | (0x1 << bit_pos);
 	i = 1;
 	while (i < arr_size - 1)
 	{
@@ -33,5 +34,5 @@ t_vlq			ft_vlq_getpow2(t_u32 exp2)
 		++i;
 	}
 	result[i] &= _MSB_;
-	return (result);	
+	return (result);
 }

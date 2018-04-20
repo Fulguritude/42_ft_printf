@@ -15,6 +15,7 @@
 /*
 ** Returns the power to which n should be raised to obtain lf.
 */
+
 double		ft_logn(double lf, double n)
 {
 	double	ln_base;

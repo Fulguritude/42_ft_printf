@@ -9,12 +9,13 @@
 /*   Updated: 2018/03/28 19:15:01 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
+
 /*
 ** https://stackoverflow.com/questions/3215235/how-do-you-print-the-exact
 ** 											-value-of-a-floating-point-number
 */
-#include "libft.h"
-
 static void		float_info_to_float_binstrs(char ***a_res,
 							int exp_b2, t_u64 mantissa)
 {
@@ -56,7 +57,7 @@ static char		*ft_lftoa_hexfp(int exp_b2, t_u64 mantissa)
 		ft_strprepend("+", &tmp);
 	ft_strpad_left_inplace(&tmp, 'p', 1);
 	result = tmp;
-	tmp = ft_uitoa_base(mantissa, HXLOW);	
+	tmp = ft_uitoa_base(mantissa, HXLOW);
 	ft_strpad_left_inplace(&tmp, '0', 14 - ft_strlen(tmp));
 	ft_strctrim_right_inplace(&tmp, '0');
 	if (ft_strequ(tmp, "") || ft_strequ(tmp, "-"))
@@ -98,7 +99,7 @@ static char		*ft_lftoa_fp(char **bin_strs)
 
 /*
 ** a*2^b = c*10^d with 1 <= a < 2 and 1 <= c < 10
-** => d = floor(log10(a*2^b)) = floor(log10(a) + b * log10(2)); 
+** => d = floor(log10(a*2^b)) = floor(log10(a) + b * log10(2));
 */
 static char		*ft_lftoa_exp(char **bin_strs)
 {

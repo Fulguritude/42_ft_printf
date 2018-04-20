@@ -18,9 +18,10 @@
 ** Usage is to make sure that if (res >= 0), then input was 2^res.
 **
 ** First part check if there is an active bit in the u64 where the MSB of the
-**	abstract value is contained.
+**		abstract value is contained.
 ** Second part checks if there is an active bit in the rest of the vlq array.
 */
+
 static int		ft_vlq_ispow2(t_vlq const vlq)
 {
 	t_u32	len;
@@ -47,7 +48,6 @@ static int		ft_vlq_ispow2(t_vlq const vlq)
 		++i;
 	}
 	pow = len + 63 * (len2 - 1);
-//ft_printf("pow = %d\n", pow);
 	return (pow);
 }
 
@@ -55,6 +55,7 @@ static int		ft_vlq_ispow2(t_vlq const vlq)
 ** Returns the number of '1' bits in a vlq. Returns 0 in case of zero or
 ** invalid vlq format.
 */
+
 static t_u32	ft_vlq_count_active_bits(t_vlq const vlq)
 {
 	t_u32	bits;
@@ -79,6 +80,7 @@ static t_u32	ft_vlq_count_active_bits(t_vlq const vlq)
 /*
 ** https://en.wikipedia.org/wiki/Multiplication_algorithm
 */
+
 static void		do_vlqmul(t_vlq const max, t_vlq const min, t_vlq *result)
 {
 	t_u64	part;
@@ -89,44 +91,15 @@ static void		do_vlqmul(t_vlq const max, t_vlq const min, t_vlq *result)
 
 	len = ft_vlqlen(min);
 	i = len;
-//ft_printf("i = %d; len = %d\n", i, len);
 	while (--i >= 0)
 	{
 		part = min[i];
 		j = 64;
-//ft_printf("j = %d; part = %#lx; shift = %d\n", j, min[i], (63 - j) - (len - 1 - i) * 63);
 		while (--j > 0)
 			if ((part << j) >> 63)
 			{
 				tmp = ft_vlq_bsl(max, (63 - j) + (len - 1 - i) * 63);
-#if 0
-char *str, *str2, *str3;
-//char *(*vlq_disp)(t_vlq);
-
-//vlq_disp = &ft_vlq_abstractval_as_hex;
-
-str = ft_vlqhex(max);
-str2 = ft_vlqhex(tmp);
-str3 = ft_vlqhex(*result);
-ft_printf("{red}\t\t\tmax = %s{eoc}\n{magenta}\t\t\ttmp = %s{eoc} (shift = %d)\n{green}\t\t\tres = %s{eoc}\n", str, str2, (63 - j) + (len - 1 - i) * 63, str3);
-ft_strdel(&str);ft_strdel(&str2);ft_strdel(&str3);
-
-str = ft_vlq_abstractval_as_hex(max);
-str2 = ft_vlq_abstractval_as_hex(tmp);
-str3 = ft_vlq_abstractval_as_hex(*result);
-ft_printf("{red}\t\t\tmax = %s{eoc}\n{magenta}\t\t\ttmp = %s{eoc} (shift = %d)\n{green}\t\t\tres = %s{eoc}\n", str, str2, (63 - j) + (len - 1 - i) * 63, str3);
-ft_strdel(&str);ft_strdel(&str2);ft_strdel(&str3);
-#endif
 				ft_vlq_add_acc(result, tmp);
-#if 0
-str = ft_vlq_abstractval_as_hex(*result);
-ft_printf("{green}{bold}\t\t\tres = %s{eoc}\n", str);
-ft_strdel(&str);
-
-str = ft_vlqhex(*result);
-ft_printf("{green}{bold}\t\t\tres = %s{eoc}\n", str);
-ft_strdel(&str);
-#endif
 				ft_vlqdel(&tmp);
 			}
 	}
@@ -138,6 +111,7 @@ ft_strdel(&str);
 ** Si t'es chaud Michel... essaye ca:
 ** https://en.wikipedia.org/wiki/Sch%C3%B6nhage%E2%80%93Strassen_algorithm
 */
+
 t_vlq			ft_vlq_mul(t_vlq const a, t_vlq const b)
 {
 	t_vlq	result;

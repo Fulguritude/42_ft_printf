@@ -17,17 +17,16 @@
 ** output to stderr when given improper parameters and returns 0 in acc if
 ** vlq > acc.
 */
+
 void					ft_vlq_sub_acc(t_vlq *acc, t_vlq const vlq)
 {
 	t_vlq	result;
 
 	if (!acc || !*acc || !vlq || (MSB(**acc) && !NOT_MSB(**acc)))
 	{
-		ft_putendl_fd("Invalid accumulator in vlq_sub_acc.", 2); 
+		ft_putendl_fd("Invalid accumulator in vlq_sub_acc.", 2);
 		return ;
 	}
-	if (!*acc)
-		return ;
 	if (ft_vlqcmp(*acc, vlq) < 0)
 	{
 		ft_vlqdel(acc);

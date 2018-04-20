@@ -15,5 +15,5 @@
 void		ft_putmem(char const *str)
 {
 	if (str)
-		ft_putmem_fd(str, 1); 
+		ft_putmem_fd(str, 1);
 }

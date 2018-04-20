@@ -15,6 +15,7 @@
 /*
 ** Uses exponentiation by squares to return a ^ exp.
 */
+
 t_vlq		ft_vlq_pow(t_vlq const a, t_vlq const exp)
 {
 	t_vlq	result;
@@ -34,11 +35,9 @@ t_vlq		ft_vlq_pow(t_vlq const a, t_vlq const exp)
 	{
 		if ((exp[len] << (cur_sigpos)) >> 63)
 			ft_vlq_mul_acc(&result, tmp_a);
-		if (--cur_sigpos == 0)
-		{
+		cur_sigpos = cur_sigpos == 1 ? 63 : cur_sigpos - 1;
+		if (cur_sigpos == 63)
 			--len;
-			cur_sigpos = 63;
-		}
 		ft_vlq_mul_acc(&tmp_a, tmp_a);
 	}
 	ft_vlqdel(&tmp_a);

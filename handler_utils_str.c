@@ -14,13 +14,14 @@
 
 /*
 ** 0x7F = 127, 0x7FF = 2047, 0xFFFF = 65535
-** Also, for 0b11000000 = 0xC0, 0b11100000 = 0xE0 and 0b11110000 = 0xF0, 
+** Also, for 0b11000000 = 0xC0, 0b11100000 = 0xE0 and 0b11110000 = 0xF0,
 ** 1 << size is 2^size, -1 makes it 00000111 with as many 1s as size, bitshift
 ** left (8 - size) gives the result we want.
 ** mod 0x40 => extract six last digits.
 **
 ** Standard calls this wcrtomb, wide char to multibyte
 */
+
 static char		*encode_unicodepoint_to_utf8(wchar_t c)
 {
 	size_t	size;
@@ -49,6 +50,7 @@ static char		*encode_unicodepoint_to_utf8(wchar_t c)
 ** known ? strappend so often would probably be quite computation-hungry.
 ** See how this affects performance in the end.
 */
+
 static char		*build_utf8(wchar_t *unicode_str)
 {
 	char	*utf8_str;
@@ -65,17 +67,18 @@ static char		*build_utf8(wchar_t *unicode_str)
 		{
 			free(utf8_str);
 			return (new_char);
-		}		
+		}
 		ft_strappend(&utf8_str, new_char);
 		free(new_char);
 		++i;
 	}
-	return (utf8_str);	
+	return (utf8_str);
 }
 
 /*
 ** FL_ZERO doesn't apply to strings
 */
+
 t_str			*handle_str_type(t_format info, va_list args)
 {
 	char	*str;

@@ -15,7 +15,8 @@
 /*
 ** Returns the vlq without its leading parts == _MSB_ which contain no info.
 ** This version reallocates to avoid future problems with free on *a_vlq.
-*/ 
+*/
+
 void			ft_vlqtrim(t_vlq *a_vlq)
 {
 	int		i;

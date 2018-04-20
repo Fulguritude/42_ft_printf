@@ -15,9 +15,10 @@
 /*
 ** strfind(src, 'n') returns true only for nan and inf
 */
+
 static void	apply_float_width(t_format info, char **a_flstr)
 {
-	int 	start;
+	int		start;
 	int		size;
 
 	if ((info.flags & (FL_SPACE | FL_PLUS)) && (*a_flstr)[0] != '-')
@@ -65,7 +66,7 @@ static char	*handle_g_type(t_format info, double lf)
 	{
 		exp_b10 = ft_atoi(ft_strrchr(result, 'e') + 1);
 		if (!(boolxp = (exp_b10 < -4 || info.prec <= exp_b10) && lf != 0))
-		{	
+		{
 			ft_strdel(&result);
 			result = ft_lftoa(lf, '\0');
 		}
@@ -86,7 +87,7 @@ static char	*handle_g_type(t_format info, double lf)
 
 /*
 ** Example debug value:
-** 
+**
 ** in hex_fp : -0x1.123456789abcdp+1010
 ** in memory :	cdab8967452311ff (little endian)
 ** in hex:		ff1123456789abcd
@@ -98,11 +99,13 @@ static char	*handle_g_type(t_format info, double lf)
 ** 		mantissa = 0001001000110100010101100111100010011010101111001101 (52 b)
 **				   123456789ABCD
 */
+
 t_str		*handle_float_type(t_format info, va_list args)
 {
-	double		lf;
-	char		*tmp;
-	t_str		*result;
+	double			lf;
+	char			*tmp;
+	t_str			*result;
+	struct lconv	*lc;
 
 	lf = va_arg(args, double);
 	if (ft_strfind("aAeEfF", info.type_char) >= 0)
@@ -113,6 +116,9 @@ t_str		*handle_float_type(t_format info, va_list args)
 		tmp = ft_strdup("(float_handler_error)");
 	if (ft_strfind("AFEG", info.type_char) >= 0)
 		ft_str_toupper(tmp);
+	lc = localeconv();
+	if (*(lc->decimal_point) != '.')
+		ft_strreplace_inplace(&tmp, ".", lc->decimal_point);
 	result = str_to_t_str(tmp);
 	free(tmp);
 	return (result);

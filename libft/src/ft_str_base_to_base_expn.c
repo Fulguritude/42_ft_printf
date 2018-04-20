@@ -34,8 +34,8 @@ static char	*convert_base_to_basen(char const *str, char const *base_f,
 		j = 0;
 		while (j < expn)
 		{
-			result[i] += ft_in_base(tmp[i * expn + j], base_f) * 
-							ft_ipowi(ft_strlen(base_f), expn - 1 - j);
+			result[i] += ft_in_base(tmp[i * expn + j], base_f)
+							* ft_ipowi(ft_strlen(base_f), expn - 1 - j);
 			++j;
 		}
 		result[i] = base_t[(t_u8)(result[i])];
@@ -63,5 +63,3 @@ char		*ft_str_base_to_base_expn(char const *str, char const *base_f,
 		return (ft_strdup(str));
 	return (convert_base_to_basen(str, base_f, base_t, expn));
 }
-
-

@@ -12,10 +12,6 @@
 
 #include "libft.h"
 
-
-#include <stdio.h>
-
-
 static double	ln_taylor_series(double x)
 {
 	double	result;
@@ -42,6 +38,7 @@ static double	ln_taylor_series(double x)
 ** Returns the natural logarithm of lf.
 ** ln(y) = ln(x*2^n) = n*ln(2) + ln(x) with 1 <= x < 2 and n = exp_b2
 */
+
 double		ft_ln(double lf)
 {
 	double	result;

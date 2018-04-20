@@ -25,6 +25,7 @@
 /*
 ** status should return 1 if an extra digit has been added
 */
+
 static int	rounding_loop(char **a_res, char const *tmp,
 							t_u32 reslen, char const *b)
 {
@@ -86,7 +87,7 @@ static int	get_rounded_flstr(char **a_result, t_format info,
 	int		status;
 
 	tmp = ft_strcdup(*a_flstr, exp_c);
-	dotpos = ft_strfind(tmp, '.');	
+	dotpos = ft_strfind(tmp, '.');
 	if ((status = dotpos + info.prec + 1 - ft_strlen(tmp)) < 0)
 	{
 		status = 0;
@@ -110,8 +111,8 @@ static int	get_rounded_flstr(char **a_result, t_format info,
 **			a single zero before, reversed for ease of iteration in round_up
 ** - dotpos + cur_frac_digits == ft_strlen(tmp)
 ** - dotpos + info.prec + 1 = length of the result string
-**
 */
+
 int			apply_float_prec(t_format info, char **a_flstr, char exp_c)
 {
 	char	*result;
@@ -127,7 +128,7 @@ int			apply_float_prec(t_format info, char **a_flstr, char exp_c)
 		ft_swap(result + neg + 1, result + neg + 2, 1);
 		tmp = ft_itoa(ft_atoi(ft_strchr(*a_flstr, exp_c) + 1) + 1);
 		neg = tmp[0] == '-';
-		ft_strinsert(&tmp, ft_strlen(tmp) - neg < 2 ? "0" : "", neg); 
+		ft_strinsert(&tmp, ft_strlen(tmp) - neg < 2 ? "0" : "", neg);
 		ft_strprepend(tmp[0] == '-' ? "e" : "e+", &tmp);
 	}
 	else

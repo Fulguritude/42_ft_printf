@@ -50,6 +50,7 @@
 **			 exp2  is the exponent if scientific binary  notation is used;
 ** 		=> Both represent "their number's corresponding number of digits - 1".
 */
+
 t_vlq		ft_vlq_get_greatest_sub_pow10(t_vlq vlq)
 {
 	t_u32			exp2;

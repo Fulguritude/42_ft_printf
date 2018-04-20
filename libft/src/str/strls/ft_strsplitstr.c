@@ -83,7 +83,7 @@ char			**ft_strsplitstr(char const *str, char const *sub)
 		while (j < reslen)
 		{
 			result[j] = get_next_chunk(str, sub, &i);
-			++j;			
+			++j;
 		}
 	return (result);
 }

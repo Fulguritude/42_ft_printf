@@ -16,6 +16,7 @@
 ** Returns the number of significant bits in a single index of a vlq, ignoring
 ** the MSB used for the vlq format (MSB is not a significant value).
 */
+
 t_u8			ft_vlq_count_sigbit_of_part(t_u64 vlq_p)
 {
 	t_u64	tmp;
@@ -30,4 +31,3 @@ t_u8			ft_vlq_count_sigbit_of_part(t_u64 vlq_p)
 	}
 	return (i);
 }
-

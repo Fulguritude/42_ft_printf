@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handler_utils_int.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/04/20 13:44:01 by fulguritu         #+#    #+#             */
+/*   Updated: 2018/04/20 13:44:14 by fulguritu        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 /*
@@ -9,6 +21,7 @@
 ** => For precision, 0 flag is ignored, and precision is applied before width
 **
 */
+
 static char		*val_to_str(t_format info, intmax_t n, int *digits, t_u8 bytes)
 {
 	char	*str;
@@ -96,6 +109,7 @@ static void		handle_int_prec_n_flzero(char **a_str, t_format info,
 **  - else, if no FL_ZERO, first FL_HASH then prepend sign/spaces
 **  - if FL_SPACE or FL_PLUS, and no FL_MINUS, append ZEROS first
 */
+
 static t_str	*build_int_str(t_format info, intmax_t n, t_u8 bytes)
 {
 	char	*str;

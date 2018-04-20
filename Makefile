@@ -13,10 +13,20 @@
 NAME	=	libftprintf.a
 LFT		=	libft.a
 
+
+PLATFORM=	LINUX
 CC		=	gcc
 CFLAGS	=	-Wall -Werror -Wextra
+
+
+ifeq ($(PLATFORM),LINUX)
 DBFLAGS =	-fsanitize=address
-#PLATFORM=	-DLINUX
+LIBASAN =	-lasan
+else
+DBFLAGS =	
+LIBASAN =	
+endif
+
 
 HDRDIR	=	./
 LFTDIR	=	./libft/
@@ -38,6 +48,12 @@ MAIN	=	main_asprintf.c
 CAPSMAIN=	main_asprintf_caps.c
 VLQMAIN	=	main_vlq.c
 TEST	=	test.out
+
+
+RESET	=	"\033[0m"
+RED		=	"\033[0;31m"
+GREEN	=	"\033[0;32m"
+
 
 $(NAME): $(LFT) $(OBJS)
 	@printf "Compiling library: "$@" -> "$(RED)
@@ -71,23 +87,26 @@ re:fclean all
 
 #remove CFLAGS below before testing weirder undefined printf cases
 test:$(NAME)
-	@printf "Rebuilding test.out for rule 'test'...\n"
+	@printf "\tRebuilding test.out for rule 'test' for '"$(PLATFORM)"'...\n"
 	@$(CC) $(CFLAGS) $(DBFLAGS) -c $(TSTDIR)$(MAIN) -o $(TSTDIR)$(MAIN:.c=.o)
-	@$(CC) $(OBJS) $(TSTDIR)$(MAIN:.c=.o) -lftprintf -L./ -lasan -o $(TEST)
-	@printf "Done ! Usage: ""\033[0;32m""./test.out {value|NULL}""\033[0m""\n"
+	@$(CC) $(OBJS) $(TSTDIR)$(MAIN:.c=.o) -lftprintf -L./ $(LIBASAN) -o $(TEST)
+	@printf "\tDone ! Usage: "$(GREEN)"./test.out {value|NULL}"$(RESET)"\n"
 
 capstest:$(NAME)
-	@printf "Rebuilding test.out for rule 'capstest'...\n"
+	@printf "\tRebuilding test.out for rule 'capstest' for '"$(PLATFORM)"'...\n"
 	@$(CC) $(CFLAGS) $(DBFLAGS) -c $(TSTDIR)$(CAPSMAIN) -o $(TSTDIR)$(CAPSMAIN:.c=.o)
-	@$(CC) $(OBJS) $(TSTDIR)$(CAPSMAIN:.c=.o) -lftprintf -L./ -lasan -o $(TEST)
-	@printf "Done ! Usage: ""\033[0;32m""./test.out {value|NULL}""\033[0m""\n"
+	@$(CC) $(OBJS) $(TSTDIR)$(CAPSMAIN:.c=.o) -lftprintf -L./ $(LIBASAN) -o $(TEST)
+	@printf "\tDone ! Usage: "$(GREEN)"./test.out {value|NULL}"$(RESET)"\n"
 
 vlqtest:$(NAME)
-	@printf "Rebuilding test.out for rule 'vlqtest'...\n"
+	@printf "\tRebuilding test.out for rule 'vlqtest' for '"$(PLATFORM)"'...\n"
 	@$(CC) $(CFLAGS) $(DBFLAGS) -c $(TSTDIR)$(VLQMAIN) -o $(TSTDIR)$(VLQMAIN:.c=.o)
-	@$(CC) $(OBJS) $(TSTDIR)$(VLQMAIN:.c=.o) -lftprintf -L./ -lasan -o $(TEST)
+	@$(CC) $(OBJS) $(TSTDIR)$(VLQMAIN:.c=.o) -lftprintf -L./ $(LIBASAN) -o $(TEST)
 	./$(TEST)
 	@make clean
-	@printf "Done !\n"
+	@printf "\tDone !\n"
+
+mf_debug:
+	@cat -e -t -v Makefile
 
 .PHONY: all clean re test vlqtest capstest

@@ -14,7 +14,7 @@
 
 void	ft_strctrim_right_inplace(char **a_str, char const c)
 {
-	int 	i;
+	int		i;
 
 	if (!a_str || !(*a_str))
 		return ;

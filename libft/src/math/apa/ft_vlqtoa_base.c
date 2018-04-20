@@ -15,6 +15,7 @@
 /*
 ** Returns the 63 significant bits of val as a string.
 */
+
 static char		*vlqpart_to_tmp_binstr(t_u64 val)
 {
 	char	*result;
@@ -34,6 +35,7 @@ static char		*vlqpart_to_tmp_binstr(t_u64 val)
 /*
 ** Returns the representation of vlq in binary as a string.
 */
+
 static char			*vlq_to_binstr(t_vlq const vlq)
 {
 	char	*result;
@@ -61,6 +63,7 @@ static char			*vlq_to_binstr(t_vlq const vlq)
 ** This is as naive an implementation as it gets, but it should suffice for most
 ** bases.
 */
+
 static char		*vlq_to_anybase(t_vlq const vlq, char const *base)
 {
 	char	*result;
@@ -78,27 +81,13 @@ static char		*vlq_to_anybase(t_vlq const vlq, char const *base)
 	{
 		ft_vlq_divmod(tmp_vlq, &radix, &div, &mod);
 		ft_strpad_left_inplace(&result, base[mod[0]], 1);
-
-/*char *str = ft_vlq_abstractval_as_hex(tmp_vlq), *str2 = ft_vlq_abstractval_as_hex(div), *str3 = ft_vlq_abstractval_as_hex(mod);
-ft_printf("{green}tmp_vlq = %s\n{eoc}radix = %#lx\n{blue}div = %s\n{magenta}mod = %s\n{yellow}result = %s{eoc}\n\n", str, radix, str2, str3, result);
-ft_strdel(&str);ft_strdel(&str2);ft_strdel(&str3);
-*/		ft_vlqdel(&tmp_vlq);
+		ft_vlqdel(&tmp_vlq);
 		ft_vlqdel(&mod);
 		tmp_vlq = div;
 	}
 	ft_vlqdel(&tmp_vlq);
-//ft_printf("final result anybase = {bold}{yellow_bg}{red}%s{eoc}\n", result);
 	return (result);
 }
-
-/*
-static char		*vlq_to_decim(t_vlq const vlq)
-{
-	//TODO placeholder: optimize for base_10 ? Or leave that to finding the topmost digits in lftoa ?
-
-	return (vlq_to_anybase(vlq, DECIM));
-}
-*/
 
 char			*ft_vlqtoa_base(t_vlq const vlq, char const *base)
 {
@@ -111,8 +100,6 @@ char			*ft_vlqtoa_base(t_vlq const vlq, char const *base)
 		ft_putendl_fd("Invalid operand in vlqtoa_base.", 2);
 		return (NULL);
 	}
-//	if (ft_strequ(base, DECIM))
-//		return (vlq_to_decim(vlq));
 	if (radix == 2 || radix == 4 || radix == 8 || radix == 16 ||
 		radix == 32 || radix == 64 || radix == 128 || radix == 256)
 	{

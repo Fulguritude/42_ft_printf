@@ -13,9 +13,10 @@
 #include "libft.h"
 
 /*
-** Returns the number of significant bits in our whole vlq, or 0 if the vlq 
+** Returns the number of significant bits in our whole vlq, or 0 if the vlq
 ** is improperly formatted. The number 0 has 1 significant bit.
 */
+
 t_u32			ft_vlq_count_sigbit(t_vlq vlq)
 {
 	t_u32	full_indices;

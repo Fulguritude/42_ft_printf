@@ -37,5 +37,5 @@ void		ft_putmem_fd(char const *str, int fd)
 	tmp = ft_strlsjoin((char const **)tmp_strls, "\n");
 	ft_putendl(tmp);
 	ft_strdel(&tmp);
-	ft_strlsdel(&tmp_strls); 
+	ft_strlsdel(&tmp_strls);
 }

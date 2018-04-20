@@ -15,6 +15,7 @@
 /*
 ** Returns a string of all the u64 in a vlq, as they are (with MSB) in 0xHXLOW.
 */
+
 char	*ft_vlqhex(t_vlq const vlq)
 {
 	char		*result;

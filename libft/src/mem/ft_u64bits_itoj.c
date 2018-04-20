@@ -22,20 +22,6 @@
 ** 0 is MSB, 63 is LSB ; bit at i included, bit at j excluded
 ** j is an index, not a number of bits after i.
 */
-t_u64			ft_u64bits_itoj(t_u64 ul, t_u8 i, t_u8 j)
-{
-	t_u64	bits;
-
-	if (63 < i || 64 < j || j < i)
-		return (_ALLBITS_);
-	bits = ((_ALLBITS_ << i) >> (64 + i - j)) << (64 - j);
-//ft_printf("\t{green}vlq[i] = %#lx, i = %d, j = %d, bits = %#lx, result == %#lx\n", ul, i, j, bits, ul & bits);
-//ft_printf("\t\tstep 0 %#lx\n", (_ALLBITS_));
-//ft_printf("\t\tstep 1 %#lx\n", (_ALLBITS_ << i));
-//ft_printf("\t\tstep 2 %#lx\n", (_ALLBITS_ << i) >> (64 + i - j));
-//ft_printf("\t\tstep 3 %#lx{eoc}\n", ((_ALLBITS_ << i) >> (64 - i - j)) << (64 - j));
-	return (ul & bits);
-}
 /*
 ** 12 bits, i = 1; j = 8
 ** 101011010111		input
@@ -46,3 +32,13 @@ t_u64			ft_u64bits_itoj(t_u64 ul, t_u8 i, t_u8 j)
 ** <<  => 0000\00101101_0000	bitnb - j = 4
 ** ==  => 0_0101101_0000
 */
+
+t_u64			ft_u64bits_itoj(t_u64 ul, t_u8 i, t_u8 j)
+{
+	t_u64	bits;
+
+	if (63 < i || 64 < j || j < i)
+		return (_ALLBITS_);
+	bits = ((_ALLBITS_ << i) >> (64 + i - j)) << (64 - j);
+	return (ul & bits);
+}

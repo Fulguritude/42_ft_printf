@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcnew.c                                       :+:      :+:    :+:   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
+/*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/27 21:32:01 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/28 11:44:43 by tduquesn         ###   ########.fr       */
+/*   Created: 2018/02/25 00:29:04 by fulguritu         #+#    #+#             */
+/*   Updated: 2018/02/25 00:37:13 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** ft_memalloc wipes memory with ft_bzero.
-*/
-
-char	*ft_strcnew(size_t size, char const c)
+inline t_u64	ft_abs(t_s64 x)
 {
-	char	*str;
-
-	if (!(str = (char*)malloc(size + 1)))
-		return (NULL);
-	str[size] = '\0';
-	ft_memset(str, c, size);
-	return (str);
+	return (x < 0 ? -x : x);
 }

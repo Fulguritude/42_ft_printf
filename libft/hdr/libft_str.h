@@ -13,9 +13,7 @@
 #ifndef __LIBFT_STR_H
 # define __LIBFT_STR_H
 
-# ifndef __LIBFT_H
-#  include "libft.h"
-# endif
+# include "libft.h"
 
 /*
 ** =========== Character Functions ==========
@@ -288,7 +286,7 @@ char					*ft_strtrim(char const *str);
 char					*ft_str_toprint(char const *str);
 
 /*
-** Returns a newly allocated version of str where all instances of "sub" 
+** Returns a newly allocated version of str where all instances of "sub"
 ** have been removed.
 */
 char					*ft_strremove(char const *str, char const *sub);
@@ -347,7 +345,7 @@ void					ft_strrev_inplace(char **a_str);
 /*
 ** Works like the bash function tr. Substitute tr_f[i] by tr_t[i] in str.
 ** Fails silently if input is null, if strlen is different for tr_f and tr_t,
-** or if a character is repeated in tr_f (only one image for every antecedent). 
+** or if a character is repeated in tr_f (only one image for every antecedent).
 */
 void					ft_str_csubstitute(char *str, char const *tr_f,
 											char const *tr_t);
@@ -378,7 +376,7 @@ void					ft_strpad_insert_inplace(char **a_str, char const c,
 										t_u32 start, size_t len);
 
 /*
-** Returns str but where the substring defined by start and len have been 
+** Returns str but where the substring defined by start and len have been
 ** removed.
 */
 void					ft_strsub_rm_inplace(char **a_str,
@@ -471,7 +469,7 @@ char					**ft_strlssub(char const **strls,
 ** 'f' to every string of 'strls'.
 */
 char					**ft_strlsmap(char const **strls,
-										char* (*f)(char const*));
+										char*(*f)(char const*));
 
 /*
 ** Returns strls where every string has been replaced and/or reallocated
@@ -479,7 +477,7 @@ char					**ft_strlsmap(char const **strls,
 ** functions that edit a string in place and return its address.
 */
 void					ft_strlsmap_inplace(char ***a_strls,
-											char* (*f)(char*));
+											char*(*f)(char*));
 
 /*
 ** Returns the number of occurences of 'c' in strls.

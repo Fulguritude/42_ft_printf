@@ -18,6 +18,7 @@
 ** section has at least 1 bit in common with that series.
 ** Use inspiration from here for bwa and bwo
 */
+
 t_vlq		ft_vlq_add(t_vlq const a, t_vlq const b)
 {
 	t_vlq	result;

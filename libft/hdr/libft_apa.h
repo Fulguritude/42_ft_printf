@@ -56,7 +56,6 @@
 **		array's LSB is 0, this is to signify a power of at least two.
 **	- u64 with MSB == 0 can be recognized as t_vlq by address; behavior for
 **		any t_u64 > 2^63 or negative signed longs is undefined.
-**
 */
 
 # define _MSB_ 			0x8000000000000000
@@ -139,7 +138,7 @@ char			*ft_vlqtoa_base(t_vlq const vlq, char const *base);
 t_u8			ft_vlq_count_sigbit_of_part(t_u64 vlq_p);
 
 /*
-** Returns the number of significant bits in our whole vlq, or 0 if the vlq 
+** Returns the number of significant bits in our whole vlq, or 0 if the vlq
 ** is improperly formatted. The number 0 has 1 significant bit.
 */
 t_u32			ft_vlq_count_sigbit(t_vlq vlq);
@@ -158,7 +157,7 @@ char			*ft_vlq_abstractval_as_hex(t_vlq const vlq);
 /*
 ** Returns the vlq without its leading zeros. This version reallocates to avoid
 ** future problems with free on *a_vlq.
-*/ 
+*/
 void			ft_vlqtrim(t_vlq *a_vlq);
 
 /*
@@ -207,13 +206,15 @@ t_vlq			ft_vlq_bsr(t_vlq const vlq, t_u32 shift);
 
 /*
 ** Returns (a & b) then trims if needed.
+**
+** t_vlq			ft_vlq_bwa(t_vlq const a, t_vlq const b);
 */
-//t_vlq			ft_vlq_bwa(t_vlq const a, t_vlq const b);
 
 /*
 ** Returns (a | b).
+**
+** t_vlq			ft_vlq_bwo(t_vlq const a, t_vlq const b);
 */
-//t_vlq			ft_vlq_bwo(t_vlq const a, t_vlq const b);
 
 /*
 ** Uses exponentiation by squares to return a ^ exp.
@@ -239,6 +240,7 @@ void			ft_vlq_mul_acc(t_vlq *acc, t_vlq const vlq);
 ** Replaces 'acc' with the value a / b.
 */
 void			ft_vlq_div_acc(t_vlq *acc, t_vlq const vlq);
+
 /*
 ** Replaces vlq with the value "vlq multiplied by 2^shift".
 */
@@ -291,6 +293,7 @@ typedef struct	s_vlf
 /*
 ** TODO
 **
-** div = mul by inverse ? If so, how does one compute the inverse ? Make sure to warn if infinite fraction !
+** div = mul by inverse ? If so, how does one compute the inverse ? Make sure
+** to warn if infinite fraction !
 */
 #endif

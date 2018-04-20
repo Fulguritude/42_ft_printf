@@ -12,8 +12,6 @@
 
 #include "libft.h"
 
-//TODO remove for moulinette
-
 long		ft_floor(double lf)
 {
 	long	result;

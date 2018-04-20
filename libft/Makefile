@@ -49,6 +49,7 @@ TSTDIR	=	../ #keep out of git bounds to avoid forbidden functions
 
 
 HDRS	=	libft.h						\
+			libft_shorthands.h			\
 			libft_mem.h					\
 			libft_io.h					\
 			libft_str.h					\
@@ -69,6 +70,8 @@ SRC_MEM_MEM	=	ft_memset.c					\
 				ft_memhex.c					\
 				ft_swap.c					\
 				ft_delete.c					\
+				ft_msb.c					\
+				ft_not_msb.c				\
 				ft_u64bits_itoj.c			\
 				ft_ptrarrlen.c				\
 				ft_ptrarrnew.c
@@ -221,7 +224,8 @@ SRC_MATH_CNV =	ft_atoi.c					\
 				ft_udigits_base.c			\
 				ft_lftoa.c
 
-SRC_MATH_OP =	ft_max.c					\
+SRC_MATH_OP =	ft_abs.c					\
+				ft_max.c					\
 				ft_min.c					\
 				ft_umax.c					\
 				ft_umin.c					\

@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static char *base_expn_char_to_base_digitstr(char c, char const *base_f,
+static char	*base_expn_char_to_base_digitstr(char c, char const *base_f,
 											char const *base_t, t_u32 expn)
 {
 	char	*result;

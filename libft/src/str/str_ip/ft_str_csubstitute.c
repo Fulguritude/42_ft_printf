@@ -15,8 +15,9 @@
 /*
 ** Works like the bash function tr. Substitute tr_f[i] by tr_t[i] in str.
 ** Fails silently if input is null, if strlen is different for tr_f and tr_t,
-** or if a character is repeated in tr_f (only one image for every antecedent). 
+** or if a character is repeated in tr_f (only one image for every antecedent).
 */
+
 void		ft_str_csubstitute(char *str, char const *tr_f, char const *tr_t)
 {
 	t_u32	i;

@@ -13,25 +13,17 @@
 #ifndef __LIBFT_IO_H
 # define __LIBFT_IO_H
 
-# ifndef __LIBFT_H
 #  include "libft.h"
-# endif
-
-# include <unistd.h>
-
-//TODO fix
-# ifndef __FT_PRINTF_H
-#  include "../../ft_printf.h"
-# endif
 
 # define HEXCOLS	6
 
 /*
 ** ============ Readers ============
 */
-
-//TODO add get_next_line
-//TODO file_to_strls
+/*
+** TODO add get_next_line
+** TODO file_to_strls
+*/
 
 /*
 ** ============ Writers ============
