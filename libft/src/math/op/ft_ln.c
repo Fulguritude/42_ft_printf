@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 06:05:08 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/11 07:02:32 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/04/21 15:20:18 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static double	ln_taylor_series(double x)
 ** ln(y) = ln(x*2^n) = n*ln(2) + ln(x) with 1 <= x < 2 and n = exp_b2
 */
 
-double		ft_ln(double lf)
+double			ft_ln(double lf)
 {
 	double	result;
 	t_u64	extract;

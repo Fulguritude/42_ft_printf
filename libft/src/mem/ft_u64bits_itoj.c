@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 04:18:06 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/21 04:18:09 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/04/21 15:16:40 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 ** Returns a value such that every bit b that is not at index i <= b < j is
-** switched off. Returns -1 (ie, 0xFFF...FF) in case of error. 
+** switched off. Returns -1 (ie, 0xFFF...FF) in case of error.
 ** TODO: add to libft_mem.h and appropriate doc
 ** TODO: make it work with a byte_len argument 1, 2, 4 or 8, like ft_swap ?
 */

@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 19:14:43 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/28 19:15:01 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/04/21 15:17:35 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 ** https://stackoverflow.com/questions/3215235/how-do-you-print-the-exact
 ** 											-value-of-a-floating-point-number
 */
+
 static void		float_info_to_float_binstrs(char ***a_res,
 							int exp_b2, t_u64 mantissa)
 {
@@ -101,6 +102,7 @@ static char		*ft_lftoa_fp(char **bin_strs)
 ** a*2^b = c*10^d with 1 <= a < 2 and 1 <= c < 10
 ** => d = floor(log10(a*2^b)) = floor(log10(a) + b * log10(2));
 */
+
 static char		*ft_lftoa_exp(char **bin_strs)
 {
 	char	*result;

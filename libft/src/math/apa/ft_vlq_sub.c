@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 15:05:07 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/15 15:05:17 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/04/21 15:24:48 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static t_vlq	do_vlqsub(t_vlq const max, t_vlq const min)
 ** Subtraction operator. Always returns ABS(a-b).
 */
 
-t_vlq		ft_vlq_sub(t_vlq const a, t_vlq const b)
+t_vlq			ft_vlq_sub(t_vlq const a, t_vlq const b)
 {
 	t_vlq	result;
 	t_vlq	max;

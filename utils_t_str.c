@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 16:36:44 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/04/16 16:36:47 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/04/21 15:15:54 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void		handle_color_t_str(t_str *a_t_str)
 	a_t_str->len = ft_strlen(a_t_str->data);
 }
 
-t_str		*str_to_t_str(char const *str)
+t_str			*str_to_t_str(char const *str)
 {
 	t_str	*result;
 
@@ -70,7 +70,7 @@ t_str		*str_to_t_str(char const *str)
 	return (result);
 }
 
-static void	t_str_append(void *s1, void *s2)
+static void		t_str_append(void *s1, void *s2)
 {
 	int		len;
 	char	*tmp;
@@ -96,7 +96,7 @@ static void	t_str_append(void *s1, void *s2)
 	acc->data = tmp;
 }
 
-t_str		to_single_t_str(t_list *lststr)
+t_str			to_single_t_str(t_list *lststr)
 {
 	t_str	acc;
 

@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/10 03:16:52 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/10 03:18:25 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/04/21 15:23:54 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 ** Returns the power to which 2 must be raised to obtain pow_of_2. If the number
 ** given is not a positive power of 2, then it returns -1.
 */
+
 int		ft_ilog2(t_u64 pow_of_2)
 {
 	int		i;
