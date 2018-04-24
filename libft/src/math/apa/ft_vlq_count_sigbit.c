@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/20 02:56:22 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/20 02:56:46 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/04/24 07:33:03 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_u32			ft_vlq_count_sigbit(t_vlq vlq)
 
 	if (*vlq == 0)
 		return (1);
-	if (!NOT_MSB(vlq[0]))
+	if (!ft_not_msb(vlq[0]))
 		return (0);
 	full_indices = ft_vlqlen(vlq) - 1;
 	return (ft_vlq_count_sigbit_of_part(vlq[0]) + 63 * full_indices);

@@ -31,13 +31,20 @@
 #  define LN10			0x1.26BB1BBB55516p+1
 # endif
 
-# define ABS(X) (X < 0 ? -X : X)
-# define MAX(X, Y) (X < Y ? Y : X)
-# define MIN(X, Y) (X < Y ? X : Y)
+/*
+** # define ABS(X) (X < 0 ? -X : X)
+** # define MAX(X, Y) (X < Y ? Y : X)
+** # define MIN(X, Y) (X < Y ? X : Y)
+*/
 
 /*
 ** =============== Math Functions ===================
 */
+
+/*
+** Returns the distance from x to 0.
+*/
+t_u64					ft_abs(t_s64 x);
 
 /*
 ** Returns max of a and b, signed.

@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 16:36:39 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/20 04:22:18 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/04/24 07:33:05 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int		ft_vlq_ispow2(t_vlq const vlq)
 	t_u32	i;
 	int		pow;
 
-	if (!NOT_MSB(vlq[0]))
+	if (!ft_not_msb(vlq[0]))
 		return (-2);
 	len = ft_vlq_count_sigbit_of_part(vlq[0]) - 1;
 	i = 0;
@@ -43,7 +43,7 @@ static int		ft_vlq_ispow2(t_vlq const vlq)
 	i = 1;
 	while (i < len2)
 	{
-		if (NOT_MSB(vlq[i]))
+		if (ft_not_msb(vlq[i]))
 			return (-1);
 		++i;
 	}
@@ -70,7 +70,7 @@ static t_u32	ft_vlq_count_active_bits(t_vlq const vlq)
 	{
 		j = -1;
 		while (++j < 63)
-			if ((NOT_MSB(vlq[i]) >> j) % 2)
+			if ((ft_not_msb(vlq[i]) >> j) % 2)
 				++bits;
 		++i;
 	}

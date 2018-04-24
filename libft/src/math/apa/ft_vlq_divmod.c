@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 16:37:08 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/20 04:22:17 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/04/24 07:33:04 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static t_u32	ft_vlq_is_pow2_divisible(t_vlq const vlq)
 	t_s32	i;
 	t_s8	j;
 
-	if (!NOT_MSB(vlq[0]))
+	if (!ft_not_msb(vlq[0]))
 		return (0);
 	pow2 = 0;
 	i = ft_vlqlen(vlq);
@@ -115,7 +115,7 @@ static t_vlq	do_vlqdiv(t_vlq *tmp_n, t_vlq *tmp_d, t_u32 ops)
 static int		divmod_init_checks(t_vlq const num, t_vlq const den,
 							t_vlq *div, t_vlq *mod)
 {
-	if (!div || num[0] == _MSB_ || !NOT_MSB(den[0]))
+	if (!div || num[0] == _MSB_ || !ft_not_msb(den[0]))
 	{
 		ft_putendl_fd("Improper vlq operand or division by 0 in vlq_div.", 2);
 		return (1);
@@ -161,7 +161,7 @@ void			ft_vlq_divmod(t_vlq const num, t_vlq const den,
 	if (divmod_init_checks(num, den, div, mod))
 		return ;
 	diff = ft_vlq_count_sigbit(num) - ft_vlq_count_sigbit(den);
-	quo_sigbits = ABS(diff) + (ft_vlqlexcmp(num, den, diff) >= 0);
+	quo_sigbits = ft_abs(diff) + (ft_vlqlexcmp(num, den, diff) >= 0);
 	end_0s = ft_min(ft_vlq_is_pow2_divisible(num),
 					ft_vlq_is_pow2_divisible(den));
 	tmp_n = ft_vlq_bsr(num, end_0s);

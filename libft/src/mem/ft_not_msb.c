@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-inline int		ft_not_msb(t_u64 x)
+inline t_u64		ft_not_msb(t_u64 x)
 {
 	return (x & _NOT_MSB_);
 }

@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 06:51:10 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/16 06:53:38 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/04/24 07:33:06 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void					ft_vlq_sub_acc(t_vlq *acc, t_vlq const vlq)
 {
 	t_vlq	result;
 
-	if (!acc || !*acc || !vlq || (MSB(**acc) && !NOT_MSB(**acc)))
+	if (!acc || !*acc || !vlq || (ft_msb(**acc) && !ft_not_msb(**acc)))
 	{
 		ft_putendl_fd("Invalid accumulator in vlq_sub_acc.", 2);
 		return ;

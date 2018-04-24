@@ -142,10 +142,10 @@ char			*ft_lftoa(double lf, char style)
 
 	extract = *(t_u64*)(&lf);
 	if (lf != lf)
-		return (ft_strdup(MSB(extract) ? "-nan" : "nan"));
+		return (ft_strdup(ft_msb(extract) ? "-nan" : "nan"));
 	mantissa = ((extract << 12) >> 12);
 	if ((exp_b2 = ((extract << 1) >> 53) - 1023) == 1024)
-		return (ft_strdup(MSB(extract) ? "-inf" : "inf"));
+		return (ft_strdup(ft_msb(extract) ? "-inf" : "inf"));
 	if (exp_b2 != -1023)
 		mantissa |= 0x10000000000000;
 	else

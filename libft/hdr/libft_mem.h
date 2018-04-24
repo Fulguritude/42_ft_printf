@@ -114,4 +114,15 @@ t_u32					ft_ptrarrlen(void const *a_ptrarr);
 */
 void					*ft_ptrarrnew(t_u32 n);
 
+/*
+** Returns true iff the MSB is set to 1
+*/
+t_u64					ft_msb(t_u64 x);
+
+/*
+** Returns x with the sign bit flipped to 0
+*/
+t_u64					ft_not_msb(t_u64 x);
+
+
 #endif

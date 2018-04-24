@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 15:05:07 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/04/21 15:24:48 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/04/24 07:33:06 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ static t_vlq	do_vlqsub(t_vlq const max, t_vlq const min)
 	carry = 0;
 	while (max_len >= 0)
 	{
-		cur_part = NOT_MSB(max[max_len]);
-		cur_part -= (min_len >= 0) ? NOT_MSB(min[min_len]) : 0;
+		cur_part = ft_not_msb(max[max_len]);
+		cur_part -= (min_len >= 0) ? ft_not_msb(min[min_len]) : 0;
 		cur_part -= carry ? 1 : 0;
-		carry = MSB(cur_part);
-		result[max_len] |= NOT_MSB(cur_part);
+		carry = ft_msb(cur_part);
+		result[max_len] |= ft_not_msb(cur_part);
 		--max_len;
 		--min_len;
 	}

@@ -54,12 +54,13 @@
 **		array's LSB is 0, this is to signify a power of at least two.
 **	- u64 with MSB == 0 can be recognized as t_vlq by address; behavior for
 **		any t_u64 > 2^63 or negative signed longs is undefined.
+** 
+** # define MSB(x) 		((x) >> 63)
+** # define NOT_MSB(x) 	((x) & _NOT_MSB_)
 */
 
 # define _MSB_ 			0x8000000000000000
-# define MSB(x) 		((x) >> 63)
 # define _NOT_MSB_		0x7FFFFFFFFFFFFFFF
-# define NOT_MSB(x) 	((x) & _NOT_MSB_)
 # define _ALLBITS_		0xFFFFFFFFFFFFFFFF
 
 typedef t_u64*	t_vlq;

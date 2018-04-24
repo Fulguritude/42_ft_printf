@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 04:18:57 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/15 04:18:59 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/04/24 07:24:34 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void		ft_vlqdel(t_vlq *a_vlq)
 		if (*a_vlq)
 		{
 			i = 0;
-			while (MSB((*a_vlq)[i]))
+			while (ft_msb((*a_vlq)[i]))
 			{
 				(*a_vlq)[i] = 0;
 				++i;

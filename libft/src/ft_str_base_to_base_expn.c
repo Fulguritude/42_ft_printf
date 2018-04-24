@@ -32,7 +32,7 @@ static char	*convert_base_to_basen(char const *str, char const *base_f,
 	while (i < size)
 	{
 		j = -1;
-		while (++j < expn)
+		while ((t_u32)(++j) < expn)
 			result[i] += ft_in_base(tmp[i * expn + j], base_f)
 							* ft_ipowi(ft_strlen(base_f), expn - 1 - j);
 		result[i] = base_t[(t_u8)(result[i])];

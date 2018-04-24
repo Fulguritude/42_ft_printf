@@ -21,7 +21,7 @@ long		ft_floor(double lf)
 	if (exp > 308)
 		ft_putendl_fd("Double out of acceptable range in ft_floor.", 2);
 	result = (long)lf;
-	if (ABS(result) > 9007199254740992)
+	if (ft_abs(result) > 9007199254740992)
 		ft_putendl_fd("Untrustworthy result in ft_floor.", 2);
 	return (result);
 }

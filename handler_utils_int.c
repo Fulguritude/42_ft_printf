@@ -46,7 +46,7 @@ static char		*val_to_str(t_format info, intmax_t n, int *digits, t_u8 bytes)
 		str = ft_ivartoa_base(n, HXUPP, bytes, 0);
 	else if (info.type == int_ubin_l || info.type == int_ubin_u)
 		str = ft_ivartoa_base(n, BINAR, bytes, 0);
-	*digits = MAX(ft_strlen(str), prec + (str[0] == '-'));
+	*digits = ft_max(ft_strlen(str), prec + (str[0] == '-'));
 	return (str);
 }
 
@@ -132,7 +132,7 @@ static t_str	*build_int_str(t_format info, intmax_t n, t_u8 bytes)
 			ft_strpad_right_inplace(&str, ' ', info.width - digits) :
 			ft_strpad_left_inplace(&str, ' ', info.width - digits);
 	result->data = str;
-	result->len = MAX(info.width, digits);
+	result->len = ft_max(info.width, digits);
 	return (result);
 }
 

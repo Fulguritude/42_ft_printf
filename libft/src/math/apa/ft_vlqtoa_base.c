@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 20:22:00 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/28 20:22:10 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/04/24 07:33:06 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char		*vlq_to_binstr(t_vlq const vlq)
 	i = 0;
 	while (i < len)
 	{
-		tmp = vlqpart_to_tmp_binstr(NOT_MSB(vlq[i]));
+		tmp = vlqpart_to_tmp_binstr(ft_not_msb(vlq[i]));
 		ft_strmerge(&tmp, &result);
 		++i;
 	}

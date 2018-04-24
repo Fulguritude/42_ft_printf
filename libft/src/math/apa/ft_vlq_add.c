@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 06:07:41 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/15 07:26:00 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/04/24 07:33:02 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ t_vlq		ft_vlq_add(t_vlq const a, t_vlq const b)
 
 	a_len = ft_vlqlen(a) - 1;
 	b_len = ft_vlqlen(b) - 1;
-	result = ft_vlqnew((MAX(a_len, b_len) + 2));
+	result = ft_vlqnew((ft_max(a_len, b_len) + 2));
 	carry = 0;
 	while (a_len >= 0 || b_len >= 0 || carry)
 	{
 		cur_part = carry;
-		cur_part += (a_len >= 0) ? NOT_MSB(a[a_len]) : 0;
-		cur_part += (b_len >= 0) ? NOT_MSB(b[b_len]) : 0;
-		carry = MSB(cur_part);
-		result[MAX(a_len, b_len) + 1] |= NOT_MSB(cur_part);
+		cur_part += (a_len >= 0) ? ft_not_msb(a[a_len]) : 0;
+		cur_part += (b_len >= 0) ? ft_not_msb(b[b_len]) : 0;
+		carry = ft_msb(cur_part);
+		result[ft_max(a_len, b_len) + 1] |= ft_not_msb(cur_part);
 		--a_len;
 		--b_len;
 	}
