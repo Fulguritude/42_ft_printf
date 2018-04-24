@@ -10,12 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef LIBFT_H
+# define LIBFT_H
+
 /*
 ** TODO
 ** Fix strlspad,
 ** add boolean functions (bool and boolarr)
 ** strinsert is an inplace which returns itself: make other inplace functions
-** 				like this ? 
+** 				like this ?
 ** lstinsert
 ** lstpop with pointers ? and rename current lstpop to lstpopi ?
 ** add ft_puthex_llstelem to libft, maybe rename putlst_hex
@@ -26,9 +29,6 @@
 ** make a t_uple type with pragmas to dynamically define type.
 ** make an optimized Tensor/Matrix/Vector library.
 */
-
-#ifndef __LIBFT_H
-# define __LIBFT_H
 
 # define OK 0
 # define ERROR 1

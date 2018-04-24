@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __LIBFT_MATH_H
-# define __LIBFT_MATH_H
+#ifndef LIBFT_MATH_H
+# define LIBFT_MATH_H
 
 /*
 ** TODO
@@ -20,7 +20,7 @@
 ** - test ln, exp, floor, ceil more extensively.
 */
 
-#  include "libft.h"
+# include "libft.h"
 
 # ifndef __CONSTANTS__
 #  define __CONSTANTS__

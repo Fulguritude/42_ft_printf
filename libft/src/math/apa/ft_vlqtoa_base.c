@@ -36,7 +36,7 @@ static char		*vlqpart_to_tmp_binstr(t_u64 val)
 ** Returns the representation of vlq in binary as a string.
 */
 
-static char			*vlq_to_binstr(t_vlq const vlq)
+static char		*vlq_to_binstr(t_vlq const vlq)
 {
 	char	*result;
 	char	*tmp;
@@ -89,13 +89,13 @@ static char		*vlq_to_anybase(t_vlq const vlq, char const *base)
 	return (result);
 }
 
-char			*ft_vlqtoa_base(t_vlq const vlq, char const *base)
+char			*ft_vlqtoa_base(t_vlq const vlq, char const *b)
 {
 	char	*result;
 	char	*tmp;
 	t_u32	radix;
 
-	if (!vlq || !ft_is_valid_base(base) || (radix = ft_strlen(base)) < 2)
+	if (!vlq || !ft_is_valid_base(b) || (radix = ft_strlen(b)) < 2)
 	{
 		ft_putendl_fd("Invalid operand in vlqtoa_base.", 2);
 		return (NULL);
@@ -103,17 +103,17 @@ char			*ft_vlqtoa_base(t_vlq const vlq, char const *base)
 	if (radix == 2 || radix == 4 || radix == 8 || radix == 16 ||
 		radix == 32 || radix == 64 || radix == 128 || radix == 256)
 	{
-		result = vlq_to_binstr(vlq);		
-		if (radix == 2 && !ft_strequ(base, BINAR))
-			ft_str_csubstitute(result, "01", base);
+		result = vlq_to_binstr(vlq);
+		if (radix == 2 && !ft_strequ(b, BINAR))
+			ft_str_csubstitute(result, "01", b);
 		else if (radix != 2)
 		{
-			tmp = ft_str_base_to_base_expn(result, BINAR, base, ft_ilog2(radix));
+			tmp = ft_str_base_to_base_expn(result, BINAR, b, ft_ilog2(radix));
 			ft_strdel(&result);
 			return (tmp);
 		}
 		return (result);
 	}
 	else
-		return (vlq_to_anybase(vlq, base));
+		return (vlq_to_anybase(vlq, b));
 }

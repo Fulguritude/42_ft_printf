@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-char		**ft_strlsmap(char const **strls, char*(*f)(char const*))
+char		**ft_strlsmap(char const **strls, char *(*f)(char const *))
 {
 	t_u32	i;
 	char	**result;

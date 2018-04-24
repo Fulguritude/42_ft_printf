@@ -19,7 +19,7 @@ static char	*convert_base_to_basen(char const *str, char const *base_f,
 	char	*tmp;
 	t_u32	size;
 	t_u32	i;
-	t_u32	j;
+	int		j;
 
 	if ((i = ft_strlen(str) % expn) == 0)
 		tmp = ft_strdup(str + (str[0] == '+' || str[0] == '-'));
@@ -31,13 +31,10 @@ static char	*convert_base_to_basen(char const *str, char const *base_f,
 	i = 0;
 	while (i < size)
 	{
-		j = 0;
-		while (j < expn)
-		{
+		j = -1;
+		while (++j < expn)
 			result[i] += ft_in_base(tmp[i * expn + j], base_f)
 							* ft_ipowi(ft_strlen(base_f), expn - 1 - j);
-			++j;
-		}
 		result[i] = base_t[(t_u8)(result[i])];
 		++i;
 	}

@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __LIBFT_STR_H
-# define __LIBFT_STR_H
+#ifndef LIBFT_STR_H
+# define LIBFT_STR_H
 
 # include "libft.h"
 

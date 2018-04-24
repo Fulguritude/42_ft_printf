@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __LIBFT_IO_H
-# define __LIBFT_IO_H
+#ifndef LIBFT_IO_H
+# define LIBFT_IO_H
 
-#  include "libft.h"
+# include "libft.h"
 
 # define HEXCOLS	6
 
@@ -136,6 +136,5 @@ void					ft_putmem(char const *str);
 /*
 ** ============ Printf family ===============
 */
-//ft_printf, ft_asprintf, etc
 
 #endif

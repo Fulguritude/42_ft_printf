@@ -10,12 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __LIBFT_APA_H
-# define __LIBFT_APA_H
+#ifndef LIBFT_APA_H
+# define LIBFT_APA_H
 
-# ifndef __LIBFT_H
-#  include "libft.h"
-# endif
+# include "libft.h"
 
 /*
 ** TODO

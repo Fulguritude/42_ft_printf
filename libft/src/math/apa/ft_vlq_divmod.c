@@ -22,7 +22,7 @@
 ** //	diff = ft_vlq_count_sigbit(a) - ft_vlq_count_sigbit(b);
 */
 
-static long	ft_vlqlexcmp(t_vlq const a, t_vlq const b, int diff)
+static long		ft_vlqlexcmp(t_vlq const a, t_vlq const b, int diff)
 {
 	long	result;
 	t_vlq	tmp;
@@ -34,7 +34,7 @@ static long	ft_vlqlexcmp(t_vlq const a, t_vlq const b, int diff)
 		tmp = ft_vlq_bsl(a, -diff);
 		result = ft_vlqcmp(tmp, b);
 		ft_vlqdel(&tmp);
-	}	
+	}
 	else
 	{
 		tmp = ft_vlq_bsl(b, diff);
@@ -55,7 +55,7 @@ static t_u32	ft_vlq_is_pow2_divisible(t_vlq const vlq)
 	t_s8	j;
 
 	if (!NOT_MSB(vlq[0]))
-		return (0); 
+		return (0);
 	pow2 = 0;
 	i = ft_vlqlen(vlq);
 	while (--i >= 0)
@@ -80,7 +80,7 @@ static t_u32	ft_vlq_is_pow2_divisible(t_vlq const vlq)
 ** 'cbi / 63' is to get the index from the bitindex inside the vlq,
 **		given by ((63 - (ops % 63)) % 63) + i)
 **
-** TODO verify usage of extra to make sure 
+** TODO verify usage of extra to make sure
 */
 
 static t_vlq	do_vlqdiv(t_vlq *tmp_n, t_vlq *tmp_d, t_u32 ops)
@@ -95,7 +95,7 @@ static t_vlq	do_vlqdiv(t_vlq *tmp_n, t_vlq *tmp_d, t_u32 ops)
 	cbi = (63 - (ops % 63));
 	i = 0;
 	while (i < ops && **tmp_n != 0)
-	{ 
+	{
 		extra = 1;
 		if (ft_vlqcmp(*tmp_n, *tmp_d) >= 0)
 		{
@@ -120,10 +120,10 @@ static int		divmod_init_checks(t_vlq const num, t_vlq const den,
 		ft_putendl_fd("Improper vlq operand or division by 0 in vlq_div.", 2);
 		return (1);
 	}
- 	if (ft_vlqcmp(num, den) < 0)
+	if (ft_vlqcmp(num, den) < 0)
 	{
 		*div = ft_vlqnew(1);
-		*mod = mod ? ft_vlqdup(num) : NULL; 
+		*mod = mod ? ft_vlqdup(num) : NULL;
 		return (1);
 	}
 	return (0);
@@ -138,7 +138,7 @@ static int		divmod_init_checks(t_vlq const num, t_vlq const den,
 ** We also though of an iterative approach which estimates the quotient in
 ** chunks by using register division on indices of the vlq, shifting left then
 ** multiplying this quotient by the denominator, comparing to see if it's still
-** under the numerator, then if it's the largest multiple of den below num, 
+** under the numerator, then if it's the largest multiple of den below num,
 ** substracting it from num and keeping the appropriate operand as new bits in
 ** our quotient, thus gradually reducing the numerator while obtaining the
 ** solution.
@@ -149,7 +149,7 @@ static int		divmod_init_checks(t_vlq const num, t_vlq const den,
 ** more quotient making operation than otherwise.
 */
 
-void		ft_vlq_divmod(t_vlq const num, t_vlq const den,
+void			ft_vlq_divmod(t_vlq const num, t_vlq const den,
 							t_vlq *div, t_vlq *mod)
 {
 	t_vlq	tmp_n;

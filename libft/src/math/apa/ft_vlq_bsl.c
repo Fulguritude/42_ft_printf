@@ -52,7 +52,7 @@ static t_u64	bsl_do_shift(t_vlq const vlq, t_u32 i, t_u32 sm63, t_s32 diff)
 	return (tmp);
 }
 
-static t_vlq	bsl_chunk_shift(t_vlq const vlq, t_u32 sm63, 
+static t_vlq	bsl_chunk_shift(t_vlq const vlq, t_u32 sm63,
 								t_u8 size, t_u8 vlqmsb_offset)
 {
 	t_vlq	result;

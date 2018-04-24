@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//TODO remove fsanitize from makefile
-
 #ifndef __FT_PRINTF
 # define __FT_PRINTF
 
@@ -110,16 +108,16 @@
 #  define STR_RESET			"{eoc}"
 # endif
 
+/*
+** # define FL_QUOTE 0x20 //add "\'" to flags
+*/
 # define FL_HASH	0x1
 # define FL_PLUS	0x2
 # define FL_MINUS	0x4
 # define FL_SPACE	0x8
 # define FL_ZERO	0x10
-/*
-** # define FL_QUOTE 0x20 //add "\'" to flags
-*/
-# define FL_NONE 0x40
-# define FL_ERROR 0x80
+# define FL_NONE 	0x40
+# define FL_ERROR 	0x80
 
 /*
 ** Section to edit platform dependent primitive type byte lengths.

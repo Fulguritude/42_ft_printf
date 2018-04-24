@@ -10,22 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef LIBFT_SHORTHANDS_H
+# define LIBFT_SHORTHANDS_H
 
-#ifndef __LIBFT_SHORTHANDS_H
-# define __LIBFT_SHORTHANDS_H
 /*
 ** Shorthands for primitive types as bitsizes
 */
-typedef char			t_s8;
-typedef short			t_s16;
-typedef int				t_s32;
-typedef	long			t_s64;
-
 typedef	unsigned char	t_u8;
 typedef	unsigned short	t_u16;
 typedef	unsigned int	t_u32;
 typedef	unsigned long	t_u64;
-
+typedef char			t_s8;
+typedef short			t_s16;
+typedef int				t_s32;
+typedef	long			t_s64;
 typedef float			t_f32;
 typedef double			t_f64;
 

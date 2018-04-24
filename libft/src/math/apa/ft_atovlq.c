@@ -16,6 +16,7 @@
 ** parsing string from left to right (with reverse and reverse iteration because
 ** of norminette limiting variables, adding to vlq by higher powers first
 */
+
 static t_vlq		bin_atovlq(char const *a)
 {
 	t_vlq	result;
@@ -34,13 +35,10 @@ static t_vlq		bin_atovlq(char const *a)
 	i = 0;
 	while (i < size)
 	{
-		j = 0;
-		while (j < 63)
-		{
+		j = -1;
+		while (++j < 63)
 			if (tmp[i * 63 + j] == '1')
 				result[i] |= (0x4000000000000000 >> j);
-			++j;
-		}
 		++i;
 	}
 	ft_strdel(&tmp);
@@ -68,7 +66,7 @@ static t_vlq		anybase_atovlq(char const *a, char const *base,
 		ft_vlq_mul_acc(&val, base_pow);
 		ft_vlq_add_acc(&result, val);
 		ft_vlq_mul_acc(&base_pow, *radix);
-		ft_vlqdel(&val);	
+		ft_vlqdel(&val);
 	}
 	ft_vlqdel(&base_pow);
 	ft_vlqdel(radix);
@@ -108,6 +106,7 @@ static t_vlq		nbin_atovlq(char const *a, char const *base,
 ** nbstr in input are in normal order, not rev.
 ** leading + and - are ignored; internal + and - cause error.
 */
+
 t_vlq				ft_atovlq(char const *a, char const *base)
 {
 	int		i;

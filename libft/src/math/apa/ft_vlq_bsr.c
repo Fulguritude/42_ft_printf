@@ -64,7 +64,8 @@ static t_vlq	bsr_chunk_shift(t_vlq const vlq, t_u32 sm63,
 /*
 ** vlqmsb_offset is the number of leading zeros in vlq[0]
 */
-t_vlq		ft_vlq_bsr(t_vlq const vlq, t_u32 shift)
+
+t_vlq			ft_vlq_bsr(t_vlq const vlq, t_u32 shift)
 {
 	t_vlq	result;
 	t_u32	size;

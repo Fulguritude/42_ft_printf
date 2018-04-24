@@ -19,7 +19,6 @@
 ** => Add two digits for a hash, remove one if the hash is an octal;
 **      add one digit for a signed value with appropriate flag;
 ** => For precision, 0 flag is ignored, and precision is applied before width
-**
 */
 
 static char		*val_to_str(t_format info, intmax_t n, int *digits, t_u8 bytes)
@@ -124,7 +123,7 @@ static t_str	*build_int_str(t_format info, intmax_t n, t_u8 bytes)
 	digits += 2 * ((info.flags & FL_HASH) && n != 0
 			&& (int_uhex_l <= info.type) && (info.type <= int_ubin_u))
 		+ (info.type == int_uoct && (info.flags & FL_HASH))
-		+ (info.type == int_dec 
+		+ (info.type == int_dec
 			&& (info.flags & (FL_SPACE | FL_PLUS)) && n >= 0);
 	handle_int_prec_n_flzero(&str, info, digits);
 	flag_prepend(info.type, info.flags, n, &str);
@@ -149,7 +148,7 @@ t_str			*handle_int_type(t_format info, va_list args)
 		result = build_int_str(info, (long)va_arg(args, long), BYTELEN_LONG);
 	else if (info.len_flag == fl_ll)
 		result = build_int_str(info, (long long)va_arg(args, long long),
-								BYTELEN_LONGLONG);	
+								BYTELEN_LONGLONG);
 	else if (info.len_flag == fl_j)
 		result = build_int_str(info, (intmax_t)va_arg(args, intmax_t),
 								BYTELEN_IMAX);
