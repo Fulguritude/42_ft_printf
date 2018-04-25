@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 06:18:38 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/04/24 07:33:03 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/04/25 19:27:48 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ long	ft_vlqcmp(t_vlq const a, t_vlq const b)
 	t_u32	a_len;
 	t_u32	i;
 
-	if ((!ft_not_msb(a[0]) && ft_msb(a[0])) || (!ft_not_msb(b[0]) && ft_msb(b[0])))
+	if ((!ft_not_msb(a[0]) && ft_msb(a[0]))
+		|| (!ft_not_msb(b[0]) && ft_msb(b[0])))
 	{
 		ft_putendl_fd("Improper vlq in vlqcmp.", 2);
 		return (0);

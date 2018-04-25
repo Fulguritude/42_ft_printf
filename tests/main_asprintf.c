@@ -558,10 +558,10 @@ int		main(int argc, char **argv)
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf %%.6ls: %.6ls\n", L"résumé ls");
 	  return_values[j++] =    asprintf(&str2, "   printf %%.6ls: %.6ls\n", L"résumé ls");
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
-	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
-	  return_values[j++] = ft_asprintf(&str1, "ft_printf %%.6S: %.6S\n", L"résumé S");
-	  return_values[j++] =    asprintf(&str2, "   printf %%.6S: %.6S\n", L"résumé S");
-	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+//	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_asprintf(&str1, "ft_printf %%.6S: %.6S\n", L"résumé S");
+//	  return_values[j++] =    asprintf(&str2, "   printf %%.6S: %.6S\n", L"résumé S");
+//	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 #   endif
 
 /*

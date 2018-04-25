@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 22:32:49 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/04/19 22:32:51 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/04/25 19:29:39 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,5 @@ t_u64					ft_msb(t_u64 x);
 ** Returns x with the sign bit flipped to 0
 */
 t_u64					ft_not_msb(t_u64 x);
-
 
 #endif

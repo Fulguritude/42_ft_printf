@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 16:18:27 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/04/18 20:49:11 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/04/25 19:41:22 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 static char		*encode_unicodepoint_to_utf8(wchar_t c)
 {
-	size_t	size;
+	int		size;
 	char	*utf8_c;
 
 	if (c > 0x10FFFF)

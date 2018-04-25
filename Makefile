@@ -6,7 +6,7 @@
 #    By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/17 21:33:56 by tduquesn          #+#    #+#              #
-#    Updated: 2018/02/20 16:20:25 by tduquesn         ###   ########.fr        #
+#    Updated: 2018/04/25 19:43:11 by tduquesn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	=	libftprintf.a
 LFT		=	libft.a
 
 
-PLATFORM=	LINUX
+PLATFORM=	MAC_OS
 CC		=	gcc
 CFLAGS	=	-Wall -Werror -Wextra
 

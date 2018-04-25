@@ -6,12 +6,12 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/05 15:52:29 by tduquesn          #+#    #+#             */
-/*   Updated: 2018/02/20 21:38:36 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/04/25 19:46:38 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __FT_PRINTF
-# define __FT_PRINTF
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -29,6 +29,9 @@
 ** Printf format specifier: https://en.wikipedia.org/wiki/Printf_format_string
 **    => "%[parameters][flags][width][.precision][length]type"
 */
+
+# define LINUX	0
+# define MAC_OS	1
 
 /*
 ** 'n$' to call the n-th parameter

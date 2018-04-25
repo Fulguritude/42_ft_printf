@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 13:44:01 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/04/20 13:44:14 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/04/25 19:53:55 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ static t_str	*build_int_str(t_format info, intmax_t n, t_u8 bytes)
 	t_str	*result;
 
 	if (n == 0 && info.type_char == 'p')
-		return (str_to_t_str("(nil)"));
+		return (str_to_t_str(MAC_OS ? "0x0" : "(nil)"));
 	if (!(result = (t_str*)malloc(sizeof(t_str))))
 		return (NULL);
 	str = val_to_str(info, n, &digits, bytes);

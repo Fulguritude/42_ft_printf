@@ -1,8 +1,0 @@
-Norme: ./libft/src/math/op/ft_ln.c
-Warning: /Users/tduquesn/Workspace/ft_printf/git_files/libft/src/math/op/ft_ln.c may not compile or is invalid for some reasons.
-
-
-Norme: ./libft/src/str/strls/ft_strlsmap.c
-Error (line 15): Bad spacing for argument f
-Norme: ./libft/src/str/strls/ft_strlsmap_inplace.c
-Error (line 15): Bad spacing for argument f

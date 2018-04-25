@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 05:44:23 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/20 04:23:47 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/04/25 19:29:17 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@
 **		array's LSB is 0, this is to signify a power of at least two.
 **	- u64 with MSB == 0 can be recognized as t_vlq by address; behavior for
 **		any t_u64 > 2^63 or negative signed longs is undefined.
-** 
+**
 ** # define MSB(x) 		((x) >> 63)
 ** # define NOT_MSB(x) 	((x) & _NOT_MSB_)
 */

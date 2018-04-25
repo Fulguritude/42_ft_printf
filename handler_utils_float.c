@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 16:57:50 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/04/12 16:58:06 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/04/25 19:49:35 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ t_str		*handle_float_type(t_format info, va_list args)
 		tmp = handle_g_type(info, lf);
 	else
 		tmp = ft_strdup("(float_handler_error)");
+	if (MAC_OS && ft_strequ(tmp, "-nan"))
+		ft_strreplace_inplace(&tmp, "-", "");
 	if (ft_strfind("AFEG", info.type_char) >= 0)
 		ft_str_toupper(tmp);
 	lc = localeconv();
