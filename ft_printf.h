@@ -6,7 +6,7 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/05 15:52:29 by tduquesn          #+#    #+#             */
-/*   Updated: 2018/04/25 19:46:38 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/04/25 22:27:11 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,7 +249,7 @@ int				apply_float_prec(t_format info, char **a_flstr, char exp_c);
 ** static char			*encode_unicodepoint_to_utf8(wchar_t c);
 ** static char			*build_utf8(wchar_t *unicode_str);
 */
-t_str			*handle_uchar_type(t_len_flag len_flag, va_list args);
+t_str			*handle_uchar_type(t_format info, va_list args);
 t_str			*handle_str_type(t_format info, va_list args);
 
 /*

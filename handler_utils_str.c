@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 16:18:27 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/04/25 19:41:22 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/04/25 22:53:01 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,29 +107,31 @@ t_str			*handle_str_type(t_format info, va_list args)
 	return (result);
 }
 
-t_str			*handle_uchar_type(t_len_flag len_flag, va_list args)
+t_str			*handle_uchar_type(t_format info, va_list args)
 {
 	t_str	*result;
-	wchar_t wc;
+	char	*str;
 
 	if (!(result = (t_str*)malloc(sizeof(t_str))))
 		return (NULL);
-	if (len_flag == fl_l)
+	if (info.len_flag == fl_l)
 	{
-		wc = (wchar_t)va_arg(args, wchar_t);
-		result->data = encode_unicodepoint_to_utf8(wc);
-		if (!result->data || ft_strequ(result->data, "MB_CUR_MAX_ERROR"))
+		str = encode_unicodepoint_to_utf8((wchar_t)va_arg(args, wchar_t));
+		if (!str || ft_strequ(str, "MB_CUR_MAX_ERROR"))
 		{
 			free(result);
 			return (str_to_t_str(NULL));
 		}
-		result->len = 1 + (wc > 0x7F) + (wc > 0x7FF) + (wc > 0xFFFF);
 	}
 	else
-	{
-		result->data = ft_strnew(1);
-		result->data[0] = (char)va_arg(args, int);
-		result->len = 1;
-	}
+		str = ft_strcnew(1, (char)va_arg(args, int));
+	result->len = ft_max(ft_strlen(str) + !str[0], info.width);
+	if (info.width != -1 && info.width > (int)ft_strlen(str))
+		(info.flags & FL_MINUS) ?
+			ft_strpad_right_inplace(&str, ' ',
+					(*str != 0) * (info.width - ft_strlen(str))) :
+			ft_strpad_left_inplace(&str, ' ',
+					info.width - ft_strlen(str) - !*str);
+	result->data = str;
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 16:12:05 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/04/16 16:12:12 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/04/25 22:27:56 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_str				*handle_format(t_format info, char const *fmt, va_list args)
 	else if (info.type == string)
 		return (handle_str_type(info, args));
 	else if (info.type == uchar)
-		return (handle_uchar_type(info.len_flag, args));
+		return (handle_uchar_type(info, args));
 	else if (info.type == float_pt)
 		return (handle_float_type(info, args));
 	else
