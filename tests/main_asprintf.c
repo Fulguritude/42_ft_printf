@@ -1217,6 +1217,81 @@ printf("\n\n");
 //	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 
 
+//	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %#i\n", "%#i", test_int);
+//	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %#i\n", "%#i", test_int);
+//	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %+i\n", "%+i", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %+i\n", "%+i", test_int);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+//	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %0-i\n", "%0-i", test_int);
+//	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %0-i\n", "%0-i", test_int);
+//	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %0.2i\n", "%0.2i", test_int);
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %0.2i\n", "%0.2i", test_int);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %5i\n", "%5i", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %5i\n", "%5i", test_int);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %.5i\n", "%.5i", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %.5i\n", "%.5i", test_int);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %.2i\n", "%.2i", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %.2i\n", "%.2i", test_int);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %-.2i\n", "%-.2i", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %-.2i\n", "%-.2i", test_int);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %2.5i\n", "%2.5i", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %2.5i\n", "%2.5i", test_int);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %4.5i\n", "%4.5i", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %4.5i\n", "%4.5i", test_int);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %02.5i\n", "%02.5i", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %02.5i\n", "%02.5i", test_int);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %04.5i\n", "%04.5i", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %04.5i\n", "%04.5i", test_int);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %5i\n", "%5i", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %5i\n", "%5i", test_int);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %6i\n", "%6i", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %6i\n", "%6i", test_int);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %0i\n", "%0i", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %0i\n", "%0i", test_int);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %06i\n", "%06i", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %06i\n", "%06i", test_int);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives % 04.5i\n", "% 04.5i", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives % 04.5i\n", "% 04.5i", test_int);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives % 04.2i\n", "% 04.2i", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives % 04.2i\n", "% 04.2i", test_int);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %x\n", "%x", part_ad);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %x\n", "%x", part_ad);
@@ -1462,6 +1537,20 @@ printf("\n\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %+-.2d\n", "%+-.2d", test_int);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %+-.2d\n", "%+-.2d", test_int);
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %04.2d\n", "%04.2d", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %04.2d\n", "%04.2d", test_int);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %04.3d\n", "%04.3d", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %04.3d\n", "%04.3d", test_int);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %04.3i\n", "%04.3i", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %04.3i\n", "%04.3i", test_int);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+
+
 
 
 printf("\n\n");
@@ -1738,10 +1827,14 @@ printf("\n\n");
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
-	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %4.5u\n", "%4.5u", test_int);
-	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %4.5u\n", "%4.5u", test_int);
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %02.5u\n", "%02.5u", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %02.5u\n", "%02.5u", test_int);
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %04.5u\n", "%4.5u", test_int);
+	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %04.5u\n", "%4.5u", test_int);
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %5u\n", "%5u", test_int);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %5u\n", "%5u", test_int);
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
@@ -1756,7 +1849,6 @@ printf("\n\n");
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives %06u\n", "%06u", test_int);
 	  return_values[j++] =    asprintf(&str2, "   printf: %s gives %06u\n", "%06u", test_int);
-	//last test gets back the static failure number
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 #  endif
 # endif

@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 13:44:01 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/04/25 19:53:55 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/04/25 20:57:17 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static void		handle_int_prec_n_flzero(char **a_str, t_format info,
 		ft_strinsert(a_str, tmp, ((*a_str)[0] == '-'));
 		free(tmp);
 	}
-	else if (((info.flags & FL_ZERO) && info.width > digits))
+	else if (((info.flags & FL_ZERO) && info.prec < 0 && info.width > digits))
 	{
 		if (info.flags & FL_MINUS)
 			ft_strpad_right_inplace(a_str, ' ', info.width - digits);
@@ -127,7 +127,8 @@ static t_str	*build_int_str(t_format info, intmax_t n, t_u8 bytes)
 			&& (info.flags & (FL_SPACE | FL_PLUS)) && n >= 0);
 	handle_int_prec_n_flzero(&str, info, digits);
 	flag_prepend(info.type, info.flags, n, &str);
-	if (!(info.flags & FL_ZERO) && info.width > digits)
+	if ((!(info.flags & FL_ZERO) || (info.prec > 0))
+				&& info.width > digits)
 		(info.flags & FL_MINUS) ?
 			ft_strpad_right_inplace(&str, ' ', info.width - digits) :
 			ft_strpad_left_inplace(&str, ' ', info.width - digits);
