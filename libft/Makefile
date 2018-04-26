@@ -6,7 +6,7 @@
 #    By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/17 21:33:56 by tduquesn          #+#    #+#              #
-#    Updated: 2018/04/26 15:31:41 by tduquesn         ###   ########.fr        #
+#    Updated: 2018/04/26 16:19:45 by tduquesn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ OBJDIR	=	./obj/
 
 TSTDIR	=	../ #keep out of git bounds to avoid forbidden functions
 
-DIRS	=	$(OBJDIR) \
+OBJDIRS	=	$(OBJDIR) \
 			$(OBJDIR)$(SRCDIR_IO) \
 			$(OBJDIR)$(SRCDIR_MEM) \
 			$(OBJDIR)$(SRCDIR_LST) \
@@ -316,7 +316,7 @@ GREEN	=	"\033[0;32m"
 #$^ is a call to the string of the current dependencies
 #$< is a call to the string of the first dependency in case of multiple deps
 
-$(NAME):mkobjstruct $(addprefix $(OBJDIR)$,$(OBJS))
+$(NAME):$(OBJDIRS) $(addprefix $(OBJDIR)$,$(OBJS))
 	@printf "Compiling library: "$@" -> "$(RED)
 	@ar -rc $@ $(addprefix $(OBJDIR)$,$(OBJS))
 	@ranlib $@
@@ -344,8 +344,8 @@ build_test: re
 	./$(TEST)
 	rm -f $(TEST)
 
-mkobjstruct: $(DIRS)
-	@mkdir -p $^
+$(OBJDIRS):
+	@mkdir -p $@
 
 test:build_test
 	@make clean

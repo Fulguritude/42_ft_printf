@@ -519,6 +519,26 @@ int		main(int argc, char **argv)
 	char		*null = NULL;
 	wchar_t		*wcnull = NULL;
 
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %%%% : |%%|\n");
+	  return_values[j++] =    asprintf(&str2, "   printf %%%% : |%%|\n");
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %%   %% : |%   %|\n");
+	  return_values[j++] =    asprintf(&str2, "   printf %%   %% : |%   %|\n");
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %%5%% : |%5%|\n");
+	  return_values[j++] =    asprintf(&str2, "   printf %%5%% : |%5%|\n");
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %%-5%% : |%-5%|\n");
+	  return_values[j++] =    asprintf(&str2, "   printf %%-5%% : |%-5%|\n");
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+	  return_values[j++] = ft_asprintf(&str1, "ft_printf %%.0%% : |%.0%|\n");
+	  return_values[j++] =    asprintf(&str2, "   printf %%.0%% : |%.0%|\n");
+	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 	printf(C_YELLOW"\n/!\\ Note that our string comparison test is not reliable for %%c with argument zero."C_RESET);
 	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 	  return_values[j++] = ft_asprintf(&str1, "ft_printf %%c with 0 : |%c|\n", 0);
