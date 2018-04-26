@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 16:18:27 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/04/25 22:53:01 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/04/26 14:39:31 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,28 +110,28 @@ t_str			*handle_str_type(t_format info, va_list args)
 t_str			*handle_uchar_type(t_format info, va_list args)
 {
 	t_str	*result;
-	char	*str;
+	char	*s;
 
-	if (!(result = (t_str*)malloc(sizeof(t_str))))
-		return (NULL);
 	if (info.len_flag == fl_l)
-	{
-		str = encode_unicodepoint_to_utf8((wchar_t)va_arg(args, wchar_t));
-		if (!str || ft_strequ(str, "MB_CUR_MAX_ERROR"))
-		{
-			free(result);
+		if (!(s = encode_unicodepoint_to_utf8((wchar_t)va_arg(args, wchar_t)))
+			|| ft_strequ(s, "MB_CUR_MAX_ERROR"))
 			return (str_to_t_str(NULL));
+	if (info.len_flag != fl_l)
+		s = ft_strcnew(1, (char)va_arg(args, int));
+	result = (t_str*)malloc(sizeof(t_str));
+	result->len = ft_max(ft_strlen(s) + !s[0], info.width);
+	if (info.width != -1 && info.width > (int)ft_strlen(s))
+	{
+		if ((info.flags & FL_MINUS) && *s)
+			ft_strpad_right_inplace(&s, ' ', info.width - ft_strlen(s));
+		else if ((info.flags & FL_MINUS))
+		{
+			ft_strpad_right_inplace(&s, ' ', info.width);
+			*s = '\0';
 		}
+		else
+			ft_strpad_left_inplace(&s, ' ', info.width - ft_strlen(s) - !*s);
 	}
-	else
-		str = ft_strcnew(1, (char)va_arg(args, int));
-	result->len = ft_max(ft_strlen(str) + !str[0], info.width);
-	if (info.width != -1 && info.width > (int)ft_strlen(str))
-		(info.flags & FL_MINUS) ?
-			ft_strpad_right_inplace(&str, ' ',
-					(*str != 0) * (info.width - ft_strlen(str))) :
-			ft_strpad_left_inplace(&str, ' ',
-					info.width - ft_strlen(str) - !*str);
-	result->data = str;
+	result->data = s;
 	return (result);
 }
