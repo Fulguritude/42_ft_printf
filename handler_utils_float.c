@@ -6,7 +6,7 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 16:57:50 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/04/25 19:49:35 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/04/26 16:10:24 by tduquesn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,12 @@ static char	*handle_g_type(t_format info, double lf)
 **			 	7F1 (hex)
 ** 		mantissa = 0001001000110100010101100111100010011010101111001101 (52 b)
 **				   123456789ABCD
+**
+** 	struct lconv	*lc;
+**
+**	lc = localeconv();
+**	if (*(lc->decimal_point) != '.')
+**		ft_strreplace_inplace(&tmp, ".", lc->decimal_point);
 */
 
 t_str		*handle_float_type(t_format info, va_list args)
@@ -105,7 +111,6 @@ t_str		*handle_float_type(t_format info, va_list args)
 	double			lf;
 	char			*tmp;
 	t_str			*result;
-	struct lconv	*lc;
 
 	lf = va_arg(args, double);
 	if (ft_strfind("aAeEfF", info.type_char) >= 0)
@@ -118,9 +123,6 @@ t_str		*handle_float_type(t_format info, va_list args)
 		ft_strreplace_inplace(&tmp, "-", "");
 	if (ft_strfind("AFEG", info.type_char) >= 0)
 		ft_str_toupper(tmp);
-	lc = localeconv();
-	if (*(lc->decimal_point) != '.')
-		ft_strreplace_inplace(&tmp, ".", lc->decimal_point);
 	result = str_to_t_str(tmp);
 	free(tmp);
 	return (result);

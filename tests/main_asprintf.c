@@ -39,7 +39,7 @@
 #  define OTHER_HANDLER						1
 # define MAIN_TESTS							_MAIN_TESTS_ && (INT_HANDLER || STR_HANDLER || OTHER_HANDLER)
 
-# define _FLOAT_BONUSES_					1
+# define _FLOAT_BONUSES_					0
 #  define PERCENT_aA						1 //medium, easier than it looks
 #  define PERCENT_eE						1 //very hard, or some much slower cases if you go through %f first like me
 #  define PERCENT_fF						1 //hard
@@ -578,6 +578,11 @@ int		main(int argc, char **argv)
 	  return_values[j++] =    asprintf(&str2, "   printf %%.6ls: %.6ls\n", L"résumé ls");
 	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 //	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_asprintf(&str1, "ft_printf %%.s: %.s\n", (char *) 42);
+//	  return_values[j++] =    asprintf(&str2, "   printf %%.s: %.s\n", (char *) 42);
+//	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+
+//	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 //	  return_values[j++] = ft_asprintf(&str1, "ft_printf %%.6S: %.6S\n", L"résumé S");
 //	  return_values[j++] =    asprintf(&str2, "   printf %%.6S: %.6S\n", L"résumé S");
 //	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
@@ -652,6 +657,10 @@ int		main(int argc, char **argv)
 //	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
 //	  return_values[j++] = ft_asprintf(&str1, "ft_printf: %s gives % 13.6s\n", "% 13.6s", "ft_printf");
 //	  return_values[j++] =    asprintf(&str2, "   printf: %s gives % 13.6s\n", "% 13.6s", "   printf");
+//	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
+//	printf(C_BLUE"\n\nTest %d:"C_RESET, ++i); printf("\n");
+//	  return_values[j++] = ft_asprintf(&str1, "ft_printf %%.s: %.s\n", (char *) 42);
+//	  return_values[j++] =    asprintf(&str2, "   printf %%.s: %.s\n", (char *) 42);
 //	str_fails = check_retvals(j, return_values, &str1, str2); ft_strdel(&str1); ft_strdel(&str2);
 
 

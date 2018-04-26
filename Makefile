@@ -6,7 +6,7 @@
 #    By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/17 21:33:56 by tduquesn          #+#    #+#              #
-#    Updated: 2018/04/25 19:43:11 by tduquesn         ###   ########.fr        #
+#    Updated: 2018/04/26 15:35:27 by tduquesn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,16 +55,16 @@ RED		=	"\033[0;31m"
 GREEN	=	"\033[0;32m"
 
 
-$(NAME): $(LFT) $(OBJS)
+$(NAME): $(LFTDIR)$(LFT) $(OBJS)
 	@printf "Compiling library: "$@" -> "$(RED)
-	@cp $(LFTDIR)$(LFT) ./$@
+	@cp $< ./$@
 	@$(CC) $(CFLAGS) -c $(SRCS) -I$(HDRDIR)
 	@ar -r $@ $(OBJS)
 	@ranlib $@
 	@printf $(GREEN)"OK!"$(RESET)"\n"
 
 #dependencies are taken care of in libft's makefile.
-$(LFT):
+$(LFTDIR)$(LFT):
 	$(MAKE) -C $(LFTDIR) $(LFT)
 
 all: $(NAME)

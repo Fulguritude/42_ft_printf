@@ -6,7 +6,7 @@
 #    By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/17 21:33:56 by tduquesn          #+#    #+#              #
-#    Updated: 2018/02/26 19:15:56 by fulguritu        ###   ########.fr        #
+#    Updated: 2018/04/26 15:31:41 by tduquesn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,20 @@ SRCDIR_MATH_APA = apa/
 OBJDIR	=	./obj/
 
 TSTDIR	=	../ #keep out of git bounds to avoid forbidden functions
+
+DIRS	=	$(OBJDIR) \
+			$(OBJDIR)$(SRCDIR_IO) \
+			$(OBJDIR)$(SRCDIR_MEM) \
+			$(OBJDIR)$(SRCDIR_LST) \
+			$(OBJDIR)$(SRCDIR_STR) \
+			$(OBJDIR)$(SRCDIR_STR)$(SRCDIR_STR_CHR) \
+			$(OBJDIR)$(SRCDIR_STR)$(SRCDIR_STR_STR) \
+			$(OBJDIR)$(SRCDIR_STR)$(SRCDIR_STR_SIP) \
+			$(OBJDIR)$(SRCDIR_STR)$(SRCDIR_STR_SLS) \
+			$(OBJDIR)$(SRCDIR_MATH) \
+			$(OBJDIR)$(SRCDIR_MATH)$(SRCDIR_MATH_CNV) \
+			$(OBJDIR)$(SRCDIR_MATH)$(SRCDIR_MATH_OP) \
+			$(OBJDIR)$(SRCDIR_MATH)$(SRCDIR_MATH_APA)
 
 
 
@@ -330,20 +344,8 @@ build_test: re
 	./$(TEST)
 	rm -f $(TEST)
 
-mkobjstruct:
-	@mkdir -p $(OBJDIR)
-	@mkdir -p $(OBJDIR)$(SRCDIR_IO)
-	@mkdir -p $(OBJDIR)$(SRCDIR_MEM)
-	@mkdir -p $(OBJDIR)$(SRCDIR_LST)
-	@mkdir -p $(OBJDIR)$(SRCDIR_STR)
-	@mkdir -p $(OBJDIR)$(SRCDIR_STR)$(SRCDIR_STR_CHR)
-	@mkdir -p $(OBJDIR)$(SRCDIR_STR)$(SRCDIR_STR_STR)
-	@mkdir -p $(OBJDIR)$(SRCDIR_STR)$(SRCDIR_STR_SIP)
-	@mkdir -p $(OBJDIR)$(SRCDIR_STR)$(SRCDIR_STR_SLS)
-	@mkdir -p $(OBJDIR)$(SRCDIR_MATH)
-	@mkdir -p $(OBJDIR)$(SRCDIR_MATH)$(SRCDIR_MATH_CNV)
-	@mkdir -p $(OBJDIR)$(SRCDIR_MATH)$(SRCDIR_MATH_OP)
-	@mkdir -p $(OBJDIR)$(SRCDIR_MATH)$(SRCDIR_MATH_APA)
+mkobjstruct: $(DIRS)
+	@mkdir -p $^
 
 test:build_test
 	@make clean
