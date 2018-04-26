@@ -454,9 +454,10 @@ static int	check_retvals(int j, int *return_values, char **a_str1, char *str2)
 	}
 	printf("\n");
 
-
+#if VERBOSE
 printf("\tft_str :%p\n\t   str :%p\n", *a_str1, str2);
 printf("\tft_str :%s\n\t   str :%s\n", *a_str1, str2);
+#endif
 	ft_strreplace_inplace(a_str1, "ft_", "   ");
 	if (ft_strequ(*a_str1, str2))
 	{
