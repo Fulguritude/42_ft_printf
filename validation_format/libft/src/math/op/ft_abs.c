@@ -6,11 +6,11 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/25 00:29:04 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/02/25 00:37:13 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/05/12 17:14:32 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_math.h"
 
 inline t_u64	ft_abs(t_s64 x)
 {

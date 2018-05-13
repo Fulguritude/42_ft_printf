@@ -6,11 +6,11 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 01:01:01 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/28 11:44:44 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:16:48 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_str.h"
 
 static t_u32	count_distinct_sub_in_str(char const *str, char const *sub)
 {

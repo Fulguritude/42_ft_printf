@@ -6,11 +6,11 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 01:54:20 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/30 18:56:41 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:16:47 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_str.h"
 
 t_u32		ft_strls_countchar(const char **strls, const char c)
 {

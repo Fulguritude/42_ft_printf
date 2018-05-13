@@ -6,11 +6,11 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 20:31:27 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/28 20:32:19 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/05/12 17:13:55 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_math.h"
 
 t_u8		ft_is_valid_nbstr_in_base(char const *nbstr, char const *base)
 {

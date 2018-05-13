@@ -14,13 +14,17 @@
 # define LIBFT_LST_H
 
 # include "libft.h"
+# include "libft_mem.h"
 
+# ifndef	LST_STRUCT
+#  define	LST_STRUCT
 typedef struct			s_list
 {
 	void			*content;
 	size_t			content_size;
 	struct s_list	*next;
 }						t_list;
+# endif
 
 /*
 ** ============= List Functions =============

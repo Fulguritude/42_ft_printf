@@ -12,41 +12,41 @@
 
 # Builds libft as a static library
 
-NAME	=	libft.a
+NAME	:=	libft.a
 
 
-CC		=	gcc
-CFLAGS	=	-Wall -Werror -Wextra
+CC		:=	gcc
+CFLAGS	:=	-Wall -Werror -Wextra
 
 
-HDRDIR	=	./hdr/
+HDRDIR	:=	./hdr/
 
 
-SRCDIR	=	./src/
+SRCDIR	:=	./src/
 
-SRCDIR_MEM	= mem/
+SRCDIR_MEM	:= mem/
 
-SRCDIR_IO	= io/
+SRCDIR_IO	:= io/
 
-SRCDIR_STR	= str/
-SRCDIR_STR_CHR = char/
-SRCDIR_STR_STR = str/
-SRCDIR_STR_SIP = str_ip/
-SRCDIR_STR_SLS = strls/
+SRCDIR_STR	:= str/
+SRCDIR_STR_CHR := char/
+SRCDIR_STR_STR := str/
+SRCDIR_STR_SIP := str_ip/
+SRCDIR_STR_SLS := strls/
 
-SRCDIR_LST	= lst/
+SRCDIR_LST	:= lst/
 
-SRCDIR_MATH	= math/
-SRCDIR_MATH_CNV = conv/
-SRCDIR_MATH_OP  = op/
-SRCDIR_MATH_APA = apa/
+SRCDIR_MATH	:= math/
+SRCDIR_MATH_CNV := conv/
+SRCDIR_MATH_OP  := op/
+SRCDIR_MATH_APA := apa/
 
 
-OBJDIR	=	./obj/
+OBJDIR	:=	./obj/
 
-TSTDIR	=	../ #keep out of git bounds to avoid forbidden functions
+TSTDIR	:=	../ #keep out of git bounds to avoid forbidden functions
 
-OBJDIRS	=	$(OBJDIR) \
+OBJDIRS	:=	$(OBJDIR) \
 			$(OBJDIR)$(SRCDIR_IO) \
 			$(OBJDIR)$(SRCDIR_MEM) \
 			$(OBJDIR)$(SRCDIR_LST) \
@@ -62,7 +62,7 @@ OBJDIRS	=	$(OBJDIR) \
 
 
 
-HDRS	=	libft.h						\
+HDRS	:=	libft.h						\
 			libft_shorthands.h			\
 			libft_mem.h					\
 			libft_io.h					\
@@ -71,7 +71,7 @@ HDRS	=	libft.h						\
 			libft_lst.h
 
 
-SRC_MEM_MEM	=	ft_memset.c					\
+SRC_MEM_MEM	:=	ft_memset.c					\
 				ft_bzero.c					\
 				ft_memcpy.c					\
 				ft_memccpy.c				\
@@ -90,9 +90,9 @@ SRC_MEM_MEM	=	ft_memset.c					\
 				ft_ptrarrlen.c				\
 				ft_ptrarrnew.c
 
-SRC_MEM	=	$(addprefix $(SRCDIR_MEM), $(SRC_MEM_MEM))
+SRC_MEM	:=	$(addprefix $(SRCDIR_MEM), $(SRC_MEM_MEM))
 
-SRC_STR_CHR	=	ft_isalpha.c				\
+SRC_STR_CHR	:=	ft_isalpha.c				\
 				ft_isupper.c				\
 				ft_islower.c				\
 				ft_isdigit.c				\
@@ -103,7 +103,7 @@ SRC_STR_CHR	=	ft_isalpha.c				\
 				ft_toupper.c				\
 				ft_tolower.c
 
-SRC_STR_STR	=	ft_strlen.c					\
+SRC_STR_STR	:=	ft_strlen.c					\
 				ft_strnew.c					\
 				ft_strcnew.c				\
 				ft_strrev.c					\
@@ -143,7 +143,7 @@ SRC_STR_STR	=	ft_strlen.c					\
 				ft_strmapi.c				\
 				ft_strdel.c
 
-SRC_STR_SIP	=	ft_strmerge.c				\
+SRC_STR_SIP	:=	ft_strmerge.c				\
 				ft_strappend.c				\
 				ft_strprepend.c				\
 				ft_strinsert.c				\
@@ -160,7 +160,7 @@ SRC_STR_SIP	=	ft_strmerge.c				\
 				ft_strntrim_left_inplace.c	\
 				ft_strntrim_right_inplace.c
 
-SRC_STR_SLS =	ft_strlsnew.c				\
+SRC_STR_SLS :=	ft_strlsnew.c				\
 				ft_strlscnew.c				\
 				ft_strcsplit.c				\
 				ft_split.c					\
@@ -174,14 +174,14 @@ SRC_STR_SLS =	ft_strlsnew.c				\
 				ft_strlsmap_inplace.c		\
 				ft_strlsdel.c
 
-SRC_STR =	$(addprefix $(SRCDIR_STR), \
+SRC_STR :=	$(addprefix $(SRCDIR_STR), \
 				$(addprefix $(SRCDIR_STR_CHR),$(SRC_STR_CHR))	\
 				$(addprefix $(SRCDIR_STR_STR),$(SRC_STR_STR))	\
 				$(addprefix $(SRCDIR_STR_SIP),$(SRC_STR_SIP))	\
 				$(addprefix $(SRCDIR_STR_SLS),$(SRC_STR_SLS))	\
 			)
 
-SRC_LST_LST	=	ft_lstnew.c					\
+SRC_LST_LST	:=	ft_lstnew.c					\
 				ft_lstnew_no_copy.c			\
 				ft_lstdelone.c				\
 				ft_lstdel.c					\
@@ -197,9 +197,9 @@ SRC_LST_LST	=	ft_lstnew.c					\
 				ft_lstfold.c				\
 				ft_lststr_to_strls.c
 
-SRC_LST	=	$(addprefix $(SRCDIR_LST), $(SRC_LST_LST))
+SRC_LST	:=	$(addprefix $(SRCDIR_LST), $(SRC_LST_LST))
 
-SRC_IO_IO	=	ft_putchar_fd.c				\
+SRC_IO_IO	:=	ft_putchar_fd.c				\
 				ft_putstr_fd.c				\
 				ft_putendl_fd.c				\
 				ft_putnbr_fd.c				\
@@ -218,9 +218,9 @@ SRC_IO_IO	=	ft_putchar_fd.c				\
 				ft_putnbr_lstelem_fd.c		\
 				ft_putnbr_lst_fd.c			
 
-SRC_IO	=	$(addprefix $(SRCDIR_IO), $(SRC_IO_IO))
+SRC_IO	:=	$(addprefix $(SRCDIR_IO), $(SRC_IO_IO))
 
-SRC_MATH_CNV =	ft_atoi.c					\
+SRC_MATH_CNV :=	ft_atoi.c					\
 				ft_itoa.c					\
 				ft_in_base.c				\
 				ft_is_valid_base.c			\
@@ -238,7 +238,7 @@ SRC_MATH_CNV =	ft_atoi.c					\
 				ft_udigits_base.c			\
 				ft_lftoa.c
 
-SRC_MATH_OP =	ft_abs.c					\
+SRC_MATH_OP :=	ft_abs.c					\
 				ft_max.c					\
 				ft_min.c					\
 				ft_umax.c					\
@@ -252,7 +252,7 @@ SRC_MATH_OP =	ft_abs.c					\
 				ft_ln.c						\
 				ft_logn.c
 
-SRC_MATH_APA =	ft_vlqnew.c						\
+SRC_MATH_APA :=	ft_vlqnew.c						\
 				ft_atovlq.c						\
 				ft_vlqdup.c						\
 				ft_vlq_getpow2.c				\
@@ -284,31 +284,32 @@ SRC_MATH_APA =	ft_vlqnew.c						\
 				#ft_vlq_bwa.c
 				#ft_vlq_bwo.c
 
-SRC_MATH=	$(addprefix $(SRCDIR_MATH), \
+SRC_MATH:=	$(addprefix $(SRCDIR_MATH), \
 				$(addprefix $(SRCDIR_MATH_CNV),$(SRC_MATH_CNV))	\
 				$(addprefix $(SRCDIR_MATH_OP),$(SRC_MATH_OP))	\
 				$(addprefix $(SRCDIR_MATH_APA),$(SRC_MATH_APA))	\
 			)
 
-SRC_TMP	=	ft_str_base_to_base_expn.c		\
+SRC_TMP	:=	ft_str_base_to_base_expn.c		\
 			ft_str_base_expn_to_base.c
 
-SRCS	=	$(SRC_MEM)		\
+SRCS	:=	$(SRC_MEM)		\
 			$(SRC_STR)		\
 			$(SRC_LST)		\
 			$(SRC_IO)		\
 			$(SRC_MATH)		\
 			$(SRC_TMP)
 
-OBJS	=	$(SRCS:.c=.o)
+OBJS	:=	$(SRCS:.c=.o)
 
-MAIN	=	main_libft.c
-TEST	=	test.out
+MAIN	:=	main_libft.c
+TEST	:=	test.out
 
-RESET	=	"\033[0m"
-RED		=	"\033[0;31m"
-GREEN	=	"\033[0;32m"
+RESET	:=	"\033[0m"
+RED		:=	"\033[0;31m"
+GREEN	:=	"\033[0;32m"
 
+.PHONY: all re clean fclean printf_req
 
 #https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html
 #@ before a function makes it so that its call isn't echoed to stdout
@@ -323,18 +324,18 @@ $(NAME):$(OBJDIRS) $(addprefix $(OBJDIR)$,$(OBJS))
 	@printf $(GREEN)"OK!"$(RESET)"\n"
 
 $(OBJDIR)%.o:$(SRCDIR)%.c
-	@printf "Compiling file: "$@" -> "$(RED)
+#	@printf "Compiling file: "$@" -> "$(RED)
 	@$(CC) $(CFLAGS) -c $< -I$(HDRDIR) -o $@
-	@printf $(GREEN)"OK!"$(RESET)"\n"
+#	@printf $(GREEN)"OK!"$(RESET)"\n"
 
 all: $(NAME)
 
 clean:
-	@printf "Calling libft clean...\n"
+#	@printf "Calling libft clean...\n"
 	@rm -f $(addprefix $(OBJDIR),$(OBJS))
 
 fclean: clean
-	@printf "Calling libft fclean...\n"
+#	@printf "Calling libft fclean...\n"
 	@rm -f $(NAME)
 
 re:fclean all

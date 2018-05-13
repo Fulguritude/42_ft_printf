@@ -6,11 +6,11 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 21:31:52 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/12/01 19:15:49 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:14:47 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_mem.h"
 
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
@@ -18,7 +18,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 
 	if (!dest || !src)
 	{
-		ft_putendl_fd("null operand given to ft_memcpy.", 2);
+		write(2, "null operand given to ft_memcpy.\n", 33);
 		return (NULL);
 	}
 	i = 0;

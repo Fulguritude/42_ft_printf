@@ -24,7 +24,7 @@
 
 static char		*encode_unicodepoint_to_utf8(wchar_t c)
 {
-	int		size;
+	t_u32	size;
 	char	*utf8_c;
 
 	if (c > 0x10FFFF)

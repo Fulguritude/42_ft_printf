@@ -6,11 +6,11 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 01:50:05 by tduquesn          #+#    #+#             */
-/*   Updated: 2018/02/20 15:19:58 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:16:46 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_str.h"
 
 char	**ft_strdivide(const char *str, size_t n)
 {

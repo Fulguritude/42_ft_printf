@@ -14,6 +14,9 @@
 # define LIBFT_APA_H
 
 # include "libft.h"
+# include "libft_mem.h"
+# include "libft_math.h"
+# include "libft_io.h"
 
 /*
 ** TODO
@@ -58,10 +61,6 @@
 ** # define MSB(x) 		((x) >> 63)
 ** # define NOT_MSB(x) 	((x) & _NOT_MSB_)
 */
-
-# define _MSB_ 			0x8000000000000000
-# define _NOT_MSB_		0x7FFFFFFFFFFFFFFF
-# define _ALLBITS_		0xFFFFFFFFFFFFFFFF
 
 typedef t_u64*	t_vlq;
 

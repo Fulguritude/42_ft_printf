@@ -6,11 +6,11 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 02:11:23 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/28 13:34:54 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:16:48 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_str.h"
 
 char	**ft_strlssub(const char **strls, t_u32 start, t_u32 len)
 {

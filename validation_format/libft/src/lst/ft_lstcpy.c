@@ -6,11 +6,11 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 22:03:30 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/28 11:44:33 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:12:45 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_lst.h"
 
 static t_list	*ft_lstelemcpy(t_list *elem)
 {

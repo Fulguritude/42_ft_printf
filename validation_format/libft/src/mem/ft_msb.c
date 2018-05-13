@@ -6,11 +6,11 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 15:45:22 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/04/20 15:46:38 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/05/12 17:14:48 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_mem.h"
 
 inline t_u64		ft_msb(t_u64 x)
 {

@@ -6,11 +6,11 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 21:31:59 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/28 14:17:52 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:16:23 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_str.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

@@ -6,11 +6,11 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/08 12:50:11 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/28 11:44:42 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:16:47 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_str.h"
 
 static void	ft_strnb_charnb_in_strls(const char **strls, int *w_nb, int *c_nb)
 {

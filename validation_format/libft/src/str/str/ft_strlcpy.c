@@ -6,11 +6,11 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 21:32:00 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/30 19:12:24 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:16:24 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_str.h"
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {

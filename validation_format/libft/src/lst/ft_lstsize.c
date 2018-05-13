@@ -6,11 +6,11 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 21:31:51 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/28 14:18:49 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:12:47 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_lst.h"
 
 t_u32			ft_lstsize(t_list *lst)
 {

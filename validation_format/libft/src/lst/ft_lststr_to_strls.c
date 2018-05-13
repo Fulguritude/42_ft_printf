@@ -6,11 +6,12 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/28 02:33:57 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/02/20 15:28:06 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:12:47 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_lst.h"
+#include "libft_str.h"
 
 char	**ft_lststr_to_strls(t_list *lst)
 {
@@ -30,7 +31,7 @@ char	**ft_lststr_to_strls(t_list *lst)
 		}
 		status = ft_strlcpy(result[i], lst->content, lst->content_size + 1);
 		if (status != (long)lst->content_size)
-			ft_putendl_fd("Incoherent string size in lst conversion.", 2);
+			write(2, "Incoherent string size in lst conversion.\n", 42);
 		lst = lst->next;
 		++i;
 	}

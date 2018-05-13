@@ -6,11 +6,11 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 19:04:14 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/02/26 19:14:46 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/05/12 17:16:36 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_str.h"
 
 char	*ft_strinsert(char **dest, char const *src, t_u32 index)
 {

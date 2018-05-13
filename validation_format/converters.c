@@ -131,9 +131,10 @@ int			convert_str(char const *fmt_part, t_list **a_lststr, va_list args)
 			result = handle_format(format_info, fmt_part, args);
 		}
 	}
-	if (result->len == -1)
+	if (!result || result->len == -1)
 	{
-		free(result);
+		if (result)
+			free(result);
 		return (ERROR);
 	}
 	ft_lstappend(a_lststr, ft_lstnew_no_copy(result, sizeof(t_str)));

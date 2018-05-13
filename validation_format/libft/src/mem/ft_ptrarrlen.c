@@ -6,11 +6,11 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 17:19:36 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/28 11:44:36 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:14:48 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_mem.h"
 
 t_u32		ft_ptrarrlen(const void *a_ptrarr)
 {

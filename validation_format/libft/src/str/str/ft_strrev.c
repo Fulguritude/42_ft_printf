@@ -6,11 +6,11 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 21:32:02 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/28 13:31:37 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:16:26 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_str.h"
 
 char	*ft_strrev(const char *s)
 {

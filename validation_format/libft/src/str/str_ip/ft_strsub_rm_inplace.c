@@ -6,11 +6,11 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 16:51:06 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/07 17:42:16 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/05/12 17:16:38 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_str.h"
 
 void		ft_strsub_rm_inplace(char **a_str, t_u32 start, size_t len)
 {
@@ -22,7 +22,7 @@ void		ft_strsub_rm_inplace(char **a_str, t_u32 start, size_t len)
 	size = ft_strlen(*a_str);
 	if (size <= start || size < start + len)
 	{
-		ft_putendl_fd("Invalid index pair given to strsub_rm_inplace", 2);
+		write(2, "Invalid index pair given to strsub_rm_inplace.\n", 47);
 		return ;
 	}
 	i = 0;

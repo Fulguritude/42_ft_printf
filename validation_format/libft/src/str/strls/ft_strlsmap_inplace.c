@@ -6,11 +6,11 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/10 21:32:00 by tduquesn          #+#    #+#             */
-/*   Updated: 2018/03/11 13:32:06 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:16:47 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_str.h"
 
 void		ft_strlsmap_inplace(char ***a_strls, char *(*f)(char *))
 {

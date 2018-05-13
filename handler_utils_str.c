@@ -30,7 +30,7 @@ static char		*encode_unicodepoint_to_utf8(wchar_t c)
 	if (c > 0x10FFFF)
 		return (NULL);
 	size = 1 + (c > 0x7F) + (c > 0x7FF) + (c > 0xFFFF);
-	if (size > MB_CUR_MAX)
+	if ((t_u32)size > MB_CUR_MAX)
 		return ("MB_CUR_MAX_ERROR");
 	if (!(utf8_c = ft_strnew(size)))
 		return (NULL);

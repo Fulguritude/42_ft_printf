@@ -6,11 +6,12 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 06:56:13 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/21 06:57:35 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/05/12 17:13:16 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_io.h"
+#include "libft_str.h"
 
 void		ft_putmem_fd(char const *str, int fd)
 {

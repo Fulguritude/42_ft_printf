@@ -6,11 +6,11 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 18:56:42 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/13 18:56:54 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/05/12 17:14:32 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_math.h"
 
 double		ft_exp(double x)
 {

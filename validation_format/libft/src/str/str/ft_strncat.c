@@ -6,11 +6,11 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 21:32:01 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/12/01 19:20:22 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:16:24 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_str.h"
 
 char	*ft_strncat(char *dest, const char *src, size_t n)
 {

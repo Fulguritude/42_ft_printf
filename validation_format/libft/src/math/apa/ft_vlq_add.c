@@ -6,11 +6,11 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 06:07:41 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/04/24 07:33:02 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/05/12 17:13:31 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_apa.h"
 
 /*
 ** Maybe improve size management to avoid call to vlqtrim : there is a carry iff

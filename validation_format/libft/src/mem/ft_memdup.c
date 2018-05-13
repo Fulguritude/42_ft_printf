@@ -6,11 +6,11 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 21:31:53 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/12/01 19:35:07 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:14:47 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_mem.h"
 
 void	*ft_memdup(const void *s, size_t n)
 {

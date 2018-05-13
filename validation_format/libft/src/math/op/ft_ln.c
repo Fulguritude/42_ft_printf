@@ -6,11 +6,11 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 06:05:08 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/05/08 16:22:24 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:14:33 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_math.h"
 
 static double	ln_taylor_series(double x)
 {

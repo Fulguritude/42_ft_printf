@@ -6,11 +6,11 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/29 01:24:59 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/29 01:38:19 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/05/12 17:16:36 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_str.h"
 
 /*
 ** Works like the bash function tr. Substitute tr_f[i] by tr_t[i] in str.

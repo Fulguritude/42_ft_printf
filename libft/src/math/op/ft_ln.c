@@ -55,10 +55,10 @@ double			ft_ln(double lf)
 		return (lf);
 	if (lf < 1. || 2. <= lf)
 	{
-		extract = *(t_u64*)(&lf);
+		extract = *(t_u64 *)(&lf);
 		norm = (extract & (_MSB_ | 0xFFFFFFFFFFFFF)) | 0x3FF0000000000000;
 		return (LN2 * (((extract << 1) >> 53) - 1023)
-					+ ft_ln(*(double*)(&norm)));
+					+ ft_ln(*(double *)(&norm)));
 	}
 	if (1.9 <= lf && lf < 2)
 		return (ft_ln(lf * DIV2_BY3) + LN_3DIV2);

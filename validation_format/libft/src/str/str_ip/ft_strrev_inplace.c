@@ -6,11 +6,11 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 05:57:36 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/06 06:00:12 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/05/12 17:16:38 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_str.h"
 
 void			ft_strrev_inplace(char **a_str)
 {

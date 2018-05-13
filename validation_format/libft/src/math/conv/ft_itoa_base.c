@@ -6,11 +6,11 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 21:31:49 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/30 19:04:21 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:13:55 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_math.h"
 
 char	*ft_itoa_base(long nb, const char *base)
 {

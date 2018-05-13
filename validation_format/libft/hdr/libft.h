@@ -39,12 +39,6 @@
 # include <inttypes.h>
 # include <limits.h>
 # include "libft_shorthands.h"
-# include "libft_lst.h"
-# include "libft_io.h"
-# include "libft_mem.h"
-# include "libft_str.h"
-# include "libft_math.h"
-# include "libft_apa.h"
 
 # ifndef __BASES__
 #  define __BASES__

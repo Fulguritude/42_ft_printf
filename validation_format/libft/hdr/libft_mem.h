@@ -15,6 +15,10 @@
 
 # include "libft.h"
 
+# define _MSB_ 			0x8000000000000000
+# define _NOT_MSB_		0x7FFFFFFFFFFFFFFF
+# define _ALLBITS_		0xFFFFFFFFFFFFFFFF
+
 /*
 ** ============ Memory Functions ===========
 */

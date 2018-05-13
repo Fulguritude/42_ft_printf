@@ -6,11 +6,11 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 16:13:36 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/03/13 16:15:55 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/05/12 17:14:32 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_math.h"
 
 long	ft_ceil(double lf)
 {

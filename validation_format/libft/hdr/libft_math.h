@@ -21,6 +21,7 @@
 */
 
 # include "libft.h"
+# include "libft_str.h"
 
 # ifndef __CONSTANTS__
 #  define __CONSTANTS__

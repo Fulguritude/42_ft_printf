@@ -6,11 +6,11 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/25 00:29:04 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/02/25 00:37:07 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/05/12 17:14:33 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_math.h"
 
 inline t_s64	ft_max(t_s64 a, t_s64 b)
 {

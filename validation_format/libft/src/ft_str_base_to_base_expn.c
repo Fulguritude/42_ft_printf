@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "libft_str.h"
+#include "libft_math.h"
+#include "libft_io.h"
 
 static char	*convert_base_to_basen(char const *str, char const *base_f,
 									char const *base_t, t_u32 expn)

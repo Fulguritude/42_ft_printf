@@ -14,7 +14,7 @@ NAME	=	libftprintf.a
 LFT		=	libft.a
 
 
-PLATFORM=	MAC_OS
+PLATFORM=	LINUX
 CC		=	gcc
 CFLAGS	=	-Wall -Werror -Wextra
 

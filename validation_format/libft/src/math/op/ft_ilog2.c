@@ -6,11 +6,11 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/10 03:16:52 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/04/21 15:23:54 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:14:32 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_math.h"
 
 /*
 ** Returns the power to which 2 must be raised to obtain pow_of_2. If the number

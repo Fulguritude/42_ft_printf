@@ -6,11 +6,11 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 21:31:46 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/28 11:44:31 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:13:54 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_math.h"
 
 char	*ft_convert_base(const char *n, const char *base_f, const char *base_t)
 {

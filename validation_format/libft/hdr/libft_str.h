@@ -14,6 +14,7 @@
 # define LIBFT_STR_H
 
 # include "libft.h"
+# include "libft_mem.h"
 
 /*
 ** =========== Character Functions ==========

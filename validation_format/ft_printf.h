@@ -19,6 +19,9 @@
 # include <locale.h>
 # include <inttypes.h>
 # include "libft/hdr/libft.h"
+# include "libft/hdr/libft_str.h"
+# include "libft/hdr/libft_lst.h"
+# include "libft/hdr/libft_math.h"
 
 /*
 ** http://computer-programming-forum.com/47-c-language/e00ad32ae4b4b1d6.htm

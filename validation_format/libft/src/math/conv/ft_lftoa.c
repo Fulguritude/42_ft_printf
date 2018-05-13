@@ -6,11 +6,12 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 19:14:43 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/04/21 15:17:35 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:13:55 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_math.h"
+#include "libft_apa.h"
 
 /*
 ** https://stackoverflow.com/questions/3215235/how-do-you-print-the-exact

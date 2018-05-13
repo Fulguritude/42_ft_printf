@@ -6,11 +6,12 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 01:25:31 by tduquesn          #+#    #+#             */
-/*   Updated: 2017/11/28 11:44:36 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:14:48 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_mem.h"
+#include "libft_str.h"
 
 char	*ft_memhex(const void *s, size_t n)
 {

@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lststrfold.c                                    :+:      :+:    :+:   */
+/*   ft_lststr_to_single_chunk.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/28 02:33:57 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/01/28 18:32:40 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/05/12 17:12:47 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_lst.h"
+#include "libft_str.h"
 
 t_list		*ft_lststrfold(t_list *lst)
 {

@@ -6,11 +6,11 @@
 /*   By: fulguritude <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 16:36:39 by fulguritu         #+#    #+#             */
-/*   Updated: 2018/04/24 07:33:05 by fulguritu        ###   ########.fr       */
+/*   Updated: 2018/05/12 17:13:34 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_apa.h"
 
 /*
 ** Returns -2 if input is improper, or if it is 0. Returns -1 if the input is

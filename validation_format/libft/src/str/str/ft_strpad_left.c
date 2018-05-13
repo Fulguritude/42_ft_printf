@@ -6,11 +6,11 @@
 /*   By: tduquesn <tduquesn@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/20 04:24:22 by tduquesn          #+#    #+#             */
-/*   Updated: 2018/02/20 21:38:28 by tduquesn         ###   ########.fr       */
+/*   Updated: 2018/05/12 17:16:25 by fulguritu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft_str.h"
 
 char	*ft_strpad_left(const char *s, char const c, t_u32 n)
 {

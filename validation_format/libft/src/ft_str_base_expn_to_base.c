@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "libft_str.h"
+#include "libft_math.h"
+#include "libft_io.h"
 
 static char	*base_expn_char_to_base_digitstr(char c, char const *base_f,
 											char const *base_t, t_u32 expn)
